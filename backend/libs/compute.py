@@ -7,8 +7,15 @@ def get_ts_daily_adjusted(instr):
         'function': 'TIME_SERIES_DAILY_ADJUSTED',
         'symbol': instr,
         'apikey': os.environ['ALPHA_VANTAGE_API'],
-        'outputsize': 'compact', # full
+        'outputsize': 'full', # full
     })
     data = r.json()['Time Series (Daily)']
     df = pd.DataFrame(data)
     return df.T  # Need to transpose to make it look like a real dataset lmao
+
+
+def cm_return(df):
+    pass
+
+def av_return(df):
+    pass

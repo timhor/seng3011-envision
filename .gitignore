@@ -1,4 +1,4 @@
 /backend/envs.sh
 **/.idea
 **/__pycache__
-**/notebooks
+**/.ipynb_checkpoints

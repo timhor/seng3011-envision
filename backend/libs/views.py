@@ -20,5 +20,6 @@ def api():
         return "Incorrect arguments supplied"
 
     # TODO: Currently is only raw data
-    return jsonify(compute.get_ts_daily_adjusted(instr).to_json())
+    df = compute.get_ts_daily_adjusted(instr).to_json()
+    return jsonify(df)
 
