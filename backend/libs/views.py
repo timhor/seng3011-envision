@@ -6,7 +6,7 @@ app = Flask('envision-server-api')
 @app.route('/')
 @app.route('/home')
 def home():
-    return "Welcome to SENG3031 API! A GUI caller coming soon!"
+    return "Welcome to SENG3011 API! A GUI caller coming soon!"
 
 @app.route('/api/')
 def api():
