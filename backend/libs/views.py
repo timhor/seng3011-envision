@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from libs import compute
 
 app = Flask('envision-server-api')
 
@@ -18,5 +19,6 @@ def api():
     except KeyError:
         return "Incorrect arguments supplied"
 
-    return "Coming soon!"
+    # TODO: Currently is only raw data
+    return jsonify(compute.get_ts_daily_adjusted(instr).to_json())
 
