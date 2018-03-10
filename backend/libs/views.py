@@ -14,12 +14,18 @@ def api():
         instr = request.args['instrumentID']
         date = request.args['DateOfInterest']
         vars = request.args['List_of_Var']
-        upper = request.args['upper_window']
         lower = request.args['lower_window']
+        upper = request.args['upper_window']
     except KeyError:
         return "Incorrect arguments supplied"
 
-    # TODO: Currently is only raw data
-    df = compute.get_ts_daily_adjusted(instr).to_json()
-    return jsonify(df)
+
+    # TODO: Currently is only raw working data
+    try:
+        df = compute.working_data(instr, date, lower, upper)
+    except Exception as e:
+        print(e)
+        return "Error."
+
+    return jsonify(df.to_json())
 
