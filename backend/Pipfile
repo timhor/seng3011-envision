@@ -8,7 +8,12 @@ name = "pypi"
 [packages]
 
 flask = "*"
+requests = "*"
+pandas = "*"
+sqlalchemy = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]
 
+jupyter = "*"
