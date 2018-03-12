@@ -3,15 +3,15 @@
 ### Environment
 Get envs.sh from Michael.
 
-### Virtualenvwrapper (Optional)
-Should have it from last Semester.
+### pipenv
+```
+sudo pip install pipenv
+```
 
-
-Otherwise [here](http://virtualenvwrapper.readthedocs.io/en/latest/install.html)
+pip3 if using python3
 
 ### Installing Dependencies
 ```
-pip install pipenv
 cd backend
 pipenv install
 ```
