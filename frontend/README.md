@@ -1,3 +1,10 @@
+## Initial setup
+
+1. Install yarn: <https://yarnpkg.com/lang/en/docs/install/>
+2. `yarn global add @angular/cli`
+3. `ng set --global packageManager=yarn`
+4. `yarn install` in this directory
+
 ## Installing dependencies
 
 Run `yarn install` in this directory to install the required modules.
