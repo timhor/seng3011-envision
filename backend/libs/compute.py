@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 import requests
+import math
 from datetime import datetime, timedelta
 
 
@@ -58,11 +59,19 @@ def working_data(instr, target, lower, upper):
 
 
 def cm_return(df):
-    pass
+    i = 0
+    cm = 0.0
+    while i < len(df):
+        val = df['Return'][i]
+        # check to see if val is not nan
+        if not math.isnan(val):
+            cm += df['Return'][i]
+        i += 1
+    return cm
 
 
 def av_return(df):
-    pass
+    return cm_return(df)/len(df)
 
 
 def tag_relative_date(row, target, lower, upper):
