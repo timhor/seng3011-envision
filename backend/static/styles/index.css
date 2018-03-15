@@ -1,0 +1,21 @@
+.demo-card-wide.mdl-card {
+    width: 30vw;
+    min-width: 300px;
+    word-wrap: break-word;
+}
+
+.demo-card-wide>.mdl-card__title {
+    color: rgb(255, 255, 255);
+    height: 176px;
+}
+
+#teamInformation {
+    background: url(/static/assets/Night_Photography.jpg) bottom / cover;
+}
+
+#projectInformation {
+    background: url(/static/assets/Laptop_Coffee.jpg) center / cover;
+}
+.demo-card-wide>.mdl-card__menu {
+    color: #fff;
+}
