@@ -26,10 +26,10 @@
             <span class="mdl-layout-title mdl-typography--font-bold mdl">Envision API</span>
             <nav class="mdl-navigation">
                 <!-- Home/Query Generator Page Link -->
-                {% if currentPage == "query"%}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('query')}}">Query Generator</a>
+                {% if currentPage == "generator"%}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('generator')}}">Query Generator</a>
                 {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('query')}}">Query Generator</a>
+                    <a class="mdl-navigation__link" href="{{url_for('generator')}}">Query Generator</a>
                 {% endif %}
 
                 <!-- Documentation Page Link -->
