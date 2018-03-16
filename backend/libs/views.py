@@ -5,8 +5,20 @@ app = Flask('envision-server-api')
 
 @app.route('/')
 @app.route('/home')
-def home():
-    return render_template('index.html')
+@app.route('/query')
+def query():
+    currentPage = "query"
+    return render_template('query.html', currentPage=currentPage)
+
+@app.route('/documentation')
+def documentation():
+    currentPage = "documentation"
+    return render_template('documentation.html', currentPage=currentPage)
+
+@app.route('/team')
+def team():
+    currentPage = "team"
+    return render_template('team.html', currentPage=currentPage)
 
 @app.route('/api/')
 def api():

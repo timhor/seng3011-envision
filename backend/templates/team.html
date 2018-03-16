@@ -1,0 +1,44 @@
+{% extends "index.html" %} {% block body_contents %}
+<!-- CSS -->
+<link rel="stylesheet" href="{{url_for('static', filename='styles/team.css')}}">
+
+<!-- Content -->
+<div class="mdl-grid" align="center">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h2>Team & Project</h2>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" align="left">
+            <div class="mdl-card__title" id="teamInformation">
+                <h2 class="mdl-card__title-text">Team Members</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                z5115401 - Soham Dinesh Patel
+                <br> z5113367 - Vintony Padmadiredja
+                <br> z3461919 - Michael Tran
+                <br> z5019242 - Tim Hor
+                <br> z5109924 - James Mangos
+            </div>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" align="left">
+            <div class="mdl-card__title" id="projectInformation">
+                <h2 class="mdl-card__title-text">Project Info</h2>
+            </div>
+            <div class="">
+
+            </div>
+            <div class="mdl-card__supporting-text">
+                Github Repository:
+                <br>
+                <a href="https://github.com/timhor/seng3011-envision" target="_blank">https://github.com/timhor/seng3011-envision</a>
+                <br>
+                <br> SENG3011 Website:
+                <br>
+                <a href="https://webcms3.cse.unsw.edu.au/SENG3011/18s1/" target="_blank">https://webcms3.cse.unsw.edu.au/SENG3011/18s1/</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

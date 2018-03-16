@@ -9,13 +9,11 @@
     height: 176px;
 }
 
-#teamInformation {
-    background: url(/static/assets/Night_Photography.jpg) bottom / cover;
-}
-
-#projectInformation {
-    background: url(/static/assets/Laptop_Coffee.jpg) center / cover;
-}
 .demo-card-wide>.mdl-card__menu {
     color: #fff;
+}
+
+.mdl-layout-title{
+    padding-top: 10px;
+    vertical-align: middle;
 }
