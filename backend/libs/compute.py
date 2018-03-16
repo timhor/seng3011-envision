@@ -58,11 +58,23 @@ def working_data(instr, target, lower, upper):
 
 
 def cm_return(df):
-    pass
+    i = 0
+    cm = 0.0
+    while i < len(df):
+        val = df['Return'][i]
+        # check to see if val is not nan
+        if not np.isnan(val):
+            percentage = df['Return (%)'][i]
+            if percentage > 0:
+                cm += val
+            elif percentage < 0:
+                cm -= val
+        i += 1
+    return cm
 
 
 def av_return(df):
-    pass
+    return cm_return(df)/len(df)
 
 
 def tag_relative_date(row, target, lower, upper):
