@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from libs import compute
 
 app = Flask('envision-server-api')
@@ -6,7 +6,7 @@ app = Flask('envision-server-api')
 @app.route('/')
 @app.route('/home')
 def home():
-    return "Welcome to SENG3011 API! A GUI caller coming soon!"
+    return render_template('index.html')
 
 @app.route('/api/')
 def api():
