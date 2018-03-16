@@ -7,18 +7,15 @@ app = Flask('envision-server-api')
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    current_page = "generator"
-    return render_template('generator.html', currentPage=current_page)
+    return render_template('generator.html', current_page="generator")
 
 @app.route('/documentation')
 def documentation():
-    current_page = "documentation"
-    return render_template('documentation.html', currentPage=current_page)
+    return render_template('documentation.html', current_page="documentation")
 
 @app.route('/team')
 def team():
-    current_page = "team"
-    return render_template('team.html', currentPage=current_page)
+    return render_template('team.html', current_page="team")
 
 @app.route('/api/')
 def api():
