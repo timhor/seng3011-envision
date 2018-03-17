@@ -12,6 +12,7 @@ requests = "*"
 pandas = "*"
 sqlalchemy = "*"
 "psycopg2-binary" = "*"
+pylint = "*"
 
 
 [dev-packages]
