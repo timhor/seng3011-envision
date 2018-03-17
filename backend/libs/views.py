@@ -42,6 +42,8 @@ def test():
         print(e)
         return "Error."
 
+    compute.add_performance(df, lower, upper)
+
     cm = compute.cm_return(df)
     av = compute.av_return(df)
     print(cm)
