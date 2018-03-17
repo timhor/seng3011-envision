@@ -17,3 +17,4 @@ sqlalchemy = "*"
 [dev-packages]
 
 jupyter = "*"
+awsebcli = "*"
