@@ -10,7 +10,8 @@ install:
   - cd backend && pipenv install --dev
 
 script:
-  - pylint backend/libs/*.py
+  - echo 'Tests will be run here'
+  # - pylint backend/libs/*.py
 
 branches:
   only:
