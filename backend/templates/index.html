@@ -3,46 +3,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Envision Gateway API</title>
+    <title>Envision API</title>
+
+    <!-- Material Design Lite CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-pink.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+    <!-- Material Design Lite JS -->
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='styles/index.css')}}">
+
+
 </head>
 <body>
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col" align="center">
-            <div class="demo-card-wide mdl-card mdl-shadow--2dp" align="left">
-                <div class="mdl-card__title" id="teamInformation">
-                    <h2 class="mdl-card__title-text">Team Members</h2>
-                </div>
-                <div class="mdl-card__supporting-text">
-                    z5115401 - Soham Dinesh Patel
-                    <br> z5113367 - Vintony Padmadiredja
-                    <br> z3461919 - Michael Tran
-                    <br> z5019242 - Tim Hor
-                    <br> z5109924 - James Mangos
-                </div>
-            </div>
-        </div>
-        <div class="mdl-cell mdl-cell--12-col" align="center">
-            <div class="demo-card-wide mdl-card mdl-shadow--2dp" align="left">
-                <div class="mdl-card__title" id="projectInformation">
-                    <h2 class="mdl-card__title-text">Project Info</h2>
-                </div>
-                <div class="">
+    <!-- The drawer is always open in large screens. The header is always shown,
+        even in small screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title mdl-typography--font-bold mdl">Envision API</span>
+            <nav class="mdl-navigation">
+                <!-- Home/Query Generator Page Link -->
+                {% if current_page == "generator"%}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('generator')}}">Query Generator</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('generator')}}">Query Generator</a>
+                {% endif %}
 
-                </div>
-                <div class="mdl-card__supporting-text">
-                    Github Repository: <br>
-                    <a href="https://github.com/timhor/seng3011-envision" target="_blank">https://github.com/timhor/seng3011-envision</a> <br> <br>
-                    
-                    SENG3011 Website: <br>
-                    <a href="https://webcms3.cse.unsw.edu.au/SENG3011/18s1/" target="_blank">https://webcms3.cse.unsw.edu.au/SENG3011/18s1/</a>
-                </div>
-            </div>
+                <!-- Documentation Page Link -->
+                {% if current_page == "documentation"%}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('documentation')}}">Documentation</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('documentation')}}">Documentation</a>
+                {% endif %}
+
+                <!-- Team Page Link -->
+                {% if current_page == "team"%}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Team / Project</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
+                {% endif %}
+
+            </nav>
         </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Your content goes here -->
+                {% block body_contents %}
+                {% endblock %}
+            </div>
+        </main>
     </div>
-
 </body>
 </html>
