@@ -21,13 +21,13 @@ pipenv install --dev
 
 ### Running the API Server
 ```
-pipenv run python run.py
+pipenv run python application.py
 ```
 
 ### API Endpoint variables (to be improved)
-- instrumentID
-- DateOfInterest
-- List_of_Var
+- instrument_id
+- date_of_interest
+- list_of_var
 - lower_window
 - upper_window
 

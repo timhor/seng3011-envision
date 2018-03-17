@@ -20,9 +20,9 @@ def team():
 @app.route('/api/')
 def api():
     try:
-        instr = request.args['instrumentID']
-        date = request.args['DateOfInterest']
-        vars = request.args['List_of_Var']
+        instr = request.args['instrument_id']
+        date = request.args['date_of_interest']
+        vars = request.args['list_of_var']
         lower = request.args['lower_window']
         upper = request.args['upper_window']
     except KeyError:
