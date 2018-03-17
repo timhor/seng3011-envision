@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "3.6"
+
+before_install:
+  - pip install pipenv
+
+install:
+  - cd backend && pipenv install --dev
+
+script:
+  - pylint backend/libs/*.py
+
+branches:
+  only:
+    - master
