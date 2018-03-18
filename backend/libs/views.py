@@ -17,26 +17,52 @@ def documentation():
 def team():
     return render_template('team.html', current_page="team")
 
-@app.route('/api/')
+@app.route('/api')
 def api():
     try:
         instr = request.args['instrument_id']
         date = request.args['date_of_interest']
-        vars = request.args['list_of_var']
-        lower = request.args['lower_window']
-        upper = request.args['upper_window']
+        var_list = request.args['list_of_var']
+        lower = int(request.args['lower_window'])
+        upper = int(request.args['upper_window'])
     except KeyError:
         return "Incorrect arguments supplied"
 
 
-    # TODO: Currently is only raw working data
+    # TODO: Sanitise inputs a little better
     try:
-        df = compute.working_data(instr, date, lower, upper)
-    except Exception as e:
-        print(e)
-        return "Error."
+        var_list = var_list.split(',')
+    except ValueError:
+        var_list = [var_list]
 
-    return jsonify(df.to_json())
+    try:
+        instr = instr.split(',')
+    except ValueError:
+        instr = [instr]
+
+
+    returns = []
+    for i in instr:
+        try:
+            df = compute.working_data(i, date, lower, upper)
+            df = compute.filter_df(df, var_list)
+            df.index = df.index.format()
+            data = df.to_json(orient='index')
+        except Exception as e:
+            print(e)
+            data = "Error."
+        returns.append({
+            'InstrumentID': i,
+            'Data': data
+        })
+
+
+    payload = {
+        'Metadata': None,  # TODO: Add in meta data
+        'CompanyReturns': returns
+    }
+
+    return jsonify(payload)
 
 @app.route('/test/')
 def test():
@@ -50,8 +76,6 @@ def test():
     except Exception as e:
         print(e)
         return "Error."
-
-    compute.add_performance(df, lower, upper)
 
     cm = compute.cm_return(df)
     av = compute.av_return(df)

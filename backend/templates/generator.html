@@ -8,4 +8,23 @@
         <p>Page under construction...</p>
     </div>
 </div>
+
+
+<form action={{ url_for('api') }}>
+  Instrument:<br>
+  <input type="text" name="instrument_id" value="ABP.AX">
+  <br>
+  Date:<br>
+  <input type="text" name="date_of_interest" value="10/12/2012">
+  <br>
+    Vars:<br>
+  <input type="text" name="list_of_var" value="CM Return">
+  <br>Lower:<br>
+  <input type="text" name="lower_window" value="3">
+  <br>Upper:<br>
+  <input type="text" name="upper_window" value="5">
+  <br>
+    <br>
+  <input type="submit" value="Submit">
+</form>
 {% endblock %}

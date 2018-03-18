@@ -53,6 +53,8 @@ def working_data(instr, target, lower, upper):
     df['Return'] = df['4. close'].diff()
     df['Return (%)'] = df['4. close'].pct_change()
 
+    add_performance(df, lower, upper)
+
     return df
 
 
@@ -94,3 +96,9 @@ def add_performance(df, lower, upper):
             #         df['CM Return'].iloc[i] = df['Return'][i-lower:i+upper].sum()
             df['CM Return'].iloc[i] = df['4. close'].iloc[i + upper] - df['4. close'].iloc[i - lower]
             df['AV Return'].iloc[i] = df['CM Return'].iloc[i] / (lower + upper + 1)
+
+def filter_df(df, vars):
+    columns = ['Relative Date', 'Return'] + vars
+    df = df[~np.isnan(df['Relative Date'])]
+    return df[columns]
+
