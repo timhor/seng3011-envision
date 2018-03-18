@@ -58,26 +58,6 @@ def working_data(instr, target, lower, upper):
     return df
 
 
-def cm_return(df):
-    i = 0
-    cm = 0.0
-    while i < len(df):
-        val = df['Return'][i]
-        # check to see if val is not nan
-        if not np.isnan(val):
-            percentage = df['Return (%)'][i]
-            if percentage > 0:
-                cm += val
-            elif percentage < 0:
-                cm -= val
-        i += 1
-    return cm
-
-
-def av_return(df):
-    return cm_return(df) / len(df)
-
-
 def tag_relative_date(row, target, lower, upper):
     """Tags a row with it's relative distance from target date if we are interested in it"""
     row['Relative Date'] = (row.name - target).days if lower <= row.name <= upper else np.nan
@@ -92,8 +72,7 @@ def add_performance(df, lower, upper):
         if np.isnan(df.iloc[i]['Relative Date']):
             continue
         else:
-            pass
-            #         df['CM Return'].iloc[i] = df['Return'][i-lower:i+upper].sum()
+            # df['CM Return'].iloc[i] = df['Return'][i-lower:i+upper].sum()
             df['CM Return'].iloc[i] = df['4. close'].iloc[i + upper] - df['4. close'].iloc[i - lower]
             df['AV Return'].iloc[i] = df['CM Return'].iloc[i] / (lower + upper + 1)
 

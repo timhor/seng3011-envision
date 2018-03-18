@@ -63,22 +63,3 @@ def api():
     }
 
     return jsonify(payload)
-
-@app.route('/test/')
-def test():
-    instr = 'ABP.AX'
-    date = '10/12/2012'
-    lower = 3
-    upper = 5
-
-    try:
-        df = compute.working_data(instr, date, lower, upper)
-    except Exception as e:
-        print(e)
-        return "Error."
-
-    cm = compute.cm_return(df)
-    av = compute.av_return(df)
-    print(cm)
-    print(av)
-    return jsonify(df.to_json())
