@@ -72,7 +72,7 @@ def add_performance(df, lower, upper):
         if np.isnan(df.iloc[i]['Relative Date']):
             continue
         else:
-            # df['CM Return'].iloc[i] = df['Return'][i-lower:i+upper].sum()
+            # df['CM Return'].iloc[i] = df['Return'][i-lower+1:i+upper+1].sum()
             df['CM Return'].iloc[i] = df['4. close'].iloc[i + upper] - df['4. close'].iloc[i - lower]
             df['AV Return'].iloc[i] = df['CM Return'].iloc[i] / (lower + upper + 1)
 
