@@ -30,7 +30,7 @@ def working_data(instr, target, lower, upper):
     """Creates an enriched dataset to work with"""
     df = get_ts_daily_adjusted(instr)
     try:
-        target_date = datetime.strptime(target, '%d/%m/%Y')
+        target_date = datetime.strptime(target, '%Y-%m-%d')
     except ValueError as e:
         raise e
 
