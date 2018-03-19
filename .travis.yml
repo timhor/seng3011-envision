@@ -27,4 +27,5 @@ deploy:
   env: envision-api
   on:
     repo: timhor/seng3011-envision
+  bucket_name: "elasticbeanstalk-ap-southeast-2-616420001240"
 
