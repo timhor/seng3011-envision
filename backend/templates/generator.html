@@ -1,30 +1,69 @@
 {% extends "index.html" %}
 {% block body_contents %}
-<div class="mdl-grid" align="center">
-    <div class="mdl-cell mdl-cell--12-col">
+<!-- CSS -->
+<link rel="stylesheet" href="{{url_for('static', filename='styles/generator.css')}}">
+
+<!-- Page Heading -->
+<div class="centeritems mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--8-col" align="center">
         <h2>Query Generator</h2>
     </div>
-    <div class="mdl-cell mdl-cell--12-col">
-        <p>Page under construction...</p>
-    </div>
+    <div class="mdl-layout-spacer"></div>
 </div>
 
+<!-- Query Generator Form -->
+<div class="centeritems mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--4-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="generatorForm">
+            <div class="mdl-card__title" id="formTitle">
+                <h2 class="mdl-card__title-text">Generate your API query here</h2>
+            </div>
+            <div class="mdl-card__supporting-text" align="center">
+                <div>    
+                    Enter the details below to obtain your API query <br><br>
+                </div>
+                <form action="{{url_for('api')}}">
 
-<form action={{ url_for('api') }}>
-    Instrument:<br>
-    <input type="text" name="instrument_id" value="ABP.AX">
-    <br>
-    Date:<br>
-    <input type="date" name="date_of_interest" value="10/12/2012">
-    <br>
-    Vars:<br>
-    <input type="text" name="list_of_var" value="CM Return">
-    <br>Lower:<br>
-    <input type="text" name="lower_window" value="3">
-    <br>Upper:<br>
-    <input type="text" name="upper_window" value="5">
-    <br>
-    <br>
-    <input type="submit" value="Submit">
-</form>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="instrument_id" value="ABP.AX">
+                        <label class="mdl-textfield__label">Instrument</label>
+                    </div>
+                    <br>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="date" name="date_of_interest" value="2012-12-10">
+                        <label class="mdl-textfield__label">Date</label>
+                    </div>
+                    <br>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="list_of_var" value="CM Return">
+                        <label class="mdl-textfield__label">Variables</label>
+                    </div>
+                    <br>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="integer" name="lower_window" pattern="-?[0-9]*(\.[0-9]+)?" value='3'>
+                        <label class="mdl-textfield__label">Lower Window</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+                    <br>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="integer" name="upper_window" pattern="-?[0-9]*(\.[0-9]+)?" value='5'>
+                        <label class="mdl-textfield__label">Upper Window</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+                    <br>
+                    <br>
+                    <div id="next" align="right">
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" value="Submit">
+                            <i class="material-icons">arrow_forward</i>
+                        </button>
+                    </div>
+                </form>
+            </div> 
+        </div>
+    </div>
+    <div class="mdl-layout-spacer"></div>
+</div>
+
 {% endblock %}
