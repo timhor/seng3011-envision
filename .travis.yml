@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - "3.6"
+
+before_install:
+  - pip install pipenv
+
+install:
+  - cd backend && pipenv install --dev
+
+script:
+  - echo 'Tests will be run here'
+  # - pylint backend/libs/*.py
+
+branches:
+  only:
+    - master
