@@ -16,3 +16,16 @@ script:
 branches:
   only:
     - master
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: AKIAI3T7JQ4K3VCCD7VA
+  secret_access_key:
+    secure: hQ459Bs1vIU7jn/OGgUbeRHOfAUmSn2+dCI9JhueBduJ2zBEwspbB1ViUsfDCPLAmBIO/kBivhu7du+KIidUyp5ZSWPy4+coENhKRoDQVjjP8T4QK4mQ0zhZ+f32DsKsIH+G0fOpfyHSqBdY/3lv+oblCTRH6GfaYkSDvkHCUv7K23cnnd71AiX9b1tyZuFwY/gDMO+DihbF95ZEd3NEV4o38EejL3YTsGYBR5cTjaai/Nj0iyEvEpyUMdgzJP2pQA0ympUa0K0pzMF3jXCs4BPgCez4/Hri0jMqSVZZaa83mQ1K/x8r1nGlCXQjSapD0rvGmVlhcuET4VxM48bXEHZth8ILZUNXuC1WkMkbeSvtzMetcOdT+8YaiRUMi69/I0403nFzCDXK/ddFhLzLIYwoJq/p53AW9AuuraTB+xPMTie7Q7KcOHvLeJVNPczM4UZhxtonNX4fvubdfPRn/loyytLkxKotTMscbx42dYfGhRa57TMaSvumRIIKuW1tPcjFw9UMYV6605YP9UlNRNiTwaCUL3A1Dt79RlZHtOV/UjJNQPS0y7PgoupnKjMlGJOtgVbANL9n/+4zhPlrSeFEG0X+BgosiUusVaA5DejQnMaZBGWDas7XJGdmtCH3gFOAkaPzE4CGmEaJXivBBKhgYw50SlFlOYEop9QhZ5k=
+  region: ap-southeast-2
+  app: envision-api
+  env: envision-api
+  on:
+    repo: timhor/seng3011-envision
+
+before_deploy: "cd backend"
