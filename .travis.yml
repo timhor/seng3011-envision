@@ -28,4 +28,3 @@ deploy:
   on:
     repo: timhor/seng3011-envision
 
-before_deploy: "cd backend"
