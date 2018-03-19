@@ -48,10 +48,10 @@ def api():
     returns = []
     for i in instr:
         try:
-            df = compute.working_data(i, date, lower, upper)
-            df = compute.filter_df(df, var_list)
-            df.index = df.index.format()
-            data = df.to_json(orient='index')
+            data_frame = compute.working_data(i, date, lower, upper)
+            data_frame = compute.filter_data_frame(data_frame, var_list)
+            data_frame.index = data_frame.index.format()
+            data = data_frame.to_json(orient='index')
             # file_name = ?
 
         except Exception as e:

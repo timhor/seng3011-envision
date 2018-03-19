@@ -17,18 +17,18 @@ def get_ts_daily_adjusted(instr):
     # Data comes with metadata that we don't need
     data = r.json()['Time Series (Daily)']
 
-    df = pd.DataFrame.from_dict(data, orient='index')
-    df = df.apply(pd.to_numeric)
-    df.index = pd.to_datetime(df.index)
+    data_frame = pd.DataFrame.from_dict(data, orient='index')
+    data_frame = data_frame.apply(pd.to_numeric)
+    data_frame.index = pd.to_datetime(data_frame.index)
 
     # Because Alpha Vantage is offset incorrectly by 1, we need to fix it up
-    df.index += timedelta(days=1)
-    return df
+    data_frame.index += timedelta(days=1)
+    return data_frame
 
 
 def working_data(instr, target, lower, upper):
     """Creates an enriched dataset to work with"""
-    df = get_ts_daily_adjusted(instr)
+    data_frame = get_ts_daily_adjusted(instr)
     try:
         target_date = datetime.strptime(target, '%Y-%m-%d')
     except ValueError as e:
@@ -43,19 +43,19 @@ def working_data(instr, target, lower, upper):
     upper_date_extreme = target_date + timedelta(days=(2 * upper))
 
     # Tighten to the range we want (and show non-trading days too)
-    df = df.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D')).fillna(method='ffill')
-    #     df = df[(df.index >= lower_date_extreme) & (df.index <= upper_date_extreme)]
+    data_frame = data_frame.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D')).fillna(method='ffill')
+    #     data_frame = data_frame[(data_frame.index >= lower_date_extreme) & (data_frame.index <= upper_date_extreme)]
 
     # Tag with relative dates
-    df = df.apply(tag_relative_date, axis=1, args=(target_date, lower_date, upper_date))
+    data_frame = data_frame.apply(tag_relative_date, axis=1, args=(target_date, lower_date, upper_date))
 
     #  Calculate the data we want
-    df['Return'] = df['4. close'].diff()
-    df['Return (%)'] = df['4. close'].pct_change()
+    data_frame['Return'] = data_frame['4. close'].diff()
+    data_frame['Return (%)'] = data_frame['4. close'].pct_change()
 
-    add_performance(df, lower, upper)
+    add_performance(data_frame, lower, upper)
 
-    return df
+    return data_frame
 
 
 def tag_relative_date(row, target, lower, upper):
@@ -64,20 +64,20 @@ def tag_relative_date(row, target, lower, upper):
     return row
 
 
-def add_performance(df, lower, upper):
-    df['CM Return'] = np.nan
-    df['AV Return'] = np.nan
+def add_performance(data_frame, lower, upper):
+    data_frame['CM Return'] = np.nan
+    data_frame['AV Return'] = np.nan
 
-    for i in range(len(df)):
-        if np.isnan(df.iloc[i]['Relative Date']):
+    for i in range(len(data_frame)):
+        if np.isnan(data_frame.iloc[i]['Relative Date']):
             continue
         else:
-            # df['CM Return'].iloc[i] = df['Return'][i-lower:i+upper+1].sum()
-            df['CM Return'].iloc[i] = df['4. close'].iloc[i + upper] - df['4. close'].iloc[i - lower - 1]
-            df['AV Return'].iloc[i] = df['CM Return'].iloc[i] / (lower + upper + 1)
+            # data_frame['CM Return'].iloc[i] = data_frame['Return'][i-lower:i+upper+1].sum()
+            data_frame['CM Return'].iloc[i] = data_frame['4. close'].iloc[i + upper] - data_frame['4. close'].iloc[i - lower - 1]
+            data_frame['AV Return'].iloc[i] = data_frame['CM Return'].iloc[i] / (lower + upper + 1)
 
-def filter_df(df, vars):
+def filter_data_frame(data_frame, vars):
     columns = ['Relative Date', 'Return'] + vars
-    df = df[~np.isnan(df['Relative Date'])]
-    return df[columns]
+    data_frame = data_frame[~np.isnan(data_frame['Relative Date'])]
+    return data_frame[columns]
 
