@@ -50,7 +50,7 @@ def api():
             data = df.to_json(orient='index')
         except Exception as e:
             print(e)
-            data = "Error."
+            data = "Error: " + str(e)
         returns.append({
             'InstrumentID': i,
             'Data': data
