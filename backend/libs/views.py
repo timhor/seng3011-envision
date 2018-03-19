@@ -20,6 +20,10 @@ def team():
 
 @app.route('/api')
 def api():
+    start_time = datetime.now()
+    success = True
+    all_error_messages = []
+
     try:
         instr = request.args['instrument_id']
         date = request.args['date_of_interest']
@@ -42,59 +46,48 @@ def api():
         instr = [instr]
 
     returns = []
-    metadata = []
     for i in instr:
-        success = False
-        start_time = None
-        end_time = None
-        elapsed_time = None
-        error_message = ""
-
         try:
-            start_time = datetime.now()
-
             df = compute.working_data(i, date, lower, upper)
             df = compute.filter_df(df, var_list)
             df.index = df.index.format()
             data = df.to_json(orient='index')
-
-            end_time = datetime.now()
-
-            success = True
-            elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
-            start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
-            end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
-            # file_name = ?  
+            # file_name = ?
 
         except Exception as e:
             print(e)
             error_message = "Error: " + str(e)
             data = error_message
+            all_error_messages.append(error_message)
+            success = False
 
-            # start_time is set before argument parsing
-            start_time = None 
-            
         returns.append({
             'InstrumentID': i,
             'Data': data
         })
-        metadata.append({
-            'team': 'Envision',
-            'module': 'Envision_API v1.0',
-            'parameters': {
-                'instr': instr,
-                'date': date,
-                'var_list': var_list,
-                'lower': lower,
-                'upper': upper
-            },
-            'success': success,
-            'start_time': start_time,
-            'end_time': end_time,
-            'elapsed_time': elapsed_time,
-            'error_message': error_message
-        })
 
+    end_time = datetime.now()
+
+    elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
+    start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
+    end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    metadata = {
+        'team': 'Envision',
+        'module': 'Envision_API v1.0',
+        'parameters': {
+            'instr': instr,
+            'date': date,
+            'var_list': var_list,
+            'lower': lower,
+            'upper': upper
+        },
+        'success': success,
+        'start_time': start_time,
+        'end_time': end_time,
+        'elapsed_time': elapsed_time,
+        'error_messages': all_error_messages
+    }
 
     payload = {
         'Metadata': metadata,
