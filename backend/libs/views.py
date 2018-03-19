@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from libs import compute
-import time
+from datetime import datetime, timedelta
 
 app = Flask('envision-server-api')
 
@@ -51,19 +51,19 @@ def api():
         error_message = ""
 
         try:
-            start_time = time.time()
+            start_time = datetime.now()
 
             df = compute.working_data(i, date, lower, upper)
             df = compute.filter_df(df, var_list)
             df.index = df.index.format()
             data = df.to_json(orient='index')
 
-            end_time = time.time()
+            end_time = datetime.now()
 
             success = True
-            elapsed_time = '{:.2f}ms'.format(((end_time - start_time) * 1000))
-            start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(start_time))
-            end_time = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(end_time))
+            elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
+            start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
+            end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
             # file_name = ?  
 
         except Exception as e:
@@ -79,20 +79,20 @@ def api():
             'Data': data
         })
         metadata.append({
-            'team' : 'Envision',
-            'module' : 'Envision_API v1.0',
-            'parameters' : {
+            'team': 'Envision',
+            'module': 'Envision_API v1.0',
+            'parameters': {
                 'instr': instr,
-                'date' : date,
-                'var_list' : var_list,
-                'lower' : lower,
-                'upper' : upper
+                'date': date,
+                'var_list': var_list,
+                'lower': lower,
+                'upper': upper
             },
-            'success' : success,
-            'start_time' : start_time,
-            'end_time' : end_time,
-            'elapsed_time' : elapsed_time,
-            'error_message' : error_message
+            'success': success,
+            'start_time': start_time,
+            'end_time': end_time,
+            'elapsed_time': elapsed_time,
+            'error_message': error_message
         })
 
 
