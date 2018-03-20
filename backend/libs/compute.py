@@ -72,8 +72,7 @@ def add_performance(data_frame, lower, upper):
         if np.isnan(data_frame.iloc[i]['Relative Date']):
             continue
         else:
-            # data_frame['CM Return'].iloc[i] = data_frame['Return'][i-lower:i+upper+1].sum()
-            data_frame['CM Return'].iloc[i] = data_frame['4. close'].iloc[i + upper] - data_frame['4. close'].iloc[i - lower - 1]
+            data_frame['CM Return'].iloc[i] = data_frame['Return (%)'][i-lower:i+upper+1].sum()
             data_frame['AV Return'].iloc[i] = data_frame['CM Return'].iloc[i] / (lower + upper + 1)
 
 def filter_data_frame(data_frame, vars):
