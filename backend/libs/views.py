@@ -52,7 +52,6 @@ def api():
             data_frame = compute.filter_data_frame(data_frame, var_list)
             data_frame.index = data_frame.index.format()
             data = data_frame.to_dict(orient='index')
-            # file_name = ?
 
         except Exception as e:
             print(e)

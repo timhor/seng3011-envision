@@ -44,7 +44,6 @@ def working_data(instr, target, lower, upper):
 
     # Tighten to the range we want (and show non-trading days too)
     data_frame = data_frame.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D')).fillna(method='ffill')
-    #     data_frame = data_frame[(data_frame.index >= lower_date_extreme) & (data_frame.index <= upper_date_extreme)]
 
     # Tag with relative dates
     data_frame = data_frame.apply(tag_relative_date, axis=1, args=(target_date, lower_date, upper_date))
