@@ -1,4 +1,4 @@
-#generatorForm {
+#formInput {
     margin: 0 auto;
     width: 100%;
 }
@@ -6,4 +6,53 @@
 #formTitle {
     padding-top: 50px;
     margin: 0 auto;
+    text-align: center;
+}
+
+#liveAPICardTitle {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#formSubmit {
+    margin-top: 250px;
+}
+
+
+#liveAPICard {
+    margin: 0 auto;
+    width: auto;
+}
+
+#copyBtn {
+    font: italic;
+    width: auto;
+    font-size: 11px;
+    color: lightcoral;
+    margin-top:0px; 
+    margin-bottom: 5px;
+}
+
+#apiQuery {
+    width: 100%;
+    padding: 20px;
+    border: dotted green 3px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.string { 
+    color: rgb(200, 95, 95); 
+}
+.number {
+    color: rgb(118, 192, 124); 
+}
+.boolean { 
+    color: blue; 
+}
+.null { 
+    color: blue; 
+}
+.key { 
+    color: rgb(75, 116, 156);
 }
