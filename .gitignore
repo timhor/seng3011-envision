@@ -2,7 +2,7 @@
 **/.idea
 **/__pycache__
 **/.ipynb_checkpoints
-**/notebooks/*
+**/backend/notebooks
 
 # Elastic Beanstalk Files
 **/.elasticbeanstalk/*
