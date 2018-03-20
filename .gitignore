@@ -2,3 +2,9 @@
 **/.idea
 **/__pycache__
 **/.ipynb_checkpoints
+**/notebooks/
+
+# Elastic Beanstalk Files
+**/.elasticbeanstalk/*
+**/!.elasticbeanstalk/*.cfg.yml
+**/!.elasticbeanstalk/*.global.yml
