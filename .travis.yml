@@ -13,10 +13,6 @@ script:
   - echo 'Tests will be run here'
   # - pylint backend/libs/*.py
 
-branches:
-  only:
-    - master
-
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAI3T7JQ4K3VCCD7VA
@@ -25,7 +21,7 @@ deploy:
   region: ap-southeast-2
   app: envision-api
   env: envision-api
+  bucket_name: "elasticbeanstalk-ap-southeast-2-616420001240"
   on:
     repo: timhor/seng3011-envision
-  bucket_name: "elasticbeanstalk-ap-southeast-2-616420001240"
-
+    branch: release
