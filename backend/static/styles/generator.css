@@ -9,19 +9,13 @@
     text-align: center;
 }
 
-#liveAPICardTitle {
-    margin: 0 auto;
-    text-align: center;
-}
-
 #formSubmit {
     margin-top: 250px;
 }
 
 #formSubmitBtn {
-    border: rgb(0, 35, 0) 2px solid;
+    border: dodgerblue 2px solid;
     color: rgb(0, 35, 0);
-    background-color: rgb(250, 255, 230);
 }
 
 #liveAPICard {
@@ -30,34 +24,42 @@
 }
 
 #copyBtn {
-    font: italic;
     width: auto;
     font-size: 11px;
     color: lightcoral;
-    margin-top:0px; 
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #apiQuery {
     width: 100%;
     padding: 20px;
-    border: dotted green 3px;
+    padding-bottom: 50px;
+    border: dodgerblue 1px solid;
     border-radius: 10px;
     font-size: 12px;
+    overflow: hidden;
+    outline: none;
+    resize: none;
 }
 
-.string { 
-    color: rgb(200, 95, 95); 
+.mdl-tooltip {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-transform: uppercase;
+}
+
+.string {
+    color: rgb(200, 95, 95);
 }
 .number {
-    color: rgb(118, 192, 124); 
+    color: rgb(118, 192, 124);
 }
-.boolean { 
-    color: blue; 
+.boolean {
+    color: blue;
 }
-.null { 
-    color: blue; 
+.null {
+    color: blue;
 }
-.key { 
+.key {
     color: rgb(75, 116, 156);
 }
