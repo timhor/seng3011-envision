@@ -93,4 +93,5 @@ def api():
         'CompanyReturns': returns
     }
 
+    
     return jsonify(payload)
