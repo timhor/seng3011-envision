@@ -64,3 +64,4 @@ function copyToClipboard() {
     var tooltip = document.getElementById("copyBtnTooltip");
     tooltip.innerHTML = "Copy to Clipboard";
   }
+  

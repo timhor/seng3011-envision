@@ -18,6 +18,11 @@
     margin-top: 250px;
 }
 
+#formSubmitBtn {
+    border: rgb(0, 35, 0) 2px solid;
+    color: rgb(0, 35, 0);
+    background-color: rgb(250, 255, 230);
+}
 
 #liveAPICard {
     margin: 0 auto;
