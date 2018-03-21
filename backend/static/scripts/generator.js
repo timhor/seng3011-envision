@@ -55,12 +55,12 @@ function copyToClipboard() {
     var copyText = document.getElementById("apiQuery");
     copyText.select();
     document.execCommand("Copy");
-    
+
     var tooltip = document.getElementById("copyBtnTooltip");
     tooltip.innerHTML = "Copied!";
-  }
-  
-  function copied() {
+}
+
+function copied() {
     var tooltip = document.getElementById("copyBtnTooltip");
     tooltip.innerHTML = "Copy to Clipboard";
-  }
+}
