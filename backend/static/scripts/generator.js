@@ -1,3 +1,8 @@
+window.onload = function() {
+    updateAPIQuery();
+    document.getElementById('loadingSpinner').hidden = true;
+};
+
 function getData(){
     var instrumentID = document.getElementById('instrument_id').value;
     var dateOfInterest = document.getElementById('date_of_interest').value;
@@ -5,11 +10,14 @@ function getData(){
     var lowerWindow = document.getElementById('lower_window').value;
     var upperWindow = document.getElementById('upper_window').value;
 
-    document.getElementById('queryResults').innerText = "Fetching Data...";
+    document.getElementById('queryResults').hidden = true;
+    document.getElementById('loadingSpinner').hidden = false;
 
     $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, function(data){
         var dataString = JSON.stringify(data, null, 3);
-        document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
+        document.getElementById('queryResults').innerHTML = `<pre><code>` + syntaxHighlight(dataString) + `</code></pre>`;
+        document.getElementById('loadingSpinner').hidden = true;
+        document.getElementById('queryResults').hidden = false;
     })
 };
  
@@ -31,10 +39,6 @@ function syntaxHighlight(json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
-
-window.onload = function() {
-    updateAPIQuery();
-};
 
 function updateAPIQuery(){
     var instrumentID = document.getElementById('instrument_id').value;
