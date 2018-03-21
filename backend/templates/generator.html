@@ -26,8 +26,7 @@
                         <br>
                         <br>
                     </div>
-                    <form action="{{url_for('api')}}" id="generatorForm">
-
+                    <form>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="instrument_id" value="ABP.AX" oninput="updateAPIQuery()">
                             <label class="mdl-textfield__label">Instrument</label>
@@ -63,21 +62,21 @@
         <br>
         <div class="mdl-cell mdl-cell--12-col">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="liveAPICard" align="center">
-                <div class="mdl-card__title" width="100%" id="liveAPICardTitle">
+                <div class="mdl-card__title" width="100%" id="formTitle">
                     <h2 class="mdl-card__title-text mdl-typography--font-bold">View Query</h2>
                 </div>
                 <div class="mdl-card__supporting-text" id="liveAPI">
-                    <div align="right">
-                        <button class="mdl-button mdl-js-button" id="copyBtn" onclick="copyToClipboard()" onmouseout="copied()">
-                                <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
-                                Click here to copy!
-                        </button>
-                    </div>
                     <textarea id="apiQuery">
                         Query not built!
                     </textarea>
+                    <div align="right">
+                        <button class="mdl-button mdl-js-button" id="copyBtn" onclick="copyToClipboard()" onmouseout="copied()">
+                                Click here to copy!
+                        </button>
+                    </div>
                 </div>
             </div>
+            <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
         </div>
     </div>
     <div class="mdl-cell mdl-cell--1-col" align="center" id="formSubmit">
