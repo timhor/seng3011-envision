@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from libs import compute
 from datetime import datetime, timedelta
-from flask.ext.misaka import Misaka
+from flask_misaka import Misaka
 
 app = Flask('envision-server-api')
 Misaka(app)
