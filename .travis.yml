@@ -11,6 +11,7 @@ install:
 
 script:
   - echo 'Tests will be run here'
+  - pipenv check
   # - pylint backend/libs/*.py
 
 deploy:
