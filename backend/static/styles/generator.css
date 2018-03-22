@@ -1,3 +1,7 @@
+#queryBuilderCard {
+    margin-top: 0px;
+}
+
 #formInput {
     margin: 0 auto;
     width: 100%;
@@ -14,8 +18,19 @@
 }
 
 #formSubmitBtn {
-    border: dodgerblue 2px solid;
     color: rgb(0, 35, 0);
+    border: transparent 2px solid;
+    transition: border .15s ease-in-out;
+}
+
+#formSubmitBtn:hover {
+    border: dodgerblue 2px solid;
+}
+
+#outputPlaceholder {
+    font-family: "Helvetica", "Arial", sans-serif;
+    text-align: center;
+    display: block;
 }
 
 #liveAPICard {
@@ -48,6 +63,7 @@
     text-transform: uppercase;
 }
 
+/* Syntax highlighting of output JSON */
 .string {
     color: rgb(200, 95, 95);
 }
