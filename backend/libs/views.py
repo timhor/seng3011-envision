@@ -14,9 +14,13 @@ def generator():
 
 @app.route('/documentation')
 def documentation():
-    readme = ""
-    with open('README.md', 'r') as f:
-        readme = f.read()
+    try:
+        with open('README.md', 'r') as f:
+            readme = f.read()
+    except IOError:
+        readme = ""
+        print("Could not read file: README.md")
+
     return render_template('documentation.html', current_page="documentation", readme=readme)
 
 @app.route('/team')
