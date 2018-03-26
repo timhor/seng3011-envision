@@ -17,14 +17,14 @@ function getData(){
     document.getElementById('loadingSpinner').hidden = false;
 
     if (cmReturn || avReturn) {
-        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, function(data){
+        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             var dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
         })
     } else {
-        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, function(data){
+        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             var dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
