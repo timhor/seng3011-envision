@@ -50,7 +50,7 @@ def working_data(instr, target, lower, upper):
 
     #  Calculate the data we want
     data_frame['Return'] = data_frame['4. close'].diff()
-    data_frame['Return (%)'] = data_frame['4. close'].pct_change()
+    data_frame['Return_pct'] = data_frame['4. close'].pct_change()
 
     add_performance(data_frame, lower, upper)
 
@@ -64,18 +64,35 @@ def tag_relative_date(row, target, lower, upper):
 
 
 def add_performance(data_frame, lower, upper):
-    data_frame['CM Return'] = np.nan
-    data_frame['AV Return'] = np.nan
+    data_frame['CM_Return'] = np.nan
+    data_frame['AV_Return'] = np.nan
+    data_frame['CM_Return_pct'] = np.nan
+    data_frame['AV_Return_pct'] = np.nan
+
 
     for i in range(len(data_frame)):
         if np.isnan(data_frame.iloc[i]['Relative Date']):
             continue
         else:
-            data_frame['CM Return'].iloc[i] = data_frame['Return (%)'][i-lower:i+upper+1].sum()
-            data_frame['AV Return'].iloc[i] = data_frame['CM Return'].iloc[i] / (lower + upper + 1)
+            data_frame['CM_Return'].iloc[i] = data_frame['Return'][i-lower:i+upper+1].sum()
+            data_frame['AV_Return'].iloc[i] = data_frame['CM_Return'].iloc[i] / (lower + upper + 1)
+            data_frame['CM_Return_pct'].iloc[i] = data_frame['Return_pct'][i - lower:i + upper + 1].sum()
+            data_frame['AV_Return_pct'].iloc[i] = data_frame['CM_Return_pct'].iloc[i] / (lower + upper + 1)
 
 def filter_data_frame(data_frame, vars):
     columns = ['Relative Date', 'Return'] + vars
     data_frame = data_frame[~np.isnan(data_frame['Relative Date'])]
     return data_frame[columns]
 
+
+# Use this to tag what are valid parameters
+VALID_VARS = ['Return',
+              'Return_pct',
+              'CM_Return',
+              'CM_Return_pct',
+              'AV_Return',
+              'AV_Return_pct',
+              'Daily_Spread',
+              'Volume',
+              'Volume_pct'
+              ]

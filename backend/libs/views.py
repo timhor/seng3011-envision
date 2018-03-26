@@ -4,19 +4,23 @@ from datetime import datetime, timedelta
 
 app = Flask('envision-server-api')
 
+
 @app.route('/')
 @app.route('/home')
 @app.route('/generator')
 def generator():
     return render_template('generator.html', current_page="generator")
 
+
 @app.route('/documentation')
 def documentation():
     return render_template('documentation.html', current_page="documentation")
 
+
 @app.route('/team')
 def team():
     return render_template('team.html', current_page="team")
+
 
 @app.route('/api')
 def api():
@@ -32,7 +36,6 @@ def api():
         upper = int(request.args['upper_window'])
     except KeyError:
         return "Incorrect arguments supplied"
-
 
     # TODO: Sanitise inputs a little better
     try:
@@ -93,5 +96,4 @@ def api():
         'CompanyReturns': returns
     }
 
-    
     return jsonify(payload)
