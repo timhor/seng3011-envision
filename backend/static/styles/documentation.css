@@ -1,3 +1,11 @@
-#documentation-setup{
+#documentationCard{
+	width: 90%;
+}
+
+#cardTitle {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 50px;
+	text-align: left;
 	width: 90%;
 }
