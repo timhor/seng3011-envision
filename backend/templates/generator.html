@@ -53,6 +53,25 @@
                             <label class="mdl-textfield__label">Upper Window</label>
                             <span class="mdl-textfield__error">Input is not a number!</span>
                         </div>
+                        <div class="mdl-textfield">
+                            <label id="variablesLabel">Variables</label>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="cm_checkbox">
+                                            <input type="checkbox" id="cm_checkbox" class="mdl-checkbox__input" onchange="updateAPIQuery()">
+                                            <span class="mdl-checkbox__label">CM Return</span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="av_checkbox">
+                                            <input type="checkbox" id="av_checkbox" class="mdl-checkbox__input" onchange="updateAPIQuery()">
+                                            <span class="mdl-checkbox__label">AV Return</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <br>
                         <br>
                     </form>
@@ -91,11 +110,9 @@
             </div>
             <div class="mdl-card__supporting-text">
                 <pre><center><div class="mdl-spinner mdl-js-spinner is-active" id="loadingSpinner"></div></center></pre>
-                <pre style="overflow: auto;">
-                    <code id="queryResults">
-                        <span id="outputPlaceholder">JSON output will be displayed here</span>
-                    </code>
-                </pre>
+                <pre style="overflow: auto;"><code id="queryResults">
+                    <span id="outputPlaceholder">JSON output will be displayed here</span>
+                </code></pre>
             </div>
         </div>
     </div>
