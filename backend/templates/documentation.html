@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 {% block body_contents %}
 <link rel="stylesheet" href="{{url_for('static', filename='styles/documentation.css')}}">
+<script src="{{url_for('static', filename='scripts/documentation.js')}}"></script>
 <div class="mdl-grid" align="center">
     <div class="mdl-cell mdl-cell--12-col">
         <h2>Documentation</h2>
@@ -10,16 +11,14 @@
             <div class="mdl-card__title" id="cardTitle">
                 <h2 class="mdl-card__title-text mdl-typography--font-bold">Features</h2>
             </div>
-            <div class="mdl-card__supporting-text">
+            <div class="mdl-card__supporting-text" align="left">
                 API is working
             </div>
         </div>
     </div>
     <div class="mdl-cell mdl-cell--12-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="documentationCard">
-            <div class="mdl-card__supporting-text">
-                <pre>{{ readme|markdown }}</pre>
-            </div>
+            <pre id="readmeMarkdown">{{ readme|markdown }}</pre>
         </div>
     </div>
     <div class="mdl-cell mdl-cell--12-col">
@@ -30,7 +29,7 @@
             <div class="mdl-card__title" id="cardTitle">
                 <h2 class="mdl-card__title-text mdl-typography--font-bold">Version 1.0.0 (Current)</h2>
             </div>
-            <div class="mdl-card__supporting-text">
+            <div class="mdl-card__supporting-text" align="left">
                 Added the API.
             </div>
         </div>

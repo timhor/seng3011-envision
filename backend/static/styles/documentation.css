@@ -9,3 +9,24 @@
 	text-align: left;
 	width: 90%;
 }
+
+#cardSubtitle {
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	width: 90%;
+}
+
+#supportText {
+	font-family: "Helvetica","Arial", sans-serif;
+}
+
+.mdl-card__subtitle-text {
+	font-size: 18px;
+}
+
+hr {
+	margin: 0;
+	width: 90%;
+}
