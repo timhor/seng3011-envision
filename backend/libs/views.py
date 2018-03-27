@@ -30,29 +30,20 @@ def api():
 
     try:
         instr = request.args['instrument_id']
-        date = request.args['date_of_interest']
+        date_string = request.args['date_of_interest']
         var_list = request.args['list_of_var']
         lower = int(request.args['lower_window'])
         upper = int(request.args['upper_window'])
     except KeyError:
         return "Incorrect arguments supplied"
 
-    # TODO: Sanitise inputs a little better
-    try:
-        var_list = var_list.split(',')
-    except ValueError:
-        var_list = [var_list]
-
-    try:
-        instr = instr.split(',')
-    except ValueError:
-        instr = [instr]
+    instr, date, var_list = compute.parse_args(instr, date_string, var_list)
 
     returns = []
     for i in instr:
         try:
-            data_frame = compute.working_data(i, date, lower, upper)
-            data_frame = compute.filter_data_frame(data_frame, var_list)
+            data_frame = compute.generate_table(i, date, lower, upper, var_list)
+
             data_frame.index = data_frame.index.format()
             data = data_frame.to_dict(orient='index')
 
@@ -79,7 +70,7 @@ def api():
         'module': 'Envision_API v1.0',
         'parameters': {
             'instr': instr,
-            'date': date,
+            'date': date_string,
             'var_list': var_list,
             'lower': lower,
             'upper': upper
