@@ -4,7 +4,6 @@ window.onload = function() {
 
 function styleReadme() {
     let readme = document.getElementById('readmeMarkdown').innerHTML;
-    console.log(readme);
     readme = readme.replace(/\<h2\>(.*?)\<\/h2\>/g, function(a, b) {
         return cardTitle(b);
     });
@@ -17,7 +16,6 @@ function styleReadme() {
     readme = readme.replace(/\<p\>(.*?)\<\/p\>/sg, function(a, b) {
         return supportText(b);
     });
-    console.log(readme);
     readme = readme.replace(/\<ul\>(.*?)\<\/ul\>/sg, function(a, b) {
         return supportText(b);
     });
