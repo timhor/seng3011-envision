@@ -5,14 +5,14 @@ from flask_misaka import Misaka
 
 app = Flask('envision-server-api')
 variables = {
-                'Return' : 'Return',
-                'Return_pct' : 'Return Percentage',
-                'CM_Return' : 'Cumulative Return',
-                'CM_Return_pct' : 'Cumulative Return Percentage',
-                'AV_Return' : 'Average Return',
-                'AV_Return_pct' : 'Average Return Percentage',
-                'Daily_Spread' : 'Daily Spread',
-                'Volume_pct (Volume on day / (sum of volumes by window))' : 'Volume Percentage'
+                'Return': 'Return',
+                'Return_pct': 'Return Percentage',
+                'CM_Return': 'Cumulative Return',
+                'CM_Return_pct': 'Cumulative Return Percentage',
+                'AV_Return': 'Average Return',
+                'AV_Return_pct': 'Average Return Percentage',
+                'Daily_Spread': 'Daily Spread',
+                'Volume_pct': 'Volume Percentage'
             }
 Misaka(app)
 
