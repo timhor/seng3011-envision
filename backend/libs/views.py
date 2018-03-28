@@ -4,13 +4,23 @@ from datetime import datetime, timedelta
 from flask_misaka import Misaka
 
 app = Flask('envision-server-api')
+variables = {
+                'Return' : 'Return',
+                'Return_pct' : 'Return Percentage',
+                'CM_Return' : 'Cumulative Return',
+                'CM_Return_pct' : 'Cumulative Return Percentage',
+                'AV_Return' : 'Average Return',
+                'AV_Return_pct' : 'Average Return Percentage',
+                'Daily_Spread' : 'Daily Spread',
+                'Volume_pct (Volume on day / (sum of volumes by window))' : 'Volume Percentage'
+            }
 Misaka(app)
 
 @app.route('/')
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page="generator")
+    return render_template('generator.html', current_page = "generator", variables_list = variables)
 
 @app.route('/documentation')
 def documentation():
@@ -21,11 +31,11 @@ def documentation():
         readme = ""
         print("Could not read file: README.md")
 
-    return render_template('documentation.html', current_page="documentation", readme=readme)
+    return render_template('documentation.html', current_page = "documentation", readme = readme)
 
 @app.route('/team')
 def team():
-    return render_template('team.html', current_page="team")
+    return render_template('team.html', current_page = "team")
 
 @app.route('/api')
 def api():
@@ -102,5 +112,5 @@ def api():
         'CompanyReturns': returns
     }
 
-    
+
     return jsonify(payload)
