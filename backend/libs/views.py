@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from libs import compute
 from datetime import datetime, timedelta
+from flask_misaka import Misaka
 
 app = Flask('envision-server-api')
 variables = {
@@ -13,15 +14,24 @@ variables = {
                 'Daily_Spread' : 'Daily Spread',
                 'Volume_pct (Volume on day / (sum of volumes by window))' : 'Volume Percentage'
             }
+Misaka(app)
+
 @app.route('/')
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page="generator", variables_list = variables)
+    return render_template('generator.html', current_page = "generator", variables_list = variables)
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html', current_page = "documentation")
+    try:
+        with open('README.md', 'r') as f:
+            readme = f.read()
+    except IOError:
+        readme = ""
+        print("Could not read file: README.md")
+
+    return render_template('documentation.html', current_page = "documentation", readme = readme)
 
 @app.route('/team')
 def team():
