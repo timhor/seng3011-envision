@@ -88,11 +88,11 @@ function getListOfVars(cmReturn, avReturn) {
     // TODO:  Change to underscores
     let listOfVar = '';
     if (cmReturn && avReturn) {
-        listOfVar = 'CM Return,AV Return';
+        listOfVar = 'CM_Return,AV_Return';
     } else if (cmReturn) {
-        listOfVar = 'CM Return';
+        listOfVar = 'CM_Return';
     } else if (avReturn) {
-        listOfVar = 'AV Return';
+        listOfVar = 'AV_Return';
     }
     return listOfVar;
 }
