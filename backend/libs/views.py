@@ -84,11 +84,7 @@ def api():
         'team': 'Envision',
         'module': 'Envision_API v1.0',
         'parameters': {
-            'instr': instr,
-            'date': date,
-            'var_list': var_list,
-            'lower': lower,
-            'upper': upper
+            x[0]: x[1] for x in request.args.items()
         },
         'success': success,
         'start_time': start_time,
