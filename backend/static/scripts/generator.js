@@ -9,14 +9,12 @@ function getData(){
     let lowerWindow = document.getElementById('lower_window').value;
     let upperWindow = document.getElementById('upper_window').value;
 
-    let cmReturn = document.getElementById('cm_checkbox').checked;
-    let avReturn = document.getElementById('av_checkbox').checked;
-    let listOfVar = getListOfVars(cmReturn, avReturn);
+    let listOfVar = getListOfVars();
 
     document.getElementById('queryResults').hidden = true;
     document.getElementById('loadingSpinner').hidden = false;
 
-    if (cmReturn || avReturn) {
+    if (getListOfVars != '') {
         $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             let dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
@@ -58,11 +56,9 @@ function updateAPIQuery(){
     let lowerWindow = document.getElementById('lower_window').value;
     let upperWindow = document.getElementById('upper_window').value;
 
-    let cmReturn = document.getElementById('cm_checkbox').checked;
-    let avReturn = document.getElementById('av_checkbox').checked;
-    let listOfVar = getListOfVars(cmReturn, avReturn);
+    let listOfVar = getListOfVars();
 
-    if (cmReturn || avReturn) {
+    if (listOfVar != '') {
         var apiQuery = window.location.protocol + '//' + window.location.host + `/api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     } else {
         var apiQuery = window.location.protocol + '//' + window.location.host + `/api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
@@ -82,17 +78,4 @@ function copyToClipboard() {
 function copied() {
     let tooltip = document.getElementById("copyBtnTooltip");
     tooltip.innerHTML = "Copy to Clipboard";
-}
-
-function getListOfVars(cmReturn, avReturn) {
-    // TODO:  Change to underscores
-    let listOfVar = '';
-    if (cmReturn && avReturn) {
-        listOfVar = 'CM Return,AV Return';
-    } else if (cmReturn) {
-        listOfVar = 'CM Return';
-    } else if (avReturn) {
-        listOfVar = 'AV Return';
-    }
-    return listOfVar;
 }
