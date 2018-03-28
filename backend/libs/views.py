@@ -24,7 +24,7 @@ VALID_VARS = compute.BASE_VARS + compute.ADJUSTED_VARS
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page = "generator", variables_list = variables)
+    return render_template('generator.html', current_page="generator", variables_list=variables)
 
 
 @app.route('/documentation')
@@ -36,12 +36,12 @@ def documentation():
         readme = ""
         print("Could not read file: README.md")
 
-    return render_template('documentation.html', current_page = "documentation", readme = readme)
+    return render_template('documentation.html', current_page="documentation", readme=readme)
 
 
 @app.route('/team')
 def team():
-    return render_template('team.html', current_page = "team")
+    return render_template('team.html', current_page="team")
 
 
 @app.route('/api')
