@@ -44,6 +44,11 @@ def team():
     return render_template('team.html', current_page="team")
 
 
+@app.route('/versions')
+def versions():
+    return render_template('versions.html', current_page="versions")
+
+
 @app.route('/api')
 def api():
     start_time = datetime.now()
