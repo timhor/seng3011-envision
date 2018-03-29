@@ -33,7 +33,7 @@ function cardTitle(title) {
 
 function cardSubtitle(title) {
     let html =
-    `<div class="mdl-card__title" id="cardSubtitle">
+    `<div class="card-subtitle mdl-card__title">
         <h2 class="mdl-card__subtitle-text mdl-typography--font-bold">`+ title + `</h2>
     </div>`;
     return html;
@@ -47,6 +47,6 @@ function supportText(text) {
 
 function supportTextInstruction(text) {
     let html =
-    `<div class="mdl-card__supporting-text" align="left" id="supportText">` + text + `</div>`
+    `<div class="support-text-instruction mdl-card__supporting-text" align="left">` + text + `</div>`
     return html;
 }
