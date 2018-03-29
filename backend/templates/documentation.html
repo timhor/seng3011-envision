@@ -1,25 +1,254 @@
 {% extends "index.html" %}
 {% block body_contents %}
-<link rel="stylesheet" href="{{url_for('static', filename='styles/documentation.css')}}">
-<script src="{{url_for('static', filename='scripts/documentation.js')}}"></script>
-<div class="mdl-grid" align="center">
-    <div class="mdl-cell mdl-cell--12-col">
-        <h2>Documentation</h2>
-    </div>
-    <div class="mdl-cell mdl-cell--12-col">
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="documentationCard">
-            <div class="mdl-card__title" id="cardTitle">
-                <h2 class="mdl-card__title-text mdl-typography--font-bold">Features</h2>
+<link rel="stylesheet" href="static/styles/foundation.min.css" />
+<link rel="stylesheet" href="static/styles/spectacle.min.css" />
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- <script src="javascripts/foundation.js"></script> -->
+<script src="static/scripts/spectacle.min.js"></script>
+<div id="spectacle">
+  <div id="page">
+    <div id="docs" class="row collapse expanded drawer" data-drawer>
+      <div class="example-box doc-content"></div>
+      <article>
+        <h1 class="doc-title">Envision
+          <span>API Reference</span>
+        </h1>
+        <div id="introduction" data-traverse-target="introduction">
+          <div class="doc-row">
+            <div class="doc-copy">
+              <p>Envision Company returns API</p>
             </div>
-            <div class="mdl-card__supporting-text" align="left">
-                API is working
+            <div class="doc-examples">
+              <section>
+                <h5>API Endpoint</h5>
+                <!-- <div class="hljs"> --><pre><code>http://envision-api.ap-southeast-2.elasticbeanstalk.com</code></pre>
+                <!-- </div> -->
+                <h5>Schemes:
+                  <span>https</span>
+                </h5>
+                <h5>Version:
+                  <span>1.0.0</span>
+                </h5>
+              </section>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="mdl-cell mdl-cell--12-col">
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="documentationCard">
-            <pre id="readmeMarkdown">{{ readme|markdown }}</pre>
+        <h1>Paths</h1>
+        <span id="path--api"></span>
+        <div id="operation--api-get" class="operation panel" data-traverse-target="operation--api-get">
+          <!-- <section class="operation-tags row"> -->
+          <!-- <div class="doc-copy"> -->
+          <div class="operation-tags">
+            <a class="label" href="#tag-Public">Public</a>
+            <!---->
+          </div>
+          <!-- </div> -->
+          <!-- </section> -->
+          <h2 class="operation-title">
+            <span class="operation-summary">Get company returns information</span>
+          </h2>
+          <div class="doc-row">
+            <div class="doc-copy">
+              <section class="swagger-operation-path">
+                <span class="operation-method">GET</span>
+                <span class="operation-path">/api</span>
+              </section>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-copy">
+              <section class="swagger-operation-description">
+                <p>Get information about a particular companies returns.</p>
+              </section>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-copy">
+              <section class="swagger-request-params">
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">instrument_id</div>
+                    <span class="json-property-required"></span>
+                    <div class="prop-subtitle"> in query </div>
+                    <div class="prop-subtitle">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-value">
+                    <p>The tickers of financial instruments, in Reuters Instrument Code (e.g. CBA.AX) or natural ticker format (e.g. ASX:CBA). Comma seperated.</p>
+                  </div>
+                </div>
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">date_of_interest</div>
+                    <span class="json-property-required"></span>
+                    <div class="prop-subtitle"> in query </div>
+                    <div class="prop-subtitle">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-format">(YYYY-MM-DD)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-value">
+                    <p>The desired date of interest, in ISO date format (YYYY-MM-DD).</p>
+                  </div>
+                </div>
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">list_of_var</div>
+                    <div class="prop-subtitle"> in query </div>
+                    <div class="prop-subtitle">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-value">
+                    <p>Request for Cumulative Return and/or Average Return.</p>
+                  </div>
+                </div>
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">lower_window</div>
+                    <span class="json-property-required"></span>
+                    <div class="prop-subtitle"> in query </div>
+                    <div class="prop-subtitle">
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                    </div>
+                  </div>
+                  <div class="prop-value">
+                    <p>The number of days before the date of interest to include in the query.</p>
+                  </div>
+                </div>
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">upper_window</div>
+                    <span class="json-property-required"></span>
+                    <div class="prop-subtitle"> in query </div>
+                    <div class="prop-subtitle">
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                    </div>
+                  </div>
+                  <div class="prop-value">
+                    <p>The number of days after the date of interest to include in the query.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="doc-examples"></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-copy">
+              <section class="swagger-responses">
+                <div class="prop-row prop-group">
+                  <div class="prop-name">
+                    <div class="prop-title">200 OK</div>
+                    <div class="prop-ref">
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/inline_response_200">inline_response_200</a>
+                      </span>
+                    </div>
+                    <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                  </div>
+                  <div class="prop-value">
+                    <p>Company returns data and metadata</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="doc-examples">
+              <h5>Response Content-Types:
+                <span>application/json</span>
+              </h5>
+              <section>
+                <h5>Response Example
+                  <span>(200 OK)</span>
+                </h5>
+                <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Metadata&quot;</span>: {
+    <span class="hljs-attr">&quot;start_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:55.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;module&quot;</span>: <span class="hljs-string">&quot;Envision_API v1.0&quot;</span>,
+    <span class="hljs-attr">&quot;elapsed_time&quot;</span>: <span class="hljs-string">&quot;2898.46ms&quot;</span>,
+    <span class="hljs-attr">&quot;end_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:58.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;team&quot;</span>: <span class="hljs-string">&quot;Envision&quot;</span>,
+    <span class="hljs-attr">&quot;parameters&quot;</span>: <span class="hljs-string">&quot;{}&quot;</span>,
+    <span class="hljs-attr">&quot;error_messages&quot;</span>: []
+  },
+  <span class="hljs-attr">&quot;CompanyReturns&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;data&quot;</span>: [
+        {
+          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+        },
+        {
+          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+        }
+      ],
+      <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
+    },
+    {
+      <span class="hljs-attr">&quot;data&quot;</span>: [
+        {
+          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+        },
+        {
+          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+        }
+      ],
+      <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
+    }
+  ]
+}
+</code></pre>
+                <!-- </div> -->
+              </section>
+            </div>
+          </div>
         </div>
+        <div class="doc-row no-margin">
+          <div class="doc-copy doc-separator">
+            <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+              <span>Spectacle</span>
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
+  </div>
 </div>
 {% endblock %}

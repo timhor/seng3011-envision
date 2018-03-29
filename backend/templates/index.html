@@ -35,6 +35,13 @@
                     <a class="mdl-navigation__link" href="{{url_for('generator')}}">Query Generator</a>
                 {% endif %}
 
+                <!-- Getting Started Page Link -->
+                {% if current_page == "gettingstarted" %}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('gettingstarted')}}">Getting Started</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('gettingstarted')}}">Getting Started</a>
+                {% endif %}
+
                 <!-- Documentation Page Link -->
                 {% if current_page == "documentation" %}
                     <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('documentation')}}">Documentation</a>
