@@ -23,8 +23,7 @@ VALID_VERSIONS = {
 }
 
 
-
-
+# Logging information
 logger = logging.getLogger('logger')
 logger.setLevel(logging.INFO)
 fh = logging.FileHandler('logging.log')
