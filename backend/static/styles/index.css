@@ -2,3 +2,20 @@
     padding-top: 10px;
     vertical-align: middle;
 }
+
+#cardTitle {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 50px;
+	text-align: left;
+	width: 90%;
+}
+
+.mdl-card__subtitle-text {
+	font-size: 18px;
+}
+
+hr {
+	margin: 0;
+	width: 90%;
+}

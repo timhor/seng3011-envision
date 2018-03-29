@@ -14,7 +14,7 @@
 <!-- Query Generator Form -->
 <div class="centeritems mdl-grid">
     <div class="mdl-layout-spacer"></div>
-    <div class="mdl-cell mdl-cell--5-col">
+    <div id="queryBuilderCard" class="mdl-cell mdl-cell--5-col">
         <div class="mdl-cell mdl-cell--12-col">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
                 <div class="mdl-card__title" width="100%" id="formTitle">
@@ -26,8 +26,7 @@
                         <br>
                         <br>
                     </div>
-                    <form action="{{url_for('api')}}" id="generatorForm">
-
+                    <form>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="instrument_id" value="ABP.AX" oninput="updateAPIQuery()">
                             <label class="mdl-textfield__label">Instrument</label>
@@ -39,8 +38,22 @@
                         </div>
                         <br>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="list_of_var" value="CM Return" oninput="updateAPIQuery()">
-                            <label class="mdl-textfield__label">Variables</label>
+                            <label class="mdl-textfield__label mdl-color-text--blue" id="variablesLabel">Variables</label>
+
+                            <ul class="mdl-list">
+                                {%  for var in variables_list %}
+                                    <li class="mdl-list__item">
+                                        <span class="mdl-list__item-secondary-action">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{ loop.index }}">
+                                                <input type="checkbox" id="list-checkbox-{{ loop.index }}" class="mdl-checkbox__input"  onchange="updateAPIQuery()" />
+                                            </label>
+                                        </span>
+                                        <span class="mdl-list__item-primary-content mdl-color-text--grey-600">
+                                            {{ variables_list[var] }}
+                                        </span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                         <br>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -50,7 +63,7 @@
                         </div>
                         <br>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="integer" id="upper_window" pattern="[0-9]+" value='5' onchange="updateAPIQuery()">
+                            <input class="mdl-textfield__input" type="integer" id="upper_window" pattern="[0-9]+" value='5'  oninput="updateAPIQuery()">
                             <label class="mdl-textfield__label">Upper Window</label>
                             <span class="mdl-textfield__error">Input is not a number!</span>
                         </div>
@@ -63,40 +76,61 @@
         <br>
         <div class="mdl-cell mdl-cell--12-col">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="liveAPICard" align="center">
-                <div class="mdl-card__title" width="100%" id="liveAPICardTitle">
+                <div class="mdl-card__title" width="100%" id="formTitle">
                     <h2 class="mdl-card__title-text mdl-typography--font-bold">View Query</h2>
                 </div>
                 <div class="mdl-card__supporting-text" id="liveAPI">
-                    <div align="right">
-                        <button class="mdl-button mdl-js-button" id="copyBtn" onclick="copyToClipboard()" onmouseout="copied()">
-                                <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
-                                Click here to copy!
-                        </button>
-                    </div>
                     <textarea id="apiQuery">
                         Query not built!
                     </textarea>
+                    <div align="right">
+                        <button class="mdl-button mdl-js-button" id="copyBtn" onclick="copyToClipboard()" onmouseout="copied()">
+                                Click here to copy!
+                        </button>
+                    </div>
                 </div>
             </div>
+            <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
         </div>
     </div>
-    <div class="mdl-cell mdl-cell--1-col" align="center" id="formSubmit">
+    <div id="formSubmit" class="mdl-cell mdl-cell--1-col" align="center">
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="getData()" id="formSubmitBtn">
             <i class="material-icons">arrow_forward</i>
         </button>
     </div>
-    <div class="mdl-cell mdl-cell--5-col">
+    <div id="queryResultsCard" class="mdl-cell mdl-cell--5-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
             <div class="mdl-card__title" id="formTitle">
                 <h2 class="mdl-card__title-text  mdl-typography--font-bold">Output</h2>
             </div>
             <div class="mdl-card__supporting-text">
                 <pre><center><div class="mdl-spinner mdl-js-spinner is-active" id="loadingSpinner"></div></center></pre>
-                <pre><code id="queryResults">JSON output is displayed here</code></pre>
+                <pre style="overflow: auto;"><code id="queryResults">
+                    <span id="outputPlaceholder">JSON output will be displayed here</span>
+                </code></pre>
             </div>
         </div>
     </div>
     <div class="mdl-layout-spacer"></div>
 </div>
+<script>
+    function getListOfVars() {
+        let firstVariable = true;
+        let listOfVar = '';
 
+        {% for var in variables_list  %}
+            let currentItem{{loop.index}} = document.getElementById('list-checkbox-{{ loop.index }}').checked;
+            if (currentItem{{loop.index}}) {
+                if (firstVariable) {
+                    firstVariable = false;
+                    listOfVar = listOfVar + '{{ var }}'
+                } else {
+                    listOfVar = listOfVar + ',{{ var }}'
+                }
+            }
+
+        {% endfor %}
+        return listOfVar;
+    }
+</script>
 {% endblock %}

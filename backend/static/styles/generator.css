@@ -1,3 +1,7 @@
+#queryBuilderCard {
+    margin-top: 0px;
+}
+
 #formInput {
     margin: 0 auto;
     width: 100%;
@@ -9,19 +13,25 @@
     text-align: center;
 }
 
-#liveAPICardTitle {
-    margin: 0 auto;
-    text-align: center;
-}
-
 #formSubmit {
     margin-top: 250px;
 }
 
 #formSubmitBtn {
-    border: rgb(0, 35, 0) 2px solid;
     color: rgb(0, 35, 0);
-    background-color: rgb(250, 255, 230);
+    border: transparent 2px solid;
+    transition: border .15s ease-in-out;
+}
+
+#formSubmitBtn:hover {
+    border: dodgerblue 2px solid;
+}
+
+#outputPlaceholder {
+    font-family: "Helvetica", "Arial", sans-serif;
+    text-align: center;
+    display: block;
+    margin-top: -28px;
 }
 
 #liveAPICard {
@@ -30,34 +40,47 @@
 }
 
 #copyBtn {
-    font: italic;
     width: auto;
     font-size: 11px;
     color: lightcoral;
-    margin-top:0px; 
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #apiQuery {
     width: 100%;
     padding: 20px;
-    border: dotted green 3px;
+    padding-bottom: 50px;
+    border: dodgerblue 1px solid;
     border-radius: 10px;
+    font-size: 12px;
+    overflow: hidden;
+    outline: none;
+    resize: none;
+}
+
+.mdl-tooltip {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-transform: uppercase;
+}
+
+#variablesLabel {
     font-size: 12px;
 }
 
-.string { 
-    color: rgb(200, 95, 95); 
+/* Syntax highlighting of output JSON */
+.string {
+    color: rgb(200, 95, 95);
 }
 .number {
-    color: rgb(118, 192, 124); 
+    color: rgb(118, 192, 124);
 }
-.boolean { 
-    color: blue; 
+.boolean {
+    color: blue;
 }
-.null { 
-    color: blue; 
+.null {
+    color: blue;
 }
-.key { 
+.key {
     color: rgb(75, 116, 156);
 }

@@ -1,0 +1,284 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Envision Company returns API",
+    "version" : "1.0.0",
+    "title" : "Envision",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/Envision5/Envision/1.0.0",
+  "tags" : [ {
+    "name" : "Public",
+    "description" : "Operations available to anyone"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/api" : {
+      "get" : {
+        "tags" : [ "Public" ],
+        "summary" : "Get company returns information",
+        "description" : "Get information about a particular companies returns.\n",
+        "operationId" : "companyReturns",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "instrument_id",
+          "in" : "query",
+          "description" : "The tickers of financial instruments, in Reuters Instrument Code (e.g. CBA.AX) or natural ticker format (e.g. ASX:CBA). Comma seperated.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "date_of_interest",
+          "in" : "query",
+          "description" : "The desired date of interest, in ISO date format (YYYY-MM-DD).",
+          "required" : true,
+          "type" : "string",
+          "format" : "YYYY-MM-DD"
+        }, {
+          "name" : "list_of_var",
+          "in" : "query",
+          "description" : "Request for Cumulative Return and/or Average Return.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "lower_window",
+          "in" : "query",
+          "description" : "The number of days before the date of interest to include in the query.",
+          "required" : true,
+          "type" : "integer",
+          "minimum" : 0
+        }, {
+          "name" : "upper_window",
+          "in" : "query",
+          "description" : "The number of days after the date of interest to include in the query.",
+          "required" : true,
+          "type" : "integer",
+          "minimum" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Company returns data and metadata",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "inline_response_200_CompanyReturns" : {
+      "properties" : {
+        "instrument_id" : {
+          "type" : "string",
+          "example" : "ABP.AX"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_data"
+          }
+        }
+      },
+      "example" : {
+        "data" : [ {
+          "date" : "2012-12-07",
+          "average_return_percentage" : 0.0,
+          "AV_Return" : 0.010226569931254703,
+          "cumulative_return_percentage" : 0.0,
+          "CM_Return" : 0.010226569931254703,
+          "volume_percentage" : 0.0,
+          "daily_spread" : 0.0,
+          "return" : 0,
+          "relative_date" : -3.0
+        }, {
+          "date" : "2012-12-07",
+          "average_return_percentage" : 0.0,
+          "AV_Return" : 0.010226569931254703,
+          "cumulative_return_percentage" : 0.0,
+          "CM_Return" : 0.010226569931254703,
+          "volume_percentage" : 0.0,
+          "daily_spread" : 0.0,
+          "return" : 0,
+          "relative_date" : -3.0
+        } ],
+        "instrument_id" : "ABP.AX"
+      }
+    },
+    "inline_response_200_Metadata" : {
+      "properties" : {
+        "elapsed_time" : {
+          "type" : "string",
+          "example" : "2898.46ms"
+        },
+        "end_time" : {
+          "type" : "string",
+          "example" : "2018-03-28T10:25:58.000Z"
+        },
+        "error_messages" : {
+          "type" : "array",
+          "example" : [ ],
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "module" : {
+          "type" : "string",
+          "example" : "Envision_API v1.0"
+        },
+        "parameters" : {
+          "type" : "object",
+          "properties" : { }
+        },
+        "start_time" : {
+          "type" : "string",
+          "example" : "2018-03-28T10:25:55.000Z"
+        },
+        "success" : {
+          "type" : "boolean",
+          "example" : true
+        },
+        "team" : {
+          "type" : "string",
+          "example" : "Envision"
+        }
+      },
+      "example" : {
+        "start_time" : "2018-03-28T10:25:55.000Z",
+        "success" : true,
+        "module" : "Envision_API v1.0",
+        "elapsed_time" : "2898.46ms",
+        "end_time" : "2018-03-28T10:25:58.000Z",
+        "team" : "Envision",
+        "parameters" : "{}",
+        "error_messages" : [ ]
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "CompanyReturns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_CompanyReturns"
+          }
+        },
+        "Metadata" : {
+          "$ref" : "#/definitions/inline_response_200_Metadata"
+        }
+      },
+      "example" : {
+        "Metadata" : {
+          "start_time" : "2018-03-28T10:25:55.000Z",
+          "success" : true,
+          "module" : "Envision_API v1.0",
+          "elapsed_time" : "2898.46ms",
+          "end_time" : "2018-03-28T10:25:58.000Z",
+          "team" : "Envision",
+          "parameters" : "{}",
+          "error_messages" : [ ]
+        },
+        "CompanyReturns" : [ {
+          "data" : [ {
+            "date" : "2012-12-07",
+            "average_return_percentage" : 0.0,
+            "AV_Return" : 0.010226569931254703,
+            "cumulative_return_percentage" : 0.0,
+            "CM_Return" : 0.010226569931254703,
+            "volume_percentage" : 0.0,
+            "daily_spread" : 0.0,
+            "return" : 0,
+            "relative_date" : -3.0
+          }, {
+            "date" : "2012-12-07",
+            "average_return_percentage" : 0.0,
+            "AV_Return" : 0.010226569931254703,
+            "cumulative_return_percentage" : 0.0,
+            "CM_Return" : 0.010226569931254703,
+            "volume_percentage" : 0.0,
+            "daily_spread" : 0.0,
+            "return" : 0,
+            "relative_date" : -3.0
+          } ],
+          "instrument_id" : "ABP.AX"
+        }, {
+          "data" : [ {
+            "date" : "2012-12-07",
+            "average_return_percentage" : 0.0,
+            "AV_Return" : 0.010226569931254703,
+            "cumulative_return_percentage" : 0.0,
+            "CM_Return" : 0.010226569931254703,
+            "volume_percentage" : 0.0,
+            "daily_spread" : 0.0,
+            "return" : 0,
+            "relative_date" : -3.0
+          }, {
+            "date" : "2012-12-07",
+            "average_return_percentage" : 0.0,
+            "AV_Return" : 0.010226569931254703,
+            "cumulative_return_percentage" : 0.0,
+            "CM_Return" : 0.010226569931254703,
+            "volume_percentage" : 0.0,
+            "daily_spread" : 0.0,
+            "return" : 0,
+            "relative_date" : -3.0
+          } ],
+          "instrument_id" : "ABP.AX"
+        } ]
+      }
+    },
+    "inline_response_200_data" : {
+      "properties" : {
+        "date" : {
+          "type" : "string",
+          "example" : "2012-12-07"
+        },
+        "return" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "relative_date" : {
+          "type" : "number",
+          "example" : -3.0
+        },
+        "CM_Return" : {
+          "type" : "number",
+          "example" : 0.010226569931254703
+        },
+        "AV_Return" : {
+          "type" : "number",
+          "example" : 0.010226569931254703
+        },
+        "cumulative_return_percentage" : {
+          "type" : "number",
+          "example" : 0.0
+        },
+        "average_return_percentage" : {
+          "type" : "number",
+          "example" : 0.0
+        },
+        "daily_spread" : {
+          "type" : "number",
+          "example" : 0.0
+        },
+        "volume_percentage" : {
+          "type" : "number",
+          "example" : 0.0
+        }
+      },
+      "example" : {
+        "date" : "2012-12-07",
+        "average_return_percentage" : 0.0,
+        "AV_Return" : 0.010226569931254703,
+        "cumulative_return_percentage" : 0.0,
+        "CM_Return" : 0.010226569931254703,
+        "volume_percentage" : 0.0,
+        "daily_spread" : 0.0,
+        "return" : 0,
+        "relative_date" : -3.0
+      }
+    }
+  }
+}
