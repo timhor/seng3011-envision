@@ -138,6 +138,8 @@ def api(version):
             'success': success
         }
 
+        logger.info(f'{metadata}')
+
         if consists_success:
             metadata['start_time'] = start_time
             metadata['end_time'] = end_time
