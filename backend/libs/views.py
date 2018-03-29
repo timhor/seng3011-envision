@@ -56,6 +56,7 @@ def api():
     start_time = datetime.now()
     success = True
     all_error_messages = []
+    consists_success = False
 
     try:
         instr = request.args['instrument_id']
@@ -75,6 +76,8 @@ def api():
 
             df.index = df.index.format()
             data = df.to_dict(orient='index')
+
+            consists_success = True
 
         except Exception as e:
             print(e)
@@ -104,12 +107,15 @@ def api():
             'lower_window': lower,
             'upper_window': upper,
         },
-        'success': success,
-        'start_time': start_time,
-        'end_time': end_time,
-        'elapsed_time': elapsed_time,
-        'error_messages': all_error_messages
+        'success': success
     }
+
+    if consists_success:
+        metadata['start_time'] = start_time
+        metadata['end_time'] = end_time
+        metadata['elapsed_time'] = elapsed_time
+    elif not success:
+        metadata['error_messages'] = all_error_messages
 
     payload = {
         'Metadata': metadata,
