@@ -23,6 +23,7 @@ def parse_args(instr, target, var_list):
 
     return instr, target, var_list
 
+
 def generate_table(instr, target, lower, upper, var_list):
     today = date.today()
     # TODO: Make this more specific
@@ -37,10 +38,13 @@ def generate_table(instr, target, lower, upper, var_list):
     else:
         adjusted = False
 
-    data_frame = get_ts_daily_adjusted(instr, adjusted=adjusted, full=full)
-    data_frame = working_data(data_frame, target, lower, upper)
-    data_frame = filter_data_frame(data_frame, var_list)
-    return data_frame
+    df = get_ts_daily_adjusted(instr, adjusted=adjusted, full=full)
+    df = working_data(df, target, lower, upper)
+    if adjusted:
+        add_advanced_data(df, lower, upper)
+    add_performance(df, lower, upper)
+    df = filter_data_frame(df, var_list)
+    return df
 
 
 def get_ts_daily_adjusted(instr, adjusted=False, full=True):
@@ -58,16 +62,16 @@ def get_ts_daily_adjusted(instr, adjusted=False, full=True):
     # Data comes with metadata that we don't need
     data = r.json()['Time Series (Daily)']
 
-    data_frame = pd.DataFrame.from_dict(data, orient='index')
-    data_frame = data_frame.apply(pd.to_numeric)
-    data_frame.index = pd.to_datetime(data_frame.index)
+    df = pd.DataFrame.from_dict(data, orient='index')
+    df = df.apply(pd.to_numeric)
+    df.index = pd.to_datetime(df.index)
 
     # Because Alpha Vantage is offset incorrectly by 1, we need to fix it up
-    data_frame.index += timedelta(days=1)
-    return data_frame
+    df.index += timedelta(days=1)
+    return df
 
 
-def working_data(data_frame, target, lower, upper):
+def working_data(df, target, lower, upper):
     """Creates an enriched dataset to work with"""
 
     # Actual dates we are interested in
@@ -79,18 +83,25 @@ def working_data(data_frame, target, lower, upper):
     upper_date_extreme = target + timedelta(days=(2 * upper))
 
     # Tighten to the range we want (and show non-trading days too)
-    data_frame = data_frame.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D')).fillna(method='ffill')
+    df = df.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D'))
+    if '5. volume' in df.columns:
+        mapper = {'5. volume': 'Volume'}
+    else:
+        mapper = {'6. volume': 'Volume'}
+    df = df.rename(columns=mapper)
+    df['Volume'] = df['Volume'].fillna(0)
+    df['4. close'] = df['4. close'].fillna(method='ffill')
 
     # Tag with relative dates
-    data_frame = data_frame.apply(tag_relative_date, axis=1, args=(target, lower_date, upper_date))
+    df = df.apply(tag_relative_date, axis=1, args=(target, lower_date, upper_date))
 
     #  Calculate the data we want
-    data_frame['Return'] = data_frame['4. close'].diff()
-    data_frame['Return_pct'] = data_frame['4. close'].pct_change()
+    df['Return'] = df['4. close'].diff()
+    df['Return_pct'] = df['4. close'].pct_change()
+    df['Daily_Spread'] = df['2. high'] - df['3. low']
+    df['Daily_Spread'] = df['Daily_Spread'].fillna(0)
 
-    add_performance(data_frame, lower, upper)
-
-    return data_frame
+    return df
 
 
 def tag_relative_date(row, target, lower, upper):
@@ -99,39 +110,39 @@ def tag_relative_date(row, target, lower, upper):
     return row
 
 
-def add_performance(data_frame, lower, upper):
-    data_frame['CM_Return'] = np.nan
-    data_frame['AV_Return'] = np.nan
-    data_frame['CM_Return_pct'] = np.nan
-    data_frame['AV_Return_pct'] = np.nan
+def add_performance(df, lower, upper):
+    df['CM_Return'] = np.nan
+    df['AV_Return'] = np.nan
+    df['CM_Return_pct'] = np.nan
+    df['AV_Return_pct'] = np.nan
 
-    for i in range(len(data_frame)):
-        if np.isnan(data_frame.iloc[i]['Relative Date']):
+    for i in range(len(df)):
+        if np.isnan(df.iloc[i]['Relative Date']):
             continue
         else:
-            data_frame['CM_Return'].iloc[i] = data_frame['Return'][i-lower:i+upper+1].sum()
-            data_frame['AV_Return'].iloc[i] = data_frame['CM_Return'].iloc[i] / (lower + upper + 1)
-            data_frame['CM_Return_pct'].iloc[i] = data_frame['Return_pct'][i - lower:i + upper + 1].sum()
-            data_frame['AV_Return_pct'].iloc[i] = data_frame['CM_Return_pct'].iloc[i] / (lower + upper + 1)
+            df['CM_Return'].iloc[i] = df['Return'][i - lower:i + upper + 1].sum()
+            df['AV_Return'].iloc[i] = df['CM_Return'].iloc[i] / (lower + upper + 1)
+            df['CM_Return_pct'].iloc[i] = df['Return_pct'][i - lower:i + upper + 1].sum()
+            df['AV_Return_pct'].iloc[i] = df['CM_Return_pct'].iloc[i] / (lower + upper + 1)
 
 
-def filter_data_frame(data_frame, vars):
+def add_advanced_data(df, lower, upper):
+    df['Volume_pct'] = np.nan
+
+    for i in range(len(df)):
+        if np.isnan(df.iloc[i]['Relative Date']):
+            continue
+        else:
+            df['Volume_pct'].iloc[i] = df['Volume'].iloc[i] / df['Volume'][i - lower:i + upper + 1].sum()
+
+
+def filter_data_frame(df, vars):
     columns = ['Relative Date', 'Return'] + vars
-    data_frame = data_frame[~np.isnan(data_frame['Relative Date'])]
-    return data_frame[columns]
+    df = df[~np.isnan(df['Relative Date'])]
+    return df[columns]
 
-
-# Valid params
-BASE_VARS = [
-    'Return',
-    'Return_pct',
-    'CM_Return',
-    'CM_Return_pct',
-    'AV_Return',
-    'AV_Return_pct',
-]
 
 ADJUSTED_VARS = [
     'Volume',
-    'Volume_pct'
+    'Volume_pct',
 ]

@@ -6,7 +6,7 @@ from flask_misaka import Misaka
 app = Flask('envision-server-api')
 app.debug = True
 
-variables = {
+VALID_VARS = {
                 'Return': 'Return',
                 'Return_pct': 'Return Percentage',
                 'CM_Return': 'Cumulative Return',
@@ -14,19 +14,17 @@ variables = {
                 'AV_Return': 'Average Return',
                 'AV_Return_pct': 'Average Return Percentage',
                 'Daily_Spread': 'Daily Spread',
+                'Volume': 'Volume',
                 'Volume_pct': 'Volume Percentage'
             }
 Misaka(app)
-
-# TODO: Can use this to generate names?
-VALID_VARS = compute.BASE_VARS + compute.ADJUSTED_VARS
 
 
 @app.route('/')
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page="generator", variables_list=variables)
+    return render_template('generator.html', current_page="generator", variables_list=VALID_VARS)
 
 
 @app.route('/documentation')
@@ -73,10 +71,10 @@ def api():
     returns = []
     for i in instr:
         try:
-            data_frame = compute.generate_table(i, date, lower, upper, var_list)
+            df = compute.generate_table(i, date, lower, upper, var_list)
 
-            data_frame.index = data_frame.index.format()
-            data = data_frame.to_dict(orient='index')
+            df.index = df.index.format()
+            data = df.to_dict(orient='index')
 
         except Exception as e:
             print(e)
@@ -100,7 +98,11 @@ def api():
         'team': 'Envision',
         'module': 'Envision_API v1.0',
         'parameters': {
-            x[0]: x[1] for x in request.args.items()
+            'instrument_id': instr,
+            'date_of_interest': date_string,
+            'list_of_var': var_list,
+            'lower_window': lower,
+            'upper_window': upper,
         },
         'success': success,
         'start_time': start_time,
