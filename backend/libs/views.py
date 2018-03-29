@@ -33,6 +33,7 @@ fh.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(message)s')
 fh.setFormatter(formatter)
 logger.addHandler(fh)
+logger.info('Logger initialised')
 
 
 @app.route('/')
@@ -45,6 +46,7 @@ def generator():
 @app.route('/documentation')
 def documentation():
     return render_template('documentation.html', current_page="documentation")
+
 
 @app.route('/gettingstarted')
 def gettingstarted():
