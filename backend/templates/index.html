@@ -29,21 +29,28 @@
             <span class="mdl-layout-title mdl-typography--font-bold mdl">Envision API</span>
             <nav class="mdl-navigation">
                 <!-- Home/Query Generator Page Link -->
-                {% if current_page == "generator"%}
+                {% if current_page == "generator" %}
                     <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('generator')}}">Query Generator</a>
                 {% else %}
                     <a class="mdl-navigation__link" href="{{url_for('generator')}}">Query Generator</a>
                 {% endif %}
 
                 <!-- Documentation Page Link -->
-                {% if current_page == "documentation"%}
+                {% if current_page == "documentation" %}
                     <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('documentation')}}">Documentation</a>
                 {% else %}
                     <a class="mdl-navigation__link" href="{{url_for('documentation')}}">Documentation</a>
                 {% endif %}
 
+                <!-- Version Page Link -->
+                {% if current_page == "versions" %}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('versions')}}">Version History</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('versions')}}">Version History</a>
+                {% endif %}
+
                 <!-- Team Page Link -->
-                {% if current_page == "team"%}
+                {% if current_page == "team" %}
                     <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Team / Project</a>
                 {% else %}
                     <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
