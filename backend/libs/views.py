@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 from flask_misaka import Misaka
 
 app = Flask('envision-server-api')
+app.debug = True
+
 variables = {
                 'Return': 'Return',
                 'Return_pct': 'Return Percentage',
