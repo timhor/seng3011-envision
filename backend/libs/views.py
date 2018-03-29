@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from libs import compute
+from libs import v1_0
 from datetime import datetime, timedelta
 from flask_misaka import Misaka
 
@@ -7,16 +7,21 @@ app = Flask('envision-server-api')
 app.debug = True
 
 VALID_VARS = {
-                'Return': 'Return',
-                'Return_pct': 'Return Percentage',
-                'CM_Return': 'Cumulative Return',
-                'CM_Return_pct': 'Cumulative Return Percentage',
-                'AV_Return': 'Average Return',
-                'AV_Return_pct': 'Average Return Percentage',
-                'Daily_Spread': 'Daily Spread',
-                'Volume': 'Volume',
-                'Volume_pct': 'Volume Percentage'
-            }
+    'Return': 'Return',
+    'Return_pct': 'Return Percentage',
+    'CM_Return': 'Cumulative Return',
+    'CM_Return_pct': 'Cumulative Return Percentage',
+    'AV_Return': 'Average Return',
+    'AV_Return_pct': 'Average Return Percentage',
+    'Daily_Spread': 'Daily Spread',
+    'Volume': 'Volume',
+    'Volume_pct': 'Volume Percentage'
+}
+VALID_VERSIONS = {
+    'v1.0': v1_0,
+}
+
+
 Misaka(app)
 
 
@@ -51,75 +56,79 @@ def versions():
     return render_template('versions.html', current_page="versions")
 
 
-@app.route('/api')
-def api():
-    start_time = datetime.now()
-    success = True
-    all_error_messages = []
-    consists_success = False
+@app.route('/api/<version>/')
+def api(version):
+    if version in VALID_VERSIONS.keys():
+        compute_engine = VALID_VERSIONS[version]
+        start_time = datetime.now()
+        success = True
+        all_error_messages = []
+        consists_success = False
 
-    try:
-        instr = request.args['instrument_id']
-        date_string = request.args['date_of_interest']
-        var_list = request.args['list_of_var']
-        lower = int(request.args['lower_window'])
-        upper = int(request.args['upper_window'])
-    except KeyError:
-        return "Incorrect arguments supplied"
-
-    instr, date, var_list = compute.parse_args(instr, date_string, var_list)
-
-    returns = []
-    for i in instr:
         try:
-            df = compute.generate_table(i, date, lower, upper, var_list)
+            instr = request.args['instrument_id']
+            date_string = request.args['date_of_interest']
+            var_list = request.args['list_of_var']
+            lower = int(request.args['lower_window'])
+            upper = int(request.args['upper_window'])
+        except KeyError:
+            return "Incorrect arguments supplied"
 
-            df.index = df.index.format()
-            data = df.to_dict(orient='index')
+        instr, date, var_list = compute_engine.parse_args(instr, date_string, var_list)
 
-            consists_success = True
+        returns = []
+        for i in instr:
+            try:
+                df = compute_engine.generate_table(i, date, lower, upper, var_list)
 
-        except Exception as e:
-            print(e)
-            error_message = "Error: " + str(e)
-            data = error_message
-            all_error_messages.append(error_message)
-            success = False
+                df.index = df.index.format()
+                data = df.to_dict(orient='index')
 
-        returns.append({
-            'InstrumentID': i,
-            'Data': data
-        })
+                consists_success = True
 
-    end_time = datetime.now()
+            except Exception as e:
+                print(e)
+                error_message = "Error: " + str(e)
+                data = error_message
+                all_error_messages.append(error_message)
+                success = False
 
-    elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
-    start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
-    end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
+            returns.append({
+                'InstrumentID': i,
+                'Data': data
+            })
 
-    metadata = {
-        'team': 'Envision',
-        'module': 'Envision_API v1.0',
-        'parameters': {
-            'instrument_id': instr,
-            'date_of_interest': date_string,
-            'list_of_var': var_list,
-            'lower_window': lower,
-            'upper_window': upper,
-        },
-        'success': success
-    }
+        end_time = datetime.now()
 
-    if consists_success:
-        metadata['start_time'] = start_time
-        metadata['end_time'] = end_time
-        metadata['elapsed_time'] = elapsed_time
-    elif not success:
-        metadata['error_messages'] = all_error_messages
+        elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
+        start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
+        end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
 
-    payload = {
-        'Metadata': metadata,
-        'CompanyReturns': returns
-    }
+        metadata = {
+            'team': 'Envision',
+            'module': f'Envision_API {version}',
+            'parameters': {
+                'instrument_id': instr,
+                'date_of_interest': date_string,
+                'list_of_var': var_list,
+                'lower_window': lower,
+                'upper_window': upper,
+            },
+            'success': success
+        }
 
-    return jsonify(payload)
+        if consists_success:
+            metadata['start_time'] = start_time
+            metadata['end_time'] = end_time
+            metadata['elapsed_time'] = elapsed_time
+        elif not success:
+            metadata['error_messages'] = all_error_messages
+
+        payload = {
+            'Metadata': metadata,
+            'CompanyReturns': returns
+        }
+
+        return jsonify(payload)
+    else:
+        return f'Unknown version: {version}'
