@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
-from flask_misaka import Misaka
+# from flask_misaka import Misaka
 import logging
 
 app = Flask('envision-server-api')
@@ -23,7 +23,7 @@ VALID_VERSIONS = {
 }
 
 
-Misaka(app)
+# Misaka(app)
 
 
 logger = logging.getLogger('logger')
