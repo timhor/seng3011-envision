@@ -15,14 +15,14 @@ function getData(){
     document.getElementById('loadingSpinner').hidden = false;
 
     if (getListOfVars != '') {
-        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             let dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
         })
     } else {
-        $.getJSON(`api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             let dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
@@ -59,9 +59,9 @@ function updateAPIQuery(){
     let listOfVar = getListOfVars();
 
     if (listOfVar != '') {
-        var apiQuery = window.location.protocol + '//' + window.location.host + `/api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
+        var apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     } else {
-        var apiQuery = window.location.protocol + '//' + window.location.host + `/api?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
+        var apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     }
     document.getElementById('apiQuery').innerText = apiQuery;
 }
