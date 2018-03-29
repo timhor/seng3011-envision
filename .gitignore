@@ -11,3 +11,5 @@
 
 *.pyc
 **/.vscode
+**/logging.log
+

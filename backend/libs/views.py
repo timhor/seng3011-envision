@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
 from flask_misaka import Misaka
+import logging
 
 app = Flask('envision-server-api')
 app.debug = True
@@ -25,6 +26,16 @@ VALID_VERSIONS = {
 Misaka(app)
 
 
+logger = logging.getLogger('logger')
+logger.setLevel(logging.INFO)
+fh = logging.FileHandler('logging.log')
+fh.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
+logger.info('Logger initialised')
+
+
 @app.route('/')
 @app.route('/home')
 @app.route('/generator')
@@ -35,6 +46,7 @@ def generator():
 @app.route('/documentation')
 def documentation():
     return render_template('documentation.html', current_page="documentation")
+
 
 @app.route('/gettingstarted')
 def gettingstarted():
@@ -54,6 +66,15 @@ def team():
 @app.route('/versions')
 def versions():
     return render_template('versions.html', current_page="versions")
+
+
+
+@app.route('/logs')
+def logs():
+    with open('logging.log') as file:
+        info = file.read()
+    info = info.replace('\n', '<br>')
+    return info
 
 
 @app.route('/api/<version>/')
