@@ -3,7 +3,15 @@
 }
 
 
-#cardSubtitle {
+.card-subtitle {
 	padding: 0;
 	width: 90%;
+}
+
+.changelog-list {
+	margin-top: -24px;
+}
+
+.release-date {
+	margin: -6px 0 4px;
 }
