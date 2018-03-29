@@ -5,7 +5,6 @@ blessed==1.14.2
 botocore==1.9.11
 cement==2.8.2
 certifi==2018.1.18
-cffi==1.11.5
 chardet==3.0.4
 click==6.7
 colorama==0.3.7
@@ -30,6 +29,7 @@ jupyter==1.0.0
 jupyter-client==5.2.3
 jupyter-console==5.2.0
 jupyter-core==4.4.0
+markdown2==2.3.5
 MarkupSafe==1.0
 mistune==0.8.3
 nbconvert==5.3.1
@@ -45,9 +45,8 @@ pickleshare==0.7.4
 prompt-toolkit==1.0.15
 psycopg2-binary==2.7.4
 ptyprocess==0.5.2
-pycparser==2.18
 Pygments==2.2.0
-python-dateutil==2.7.0
+python-dateutil==2.7.2
 pytz==2018.3
 PyYAML==3.12
 pyzmq==17.0.0

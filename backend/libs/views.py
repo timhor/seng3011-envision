@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
-# from flask_misaka import Misaka
+from markdown2 import markdown
 import logging
 
 app = Flask('envision-server-api')
@@ -23,7 +23,6 @@ VALID_VERSIONS = {
 }
 
 
-# Misaka(app)
 
 
 logger = logging.getLogger('logger')
@@ -56,6 +55,7 @@ def gettingstarted():
     except IOError:
         readme = ""
         print("Could not read file: README.md")
+    readme = markdown(readme)
     return render_template('gettingstarted.html', current_page="gettingstarted", readme=readme)
 
 @app.route('/team')
