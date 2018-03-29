@@ -31,15 +31,17 @@ def generator():
 
 @app.route('/documentation')
 def documentation():
+    return render_template('documentation.html', current_page="documentation")
+
+@app.route('/gettingstarted')
+def gettingstarted():
     try:
         with open('README.md', 'r') as f:
             readme = f.read()
     except IOError:
         readme = ""
         print("Could not read file: README.md")
-
-    return render_template('documentation.html', current_page="documentation", readme=readme)
-
+    return render_template('gettingstarted.html', current_page="gettingstarted", readme=readme)
 
 @app.route('/team')
 def team():
