@@ -1,254 +1,349 @@
-{% extends "index.html" %}
-{% block body_contents %}
-<link rel="stylesheet" href="static/styles/foundation.min.css" />
+{% extends "index.html" %} {% block body_contents %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css" />
 <link rel="stylesheet" href="static/styles/spectacle.min.css" />
+<link rel="stylesheet" href="static/styles/documentation.css" />
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <!-- <script src="javascripts/foundation.js"></script> -->
 <script src="static/scripts/spectacle.min.js"></script>
 <div id="spectacle">
-  <div id="page">
-    <div id="docs" class="row collapse expanded drawer" data-drawer>
-      <div class="example-box doc-content"></div>
-      <article>
-        <h1 class="doc-title">Envision
-          <span>API Reference</span>
-        </h1>
-        <div id="introduction" data-traverse-target="introduction">
-          <div class="doc-row">
-            <div class="doc-copy">
-              <p>Envision Company returns API</p>
-            </div>
-            <div class="doc-examples">
-              <section>
-                <h5>API Endpoint</h5>
-                <!-- <div class="hljs"> --><pre><code>http://envision-api.ap-southeast-2.elasticbeanstalk.com</code></pre>
-                <!-- </div> -->
-                <h5>Schemes:
-                  <span>https</span>
-                </h5>
-                <h5>Version:
-                  <span>1.0.0</span>
-                </h5>
-              </section>
-            </div>
-          </div>
-        </div>
-        <h1>Paths</h1>
-        <span id="path--api"></span>
-        <div id="operation--api-get" class="operation panel" data-traverse-target="operation--api-get">
-          <!-- <section class="operation-tags row"> -->
-          <!-- <div class="doc-copy"> -->
-          <div class="operation-tags">
-            <a class="label" href="#tag-Public">Public</a>
-            <!---->
-          </div>
-          <!-- </div> -->
-          <!-- </section> -->
-          <h2 class="operation-title">
-            <span class="operation-summary">Get company returns information</span>
-          </h2>
-          <div class="doc-row">
-            <div class="doc-copy">
-              <section class="swagger-operation-path">
-                <span class="operation-method">GET</span>
-                <span class="operation-path">/api</span>
-              </section>
-            </div>
-          </div>
-          <div class="doc-row">
-            <div class="doc-copy">
-              <section class="swagger-operation-description">
-                <p>Get information about a particular companies returns.</p>
-              </section>
-            </div>
-          </div>
-          <div class="doc-row">
-            <div class="doc-copy">
-              <section class="swagger-request-params">
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">instrument_id</div>
-                    <span class="json-property-required"></span>
-                    <div class="prop-subtitle"> in query </div>
-                    <div class="prop-subtitle">
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-range" title="Value limits"></span>
+    <div id="page">
+        <div id="docs" class="row collapse expanded drawer" data-drawer>
+            <div class="example-box doc-content"></div>
+            <article>
+                <h1 class="doc-title">Envision
+                    <span>API Reference</span>
+                </h1>
+                <div id="introduction" data-traverse-target="introduction">
+                    <div class="doc-row">
+                        <div class="doc-copy">
+                            <p>Envision Company returns API</p>
+                        </div>
+                        <div class="doc-examples">
+                            <section>
+                                <h5>API Endpoint</h5>
+                                <!-- <div class="hljs"> -->
+                                <pre><code>envision-api.ap-southeast-2.elasticbeanstalk.com/api</code></pre>
+                                <!-- </div> -->
+                                <h5>Schemes:
+                                    <span>http</span>
+                                </h5>
+                                <h5>Version:
+                                    <span>1.0.1</span>
+                                </h5>
+                            </section>
+                        </div>
                     </div>
-                  </div>
-                  <div class="prop-value">
-                    <p>The tickers of financial instruments, in Reuters Instrument Code (e.g. CBA.AX) or natural ticker format (e.g. ASX:CBA). Comma seperated.</p>
-                  </div>
                 </div>
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">date_of_interest</div>
-                    <span class="json-property-required"></span>
-                    <div class="prop-subtitle"> in query </div>
-                    <div class="prop-subtitle">
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-format">(YYYY-MM-DD)</span>
-                      <span class="json-property-range" title="Value limits"></span>
+                <h1>Paths</h1>
+                <span id="path--v1.0"></span>
+                <div id="operation--v1.0-get" class="operation panel" data-traverse-target="operation--v1.0-get">
+                    <!-- <section class="operation-tags row"> -->
+                    <!-- <div class="doc-copy"> -->
+                    <div class="operation-tags">
+                        <a class="label" href="#tag-Public">Public</a>
+                        <!---->
                     </div>
-                  </div>
-                  <div class="prop-value">
-                    <p>The desired date of interest, in ISO date format (YYYY-MM-DD).</p>
-                  </div>
-                </div>
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">list_of_var</div>
-                    <div class="prop-subtitle"> in query </div>
-                    <div class="prop-subtitle">
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-range" title="Value limits"></span>
+                    <!-- </div> -->
+                    <!-- </section> -->
+                    <h2 class="operation-title">
+                        <span class="operation-summary">Get company returns information</span>
+                    </h2>
+                    <div class="doc-row">
+                        <div class="doc-copy">
+                            <section class="swagger-operation-path">
+                                <span class="operation-method">GET</span>
+                                <span class="operation-path">/v1.0</span>
+                            </section>
+                        </div>
                     </div>
-                  </div>
-                  <div class="prop-value">
-                    <p>Request for Cumulative Return and/or Average Return.</p>
-                  </div>
-                </div>
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">lower_window</div>
-                    <span class="json-property-required"></span>
-                    <div class="prop-subtitle"> in query </div>
-                    <div class="prop-subtitle">
-                      <span class="json-property-type">integer</span>
-                      <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                    <div class="doc-row">
+                        <div class="doc-copy">
+                            <section class="swagger-operation-description">
+                                <p>Get information about a particular companies returns.</p>
+                                <p>Example usages:</p>
+                                <p>
+                                    <b>Curl:</b>
+<pre id="copyableCode">curl -X GET "http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5"</pre>
+                                </p>
+                                <p>
+                                    <b>Python3:</b>
+<pre id="copyableCode">import requests
+r = requests.get('http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0', params={
+    'instrument_id': 'ABP.AX',
+    'date_of_interest': '2012-12-10',
+    'lower_window': 3,
+    'upper_window': 5,
+    'list_of_var' : 'Return'
+})
+data = r.json()
+</pre>
+                                </p>
+                                <p>
+                                    <b>JQuery:</b>
+<pre id="copyableCode">$.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+    let dataString = JSON.stringify(data, null, 3);
+})
+</pre>
+                                </p>
+                            </section>
+                        </div>
                     </div>
-                  </div>
-                  <div class="prop-value">
-                    <p>The number of days before the date of interest to include in the query.</p>
-                  </div>
-                </div>
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">upper_window</div>
-                    <span class="json-property-required"></span>
-                    <div class="prop-subtitle"> in query </div>
-                    <div class="prop-subtitle">
-                      <span class="json-property-type">integer</span>
-                      <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                    <div class="doc-row">
+                        <div class="doc-copy">
+                            <section class="swagger-request-params">
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">instrument_id</div>
+                                        <span class="json-property-required"></span>
+                                        <div class="prop-subtitle"> in query </div>
+                                        <div class="prop-subtitle">
+                                            <span class="json-property-type">string</span>
+                                            <span class="json-property-range" title="Value limits"></span>
+                                        </div>
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>The tickers of financial instruments, in Reuters Instrument Code (e.g. CBA.AX) or
+                                            natural ticker format (e.g. ASX:CBA). Comma seperated.</p>
+                                    </div>
+                                </div>
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">date_of_interest</div>
+                                        <span class="json-property-required"></span>
+                                        <div class="prop-subtitle"> in query </div>
+                                        <div class="prop-subtitle">
+                                            <span class="json-property-type">string</span>
+                                            <span class="json-property-format">(YYYY-MM-DD)</span>
+                                            <span class="json-property-range" title="Value limits"></span>
+                                        </div>
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>The desired date of interest.</p>
+                                    </div>
+                                </div>
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">list_of_var</div>
+                                        <span class="json-property-required"></span>
+                                        <div class="prop-subtitle"> in query </div>
+                                        <div class="prop-subtitle">
+                                            <span class="json-property-type">string</span>
+                                            <span class="json-property-range" title="Value limits"></span>
+                                        </div>
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>Which outputs should be included. Comma seperated string. Values may be: Returns,
+                                            Return_pct, CM_Return, CM_Return_pct, AV_Return, AV_Return_pct, Daily_Spread,
+                                            Volume, Volume_pct. See ouput description fo rthe meaning of these.</p>
+                                    </div>
+                                </div>
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">lower_window</div>
+                                        <span class="json-property-required"></span>
+                                        <div class="prop-subtitle"> in query </div>
+                                        <div class="prop-subtitle">
+                                            <span class="json-property-type">integer</span>
+                                            <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                                        </div>
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>The number of days before the date of interest to include in the query.</p>
+                                    </div>
+                                </div>
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">upper_window</div>
+                                        <span class="json-property-required"></span>
+                                        <div class="prop-subtitle"> in query </div>
+                                        <div class="prop-subtitle">
+                                            <span class="json-property-type">integer</span>
+                                            <span class="json-property-range" title="Value limits">x ≥ 0</span>
+                                        </div>
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>The number of days after the date of interest to include in the query.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="doc-examples"></div>
                     </div>
-                  </div>
-                  <div class="prop-value">
-                    <p>The number of days after the date of interest to include in the query.</p>
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div class="doc-examples"></div>
-          </div>
-          <div class="doc-row">
-            <div class="doc-copy">
-              <section class="swagger-responses">
-                <div class="prop-row prop-group">
-                  <div class="prop-name">
-                    <div class="prop-title">200 OK</div>
-                    <div class="prop-ref">
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/inline_response_200">inline_response_200</a>
-                      </span>
-                    </div>
-                    <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
-                  </div>
-                  <div class="prop-value">
-                    <p>Company returns data and metadata</p>
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div class="doc-examples">
-              <h5>Response Content-Types:
-                <span>application/json</span>
-              </h5>
-              <section>
-                <h5>Response Example
-                  <span>(200 OK)</span>
-                </h5>
-                <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
-  <span class="hljs-attr">&quot;Metadata&quot;</span>: {
-    <span class="hljs-attr">&quot;start_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:55.000Z&quot;</span>,
-    <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;module&quot;</span>: <span class="hljs-string">&quot;Envision_API v1.0&quot;</span>,
-    <span class="hljs-attr">&quot;elapsed_time&quot;</span>: <span class="hljs-string">&quot;2898.46ms&quot;</span>,
-    <span class="hljs-attr">&quot;end_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:58.000Z&quot;</span>,
-    <span class="hljs-attr">&quot;team&quot;</span>: <span class="hljs-string">&quot;Envision&quot;</span>,
-    <span class="hljs-attr">&quot;parameters&quot;</span>: <span class="hljs-string">&quot;{}&quot;</span>,
-    <span class="hljs-attr">&quot;error_messages&quot;</span>: []
-  },
-  <span class="hljs-attr">&quot;CompanyReturns&quot;</span>: [
+                    <div class="doc-row">
+                        <div class="doc-copy">
+                            <section class="swagger-responses">
+                                <div class="prop-row prop-group">
+                                    <div class="prop-name">
+                                        <div class="prop-title">200 OK</div>
+                                        <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                                    </div>
+                                    <div class="prop-value">
+                                        <p>Company returns data and metadata.</p>
+                                        <p>
+                                            <code>Date:</code> The day that this object refers to.</p>
+                                        <p>
+                                            <code>AV_Return:</code> Average returns from start day to this day. Only in response if it was requested
+                                            through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>AV_Return_pct:</code> Average return percentage. Only in response if it was requested through the
+                                            list_of_var parameter.</p>
+                                        <p>
+                                            <code>CM_Return:</code> Cumulative returns from the start day to this day. Only in response if it was
+                                            requested through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>CM_Return_pct:</code> Cumulative return percentage. Only in response if it was requested through the
+                                            list_of_var parameter.</p>
+                                        <p>
+                                            <code>Daily_Spread:</code> The difference between the highest and lowest trade price for that day. Only
+                                            in response if it was requested through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>Relative_Date:</code> The number of days this day is from the date of interest. Only in response if
+                                            it was requested through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>Return:</code> The return for that day. Only in response if it was requested through the list_of_var
+                                            parameter. Only in response if it was requested through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>Return_pct:</code> Returns as a percentage of the previous days closing price. Only in response
+                                            if it was requested through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>Volume:</code> Amount of the instrument traded on that day. Only in response if it was requested
+                                            through the list_of_var parameter.</p>
+                                        <p>
+                                            <code>Volume_pct:</code> Proportion of volume traded on that day compared to the sum of the sum of volume
+                                            throughout the trading window. Only in response if it was requested through the
+                                            list_of_var parameter.</p>
+                                        <p>
+                                            <code>elapsed_time:</code> Time for the query to run.</p>
+                                        <p>
+                                            <code>end_time:</code> End time of the query.</p>
+                                        <p>
+                                            <code>module:</code> The name of the envision module.</p>
+                                        <p>
+                                            <code>parameters:</code> The parameters of the query as envision understood them.</p>
+                                        <p>
+                                            <code>start_time:</code> Start time of query.</p>
+                                        <p>
+                                            <code>success:</code> Was the api call to envision successful.</p>
+                                        <p>
+                                            <code>team:</code> The name of the team that made this api.</p>
+                                        <p>
+                                            <code>error_messages:</code> An array of error messages. Only in response if there were errors.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="doc-examples">
+                            <h5>Response Content-Types:
+                                <span>application/json</span>
+                            </h5>
+                            <section>
+                                <h5>Response Example
+                                    <span>(200 OK)</span>
+                                </h5>
+                                <!-- <div class="hljs"> -->
+                                <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;Company_Returns&quot;</span>: [
     {
-      <span class="hljs-attr">&quot;data&quot;</span>: [
+      <span class="hljs-attr">&quot;Data&quot;</span>: [
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         }
       ],
       <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
     },
     {
-      <span class="hljs-attr">&quot;data&quot;</span>: [
+      <span class="hljs-attr">&quot;Data&quot;</span>: [
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         }
       ],
       <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
     }
-  ]
+  ],
+  <span class="hljs-attr">&quot;Metadata&quot;</span>: {
+    <span class="hljs-attr">&quot;start_time&quot;</span>: <span class="hljs-string">&quot;2018-03-30T12:38:20.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;module&quot;</span>: <span class="hljs-string">&quot;Envision_API v1.0&quot;</span>,
+    <span class="hljs-attr">&quot;elapsed_time&quot;</span>: <span class="hljs-string">&quot;4255.30ms&quot;</span>,
+    <span class="hljs-attr">&quot;end_time&quot;</span>: <span class="hljs-string">&quot;2018-03-30T12:38:24.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;team&quot;</span>: <span class="hljs-string">&quot;Envision&quot;</span>,
+    <span class="hljs-attr">&quot;parameters&quot;</span>: {
+      <span class="hljs-attr">&quot;list_of_var&quot;</span>: [
+        <span class="hljs-string">&quot;Return&quot;</span>,
+        <span class="hljs-string">&quot;Return&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;upper_window&quot;</span>: <span class="hljs-number">5</span>,
+      <span class="hljs-attr">&quot;date_of_interest&quot;</span>: <span class="hljs-string">&quot;2012-12-10T00:00:00.000Z&quot;</span>,
+      <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>,
+      <span class="hljs-attr">&quot;lower_window&quot;</span>: <span class="hljs-number">3</span>
+    },
+    <span class="hljs-attr">&quot;error_messages&quot;</span>: [
+      <span class="hljs-string">&quot;Error: &apos;Time Series (Daily)&apos;&quot;</span>,
+      <span class="hljs-string">&quot;Error: &apos;Time Series (Daily)&apos;&quot;</span>
+    ]
+  }
 }
 </code></pre>
-                <!-- </div> -->
-              </section>
-            </div>
-          </div>
+                                <!-- </div> -->
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="doc-row no-margin">
+                    <div class="doc-copy doc-separator">
+                        <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                            <span>Spectacle</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
         </div>
-        <div class="doc-row no-margin">
-          <div class="doc-copy doc-separator">
-            <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
-              <span>Spectacle</span>
-            </a>
-          </div>
-        </div>
-      </article>
     </div>
-  </div>
 </div>
 {% endblock %}

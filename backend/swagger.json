@@ -15,9 +15,9 @@
     "name" : "Public",
     "description" : "Operations available to anyone"
   } ],
-  "schemes" : [ "https" ],
+  "schemes" : [ "https", "http" ],
   "paths" : {
-    "/api" : {
+    "/v1.0" : {
       "get" : {
         "tags" : [ "Public" ],
         "summary" : "Get company returns information",
@@ -33,7 +33,7 @@
         }, {
           "name" : "date_of_interest",
           "in" : "query",
-          "description" : "The desired date of interest, in ISO date format (YYYY-MM-DD).",
+          "description" : "The desired date of interest.",
           "required" : true,
           "type" : "string",
           "format" : "YYYY-MM-DD"
@@ -41,7 +41,7 @@
           "name" : "list_of_var",
           "in" : "query",
           "description" : "Request for Cumulative Return and/or Average Return.",
-          "required" : false,
+          "required" : true,
           "type" : "string"
         }, {
           "name" : "lower_window",
@@ -70,7 +70,147 @@
     }
   },
   "definitions" : {
-    "inline_response_200_CompanyReturns" : {
+    "inline_response_200_Metadata" : {
+      "properties" : {
+        "elapsed_time" : {
+          "type" : "string",
+          "example" : "4255.30ms"
+        },
+        "end_time" : {
+          "type" : "string",
+          "example" : "2018-03-30T12:38:24.000Z"
+        },
+        "module" : {
+          "type" : "string",
+          "example" : "Envision_API v1.0"
+        },
+        "parameters" : {
+          "$ref" : "#/definitions/inline_response_200_Metadata_parameters"
+        },
+        "start_time" : {
+          "type" : "string",
+          "example" : "2018-03-30T12:38:20.000Z"
+        },
+        "success" : {
+          "type" : "boolean",
+          "example" : true
+        },
+        "team" : {
+          "type" : "string",
+          "example" : "Envision"
+        },
+        "error_messages" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "Error: 'Time Series (Daily)'"
+          }
+        }
+      },
+      "example" : {
+        "start_time" : "2018-03-30T12:38:20.000Z",
+        "success" : true,
+        "module" : "Envision_API v1.0",
+        "elapsed_time" : "4255.30ms",
+        "end_time" : "2018-03-30T12:38:24.000Z",
+        "team" : "Envision",
+        "parameters" : {
+          "list_of_var" : [ "Return", "Return" ],
+          "upper_window" : 5.0,
+          "date_of_interest" : "2012-12-10T00:00:00.000Z",
+          "instrument_id" : "ABP.AX",
+          "lower_window" : 3.0
+        },
+        "error_messages" : [ "Error: 'Time Series (Daily)'", "Error: 'Time Series (Daily)'" ]
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "Company_Returns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_Company_Returns"
+          }
+        },
+        "Metadata" : {
+          "$ref" : "#/definitions/inline_response_200_Metadata"
+        }
+      },
+      "example" : {
+        "Company_Returns" : [ {
+          "data" : [ {
+            "date" : "2012-12-07",
+            "Volume_pct" : 0.13135290615687387,
+            "AV_Return" : 0.0022222222222222244,
+            "CM_Return" : 0.020000000000000018,
+            "Return" : 0,
+            "CM_Return_pct" : 0.010226569931254703,
+            "Volume" : 311761.0,
+            "AV_Return_pct" : 0.0011362855479171892,
+            "Return_pct" : 0.0,
+            "Daily_Spread" : 0.024900000000000144,
+            "Relative_Date" : -3.0
+          }, {
+            "date" : "2012-12-07",
+            "Volume_pct" : 0.13135290615687387,
+            "AV_Return" : 0.0022222222222222244,
+            "CM_Return" : 0.020000000000000018,
+            "Return" : 0,
+            "CM_Return_pct" : 0.010226569931254703,
+            "Volume" : 311761.0,
+            "AV_Return_pct" : 0.0011362855479171892,
+            "Return_pct" : 0.0,
+            "Daily_Spread" : 0.024900000000000144,
+            "Relative_Date" : -3.0
+          } ],
+          "instrument_id" : "ABP.AX"
+        }, {
+          "data" : [ {
+            "date" : "2012-12-07",
+            "Volume_pct" : 0.13135290615687387,
+            "AV_Return" : 0.0022222222222222244,
+            "CM_Return" : 0.020000000000000018,
+            "Return" : 0,
+            "CM_Return_pct" : 0.010226569931254703,
+            "Volume" : 311761.0,
+            "AV_Return_pct" : 0.0011362855479171892,
+            "Return_pct" : 0.0,
+            "Daily_Spread" : 0.024900000000000144,
+            "Relative_Date" : -3.0
+          }, {
+            "date" : "2012-12-07",
+            "Volume_pct" : 0.13135290615687387,
+            "AV_Return" : 0.0022222222222222244,
+            "CM_Return" : 0.020000000000000018,
+            "Return" : 0,
+            "CM_Return_pct" : 0.010226569931254703,
+            "Volume" : 311761.0,
+            "AV_Return_pct" : 0.0011362855479171892,
+            "Return_pct" : 0.0,
+            "Daily_Spread" : 0.024900000000000144,
+            "Relative_Date" : -3.0
+          } ],
+          "instrument_id" : "ABP.AX"
+        } ],
+        "Metadata" : {
+          "start_time" : "2018-03-30T12:38:20.000Z",
+          "success" : true,
+          "module" : "Envision_API v1.0",
+          "elapsed_time" : "4255.30ms",
+          "end_time" : "2018-03-30T12:38:24.000Z",
+          "team" : "Envision",
+          "parameters" : {
+            "list_of_var" : [ "Return", "Return" ],
+            "upper_window" : 5.0,
+            "date_of_interest" : "2012-12-10T00:00:00.000Z",
+            "instrument_id" : "ABP.AX",
+            "lower_window" : 3.0
+          },
+          "error_messages" : [ "Error: 'Time Series (Daily)'", "Error: 'Time Series (Daily)'" ]
+        }
+      }
+    },
+    "inline_response_200_Company_Returns" : {
       "properties" : {
         "instrument_id" : {
           "type" : "string",
@@ -86,147 +226,30 @@
       "example" : {
         "data" : [ {
           "date" : "2012-12-07",
-          "average_return_percentage" : 0.0,
-          "AV_Return" : 0.010226569931254703,
-          "cumulative_return_percentage" : 0.0,
-          "CM_Return" : 0.010226569931254703,
-          "volume_percentage" : 0.0,
-          "daily_spread" : 0.0,
-          "return" : 0,
-          "relative_date" : -3.0
+          "Volume_pct" : 0.13135290615687387,
+          "AV_Return" : 0.0022222222222222244,
+          "CM_Return" : 0.020000000000000018,
+          "Return" : 0,
+          "CM_Return_pct" : 0.010226569931254703,
+          "Volume" : 311761.0,
+          "AV_Return_pct" : 0.0011362855479171892,
+          "Return_pct" : 0.0,
+          "Daily_Spread" : 0.024900000000000144,
+          "Relative_Date" : -3.0
         }, {
           "date" : "2012-12-07",
-          "average_return_percentage" : 0.0,
-          "AV_Return" : 0.010226569931254703,
-          "cumulative_return_percentage" : 0.0,
-          "CM_Return" : 0.010226569931254703,
-          "volume_percentage" : 0.0,
-          "daily_spread" : 0.0,
-          "return" : 0,
-          "relative_date" : -3.0
+          "Volume_pct" : 0.13135290615687387,
+          "AV_Return" : 0.0022222222222222244,
+          "CM_Return" : 0.020000000000000018,
+          "Return" : 0,
+          "CM_Return_pct" : 0.010226569931254703,
+          "Volume" : 311761.0,
+          "AV_Return_pct" : 0.0011362855479171892,
+          "Return_pct" : 0.0,
+          "Daily_Spread" : 0.024900000000000144,
+          "Relative_Date" : -3.0
         } ],
         "instrument_id" : "ABP.AX"
-      }
-    },
-    "inline_response_200_Metadata" : {
-      "properties" : {
-        "elapsed_time" : {
-          "type" : "string",
-          "example" : "2898.46ms"
-        },
-        "end_time" : {
-          "type" : "string",
-          "example" : "2018-03-28T10:25:58.000Z"
-        },
-        "error_messages" : {
-          "type" : "array",
-          "example" : [ ],
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "module" : {
-          "type" : "string",
-          "example" : "Envision_API v1.0"
-        },
-        "parameters" : {
-          "type" : "object",
-          "properties" : { }
-        },
-        "start_time" : {
-          "type" : "string",
-          "example" : "2018-03-28T10:25:55.000Z"
-        },
-        "success" : {
-          "type" : "boolean",
-          "example" : true
-        },
-        "team" : {
-          "type" : "string",
-          "example" : "Envision"
-        }
-      },
-      "example" : {
-        "start_time" : "2018-03-28T10:25:55.000Z",
-        "success" : true,
-        "module" : "Envision_API v1.0",
-        "elapsed_time" : "2898.46ms",
-        "end_time" : "2018-03-28T10:25:58.000Z",
-        "team" : "Envision",
-        "parameters" : "{}",
-        "error_messages" : [ ]
-      }
-    },
-    "inline_response_200" : {
-      "properties" : {
-        "CompanyReturns" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/inline_response_200_CompanyReturns"
-          }
-        },
-        "Metadata" : {
-          "$ref" : "#/definitions/inline_response_200_Metadata"
-        }
-      },
-      "example" : {
-        "Metadata" : {
-          "start_time" : "2018-03-28T10:25:55.000Z",
-          "success" : true,
-          "module" : "Envision_API v1.0",
-          "elapsed_time" : "2898.46ms",
-          "end_time" : "2018-03-28T10:25:58.000Z",
-          "team" : "Envision",
-          "parameters" : "{}",
-          "error_messages" : [ ]
-        },
-        "CompanyReturns" : [ {
-          "data" : [ {
-            "date" : "2012-12-07",
-            "average_return_percentage" : 0.0,
-            "AV_Return" : 0.010226569931254703,
-            "cumulative_return_percentage" : 0.0,
-            "CM_Return" : 0.010226569931254703,
-            "volume_percentage" : 0.0,
-            "daily_spread" : 0.0,
-            "return" : 0,
-            "relative_date" : -3.0
-          }, {
-            "date" : "2012-12-07",
-            "average_return_percentage" : 0.0,
-            "AV_Return" : 0.010226569931254703,
-            "cumulative_return_percentage" : 0.0,
-            "CM_Return" : 0.010226569931254703,
-            "volume_percentage" : 0.0,
-            "daily_spread" : 0.0,
-            "return" : 0,
-            "relative_date" : -3.0
-          } ],
-          "instrument_id" : "ABP.AX"
-        }, {
-          "data" : [ {
-            "date" : "2012-12-07",
-            "average_return_percentage" : 0.0,
-            "AV_Return" : 0.010226569931254703,
-            "cumulative_return_percentage" : 0.0,
-            "CM_Return" : 0.010226569931254703,
-            "volume_percentage" : 0.0,
-            "daily_spread" : 0.0,
-            "return" : 0,
-            "relative_date" : -3.0
-          }, {
-            "date" : "2012-12-07",
-            "average_return_percentage" : 0.0,
-            "AV_Return" : 0.010226569931254703,
-            "cumulative_return_percentage" : 0.0,
-            "CM_Return" : 0.010226569931254703,
-            "volume_percentage" : 0.0,
-            "daily_spread" : 0.0,
-            "return" : 0,
-            "relative_date" : -3.0
-          } ],
-          "instrument_id" : "ABP.AX"
-        } ]
       }
     },
     "inline_response_200_data" : {
@@ -235,49 +258,93 @@
           "type" : "string",
           "example" : "2012-12-07"
         },
-        "return" : {
-          "type" : "integer",
-          "example" : 0
-        },
-        "relative_date" : {
+        "AV_Return" : {
           "type" : "number",
-          "example" : -3.0
+          "example" : 0.0022222222222222244
+        },
+        "AV_Return_pct" : {
+          "type" : "number",
+          "example" : 0.0011362855479171892
         },
         "CM_Return" : {
           "type" : "number",
-          "example" : 0.010226569931254703
+          "example" : 0.020000000000000018
         },
-        "AV_Return" : {
+        "CM_Return_pct" : {
           "type" : "number",
           "example" : 0.010226569931254703
         },
-        "cumulative_return_percentage" : {
+        "Daily_Spread" : {
+          "type" : "number",
+          "example" : 0.024900000000000144
+        },
+        "Relative_Date" : {
+          "type" : "number",
+          "example" : -3.0
+        },
+        "Return" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "Return_pct" : {
           "type" : "number",
           "example" : 0.0
         },
-        "average_return_percentage" : {
+        "Volume" : {
           "type" : "number",
-          "example" : 0.0
+          "example" : 311761.0
         },
-        "daily_spread" : {
+        "Volume_pct" : {
           "type" : "number",
-          "example" : 0.0
-        },
-        "volume_percentage" : {
-          "type" : "number",
-          "example" : 0.0
+          "example" : 0.13135290615687387
         }
       },
       "example" : {
         "date" : "2012-12-07",
-        "average_return_percentage" : 0.0,
-        "AV_Return" : 0.010226569931254703,
-        "cumulative_return_percentage" : 0.0,
-        "CM_Return" : 0.010226569931254703,
-        "volume_percentage" : 0.0,
-        "daily_spread" : 0.0,
-        "return" : 0,
-        "relative_date" : -3.0
+        "Volume_pct" : 0.13135290615687387,
+        "AV_Return" : 0.0022222222222222244,
+        "CM_Return" : 0.020000000000000018,
+        "Return" : 0,
+        "CM_Return_pct" : 0.010226569931254703,
+        "Volume" : 311761.0,
+        "AV_Return_pct" : 0.0011362855479171892,
+        "Return_pct" : 0.0,
+        "Daily_Spread" : 0.024900000000000144,
+        "Relative_Date" : -3.0
+      }
+    },
+    "inline_response_200_Metadata_parameters" : {
+      "properties" : {
+        "date_of_interest" : {
+          "type" : "string",
+          "example" : "2012-12-10T00:00:00.000Z"
+        },
+        "instrument_id" : {
+          "type" : "string",
+          "example" : "ABP.AX"
+        },
+        "list_of_var" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "Return"
+          }
+        },
+        "lower_window" : {
+          "type" : "number",
+          "example" : 3.0
+        },
+        "upper_window" : {
+          "type" : "number",
+          "example" : 5.0
+        }
+      },
+      "example" : {
+        "list_of_var" : [ "Return", "Return" ],
+        "upper_window" : 5.0,
+        "date_of_interest" : "2012-12-10T00:00:00.000Z",
+        "instrument_id" : "ABP.AX",
+        "lower_window" : 3.0
       }
     }
   }

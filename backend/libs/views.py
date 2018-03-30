@@ -73,7 +73,9 @@ def logs():
     with open('logging.log') as file:
         info = file.read()
     info = info.replace('\n', '<br>')
-    return info
+    if request.args.get('raw'):
+        return info
+    return render_template('logs.html', current_page="logs", logs=info)
 
 
 @app.route('/api/<version>/')
@@ -102,7 +104,17 @@ def api(version):
                 df = compute_engine.generate_table(i, date, lower, upper, var_list)
 
                 df.index = df.index.format()
-                data = df.to_dict(orient='index')
+
+                # Alternative implementation
+                def listed_dict(df):
+                    info_list = []
+                    for i in df.iterrows():
+                        info = {'Date': i[0]}
+                        info.update(i[1].to_dict())
+                        info_list.append(info)
+                    return info_list
+
+                data = listed_dict(df)
 
                 consists_success = True
 
@@ -148,7 +160,7 @@ def api(version):
 
         payload = {
             'Metadata': metadata,
-            'CompanyReturns': returns
+            'Company_Returns': returns
         }
 
         return jsonify(payload)
