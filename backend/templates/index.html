@@ -29,7 +29,10 @@
         even in small screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
         <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title mdl-typography--font-bold mdl">Envision API</span>
+            <div id="heading" class="mdl-layout-title mdl-typography--font-bold mdl">
+                <img id="envisionLogo" src="/static/assets/favicon.png">
+                Envision API
+            </div>
             <nav class="mdl-navigation">
                 <!-- Home/Query Generator Page Link -->
                 {% if current_page == "generator" %}
