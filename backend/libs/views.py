@@ -73,7 +73,9 @@ def logs():
     with open('logging.log') as file:
         info = file.read()
     info = info.replace('\n', '<br>')
-    return info
+    if request.args.get('raw'):
+        return info
+    return render_template('logs.html', current_page="logs", logs=info)
 
 
 @app.route('/api/<version>/')

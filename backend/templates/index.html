@@ -66,6 +66,13 @@
                     <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
                 {% endif %}
 
+                <!-- Logs Link -->
+                {% if current_page == "logs" %}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Logs</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('logs')}}">Logs</a>
+                {% endif %}
+
             </nav>
         </div>
         <main class="mdl-layout__content">
