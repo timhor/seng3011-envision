@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+{% block body_contents %}
+<link rel="stylesheet" href="{{url_for('static', filename='styles/gettingstarted.css')}}">
+<script src="{{url_for('static', filename='scripts/gettingstarted.js')}}"></script>
+<div class="mdl-grid" align="center">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h2>Logs</h2>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="documentationCard">
+            <pre id="readmeMarkdown">{{ logs | safe }}</pre>
+        </div>
+    </div>
+</div>
+<form method="get">
+    <input hidden name="raw" value="1">
+    <button>Raw log</button>
+</form>
+{% endblock %}
