@@ -106,7 +106,7 @@ def working_data(df, target, lower, upper):
 
 def tag_relative_date(row, target, lower, upper):
     """Tags a row with it's relative distance from target date if we are interested in it"""
-    row['Relative Date'] = (row.name - target).days if lower <= row.name <= upper else np.nan
+    row['Relative_Date'] = (row.name - target).days if lower <= row.name <= upper else np.nan
     return row
 
 
@@ -117,7 +117,7 @@ def add_performance(df, lower, upper):
     df['AV_Return_pct'] = np.nan
 
     for i in range(len(df)):
-        if np.isnan(df.iloc[i]['Relative Date']):
+        if np.isnan(df.iloc[i]['Relative_Date']):
             continue
         else:
             df['CM_Return'].iloc[i] = df['Return'][i - lower:i + upper + 1].sum()
@@ -130,15 +130,15 @@ def add_advanced_data(df, lower, upper):
     df['Volume_pct'] = np.nan
 
     for i in range(len(df)):
-        if np.isnan(df.iloc[i]['Relative Date']):
+        if np.isnan(df.iloc[i]['Relative_Date']):
             continue
         else:
             df['Volume_pct'].iloc[i] = df['Volume'].iloc[i] / df['Volume'][i - lower:i + upper + 1].sum()
 
 
 def filter_data_frame(df, vars):
-    columns = ['Relative Date', 'Return'] + vars
-    df = df[~np.isnan(df['Relative Date'])]
+    columns = ['Relative_Date', 'Return'] + vars
+    df = df[~np.isnan(df['Relative_Date'])]
     return df[columns]
 
 

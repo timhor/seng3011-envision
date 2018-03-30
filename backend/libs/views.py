@@ -109,8 +109,8 @@ def api(version):
                 def listed_dict(df):
                     info_list = []
                     for i in df.iterrows():
-                        info = i[1].to_dict()
-                        info['date'] = i[0]
+                        info = {'Date': i[0]}
+                        info.update(i[1].to_dict())
                         info_list.append(info)
                     return info_list
 
@@ -160,7 +160,7 @@ def api(version):
 
         payload = {
             'Metadata': metadata,
-            'CompanyReturns': returns
+            'Company_Returns': returns
         }
 
         return jsonify(payload)
