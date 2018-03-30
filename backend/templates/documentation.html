@@ -73,7 +73,7 @@
                   data = r.json()
                 </code></p>
                 <p>JQuery: <code>
-                  $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+                  $.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
                     let dataString = JSON.stringify(data, null, 3);
                   })
                 </code></p>
