@@ -104,7 +104,17 @@ def api(version):
                 df = compute_engine.generate_table(i, date, lower, upper, var_list)
 
                 df.index = df.index.format()
-                data = df.to_dict(orient='index')
+
+                # Alternative implementation
+                def listed_dict(df):
+                    info_list = []
+                    for i in df.iterrows():
+                        info = i[1].to_dict()
+                        info['date'] = i[0]
+                        info_list.append(info)
+                    return info_list
+
+                data = listed_dict(df)
 
                 consists_success = True
 
