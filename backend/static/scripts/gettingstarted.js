@@ -19,7 +19,7 @@ function styleReadme() {
     readme = readme.replace(/\<ul\>(.*?)\<\/ul\>/sg, function(a, b) {
         return supportText(b);
     });
-    readme = readme.replace(/(\r\n|\n|\r)/g, "");
+    readme = readme.replace(/<code>(\r\n|\n|\r)/g, "<code>");
     document.getElementById('readmeMarkdown').innerHTML = readme;
 }
 
