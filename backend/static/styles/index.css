@@ -15,11 +15,17 @@
 	font-size: 18px;
 }
 
-hr {
-	margin: 0;
-	width: 90%;
+#heading {
+	margin-left: -14px;
 }
 
 #envisionLogo {
-	width: 50%;
+	width: 50px;
+	margin-top: -2px;
+	margin-right: 6px;
+}
+
+hr {
+	margin: 0;
+	width: 90%;
 }
