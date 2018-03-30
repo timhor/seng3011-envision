@@ -21,25 +21,25 @@
             <div class="doc-examples">
               <section>
                 <h5>API Endpoint</h5>
-                <!-- <div class="hljs"> --><pre><code>http://envision-api.ap-southeast-2.elasticbeanstalk.com</code></pre>
+                <!-- <div class="hljs"> --><pre><code>envision-api.ap-southeast-2.elasticbeanstalk.com</code></pre>
                 <!-- </div> -->
                 <h5>Schemes:
-                  <span>https</span>
+                  <span>http</span>
                 </h5>
                 <h5>Version:
-                  <span>1.0.0</span>
+                  <span>1.0.1</span>
                 </h5>
               </section>
             </div>
           </div>
         </div>
         <h1>Paths</h1>
-        <span id="path--api"></span>
-        <div id="operation--api-get" class="operation panel" data-traverse-target="operation--api-get">
+        <span id="path--v1.0"></span>
+        <div id="operation--v1.0-get" class="operation panel" data-traverse-target="operation--v1.0-get">
           <!-- <section class="operation-tags row"> -->
           <!-- <div class="doc-copy"> -->
           <div class="operation-tags">
-            <a class="label">Public</a>
+            <a class="label" href="#tag-Public">Public</a>
             <!---->
           </div>
           <!-- </div> -->
@@ -51,7 +51,7 @@
             <div class="doc-copy">
               <section class="swagger-operation-path">
                 <span class="operation-method">GET</span>
-                <span class="operation-path">/api</span>
+                <span class="operation-path">/v1.0</span>
               </section>
             </div>
           </div>
@@ -91,7 +91,7 @@
                     </div>
                   </div>
                   <div class="prop-value">
-                    <p>The desired date of interest, in ISO date format (YYYY-MM-DD).</p>
+                    <p>The desired date of interest.</p>
                   </div>
                 </div>
                 <div class="prop-row prop-group">
@@ -105,19 +105,7 @@
                     </div>
                   </div>
                   <div class="prop-value">
-                    <p>The list of Return Data requested. Comma seperated</p>
-                    <p>Supported variables:</p>
-                    <ul>
-                        <li><code>Return</code></li>
-                        <li><code>Return_pct</code></li>
-                        <li><code>CM_Return</code></li>
-                        <li><code>CM_Return_pct</code></li>
-                        <li><code>AV_Return</code></li>
-                        <li><code>AV_Return_pct</code></li>
-                        <li><code>Daily_Spread</code></li>
-                        <li><code>Volume</code></li>
-                        <li><code>Volume_pct</code></li>
-                    </ul>
+                    <p>Request for Cumulative Return and/or Average Return.</p>
                   </div>
                 </div>
                 <div class="prop-row prop-group">
@@ -150,12 +138,7 @@
                 </div>
               </section>
             </div>
-            <div class="doc-examples">
-                <section>
-                    <h5>Request Example</h5>
-                    <pre><code>http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=CM_Return_pct,AV_Return_pct&lower_window=3&upper_window=5</code></pre>
-                </section>
-            </div>
+            <div class="doc-examples"></div>
           </div>
           <div class="doc-row">
             <div class="doc-copy">
@@ -163,11 +146,7 @@
                 <div class="prop-row prop-group">
                   <div class="prop-name">
                     <div class="prop-title">200 OK</div>
-                    <div class="prop-ref">
-                      <span class="">
-                        <a class="json-schema-ref">inline_response_200</a>
-                      </span>
-                    </div>
+                    <p>hello</p>
                     <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                   </div>
                   <div class="prop-value">
@@ -185,40 +164,34 @@
                   <span>(200 OK)</span>
                 </h5>
                 <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
-  <span class="hljs-attr">&quot;Metadata&quot;</span>: {
-    <span class="hljs-attr">&quot;start_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:55.000Z&quot;</span>,
-    <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;module&quot;</span>: <span class="hljs-string">&quot;Envision_API v1.0&quot;</span>,
-    <span class="hljs-attr">&quot;elapsed_time&quot;</span>: <span class="hljs-string">&quot;2898.46ms&quot;</span>,
-    <span class="hljs-attr">&quot;end_time&quot;</span>: <span class="hljs-string">&quot;2018-03-28T10:25:58.000Z&quot;</span>,
-    <span class="hljs-attr">&quot;team&quot;</span>: <span class="hljs-string">&quot;Envision&quot;</span>,
-    <span class="hljs-attr">&quot;parameters&quot;</span>: <span class="hljs-string">&quot;{}&quot;</span>,
-    <span class="hljs-attr">&quot;error_messages&quot;</span>: []
-  },
-  <span class="hljs-attr">&quot;CompanyReturns&quot;</span>: [
+  <span class="hljs-attr">&quot;Company_Returns&quot;</span>: [
     {
       <span class="hljs-attr">&quot;data&quot;</span>: [
         {
           <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
           <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         }
       ],
       <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
@@ -227,30 +200,56 @@
       <span class="hljs-attr">&quot;data&quot;</span>: [
         {
           <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
           <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
-          <span class="hljs-attr">&quot;average_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;cumulative_return_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
-          <span class="hljs-attr">&quot;volume_percentage&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;daily_spread&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;return&quot;</span>: <span class="hljs-number">0</span>,
-          <span class="hljs-attr">&quot;relative_date&quot;</span>: <span class="hljs-number">-3</span>
+          <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
+          <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
+          <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
+          <span class="hljs-attr">&quot;Return&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;CM_Return_pct&quot;</span>: <span class="hljs-number">0.010226569931254703</span>,
+          <span class="hljs-attr">&quot;Volume&quot;</span>: <span class="hljs-number">311761</span>,
+          <span class="hljs-attr">&quot;AV_Return_pct&quot;</span>: <span class="hljs-number">0.0011362855479171892</span>,
+          <span class="hljs-attr">&quot;Return_pct&quot;</span>: <span class="hljs-number">0</span>,
+          <span class="hljs-attr">&quot;Daily_Spread&quot;</span>: <span class="hljs-number">0.024900000000000144</span>,
+          <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         }
       ],
       <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
     }
-  ]
+  ],
+  <span class="hljs-attr">&quot;Metadata&quot;</span>: {
+    <span class="hljs-attr">&quot;start_time&quot;</span>: <span class="hljs-string">&quot;2018-03-30T12:38:20.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;module&quot;</span>: <span class="hljs-string">&quot;Envision_API v1.0&quot;</span>,
+    <span class="hljs-attr">&quot;elapsed_time&quot;</span>: <span class="hljs-string">&quot;4255.30ms&quot;</span>,
+    <span class="hljs-attr">&quot;end_time&quot;</span>: <span class="hljs-string">&quot;2018-03-30T12:38:24.000Z&quot;</span>,
+    <span class="hljs-attr">&quot;team&quot;</span>: <span class="hljs-string">&quot;Envision&quot;</span>,
+    <span class="hljs-attr">&quot;parameters&quot;</span>: {
+      <span class="hljs-attr">&quot;list_of_var&quot;</span>: [
+        <span class="hljs-string">&quot;Return&quot;</span>,
+        <span class="hljs-string">&quot;Return&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;upper_window&quot;</span>: <span class="hljs-number">5</span>,
+      <span class="hljs-attr">&quot;date_of_interest&quot;</span>: <span class="hljs-string">&quot;2012-12-10T00:00:00.000Z&quot;</span>,
+      <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>,
+      <span class="hljs-attr">&quot;lower_window&quot;</span>: <span class="hljs-number">3</span>
+    },
+    <span class="hljs-attr">&quot;error_messages&quot;</span>: [
+      <span class="hljs-string">&quot;Error: &apos;Time Series (Daily)&apos;&quot;</span>,
+      <span class="hljs-string">&quot;Error: &apos;Time Series (Daily)&apos;&quot;</span>
+    ]
+  }
 }
 </code></pre>
                 <!-- </div> -->
