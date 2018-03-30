@@ -1,37 +1,23 @@
 ## Setting Up
 
-### Environment
-
-```
-source ./envs.sh
-```
-
-This sets the appropriate environment variables to be used by the application.
-
-### pipenv
+### First time setup
 
 ```
 sudo pip install pipenv
+pipenv install --dev
 ```
 
 Replace `pip` with `pip3` if using python3.
 
-### Installing Dependencies
+### To run the server
+
+```
+source ./envs.sh
+pipenv run python application.py
+```
+
+### If the pipfile has changed
 
 ```
 pipenv install --dev
 ```
-
-### Running the API Server
-
-```
-pipenv run python application.py
-```
-
-### API Endpoint Variables
-
-- `instrument_id`
-- `date_of_interest`
-- `list_of_var`
-- `lower_window`
-- `upper_window`
