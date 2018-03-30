@@ -21,7 +21,7 @@
             <div class="doc-examples">
               <section>
                 <h5>API Endpoint</h5>
-                <!-- <div class="hljs"> --><pre><code>envision-api.ap-southeast-2.elasticbeanstalk.com</code></pre>
+                <!-- <div class="hljs"> --><pre><code>envision-api.ap-southeast-2.elasticbeanstalk.com/api</code></pre>
                 <!-- </div> -->
                 <h5>Schemes:
                   <span>http</span>
@@ -59,6 +59,24 @@
             <div class="doc-copy">
               <section class="swagger-operation-description">
                 <p>Get information about a particular companies returns.</p>
+                <p>Example usages:</p>
+                <p>Curl: <code>curl -X GET "http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5"</code></p>
+                <p>Python3: <code>
+                  import requests
+                  r = requests.get('http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0', params={
+                      'instrument_id': 'ABP.AX',
+                      'date_of_interest': '2012-12-10',
+                      'lower_window': 3,
+                      'upper_window': 5,
+                      'list_of_var' : 'Return'
+                  })
+                  data = r.json()
+                </code></p>
+                <p>JQuery: <code>
+                  $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+                    let dataString = JSON.stringify(data, null, 3);
+                  })
+                </code></p>
               </section>
             </div>
           </div>
@@ -146,11 +164,29 @@
                 <div class="prop-row prop-group">
                   <div class="prop-name">
                     <div class="prop-title">200 OK</div>
-                    <p>hello</p>
                     <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                   </div>
                   <div class="prop-value">
-                    <p>Company returns data and metadata</p>
+                    <p>Company returns data and metadata.</p>
+                    <p>start_time: Start time of query.</p>
+                    <p>end_time: End time of the query.</p>
+                    <p>success: Was the api call to envision successful.</p>
+                    <p>module: The name of the envision module.</p>
+                    <p>elapsed_time: Time for the query to run.</p>
+                    <p>team: The name of the team that made this api.</p>
+                    <p>parameters: The parameters of the query as envision understood them.</p>
+                    <p>error_messages: An array of error messages. Only in response if there were errors.</p>
+                    <p>Date: The day that this object refers to.</p>
+                    <p>Volume_pct: Proportion of volume traded on that day compared to the sum of the sum of volume throughout the trading window.</p>
+                    <p>AV_Return: Average returns from start day to this day.</p>
+                    <p>CM_Return: Cumulative returns from the start day to this day.</p>
+                    <p>Return: The return for that day.</p>
+                    <p>CM_Return_pct: Cumulatove return percentage.</p>
+                    <p>Volume: Amount of the instrument traded on that day.</p>
+                    <p>AV_Return_pct: Average return percentage.</p>
+                    <p>Return_pct: Returns as a percentage of the previous days closing price.</p>
+                    <p>Daily_Spread: The difference between the highest and lowest trade price for that day.</p>
+                    <p>Relative_Date: The number of days this day is from the date of interest</p>
                   </div>
                 </div>
               </section>
@@ -166,9 +202,9 @@
                 <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
   <span class="hljs-attr">&quot;Company_Returns&quot;</span>: [
     {
-      <span class="hljs-attr">&quot;data&quot;</span>: [
+      <span class="hljs-attr">&quot;Data&quot;</span>: [
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
           <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
           <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
           <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
@@ -181,7 +217,7 @@
           <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
           <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
           <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
           <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
@@ -197,9 +233,9 @@
       <span class="hljs-attr">&quot;instrument_id&quot;</span>: <span class="hljs-string">&quot;ABP.AX&quot;</span>
     },
     {
-      <span class="hljs-attr">&quot;data&quot;</span>: [
+      <span class="hljs-attr">&quot;Data&quot;</span>: [
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
           <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
           <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
           <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
@@ -212,7 +248,7 @@
           <span class="hljs-attr">&quot;Relative_Date&quot;</span>: <span class="hljs-number">-3</span>
         },
         {
-          <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
+          <span class="hljs-attr">&quot;Date&quot;</span>: <span class="hljs-string">&quot;2012-12-07&quot;</span>,
           <span class="hljs-attr">&quot;Volume_pct&quot;</span>: <span class="hljs-number">0.13135290615687387</span>,
           <span class="hljs-attr">&quot;AV_Return&quot;</span>: <span class="hljs-number">0.0022222222222222244</span>,
           <span class="hljs-attr">&quot;CM_Return&quot;</span>: <span class="hljs-number">0.020000000000000018</span>,
