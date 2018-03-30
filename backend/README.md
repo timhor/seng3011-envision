@@ -1,6 +1,6 @@
 ## Setting Up
 
-### First time setup
+### Initial setup
 
 ```
 sudo pip install pipenv
@@ -9,14 +9,14 @@ pipenv install --dev
 
 Replace `pip` with `pip3` if using python3.
 
-### To run the server
+### Running the server
 
 ```
 source ./envs.sh
 pipenv run python application.py
 ```
 
-### If the pipfile has changed
+### Updating dependencies
 
 ```
 pipenv install --dev
