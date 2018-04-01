@@ -1,8 +1,15 @@
 #copyableCode {
-    background-color: rgb(238, 238, 238);
-    border: 1px solid rgb(200, 200, 200);
+    font-size: .9em;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    font-weight: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #404040;
     border-radius: 5px;
-    padding: 5px;
+    box-shadow: 0 0 200px rgba(0,0,0,.33) inset;
 }
 
 #spectacle article .operation .operation-tags .label {
