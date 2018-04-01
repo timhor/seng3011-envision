@@ -19,3 +19,11 @@
 #spectacle article .operation .operation-tags .label:hover {
     color: #fefefe;
 }
+
+#pathTitle {
+    font-size: 2.5em;
+}
+
+.operation-title {
+    font-size: 2em;
+}
