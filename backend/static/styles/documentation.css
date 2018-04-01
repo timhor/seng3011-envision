@@ -4,3 +4,11 @@
     border-radius: 5px;
     padding: 5px;
 }
+
+#spectacle article .operation .operation-tags .label {
+    cursor: default;
+}
+
+#spectacle article .operation .operation-tags .label:hover {
+    color: #fefefe;
+}
