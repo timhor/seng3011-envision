@@ -13,6 +13,11 @@
     text-align: center;
 }
 
+#checkboxLabel {
+    margin-top: 4px;
+    cursor: pointer;
+}
+
 #formSubmit {
     margin-top: 250px;
 }

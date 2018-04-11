@@ -41,15 +41,15 @@
                             <label class="mdl-textfield__label mdl-color-text--blue" id="variablesLabel">Variables</label>
 
                             <ul class="mdl-list">
-                                {%  for var in variables_list %}
+                                {% for var in variables_list %}
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-secondary-action">
                                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{ loop.index }}">
-                                                <input type="checkbox" id="list-checkbox-{{ loop.index }}" class="mdl-checkbox__input"  onchange="updateAPIQuery()" />
+                                                 <span id="checkboxLabel" class="mdl-list__item-primary-content mdl-color-text--grey-600">
+                                                     {{ variables_list[var] }}
+                                                 </span>
+                                                 <input type="checkbox" id="list-checkbox-{{ loop.index }}" class="mdl-checkbox__input"  onchange="updateAPIQuery()" />
                                             </label>
-                                        </span>
-                                        <span class="mdl-list__item-primary-content mdl-color-text--grey-600">
-                                            {{ variables_list[var] }}
                                         </span>
                                     </li>
                                 {% endfor %}
