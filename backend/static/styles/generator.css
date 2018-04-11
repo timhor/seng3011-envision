@@ -65,6 +65,10 @@
     resize: none;
 }
 
+.mdl-list {
+    margin-left: -15px;
+}
+
 .mdl-tooltip {
     font-family: "Roboto","Helvetica","Arial",sans-serif;
     text-transform: uppercase;
