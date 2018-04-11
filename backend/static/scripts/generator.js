@@ -1,6 +1,31 @@
 window.onload = function() {
     updateAPIQuery();
     document.getElementById('loadingSpinner').hidden = true;
+
+    let ctx = document.getElementById('sampleChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['07 Apr', '08 Apr', '09 Apr', '10 Apr', '11 Apr'],
+            datasets: [{
+                label: 'Return',
+                data: [12, 19, 5, 9, 2],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 };
 
 function getData(){

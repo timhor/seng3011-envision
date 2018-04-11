@@ -84,3 +84,8 @@
 .key {
     color: rgb(75, 116, 156);
 }
+
+hr {
+    width: 100%;
+    margin: 35px 0;
+}
