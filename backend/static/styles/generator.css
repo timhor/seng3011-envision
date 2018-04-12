@@ -13,6 +13,11 @@
     text-align: center;
 }
 
+#checkboxLabel {
+    margin-top: 4px;
+    cursor: pointer;
+}
+
 #formSubmit {
     margin-top: 250px;
 }
@@ -21,6 +26,7 @@
     color: rgb(0, 35, 0);
     border: transparent 2px solid;
     transition: border .15s ease-in-out;
+    position: fixed;
 }
 
 #formSubmitBtn:hover {
@@ -57,6 +63,10 @@
     overflow: hidden;
     outline: none;
     resize: none;
+}
+
+.mdl-list {
+    margin-left: -15px;
 }
 
 .mdl-tooltip {
