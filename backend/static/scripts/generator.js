@@ -63,8 +63,12 @@ function drawGraphs() {
 
     var dates = new Array();
 
-    // console.log(apiData.Company_Returns[0].Data);
+    returnDatasets = new Array();
+    returnPercentageDatasets = new Array();
+
+    // Fill up data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
+
         if (rec.Return !== 'undefined') returnData.push(rec.Return);
         if (rec.Return_pct !== 'undefined') returnPctData.push(rec.Return_pct*100);
         if (rec.CM_Return !== 'undefined') cmReturnData.push(rec.CM_Return);
@@ -80,143 +84,145 @@ function drawGraphs() {
         dates.push(formattedDate);
     });
 
-    // Build Graph
-    if (apiData.Company_Returns[0].Data.Return !== 'undefined') {
-        document.getElementById('return_graph').hidden = false;
-        let ctx = document.getElementById('return_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
+    // Add datasets for just returns graph
+    if (returnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Return',
+                data: returnData,
+                fill: false,
+                borderColor : "rgb(57, 106, 177)",
+                lineTension :0.1,
+            }
+        );
+    }
+    if (cmReturnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Cumulative Return',
+                data: cmReturnData,
+                fill: false,
+                borderColor : "rgb(218, 124, 48)",
+                lineTension :0.1,
+            }
+        );
+    }
+    if (avReturnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Average Return',
+                data: avReturnData,
+                fill: false,
+                borderColor : "rgb(62, 150, 81)",
+                lineTension :0.1,
+            }
+        );
+    }
+
+    // Add datasets for percentage returns graph
+    if (returnPctData.length > 0) {
+        returnPercentageDatasets.push(
+            {
+                label: 'Return Percentage',
+                data: returnPctData,
+                fill: false,
+                borderColor : "rgb(57, 106, 177)",
+                lineTension :0.1,
+            }
+        );
+    }
+    if (cmReturnPctData.length > 0) {
+        returnPercentageDatasets.push(
+            {
+                label: 'Cumulative Return Percentage',
+                data: cmReturnPctData,
+                fill: false,
+                borderColor : "rgb(218, 124, 48)",
+                lineTension :0.1,
+            }
+        );
+    }
+    if (avReturnPctData.length > 0) {
+        returnPercentageDatasets.push(
+            {
+                label: 'Average Return Percentage',
+                data: avReturnPctData,
+                fill: false,
+                borderColor : "rgb(62, 150, 81)",
+                lineTension :0.1,
+            }
+        );
+    }
+
+    // Build Returns Graph
+    let rtn = document.getElementById('return_graph').getContext('2d');
+    let rtnChart = new Chart(rtn, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: returnDatasets
+        },
+        options: graphOptions
+    });
+
+
+    // Build Returns Percentage Graph
+    let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
+    let rtnPctChart = new Chart(rtnPct, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: returnPercentageDatasets
+        },
+        options: graphOptions
+    });
+
+
+    if (volumeData.length > 0) {
+        let vol = document.getElementById('volume_graph').getContext('2d');
+        let volChart = new Chart(vol, {
             type: 'line',
             data: {
                 labels: dates,
                 datasets: [
                     {
-                        label: 'Return',
-                        data: returnData,
+                        label: 'Volume Traded',
+                        data: volumeData,
                         fill: false,
-                        borderColor : "rgb(75, 192, 192)",
+                        borderColor : "rgb(107, 76, 154)",
                         lineTension :0.1,
                     }
                 ]
             },
             options: graphOptions
         });
-    } else {
-        document.getElementById('return_graph').hidden = true;
     }
-    if (apiData.Company_Returns[0].Data.Return_pct !== 'undefined') {
-        document.getElementById('return_pct_graph').hidden = false;
-        let ctx = document.getElementById('return_pct_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
+
+    if (volumePctData.length > 0) {
+        document.getElementById('volume_pct_graph').hidden = false;
+        let volPct = document.getElementById('volume_pct_graph').getContext('2d');
+        let volPctChart = new Chart(volPct, {
             type: 'line',
             data: {
                 labels: dates,
                 datasets: [
                     {
-                        label: 'Return Percentage',
-                        data: returnPctData,
+                        label: 'Volume Traded Percentage',
+                        data: volumePctData,
                         fill: false,
-                        borderColor : "rgb(75, 192, 192)",
+                        borderColor : "rgb(107, 76, 154)",
                         lineTension :0.1,
                     }
                 ]
             },
             options: graphOptions
         });
-    } else {
-        document.getElementById('return_pct_graph').hidden = true;
     }
-    if (apiData.Company_Returns[0].Data.CM_Return !== 'undefined') {
-        document.getElementById('cm_return_graph').hidden = false;
-        let ctx = document.getElementById('cm_return_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Cumulative Return',
-                        data: cmReturnData,
-                        fill: false,
-                        borderColor : "rgb(0, 100, 100)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('cm_return_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.CM_Return_pct !== 'undefined') {
-        document.getElementById('cm_return_pct_graph').hidden = false;
-        let ctx = document.getElementById('cm_return_pct_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Cumulative Return Percentage',
-                        data: cmReturnPctData,
-                        fill: false,
-                        borderColor : "rgb(0, 100, 100)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('cm_return_pct_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.AV_Return !== 'undefined') {
-        document.getElementById('av_return_graph').hidden = false;
-        let ctx = document.getElementById('av_return_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Average Return',
-                        data: avReturnData,
-                        fill: false,
-                        borderColor : "rgb(100, 0, 100)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('av_return_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.AV_Return_pct !== 'undefined') {
-        document.getElementById('av_return_pct_graph').hidden = false;
-        let ctx = document.getElementById('av_return_pct_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Average Return Percentage',
-                        data: avReturnPctData,
-                        fill: false,
-                        borderColor : "rgb(100, 0, 100)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('av_return_pct_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.Daily_Spread !== 'undefined') {
+
+    if (dailySpreadData.length > 0) {
         document.getElementById('daily_spread_graph').hidden = false;
-        let ctx = document.getElementById('daily_spread_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
+        let spread = document.getElementById('daily_spread_graph').getContext('2d');
+        let spreadChart = new Chart(spread, {
             type: 'line',
             data: {
                 labels: dates,
@@ -225,59 +231,13 @@ function drawGraphs() {
                         label: 'Daily Spread',
                         data: dailySpreadData,
                         fill: false,
-                        borderColor : "rgb(125, 125, 125)",
+                        borderColor : "rgb(148, 139, 61)",
                         lineTension :0.1,
                     }
                 ]
             },
             options: graphOptions
         });
-    } else {
-        document.getElementById('daily_spread_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.Volume !== 'undefined') {
-        document.getElementById('volume_graph').hidden = false;
-        let ctx = document.getElementById('volume_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Volume',
-                        data: volumeData,
-                        fill: false,
-                        borderColor : "rgb(10, 10, 10)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('volume_graph').hidden = true;
-    }
-    if (apiData.Company_Returns[0].Data.Volume_pct !== 'undefined') {
-        document.getElementById('volume_pct_graph').hidden = false;
-        let ctx = document.getElementById('volume_pct_graph').getContext('2d');
-        let myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Volume Percentage',
-                        data: volumePctData,
-                        fill: false,
-                        borderColor : "rgb(10, 10, 10)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    } else {
-        document.getElementById('volume_pct_graph').hidden = true;
     }
 }
 
