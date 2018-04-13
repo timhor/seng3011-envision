@@ -71,15 +71,15 @@ function drawGraphs() {
     // Fill up data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
 
-        if (rec.Return !== 'undefined') returnData.push(rec.Return);
-        if (rec.Return_pct !== 'undefined') returnPctData.push(rec.Return_pct*100);
-        if (rec.CM_Return !== 'undefined') cmReturnData.push(rec.CM_Return);
-        if (rec.CM_Return_pct !== 'undefined') cmReturnPctData.push(rec.CM_Return_pct*100);
-        if (rec.AV_Return !== 'undefined') avReturnData.push(rec.AV_Return);
-        if (rec.AV_Return_pct !== 'undefined') avReturnPctData.push(rec.AV_Return_pct*100);
-        if (rec.Daily_Spread !== 'undefined') dailySpreadData.push(rec.Daily_Spread);
-        if (rec.Volume !== 'undefined') volumeData.push(rec.Volume);
-        if (rec.Volume_pct !== 'undefined') volumePctData.push(rec.Volume_pct*100);
+        if (rec.Return !== 'undefined') returnData.push(Number((rec.Return).toFixed(4)));
+        if (rec.Return_pct !== 'undefined') returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));
+        if (rec.CM_Return !== 'undefined') cmReturnData.push(Number((rec.CM_Return).toFixed(4)));
+        if (rec.CM_Return_pct !== 'undefined') cmReturnPctData.push(Number((rec.CM_Return_pct*100).toFixed(4)));
+        if (rec.AV_Return !== 'undefined') avReturnData.push(Number((rec.AV_Return).toFixed(4)));
+        if (rec.AV_Return_pct !== 'undefined') avReturnPctData.push(Number((rec.AV_Return_pct*100).toFixed(4)));
+        if (rec.Daily_Spread !== 'undefined') dailySpreadData.push(Number((rec.Daily_Spread).toFixed(2)));
+        if (rec.Volume !== 'undefined') volumeData.push(Number((rec.Volume).toFixed(4)));
+        if (rec.Volume_pct !== 'undefined') volumePctData.push(Number((rec.Volume_pct*100).toFixed(4)));
 
         let mydate = new Date(rec.Date);
         let formattedDate = mydate.toLocaleDateString();
