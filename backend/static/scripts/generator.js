@@ -13,6 +13,8 @@ function getData(){
 
     let listOfVar = getListOfVars();
 
+    document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
+
     document.getElementById('queryResults').hidden = true;
     document.getElementById('loadingSpinner').hidden = false;
 
