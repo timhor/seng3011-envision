@@ -42,3 +42,24 @@ mat-divider {
     border: 3px solid hsla(0, 0%, 100%, .5);
     border-radius: 100%;
 }
+
+.search-bar {
+    display: block;
+    height: 70%;
+    width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.search-bar .search-form input {
+    font-size: 1rem;
+    cursor: text;
+    text-indent: 10px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: 0;
+}
+
+.search-form {
+    padding: 6px;
+}
