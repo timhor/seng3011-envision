@@ -200,63 +200,40 @@ function drawGraphs() {
 
     // Build Returns Graph
     let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: returnDatasets
-        },
-        options: graphOptions
-    });
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, graphOptions));
 
 
     // Build Returns Percentage Graph
     let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-    let rtnPctChart = new Chart(rtnPct, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: returnPercentageDatasets
-        },
-        options: graphOptions
-    });
+    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, graphOptions));
 
 
     // Build Volume Graph
     let vol = document.getElementById('volume_graph').getContext('2d');
-    let volChart = new Chart(vol, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: volumeDatasets
-        },
-        options: graphOptions
-    });
+    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, graphOptions));
 
 
     // Build Volume Percentage Graph
     let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-    let volPctChart = new Chart(volPct, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: volumePercentageDatasets
-        },
-        options: graphOptions
-    });
+    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, graphOptions));
 
 
     // Build Daily Spread Graph
     let spread = document.getElementById('daily_spread_graph').getContext('2d');
-    let spreadChart = new Chart(spread, {
+    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, graphOptions));
+
+}
+
+function buildGraphData(dates, datasets, graphOptions) {
+    var formatOutput = {
         type: 'line',
         data: {
             labels: dates,
-            datasets: dailySpreadDatasets
+            datasets: datasets
         },
         options: graphOptions
-    });
-
+    }
+    return formatOutput;
 }
 
 function syntaxHighlight(json) {
