@@ -7,19 +7,9 @@ import logging
 app = Flask('envision-server-api')
 app.debug = True
 
-VALID_VARS = {
-    'Return': 'Return',
-    'Return_pct': 'Return Percentage',
-    'CM_Return': 'Cumulative Return',
-    'CM_Return_pct': 'Cumulative Return Percentage',
-    'AV_Return': 'Average Return',
-    'AV_Return_pct': 'Average Return Percentage',
-    'Daily_Spread': 'Daily Spread',
-    'Volume': 'Volume',
-    'Volume_pct': 'Volume Percentage'
-}
+
 VALID_VERSIONS = {
-    'v1.0': v1_0,
+    'v1.0': v1_0,  # Latest is the last one in the dict
 }
 
 
@@ -38,7 +28,8 @@ logger.info('Logger initialised')
 @app.route('/home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page="generator", variables_list=VALID_VARS)
+    latest = list(VALID_VERSIONS.values())[-1]
+    return render_template('generator.html', current_page="generator", variables_list=latest.VALID_VARS)
 
 
 @app.route('/documentation')
@@ -88,15 +79,11 @@ def api(version):
         consists_success = False
 
         try:
-            instr = request.args['instrument_id']
-            date_string = request.args['date_of_interest']
-            var_list = request.args['list_of_var']
-            lower = int(request.args['lower_window'])
-            upper = int(request.args['upper_window'])
-        except KeyError:
-            return "Incorrect arguments supplied"
-
-        instr, date, var_list = compute_engine.parse_args(instr, date_string, var_list)
+            instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
+        except compute_engine.ParamException as e:
+            return f"Error: {e}"
+        except TypeError:
+            return "Not all required arguments supplied"
 
         returns = []
         for i in instr:
@@ -141,7 +128,7 @@ def api(version):
             'module': f'Envision_API {version}',
             'parameters': {
                 'instrument_id': instr,
-                'date_of_interest': date_string,
+                'date_of_interest': request.args['date_of_interest'],
                 'list_of_var': var_list,
                 'lower_window': lower,
                 'upper_window': upper,

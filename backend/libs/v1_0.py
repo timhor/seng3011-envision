@@ -4,24 +4,53 @@ import numpy as np
 import requests
 from datetime import datetime, timedelta, date
 
+class ParamException(Exception):
+    pass
 
-def parse_args(instr, target, var_list):
+
+VALID_VARS = {
+    'Return': 'Return',
+    'Return_pct': 'Return Percentage',
+    'CM_Return': 'Cumulative Return',
+    'CM_Return_pct': 'Cumulative Return Percentage',
+    'AV_Return': 'Average Return',
+    'AV_Return_pct': 'Average Return Percentage',
+    'Volume': 'Volume',
+    'Volume_pct': 'Volume Percentage',
+    'Daily_Spread': 'Daily Spread',
+}
+
+
+def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper_window, **kwargs):
     try:
-        instr = instr.split(',')
+        instr = instrument_id[0].split(',')
     except ValueError:
-        instr = [instr]
+        instr = instrument_id
 
     try:
-        target = datetime.strptime(target, '%Y-%m-%d')
-    except ValueError as e:
-        raise e
-
-    try:
-        var_list = var_list.split(',')
+        target = datetime.strptime(date_of_interest[0], '%Y-%m-%d')
     except ValueError:
-        var_list = [var_list]
+        raise ParamException("date_of_interest needs to be in the correct format")
 
-    return instr, target, var_list
+    try:
+        var_list = list_of_var[0].split(',')
+    except ValueError:
+        var_list = list_of_var
+
+    for i in var_list:
+        if i not in VALID_VARS.keys():
+            raise ParamException(f"{i} does not exist as a variable in list_of_var")
+
+    try:
+        lower = int(lower_window[0])
+        upper = int(upper_window[0])
+    except ValueError:
+        raise ParamException("Window arguments must be integers")
+
+    if lower < 0 or upper < 0:
+        raise ParamException("Window arguments cannot be negative")
+
+    return instr, target, var_list, lower, upper
 
 
 def generate_table(instr, target, lower, upper, var_list):
@@ -137,7 +166,7 @@ def add_advanced_data(df, lower, upper):
 
 
 def filter_data_frame(df, vars):
-    columns = ['Relative_Date', 'Return'] + vars
+    columns = ['Relative_Date'] + vars
     df = df[~np.isnan(df['Relative_Date'])]
     return df[columns]
 
