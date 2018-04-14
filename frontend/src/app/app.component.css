@@ -4,6 +4,41 @@ mat-card {
     text-align: center;
 }
 
-mat-toolbar-row {
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+mat-sidenav {
+    width: 240px;
+    background: linear-gradient(45deg, #d64161, #6b5b95);
+    color: #f9f6fa;
+}
+
+mat-toolbar {
+    width: 100%;
     justify-content: space-between;
+    background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+mat-divider {
+    background-color: hsla(0, 0%, 100%, .5);
+}
+
+#heading {
+    height: 84px;
+    text-align: center;
+    padding: 5px 0;
+    margin-bottom: 5px;
+}
+
+#envisionLogo {
+	width: 50px;
+	margin-right: 6px;
+    border: 3px solid hsla(0, 0%, 100%, .5);
+    border-radius: 100%;
 }
