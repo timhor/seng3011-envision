@@ -96,8 +96,8 @@ function drawGraphs() {
                 label: 'Return',
                 data: returnData,
                 fill: false,
-                borderColor : "rgb(57, 106, 177)",
-                lineTension :0.1,
+                borderColor: "rgb(57, 106, 177)",
+                lineTension: 0.1,
             }
         );
     }
@@ -107,8 +107,8 @@ function drawGraphs() {
                 label: 'Cumulative Return',
                 data: cmReturnData,
                 fill: false,
-                borderColor : "rgb(218, 124, 48)",
-                lineTension :0.1,
+                borderColor: "rgb(218, 124, 48)",
+                lineTension: 0.1,
             }
         );
     }
@@ -118,8 +118,8 @@ function drawGraphs() {
                 label: 'Average Return',
                 data: avReturnData,
                 fill: false,
-                borderColor : "rgb(62, 150, 81)",
-                lineTension :0.1,
+                borderColor: "rgb(62, 150, 81)",
+                lineTension: 0.1,
             }
         );
     }
@@ -131,8 +131,8 @@ function drawGraphs() {
                 label: 'Return Percentage',
                 data: returnPctData,
                 fill: false,
-                borderColor : "rgb(57, 106, 177)",
-                lineTension :0.1,
+                borderColor: "rgb(57, 106, 177)",
+                lineTension: 0.1,
             }
         );
     }
@@ -142,8 +142,8 @@ function drawGraphs() {
                 label: 'Cumulative Return Percentage',
                 data: cmReturnPctData,
                 fill: false,
-                borderColor : "rgb(218, 124, 48)",
-                lineTension :0.1,
+                borderColor: "rgb(218, 124, 48)",
+                lineTension: 0.1,
             }
         );
     }
@@ -153,8 +153,8 @@ function drawGraphs() {
                 label: 'Average Return Percentage',
                 data: avReturnPctData,
                 fill: false,
-                borderColor : "rgb(62, 150, 81)",
-                lineTension :0.1,
+                borderColor: "rgb(62, 150, 81)",
+                lineTension: 0.1,
             }
         );
     }
@@ -166,8 +166,8 @@ function drawGraphs() {
                 label: 'Volume Traded',
                 data: volumeData,
                 fill: false,
-                borderColor : "rgb(107, 76, 154)",
-                lineTension :0.1,
+                borderColor: "rgb(107, 76, 154)",
+                lineTension: 0.1,
             }
         );
     }
@@ -179,8 +179,8 @@ function drawGraphs() {
                 label: 'Volume Traded Percentage',
                 data: volumePctData,
                 fill: false,
-                borderColor : "rgb(107, 76, 154)",
-                lineTension :0.1,
+                borderColor: "rgb(107, 76, 154)",
+                lineTension: 0.1,
             }
         );
     }
@@ -192,8 +192,8 @@ function drawGraphs() {
                 label: 'Daily Spread',
                 data: dailySpreadData,
                 fill: false,
-                borderColor : "rgb(148, 139, 61)",
-                lineTension :0.1,
+                borderColor: "rgb(148, 139, 61)",
+                lineTension: 0.1,
             }
         );
     }
