@@ -77,13 +77,25 @@ def api(version):
         success = True
         all_error_messages = []
         consists_success = False
+        metadata = {
+                'team': 'Envision',
+                'module': f'Envision_API {version}',
+                'success': success,
+                'error_messages': all_error_messages
+            }
 
         try:
             instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
         except compute_engine.ParamException as e:
-            return f"Error: {e}"
+            all_error_messages.append(f"Error: {e}")
+            success = False
         except TypeError:
-            return "Not all required arguments supplied"
+            all_error_messages.append("Not all required arguments supplied")
+            success = False
+
+        if not success:
+            logger.info(f'{metadata}')
+            return jsonify({'metdata': metadata})
 
         returns = []
         for i in instr:
@@ -123,20 +135,13 @@ def api(version):
         start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
         end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
 
-        metadata = {
-            'team': 'Envision',
-            'module': f'Envision_API {version}',
-            'parameters': {
+        metadata['parameters'] =  {
                 'instrument_id': instr,
                 'date_of_interest': request.args['date_of_interest'],
                 'list_of_var': var_list,
                 'lower_window': lower,
                 'upper_window': upper,
-            },
-            'success': success
-        }
-
-        logger.info(f'{metadata}')
+            }
 
         if consists_success:
             metadata['start_time'] = start_time
@@ -145,6 +150,7 @@ def api(version):
         elif not success:
             metadata['error_messages'] = all_error_messages
 
+        logger.info(f'{metadata}')
         payload = {
             'Metadata': metadata,
             'Company_Returns': returns
