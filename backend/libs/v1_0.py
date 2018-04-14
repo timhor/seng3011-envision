@@ -16,7 +16,7 @@ VALID_VARS = {
     'AV_Return': 'Average Return',
     'AV_Return_pct': 'Average Return Percentage',
     'Volume': 'Volume',
-    'Volume_pct': 'Volume Percentage'
+    'Volume_pct': 'Volume Percentage',
     'Daily_Spread': 'Daily Spread',
 }
 
