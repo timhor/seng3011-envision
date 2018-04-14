@@ -78,11 +78,11 @@ def api(version):
         all_error_messages = []
         consists_success = False
         metadata = {
-                'team': 'Envision',
-                'module': f'Envision_API {version}',
-                'success': success,
-                'error_messages': all_error_messages
-            }
+            'team': 'Envision',
+            'module': f'Envision_API {version}',
+            'success': success,
+            'error_messages': all_error_messages
+        }
 
         try:
             instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
@@ -136,12 +136,12 @@ def api(version):
         end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
 
         metadata['parameters'] =  {
-                'instrument_id': instr,
-                'date_of_interest': request.args['date_of_interest'],
-                'list_of_var': var_list,
-                'lower_window': lower,
-                'upper_window': upper,
-            }
+            'instrument_id': instr,
+            'date_of_interest': request.args['date_of_interest'],
+            'list_of_var': var_list,
+            'lower_window': lower,
+            'upper_window': upper,
+        }
 
         if consists_success:
             metadata['start_time'] = start_time
