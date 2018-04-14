@@ -2,6 +2,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="{{url_for('static', filename='styles/generator.css')}}">
 <script src="{{url_for('static', filename='scripts/generator.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/Chart.bundle.min.js')}}"></script>
 <!-- Page Heading -->
 <div class="centeritems mdl-grid">
     <div class="mdl-layout-spacer"></div>
@@ -93,7 +94,7 @@
             <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
         </div>
     </div>
-    <div id="formSubmit" class="mdl-cell mdl-cell--1-col">
+    <div id="formSubmit" class="mdl-cell mdl-cell--1-col" align="center">
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="getData()" id="formSubmitBtn">
             <i class="material-icons">arrow_forward</i>
         </button>
@@ -113,6 +114,20 @@
     </div>
     <div class="mdl-layout-spacer"></div>
 </div>
+
+<hr>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col"><canvas id="return_graph"></canvas></div>
+    <div class="mdl-cell mdl-cell--6-col"><canvas id="return_percentage_graph"></canvas></div>
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--6-col"><canvas id="volume_graph"></canvas></div>
+    <div class="mdl-cell mdl-cell--6-col"><canvas id="volume_percentage_graph"></canvas></div>
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-cell mdl-cell--6-col"><canvas id="daily_spread_graph"></canvas></div>
+
+</div>
+
+
 <script>
     function getListOfVars() {
         let firstVariable = true;
