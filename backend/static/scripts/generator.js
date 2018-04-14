@@ -13,6 +13,7 @@ function getData(){
 
     let listOfVar = getListOfVars();
 
+    document.getElementById('scrollToGraphsBtn').hidden = true;
     document.getElementById('graphSeparator').hidden = true;
     document.getElementById('graphs').hidden = true;
     document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
