@@ -19,18 +19,26 @@
 }
 
 #formSubmit {
-    margin-top: 250px;
+    padding-bottom: 6px;
 }
 
 #formSubmitBtn {
     color: rgb(0, 35, 0);
     border: transparent 2px solid;
     transition: border .15s ease-in-out;
-    position: fixed;
+    /* sticky relative to formSubmit column  */
+    position: sticky;
+    top: 300px;
+    /* needed to make button remain clickable after scrolling with position: sticky */
+    overflow: visible;
 }
 
 #formSubmitBtn:hover {
     border: dodgerblue 2px solid;
+}
+
+#queryResultsCard {
+    margin-left: 20px;
 }
 
 #outputPlaceholder {
@@ -93,4 +101,14 @@
 }
 .key {
     color: rgb(75, 116, 156);
+}
+
+hr {
+    width: 100%;
+    margin: 35px 0;
+}
+
+canvas{
+    width: 500px;
+    height: 300px;
 }
