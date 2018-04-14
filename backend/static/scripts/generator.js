@@ -26,6 +26,7 @@ function getData(){
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
             drawGraphs();
+            document.getElementById('scrollToGraphsBtn').hidden = false;
         })
     } else {
         $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
@@ -35,6 +36,7 @@ function getData(){
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
             drawGraphs();
+            document.getElementById('scrollToGraphsBtn').hidden = false;
         })
     }
 };
