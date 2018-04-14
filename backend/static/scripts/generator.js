@@ -67,19 +67,22 @@ function drawGraphs() {
 
     returnDatasets = new Array();
     returnPercentageDatasets = new Array();
+    volumeDatasets = new Array();
+    volumePercentageDatasets = new Array();
+    dailySpreadDatasets = new Array();
 
     // Fill up data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
 
-        if (rec.Return !== 'undefined') returnData.push(Number((rec.Return).toFixed(4)));
-        if (rec.Return_pct !== 'undefined') returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));
-        if (rec.CM_Return !== 'undefined') cmReturnData.push(Number((rec.CM_Return).toFixed(4)));
-        if (rec.CM_Return_pct !== 'undefined') cmReturnPctData.push(Number((rec.CM_Return_pct*100).toFixed(4)));
-        if (rec.AV_Return !== 'undefined') avReturnData.push(Number((rec.AV_Return).toFixed(4)));
-        if (rec.AV_Return_pct !== 'undefined') avReturnPctData.push(Number((rec.AV_Return_pct*100).toFixed(4)));
-        if (rec.Daily_Spread !== 'undefined') dailySpreadData.push(Number((rec.Daily_Spread).toFixed(2)));
-        if (rec.Volume !== 'undefined') volumeData.push(Number((rec.Volume).toFixed(4)));
-        if (rec.Volume_pct !== 'undefined') volumePctData.push(Number((rec.Volume_pct*100).toFixed(4)));
+        if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
+        if (rec.Return_pct !== undefined) {returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));}
+        if (rec.CM_Return !== undefined) {cmReturnData.push(Number((rec.CM_Return).toFixed(4)));}
+        if (rec.CM_Return_pct !== undefined) {cmReturnPctData.push(Number((rec.CM_Return_pct*100).toFixed(4)));}
+        if (rec.AV_Return !== undefined) {avReturnData.push(Number((rec.AV_Return).toFixed(4)));}
+        if (rec.AV_Return_pct !== undefined) {avReturnPctData.push(Number((rec.AV_Return_pct*100).toFixed(4)));}
+        if (rec.Daily_Spread !== undefined) {dailySpreadData.push(Number((rec.Daily_Spread).toFixed(2)));}
+        if (rec.Volume !== undefined) {volumeData.push(Number((rec.Volume).toFixed(4)));}
+        if (rec.Volume_pct !== undefined) {volumePctData.push(Number((rec.Volume_pct*100).toFixed(4)));}
 
         let mydate = new Date(rec.Date);
         let formattedDate = mydate.toLocaleDateString();
@@ -156,6 +159,45 @@ function drawGraphs() {
         );
     }
 
+    // Add datasets for volume graph
+    if (volumeData.length > 0) {
+        volumeDatasets.push(
+            {
+                label: 'Volume Traded',
+                data: volumeData,
+                fill: false,
+                borderColor : "rgb(107, 76, 154)",
+                lineTension :0.1,
+            }
+        );
+    }
+
+    // Add datasets for volume percentage graph
+    if (volumePctData.length > 0) {
+        volumePercentageDatasets.push(
+            {
+                label: 'Volume Traded Percentage',
+                data: volumePctData,
+                fill: false,
+                borderColor : "rgb(107, 76, 154)",
+                lineTension :0.1,
+            }
+        );
+    }
+
+    // Add datasets for daily spread graph
+    if (dailySpreadData.length > 0) {
+        dailySpreadDatasets.push(
+            {
+                label: 'Daily Spread',
+                data: dailySpreadData,
+                fill: false,
+                borderColor : "rgb(148, 139, 61)",
+                lineTension :0.1,
+            }
+        );
+    }
+
     // Build Returns Graph
     let rtn = document.getElementById('return_graph').getContext('2d');
     let rtnChart = new Chart(rtn, {
@@ -180,67 +222,41 @@ function drawGraphs() {
     });
 
 
-    if (volumeData.length > 0) {
-        let vol = document.getElementById('volume_graph').getContext('2d');
-        let volChart = new Chart(vol, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Volume Traded',
-                        data: volumeData,
-                        fill: false,
-                        borderColor : "rgb(107, 76, 154)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    }
+    // Build Volume Graph
+    let vol = document.getElementById('volume_graph').getContext('2d');
+    let volChart = new Chart(vol, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: volumeDatasets
+        },
+        options: graphOptions
+    });
 
-    if (volumePctData.length > 0) {
-        document.getElementById('volume_pct_graph').hidden = false;
-        let volPct = document.getElementById('volume_pct_graph').getContext('2d');
-        let volPctChart = new Chart(volPct, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Volume Traded Percentage',
-                        data: volumePctData,
-                        fill: false,
-                        borderColor : "rgb(107, 76, 154)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    }
 
-    if (dailySpreadData.length > 0) {
-        document.getElementById('daily_spread_graph').hidden = false;
-        let spread = document.getElementById('daily_spread_graph').getContext('2d');
-        let spreadChart = new Chart(spread, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Daily Spread',
-                        data: dailySpreadData,
-                        fill: false,
-                        borderColor : "rgb(148, 139, 61)",
-                        lineTension :0.1,
-                    }
-                ]
-            },
-            options: graphOptions
-        });
-    }
+    // Build Volume Percentage Graph
+    let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
+    let volPctChart = new Chart(volPct, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: volumePercentageDatasets
+        },
+        options: graphOptions
+    });
+
+
+    // Build Daily Spread Graph
+    let spread = document.getElementById('daily_spread_graph').getContext('2d');
+    let spreadChart = new Chart(spread, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: dailySpreadDatasets
+        },
+        options: graphOptions
+    });
+
 }
 
 function syntaxHighlight(json) {
