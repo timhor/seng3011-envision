@@ -13,6 +13,9 @@ function getData(){
 
     let listOfVar = getListOfVars();
 
+    document.getElementById('scrollToGraphsBtn').hidden = true;
+    document.getElementById('graphSeparator').hidden = true;
+    document.getElementById('graphs').hidden = true;
     document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
 
     document.getElementById('queryResults').hidden = true;
@@ -26,6 +29,7 @@ function getData(){
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
             drawGraphs();
+            document.getElementById('scrollToGraphsBtn').hidden = false;
         })
     } else {
         $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
@@ -35,12 +39,16 @@ function getData(){
             document.getElementById('loadingSpinner').hidden = true;
             document.getElementById('queryResults').hidden = false;
             drawGraphs();
+            document.getElementById('scrollToGraphsBtn').hidden = false;
         })
     }
 };
 
-function drawGraphs() {
+function scrollToGraphs() {
+    document.getElementById('graphs').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
 
+function drawGraphs() {
     var graphOptions = {
         scales: {
             yAxes: [{
@@ -52,7 +60,6 @@ function drawGraphs() {
     };
 
     // Convert API Data to Array
-
     var returnData = new Array();
     var returnPctData = new Array();
     var cmReturnData = new Array();
@@ -222,6 +229,8 @@ function drawGraphs() {
     let spread = document.getElementById('daily_spread_graph').getContext('2d');
     let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, graphOptions));
 
+    document.getElementById('graphSeparator').hidden = false;
+    document.getElementById('graphs').hidden = false;
 }
 
 function buildGraphData(dates, datasets, graphOptions) {
