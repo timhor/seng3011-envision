@@ -95,9 +95,17 @@
         </div>
     </div>
     <div id="formSubmit" class="mdl-cell mdl-cell--1-col" align="center">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="getData()" id="formSubmitBtn">
-            <i class="material-icons">arrow_forward</i>
-        </button>
+        <!-- the entire div is sticky relative to the formSubmit column -->
+        <div id="midColumnButtons">
+            <!-- submit button is absolutely positioned within the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="getData()" id="formSubmitBtn">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+            <!-- graphs button is relatively positioned to the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="scrollToGraphs()" id="scrollToGraphsBtn">
+                <i class="material-icons">show_chart</i>
+            </button>
+        </div>
     </div>
     <div id="queryResultsCard" class="mdl-cell mdl-cell--5-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
@@ -116,7 +124,7 @@
 </div>
 
 <hr>
-<div class="mdl-grid">
+<div class="mdl-grid" id="graphs">
     <div class="mdl-cell mdl-cell--6-col"><canvas id="return_graph"></canvas></div>
     <div class="mdl-cell mdl-cell--6-col"><canvas id="return_percentage_graph"></canvas></div>
     <div class="mdl-layout-spacer"></div>

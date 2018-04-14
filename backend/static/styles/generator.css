@@ -19,21 +19,28 @@
 }
 
 #formSubmit {
-    padding-bottom: 6px;
+    padding-bottom: 200px;
 }
 
-#formSubmitBtn {
+#midColumnButtons {
+    position: sticky;
+    top: 260px;
+}
+
+#scrollToGraphsBtn {
+    top: 194px;
+    position: relative;
+}
+
+.action-btn {
     color: rgb(0, 35, 0);
     border: transparent 2px solid;
     transition: border .15s ease-in-out;
-    /* sticky relative to formSubmit column  */
-    position: sticky;
-    top: 300px;
     /* needed to make button remain clickable after scrolling with position: sticky */
     overflow: visible;
 }
 
-#formSubmitBtn:hover {
+.action-btn:hover {
     border: dodgerblue 2px solid;
 }
 

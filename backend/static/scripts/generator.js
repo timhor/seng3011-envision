@@ -39,6 +39,10 @@ function getData(){
     }
 };
 
+function scrollToGraphs() {
+    document.getElementById('graphs').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
 function drawGraphs() {
 
     var graphOptions = {
