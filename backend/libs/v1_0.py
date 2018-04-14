@@ -15,9 +15,9 @@ VALID_VARS = {
     'CM_Return_pct': 'Cumulative Return Percentage',
     'AV_Return': 'Average Return',
     'AV_Return_pct': 'Average Return Percentage',
-    'Daily_Spread': 'Daily Spread',
     'Volume': 'Volume',
     'Volume_pct': 'Volume Percentage'
+    'Daily_Spread': 'Daily Spread',
 }
 
 
