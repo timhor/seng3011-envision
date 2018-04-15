@@ -3,10 +3,20 @@ from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
 import logging
+import warnings
+import os
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from db_manage import Dump
+import json
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    engine = create_engine(os.environ['DB_CONN'])
+Session = sessionmaker(bind=engine)
+session = Session()
 
 app = Flask('envision-server-api')
 app.debug = True
-
 
 VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
@@ -83,6 +93,19 @@ def api(version):
             'success': success,
             'error_messages': all_error_messages
         }
+        q = session.query(Dump).filter_by(
+            instr=request.args['instrument_id'],
+            date=request.args['date_of_interest'],
+            vars=request.args['list_of_var'],
+            lower=request.args['lower_window'],
+            upper=request.args['upper_window']
+        )
+
+        returns = []
+        results = session.execute(q).first()
+        if results:
+            consists_success = True
+            returns = json.loads(results[-1])
 
         try:
             instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
@@ -97,37 +120,47 @@ def api(version):
             logger.info(f'{metadata}')
             return jsonify({'metdata': metadata})
 
-        returns = []
-        for i in instr:
-            try:
-                df = compute_engine.generate_table(i, date, lower, upper, var_list)
+        if not returns:
+            for i in instr:
+                try:
+                    df = compute_engine.generate_table(i, date, lower, upper, var_list)
 
-                df.index = df.index.format()
+                    df.index = df.index.format()
 
-                # Alternative implementation
-                def listed_dict(df):
-                    info_list = []
-                    for i in df.iterrows():
-                        info = {'Date': i[0]}
-                        info.update(i[1].to_dict())
-                        info_list.append(info)
-                    return info_list
+                    # Alternative implementation
+                    def listed_dict(df):
+                        info_list = []
+                        for i in df.iterrows():
+                            info = {'Date': i[0]}
+                            info.update(i[1].to_dict())
+                            info_list.append(info)
+                        return info_list
 
-                data = listed_dict(df)
+                    data = listed_dict(df)
 
-                consists_success = True
+                    consists_success = True
 
-            except Exception as e:
-                print(e)
-                error_message = "Error: " + str(e)
-                data = error_message
-                all_error_messages.append(error_message)
-                success = False
+                except Exception as e:
+                    print(e)
+                    error_message = "Error: " + str(e)
+                    data = error_message
+                    all_error_messages.append(error_message)
+                    success = False
 
-            returns.append({
-                'InstrumentID': i,
-                'Data': data
-            })
+                returns.append({
+                    'InstrumentID': i,
+                    'Data': data
+                })
+            db_item = Dump(
+                instr=request.args['instrument_id'],
+                date=request.args['date_of_interest'],
+                vars=request.args['list_of_var'],
+                lower=request.args['lower_window'],
+                upper=request.args['upper_window'],
+                created=datetime.now(),
+                payload=json.dumps(returns))
+            session.add(db_item)
+            session.commit()
 
         end_time = datetime.now()
 

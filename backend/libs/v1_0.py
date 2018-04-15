@@ -22,16 +22,19 @@ VALID_VARS = {
 
 
 def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper_window, **kwargs):
+    # Instrument
     try:
         instr = instrument_id[0].split(',')
     except ValueError:
         instr = instrument_id
 
+    # Date
     try:
         target = datetime.strptime(date_of_interest[0], '%Y-%m-%d')
     except ValueError:
         raise ParamException("date_of_interest needs to be in the correct format")
 
+    # Vars
     try:
         var_list = list_of_var[0].split(',')
     except ValueError:
@@ -41,6 +44,7 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
         if i not in VALID_VARS.keys():
             raise ParamException(f"{i} does not exist as a variable in list_of_var")
 
+    # Windows
     try:
         lower = int(lower_window[0])
         upper = int(upper_window[0])
