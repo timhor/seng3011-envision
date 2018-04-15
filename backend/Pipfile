@@ -13,6 +13,7 @@ pandas = "*"
 sqlalchemy = "*"
 "psycopg2-binary" = "*"
 "markdown2" = "*"
+coverage = "*"
 "psycopg2" = "*"
 
 

@@ -13,3 +13,4 @@
 **/.vscode
 **/logging.log
 
+.coverage
