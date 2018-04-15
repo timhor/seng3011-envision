@@ -20,6 +20,14 @@ VALID_VARS = {
     'Daily_Spread': 'Daily Spread',
 }
 
+def listed_dict(df):
+    info_list = []
+    for i in df.iterrows():
+        info = {'Date': i[0]}
+        info.update(i[1].to_dict())
+        info_list.append(info)
+    return info_list
+
 
 def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper_window, **kwargs):
     # Instrument
@@ -57,37 +65,62 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
     return instr, target, var_list, lower, upper
 
 
-def generate_table(instr, target, lower, upper, var_list):
+def calculate_returns(instrument_id, date_of_interest, list_of_var, lower_window, upper_window):
+    returns = []
+    error_messages = []
+    for i in instrument_id:
+        i = i.strip()
+        try:
+            df = generate_table(i, date_of_interest, list_of_var, lower_window, upper_window)
+            df.index = df.index.format()
+            data = listed_dict(df)
+
+        except KeyError as e:
+            data = f"Error: {i} does not exist"
+            error_messages.append(data)
+        except Exception as e:
+            data = "Error: " + str(e)
+            print(data)
+            error_messages.append(data)
+
+        returns.append({
+            'InstrumentID': i,
+            'Data': data
+        })
+    return returns, error_messages
+
+
+def generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window):
     today = date.today()
     # TODO: Make this more specific
-    if (today - target.date()).days > 100:
+    if (today - date_of_interest.date()).days > 100:
         # Need full data
         full = True
     else:
         full = False
 
-    if [i for i in var_list if i in ADJUSTED_VARS]:
+    if [i for i in list_of_var if i in ADJUSTED_VARS]:
         adjusted = True
     else:
         adjusted = False
 
-    df = get_ts_daily_adjusted(instr, adjusted=adjusted, full=full)
-    df = working_data(df, target, lower, upper)
+    df = get_ts_daily_adjusted(instrument_id, adjusted=adjusted, full=full)
+    df = working_data(df, date_of_interest, lower_window, upper_window)
     if adjusted:
-        add_advanced_data(df, lower, upper)
-    add_performance(df, lower, upper)
-    df = filter_data_frame(df, var_list)
+        add_advanced_data(df, lower_window, upper_window)
+    add_performance(df, lower_window, upper_window)
+    df = filter_data_frame(df, list_of_var)
     return df
 
 
-def get_ts_daily_adjusted(instr, adjusted=False, full=True):
+def get_ts_daily_adjusted(instrument_id, adjusted=False, full=True):
     """Get data directly from Alpha Vantage"""
     target = 'TIME_SERIES_DAILY_ADJUSTED' if adjusted else 'TIME_SERIES_DAILY'
     output_size = 'full' if full else 'compact'
 
     r = requests.get('https://www.alphavantage.co/query', params={
         'function': target,
-        'symbol': instr,
+        'symbol': instrument_id,
         'apikey': os.environ['ALPHA_VANTAGE_API'],
         'outputsize': output_size,
     })
@@ -104,16 +137,16 @@ def get_ts_daily_adjusted(instr, adjusted=False, full=True):
     return df
 
 
-def working_data(df, target, lower, upper):
+def working_data(df, date_of_interest, lower_window, upper_window):
     """Creates an enriched dataset to work with"""
 
     # Actual dates we are interested in
-    lower_date = target - timedelta(days=lower)
-    upper_date = target + timedelta(days=upper)
+    lower_date = date_of_interest - timedelta(days=lower_window)
+    upper_date = date_of_interest + timedelta(days=upper_window)
 
     # Specs want us to call more than that
-    lower_date_extreme = target - timedelta(days=(2 * lower + 1))
-    upper_date_extreme = target + timedelta(days=(2 * upper))
+    lower_date_extreme = date_of_interest - timedelta(days=(2 * lower_window + 1))
+    upper_date_extreme = date_of_interest + timedelta(days=(2 * upper_window))
 
     # Tighten to the range we want (and show non-trading days too)
     df = df.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D'))
@@ -126,7 +159,7 @@ def working_data(df, target, lower, upper):
     df['4. close'] = df['4. close'].fillna(method='ffill')
 
     # Tag with relative dates
-    df = df.apply(tag_relative_date, axis=1, args=(target, lower_date, upper_date))
+    df = df.apply(tag_relative_date, axis=1, args=(date_of_interest, lower_date, upper_date))
 
     #  Calculate the data we want
     df['Return'] = df['4. close'].diff()
@@ -137,13 +170,13 @@ def working_data(df, target, lower, upper):
     return df
 
 
-def tag_relative_date(row, target, lower, upper):
-    """Tags a row with it's relative distance from target date if we are interested in it"""
-    row['Relative_Date'] = (row.name - target).days if lower <= row.name <= upper else np.nan
+def tag_relative_date(row, date_of_interest, lower_window, upper_window):
+    """Tags a row with it's relative distance from date_of_interest if we are interested in it"""
+    row['Relative_Date'] = (row.name - date_of_interest).days if lower_window <= row.name <= upper_window else np.nan
     return row
 
 
-def add_performance(df, lower, upper):
+def add_performance(df, lower_window, upper_window):
     df['CM_Return'] = np.nan
     df['AV_Return'] = np.nan
     df['CM_Return_pct'] = np.nan
@@ -153,24 +186,24 @@ def add_performance(df, lower, upper):
         if np.isnan(df.iloc[i]['Relative_Date']):
             continue
         else:
-            df['CM_Return'].iloc[i] = df['Return'][i - lower:i + upper + 1].sum()
-            df['AV_Return'].iloc[i] = df['CM_Return'].iloc[i] / (lower + upper + 1)
-            df['CM_Return_pct'].iloc[i] = df['Return_pct'][i - lower:i + upper + 1].sum()
-            df['AV_Return_pct'].iloc[i] = df['CM_Return_pct'].iloc[i] / (lower + upper + 1)
+            df['CM_Return'].iloc[i] = df['Return'][i - lower_window:i + upper_window + 1].sum()
+            df['AV_Return'].iloc[i] = df['CM_Return'].iloc[i] / (lower_window + upper_window + 1)
+            df['CM_Return_pct'].iloc[i] = df['Return_pct'][i - lower_window:i + upper_window + 1].sum()
+            df['AV_Return_pct'].iloc[i] = df['CM_Return_pct'].iloc[i] / (lower_window + upper_window + 1)
 
 
-def add_advanced_data(df, lower, upper):
+def add_advanced_data(df, lower_window, upper_window):
     df['Volume_pct'] = np.nan
 
     for i in range(len(df)):
         if np.isnan(df.iloc[i]['Relative_Date']):
             continue
         else:
-            df['Volume_pct'].iloc[i] = df['Volume'].iloc[i] / df['Volume'][i - lower:i + upper + 1].sum()
+            df['Volume_pct'].iloc[i] = df['Volume'].iloc[i] / df['Volume'][i - lower_window:i + upper_window + 1].sum()
 
 
-def filter_data_frame(df, vars):
-    columns = ['Relative_Date'] + vars
+def filter_data_frame(df, list_of_var):
+    columns = ['Relative_Date'] + list_of_var
     df = df[~np.isnan(df['Relative_Date'])]
     return df[columns]
 

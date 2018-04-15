@@ -21,6 +21,7 @@ class Dump(Base):
     upper = Column(String, primary_key=True)
     created = Column(DateTime, nullable=False)
     payload = Column(String, nullable=False)
+    errors = Column(String, nullable=False)
 
 
 if __name__ == '__main__':
