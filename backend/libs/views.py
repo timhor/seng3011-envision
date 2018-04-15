@@ -3,10 +3,20 @@ from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
 import logging
+import warnings
+import os
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from db_manage import Dump
+import json
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    engine = create_engine(os.environ['DB_CONN'])
+Session = sessionmaker(bind=engine)
+session = Session()
 
 app = Flask('envision-server-api')
 app.debug = True
-
 
 VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
@@ -71,91 +81,81 @@ def logs():
 
 @app.route('/api/<version>/')
 def api(version):
-    if version in VALID_VERSIONS.keys():
-        compute_engine = VALID_VERSIONS[version]
-        start_time = datetime.now()
-        success = True
-        all_error_messages = []
-        consists_success = False
-        metadata = {
-            'team': 'Envision',
-            'module': f'Envision_API {version}',
-            'success': success,
-            'error_messages': all_error_messages
-        }
+    if version not in VALID_VERSIONS:
+        return f'Unknown API version: {version}'
 
-        try:
-            instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
-        except compute_engine.ParamException as e:
-            all_error_messages.append(f"Error: {e}")
-            success = False
-        except TypeError:
-            all_error_messages.append("Not all required arguments supplied")
-            success = False
+    compute_engine = VALID_VERSIONS[version]
+    start_time = datetime.now()
+    success = True
+    metadata = {
+        'team': 'Envision',
+        'module': f'Envision_API {version}',
+    }
 
-        if not success:
-            logger.info(f'{metadata}')
-            return jsonify({'metdata': metadata})
+    # Check that the arguments are correct
+    try:
+        instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
+    except compute_engine.ParamException as e:
+        metadata['error_messages'] = f"Error: {e}"
+        success = False
+    except TypeError:
+        # Not enough arguments to call parse_args
+        metadata['error_messages'] = "Not all required arguments supplied"
+        success = False
 
-        returns = []
-        for i in instr:
-            try:
-                df = compute_engine.generate_table(i, date, lower, upper, var_list)
-
-                df.index = df.index.format()
-
-                # Alternative implementation
-                def listed_dict(df):
-                    info_list = []
-                    for i in df.iterrows():
-                        info = {'Date': i[0]}
-                        info.update(i[1].to_dict())
-                        info_list.append(info)
-                    return info_list
-
-                data = listed_dict(df)
-
-                consists_success = True
-
-            except Exception as e:
-                print(e)
-                error_message = "Error: " + str(e)
-                data = error_message
-                all_error_messages.append(error_message)
-                success = False
-
-            returns.append({
-                'InstrumentID': i,
-                'Data': data
-            })
-
-        end_time = datetime.now()
-
-        elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
-        start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
-        end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
-
-        metadata['parameters'] =  {
-            'instrument_id': instr,
-            'date_of_interest': request.args['date_of_interest'],
-            'list_of_var': var_list,
-            'lower_window': lower,
-            'upper_window': upper,
-        }
-
-        if consists_success:
-            metadata['start_time'] = start_time
-            metadata['end_time'] = end_time
-            metadata['elapsed_time'] = elapsed_time
-        elif not success:
-            metadata['error_messages'] = all_error_messages
-
+    if not success:
+        metadata['success'] = False
         logger.info(f'{metadata}')
-        payload = {
-            'Metadata': metadata,
-            'Company_Returns': returns
-        }
+        return jsonify({'Metadata': metadata})
 
-        return jsonify(payload)
+    query_args = {
+        'instr': request.args['instrument_id'],
+        'date': request.args['date_of_interest'],
+        'vars': request.args['list_of_var'],
+        'lower': request.args['lower_window'],
+        'upper':request.args['upper_window'],
+    }
+    q = session.query(Dump).filter_by(**query_args)
+    query_load = session.execute(q).first()
+    if query_load:
+        returns = json.loads(query_load[-2])
+        error_messages = query_load[-1].split('|')
     else:
-        return f'Unknown version: {version}'
+        returns, error_messages = compute_engine.calculate_returns(instr, date, var_list, lower, upper)
+        db_item = Dump(
+            **query_args,
+            created=datetime.now(),
+            payload=json.dumps(returns),
+            errors='|'.join(error_messages))
+        session.add(db_item)
+        session.commit()
+
+    end_time = datetime.now()
+
+    elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
+    start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
+    end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    metadata['parameters'] =  {
+        'instrument_id': instr,
+        'date_of_interest': request.args['date_of_interest'],
+        'list_of_var': var_list,
+        'lower_window': lower,
+        'upper_window': upper,
+    }
+
+    metadata['start_time'] = start_time
+    metadata['end_time'] = end_time
+    metadata['elapsed_time'] = elapsed_time
+
+    if error_messages:
+        metadata['error_messages'] = error_messages
+        metadata['success'] = False
+
+    logger.info(f'{metadata}')
+    payload = {
+        'Metadata': metadata,
+        'Company_Returns': returns
+    }
+
+    return jsonify(payload)
