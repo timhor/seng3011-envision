@@ -198,27 +198,27 @@ function drawGraphs() {
 
     // Build Returns Graph
     let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions("Returns")));
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions("Returns", "Returns ($)")));
 
 
     // Build Returns Percentage Graph
     let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions("Returns Percentage")));
+    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions("Returns Percentage", "Returns (%)")));
 
 
     // Build Volume Graph
     let vol = document.getElementById('volume_graph').getContext('2d');
-    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions("Volume Traded")));
+    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions("Volume Traded", "Volume ($)")));
 
 
     // Build Volume Percentage Graph
     let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions("Volume Traded Percentage")));
+    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions("Volume Traded Percentage", "Volume (%)")));
 
 
     // Build Daily Spread Graph
     let spread = document.getElementById('daily_spread_graph').getContext('2d');
-    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions("Daily Spread")));
+    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions("Daily Spread", "Spread ($)")));
 
     document.getElementById('graphSeparator').hidden = false;
     document.getElementById('graphs').hidden = false;
@@ -236,17 +236,27 @@ function buildGraphData(dates, datasets, graphOptions) {
     return formatOutput;
 }
 
-function buildGraphOptions(name){
+function buildGraphOptions(name, yLabel){
     return ({
         responsive: true,
         title:{
-            display:true,
+            display: true,
             text: name
         },
         scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Days'
+                }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: yLabel
                 }
             }]
         },
