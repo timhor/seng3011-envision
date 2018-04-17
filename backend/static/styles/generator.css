@@ -71,11 +71,11 @@
 #apiQuery {
     width: 100%;
     padding: 20px;
-    padding-bottom: 50px;
+    min-height: 90px;
     border: dodgerblue 1px solid;
     border-radius: 10px;
     font-size: 12px;
-    overflow: hidden;
+    overflow: auto;
     outline: none;
     resize: none;
 }
