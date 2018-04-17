@@ -224,15 +224,14 @@ function drawGraphs() {
 }
 
 function buildGraphData(dates, datasets, graphOptions) {
-    var formatOutput = {
+    return {
         type: 'line',
         data: {
             labels: dates,
             datasets: datasets
         },
         options: graphOptions
-    }
-    return formatOutput;
+    };
 }
 
 function buildGraphOptions(name){
@@ -263,7 +262,7 @@ function buildGraphOptions(name){
 
 function syntaxHighlight(json) {
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
         let colourClass = 'number';
         if (/^"/.test(match)) {
             if (/:$/.test(match)) {
