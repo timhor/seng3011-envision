@@ -49,7 +49,6 @@ function scrollToGraphs() {
 }
 
 function drawGraphs() {
-
     // Convert API Data to Array
     var returnData = new Array();
     var returnPctData = new Array();
@@ -69,7 +68,7 @@ function drawGraphs() {
     volumePercentageDatasets = new Array();
     dailySpreadDatasets = new Array();
 
-    // Fill up data arrays
+    // Populate data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
 
         if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
@@ -94,7 +93,7 @@ function drawGraphs() {
                 label: 'Return',
                 data: returnData,
                 fill: false,
-                borderColor: "rgb(57, 106, 177)",
+                borderColor: 'rgb(57, 106, 177)',
                 lineTension: 0.1,
             }
         );
@@ -105,7 +104,7 @@ function drawGraphs() {
                 label: 'Cumulative Return',
                 data: cmReturnData,
                 fill: false,
-                borderColor: "rgb(218, 124, 48)",
+                borderColor: 'rgb(218, 124, 48)',
                 lineTension: 0.1,
             }
         );
@@ -116,7 +115,7 @@ function drawGraphs() {
                 label: 'Average Return',
                 data: avReturnData,
                 fill: false,
-                borderColor: "rgb(62, 150, 81)",
+                borderColor: 'rgb(62, 150, 81)',
                 lineTension: 0.1,
             }
         );
@@ -129,7 +128,7 @@ function drawGraphs() {
                 label: 'Return Percentage',
                 data: returnPctData,
                 fill: false,
-                borderColor: "rgb(57, 106, 177)",
+                borderColor: 'rgb(57, 106, 177)',
                 lineTension: 0.1,
             }
         );
@@ -140,7 +139,7 @@ function drawGraphs() {
                 label: 'Cumulative Return Percentage',
                 data: cmReturnPctData,
                 fill: false,
-                borderColor: "rgb(218, 124, 48)",
+                borderColor: 'rgb(218, 124, 48)',
                 lineTension: 0.1,
             }
         );
@@ -151,7 +150,7 @@ function drawGraphs() {
                 label: 'Average Return Percentage',
                 data: avReturnPctData,
                 fill: false,
-                borderColor: "rgb(62, 150, 81)",
+                borderColor: 'rgb(62, 150, 81)',
                 lineTension: 0.1,
             }
         );
@@ -164,7 +163,7 @@ function drawGraphs() {
                 label: 'Volume Traded',
                 data: volumeData,
                 fill: false,
-                borderColor: "rgb(107, 76, 154)",
+                borderColor: 'rgb(107, 76, 154)',
                 lineTension: 0.1,
             }
         );
@@ -177,7 +176,7 @@ function drawGraphs() {
                 label: 'Volume Traded Percentage',
                 data: volumePctData,
                 fill: false,
-                borderColor: "rgb(107, 76, 154)",
+                borderColor: 'rgb(107, 76, 154)',
                 lineTension: 0.1,
             }
         );
@@ -190,35 +189,35 @@ function drawGraphs() {
                 label: 'Daily Spread',
                 data: dailySpreadData,
                 fill: false,
-                borderColor: "rgb(148, 139, 61)",
+                borderColor: 'rgb(148, 139, 61)',
                 lineTension: 0.1,
             }
         );
     }
 
-    // Build Returns Graph
+    // Build returns graph
     let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions("Returns")));
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns')));
 
 
-    // Build Returns Percentage Graph
+    // Build returns percentage graph
     let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions("Returns Percentage")));
+    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage')));
 
 
-    // Build Volume Graph
+    // Build volume graph
     let vol = document.getElementById('volume_graph').getContext('2d');
-    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions("Volume Traded")));
+    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded')));
 
 
-    // Build Volume Percentage Graph
+    // Build volume percentage graph
     let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions("Volume Traded Percentage")));
+    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage')));
 
 
-    // Build Daily Spread Graph
+    // Build daily spread graph
     let spread = document.getElementById('daily_spread_graph').getContext('2d');
-    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions("Daily Spread")));
+    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread')));
 
     document.getElementById('graphSeparator').hidden = false;
     document.getElementById('graphs').hidden = false;
@@ -240,7 +239,7 @@ function buildGraphOptions(name){
     return ({
         responsive: true,
         title:{
-            display:true,
+            display: true,
             text: name
         },
         scales: {
@@ -261,6 +260,7 @@ function buildGraphOptions(name){
         }
     });
 }
+
 function syntaxHighlight(json) {
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
@@ -280,7 +280,7 @@ function syntaxHighlight(json) {
     });
 }
 
-function updateAPIQuery(){
+function updateAPIQuery() {
     let instrumentID = document.getElementById('instrument_id').value;
     let dateOfInterest = document.getElementById('date_of_interest').value;
     let lowerWindow = document.getElementById('lower_window').value;
@@ -297,15 +297,15 @@ function updateAPIQuery(){
 }
 
 function copyToClipboard() {
-    let copyText = document.getElementById("apiQuery");
+    let copyText = document.getElementById('apiQuery');
     copyText.select();
-    document.execCommand("Copy");
+    document.execCommand('Copy');
 
-    let tooltip = document.getElementById("copyBtnTooltip");
-    tooltip.innerHTML = "Copied!";
+    let tooltip = document.getElementById('copyBtnTooltip');
+    tooltip.innerHTML = 'Copied!';
 }
 
 function copied() {
-    let tooltip = document.getElementById("copyBtnTooltip");
-    tooltip.innerHTML = "Copy to Clipboard";
+    let tooltip = document.getElementById('copyBtnTooltip');
+    tooltip.innerHTML = 'Copy to Clipboard';
 }
