@@ -252,16 +252,12 @@ function buildGraphOptions(name){
         },
         pan: {
             enabled: true,
-            mode: 'xy'
+            mode: 'x'
         },
-
         zoom: {
             enabled: true,
-            mode: 'xy',
-            limits: {
-                max: 10,
-                min: 0.5
-            }
+            mode: 'x',
+            sensitivity: 3,
         }
     });
 }
