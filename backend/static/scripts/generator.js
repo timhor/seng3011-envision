@@ -50,17 +50,17 @@ function scrollToGraphs() {
 
 function drawGraphs() {
     // Convert API Data to Array
-    var returnData = new Array();
-    var returnPctData = new Array();
-    var cmReturnData = new Array();
-    var cmReturnPctData = new Array();
-    var avReturnData = new Array();
-    var avReturnPctData = new Array();
-    var dailySpreadData = new Array();
-    var volumeData = new Array();
-    var volumePctData = new Array();
+    let returnData = new Array();
+    let returnPctData = new Array();
+    let cmReturnData = new Array();
+    let cmReturnPctData = new Array();
+    let avReturnData = new Array();
+    let avReturnPctData = new Array();
+    let dailySpreadData = new Array();
+    let volumeData = new Array();
+    let volumePctData = new Array();
 
-    var dates = new Array();
+    let dates = new Array();
 
     returnDatasets = new Array();
     returnPercentageDatasets = new Array();
@@ -288,10 +288,11 @@ function updateAPIQuery() {
 
     let listOfVar = getListOfVars();
 
+    let apiQuery;
     if (listOfVar != '') {
-        var apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
+        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     } else {
-        var apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
+        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     }
     document.getElementById('apiQuery').innerText = apiQuery;
 }
