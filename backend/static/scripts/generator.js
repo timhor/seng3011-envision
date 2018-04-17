@@ -49,15 +49,6 @@ function scrollToGraphs() {
 }
 
 function drawGraphs() {
-    var graphOptions = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    };
 
     // Convert API Data to Array
     var returnData = new Array();
@@ -207,27 +198,27 @@ function drawGraphs() {
 
     // Build Returns Graph
     let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, graphOptions));
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions("Returns")));
 
 
     // Build Returns Percentage Graph
     let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, graphOptions));
+    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions("Returns Percentage")));
 
 
     // Build Volume Graph
     let vol = document.getElementById('volume_graph').getContext('2d');
-    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, graphOptions));
+    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions("Volume Traded")));
 
 
     // Build Volume Percentage Graph
     let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, graphOptions));
+    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions("Volume Traded Percentage")));
 
 
     // Build Daily Spread Graph
     let spread = document.getElementById('daily_spread_graph').getContext('2d');
-    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, graphOptions));
+    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions("Daily Spread")));
 
     document.getElementById('graphSeparator').hidden = false;
     document.getElementById('graphs').hidden = false;
@@ -245,6 +236,35 @@ function buildGraphData(dates, datasets, graphOptions) {
     return formatOutput;
 }
 
+function buildGraphOptions(name){
+    return ({
+        responsive: true,
+        title:{
+            display:true,
+            text: name
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        pan: {
+            enabled: true,
+            mode: 'xy'
+        },
+
+        zoom: {
+            enabled: true,
+            mode: 'xy',
+            limits: {
+                max: 10,
+                min: 0.5
+            }
+        }
+    });
+}
 function syntaxHighlight(json) {
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
