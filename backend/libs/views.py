@@ -154,6 +154,8 @@ def api(version):
     if error_messages:
         metadata['error_messages'] = error_messages
         metadata['success'] = False
+    else:
+        metadata['success'] = True
 
     logger.info(f'{metadata}')
     payload = {
