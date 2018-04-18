@@ -119,7 +119,10 @@ def api(version):
     query_load = session.execute(q).first()
     if query_load:
         returns = json.loads(query_load[-2])
-        error_messages = query_load[-1].split('|')
+        if len(query_load[-1]) > 0:
+            error_messages = query_load[-1].split('|')
+        else:
+            error_messages = []
     else:
         returns, error_messages = compute_engine.calculate_returns(instr, date, var_list, lower, upper)
         db_item = Dump(

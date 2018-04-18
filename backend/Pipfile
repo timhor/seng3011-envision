@@ -21,3 +21,7 @@ coverage = "*"
 
 jupyter = "*"
 awsebcli = "*"
+
+[scripts]
+start = "python application.py"
+nuke = "python db_manage.py -n -b"
