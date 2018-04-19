@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 import requests
+from threading import Thread, Lock
 from datetime import datetime, timedelta, date
 
 class ParamException(Exception):
@@ -69,28 +70,52 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
     return instr, target, var_list, lower, upper
 
 
+def calc_individual_returns(instrument_id,
+    date_of_interest, list_of_var,
+    lower_window, upper_window,
+    returns, error_messages,
+    lock):
+    try:
+        df = generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        df.index = df.index.format()
+        data = listed_dict(df)
+        lock.acquire()
+    except KeyError as e:
+        data = f"Error: {instrument_id} does not exist"
+        lock.acquire()
+        error_messages.append(data)
+    except Exception as e:
+        data = "Error: " + str(e)
+        print(data)
+        lock.acquire()
+        error_messages.append(data)
+
+    returns.append({
+        'InstrumentID': instrument_id,
+        'Data': data
+    })
+    lock.release()
+
+
 def calculate_returns(instrument_id, date_of_interest, list_of_var, lower_window, upper_window):
     returns = []
     error_messages = []
+
+    lock = Lock()
+    threads = []
     for i in instrument_id:
         i = i.strip()
-        try:
-            df = generate_table(i, date_of_interest, list_of_var, lower_window, upper_window)
-            df.index = df.index.format()
-            data = listed_dict(df)
+        t = Thread(target=calc_individual_returns, args=(i,
+            date_of_interest, list_of_var,
+            lower_window, upper_window,
+            returns, error_messages,
+            lock))
+        t.start()
+        threads.append(t)
 
-        except KeyError as e:
-            data = f"Error: {i} does not exist"
-            error_messages.append(data)
-        except Exception as e:
-            data = "Error: " + str(e)
-            print(data)
-            error_messages.append(data)
+    for t in threads:
+        t.join()
 
-        returns.append({
-            'InstrumentID': i,
-            'Data': data
-        })
     return returns, error_messages
 
 
