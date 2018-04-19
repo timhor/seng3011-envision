@@ -62,13 +62,6 @@
                     <a class="mdl-navigation__link" href="{{url_for('versions')}}">Version History</a>
                 {% endif %}
 
-                <!-- Team Page Link -->
-                {% if current_page == "team" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Team / Project</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
-                {% endif %}
-
                 <!-- Blog Page Link -->
                 {% if current_page == "blog" %}
                     <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('blog')}}">Blog</a>
@@ -83,6 +76,12 @@
                     <a class="mdl-navigation__link" href="{{url_for('logs')}}">Logs</a>
                 {% endif %}
 
+                <!-- Team Page Link -->
+                {% if current_page == "team" %}
+                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Team / Project</a>
+                {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
+                {% endif %}
             </nav>
         </div>
         <main class="mdl-layout__content">
