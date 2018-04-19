@@ -252,7 +252,7 @@ function drawGraphs() {
         );
     }
 
-    // Build cm returns graph
+    // Build CM returns graph
     if (shouldDrawCMReturns) {
         let cmRtnChart = new Chart(
             getCanvas('cm_return_graph'),
@@ -260,7 +260,7 @@ function drawGraphs() {
         );
     }
 
-    // Build cm returns percentage graph
+    // Build CM returns percentage graph
     if (shouldDrawCMReturnsPct) {
         let cmRtnPctChart = new Chart(
             getCanvas('cm_return_percentage_graph'),
@@ -268,7 +268,7 @@ function drawGraphs() {
         );
     }
 
-    // Build av returns graph
+    // Build AV returns graph
     if (shouldDrawAVReturns) {
         let avRtnChart = new Chart(
             getCanvas('av_return_graph'),
@@ -276,7 +276,7 @@ function drawGraphs() {
         );
     }
 
-    // Build av returns percentage graph
+    // Build AV returns percentage graph
     if (shouldDrawAVReturnsPct) {
         let avRtnPctChart = new Chart(
             getCanvas('av_return_percentage_graph'),
