@@ -12,6 +12,10 @@
 	margin-top: -24px;
 }
 
+.bugfix-title {
+	margin-top: -10px;
+}
+
 .release-date {
 	margin: -6px 0 4px;
 }
