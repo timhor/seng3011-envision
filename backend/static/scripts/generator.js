@@ -319,8 +319,8 @@ function getCanvas(name) {
 }
 
 function buildGraphData(dates, datasets, graphOptions) {
-    var dataArray = new Array();
-    jQuery.each(datasets, function (i,val) {
+    let dataArray = new Array();
+    jQuery.each(datasets, (i,val) => {
         dataArray.push(val[0]);
     });
     return {
