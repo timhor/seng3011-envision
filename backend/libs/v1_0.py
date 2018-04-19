@@ -33,6 +33,8 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
     # Instrument
     try:
         instr = instrument_id[0].split(',')
+        if len(instr) > 10:
+            raise ParamException("Only a maximum of 10 instruments can be queried per request")
     except ValueError:
         instr = instrument_id
 
@@ -61,6 +63,8 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
 
     if lower < 0 or upper < 0:
         raise ParamException("Window arguments cannot be negative")
+
+    # TODO: Add in date range limit?
 
     return instr, target, var_list, lower, upper
 
@@ -118,23 +122,21 @@ def get_ts_daily_adjusted(instrument_id, adjusted=False, full=True):
     target = 'TIME_SERIES_DAILY_ADJUSTED' if adjusted else 'TIME_SERIES_DAILY'
     output_size = 'full' if full else 'compact'
 
+    # NEW
     r = requests.get('https://www.alphavantage.co/query', params={
         'function': target,
         'symbol': instrument_id,
         'apikey': os.environ['ALPHA_VANTAGE_API'],
         'outputsize': output_size,
+        'datatype': 'csv',
     })
 
-    # Data comes with metadata that we don't need
-    data = r.json()['Time Series (Daily)']
-
-    df = pd.DataFrame.from_dict(data, orient='index')
+    df = pd.read_csv(pd.compat.StringIO(r.text), index_col='timestamp')
     df = df.apply(pd.to_numeric)
     df.index = pd.to_datetime(df.index)
-
-    # Because Alpha Vantage is offset incorrectly by 1, we need to fix it up
     df.index += timedelta(days=1)
     return df
+
 
 
 def working_data(df, date_of_interest, lower_window, upper_window):
@@ -150,21 +152,17 @@ def working_data(df, date_of_interest, lower_window, upper_window):
 
     # Tighten to the range we want (and show non-trading days too)
     df = df.reindex(pd.date_range(lower_date_extreme, upper_date_extreme, freq='D'))
-    if '5. volume' in df.columns:
-        mapper = {'5. volume': 'Volume'}
-    else:
-        mapper = {'6. volume': 'Volume'}
-    df = df.rename(columns=mapper)
+    df = df.rename(columns={'volume': 'Volume'})
     df['Volume'] = df['Volume'].fillna(0)
-    df['4. close'] = df['4. close'].fillna(method='ffill')
+    df['close'] = df['close'].fillna(method='ffill')
 
     # Tag with relative dates
     df = df.apply(tag_relative_date, axis=1, args=(date_of_interest, lower_date, upper_date))
 
     #  Calculate the data we want
-    df['Return'] = df['4. close'].diff()
-    df['Return_pct'] = df['4. close'].pct_change()
-    df['Daily_Spread'] = df['2. high'] - df['3. low']
+    df['Return'] = df['close'].diff()
+    df['Return_pct'] = df['close'].pct_change()
+    df['Daily_Spread'] = df['high'] - df['low']
     df['Daily_Spread'] = df['Daily_Spread'].fillna(0)
 
     return df
