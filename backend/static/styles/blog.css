@@ -26,5 +26,5 @@ pre {
     font-family: Consolas,"Liberation Mono",Courier,monospace;
     font-weight: 400;
     color: #0a0a0a;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
