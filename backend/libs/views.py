@@ -20,6 +20,8 @@ app.debug = True
 
 VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
+    'v1.0.1': v1_0,
+    'v1.0.2' : v1_0,
 }
 
 
@@ -44,7 +46,8 @@ def generator():
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html', current_page="documentation")
+    latest_ver = list(VALID_VERSIONS.keys())[-1]
+    return render_template('documentation.html', current_page="documentation", version_number=latest_ver)
 
 
 @app.route('/gettingstarted')
