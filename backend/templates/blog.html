@@ -31,85 +31,33 @@ $.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?inst
                 <p>For graphing, we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>, although there are many other suitable charting libraries available in JavaScript too.</p>
                 <p>To display a graph we need to manipulate the data retrieved to the required format of the library. This is done with the code below.</p>
                 <p>The format of data from the Envision API can be obtained from the <a href="documentation">Documentation</a> page. Our demo application is another good way of exploring the output of the API.</p>
-                <pre>TODO UPDATE THIS CODE
-function buildGraphData(dates, datasets, graphOptions) {
-    var formatOutput = {
-        type: 'line',
-            data: {
-                labels: dates,
-                datasets: datasets
-            },
-            options: graphOptions
-        }
-    return formatOutput;
-}
+                <pre>function drawGraphs() {
+    let returnData = new Array();
+    let dates = new Array();
 
-function drawGraphs() {
-    var graphOptions = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    };
-
-    // Convert API Data to Array
-    var returnData = new Array();
-
-    var dates = new Array();
-
-
-    // Fill up data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
-
-        if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
+        if (rec.Return !== undefined) {
+            returnData.push(Number((rec.Return).toFixed(4)));
+        }
         let mydate = new Date(rec.Date);
         let formattedDate = mydate.toLocaleDateString();
         dates.push(formattedDate);
     });
 
-    // Add datasets for just returns graph
     if (returnData.length > 0) {
         returnDatasets.push(
             {
                 label: 'Return',
                 data: returnData,
                 fill: false,
-                borderColor: "rgb(57, 106, 177)",
-                lineTension: 0.1,
-            }
-        );
-    }
-    if (cmReturnData.length > 0) {
-        returnDatasets.push(
-            {
-                label: 'Cumulative Return',
-                data: cmReturnData,
-                fill: false,
-                borderColor: "rgb(218, 124, 48)",
-                lineTension: 0.1,
-            }
-        );
-    }
-    if (avReturnData.length > 0) {
-        returnDatasets.push(
-            {
-                label: 'Average Return',
-                data: avReturnData,
-                fill: false,
-                borderColor: "rgb(62, 150, 81)",
+                borderColor: 'rgb(57, 106, 177)',
                 lineTension: 0.1,
             }
         );
     }
 
-    // Build Returns Graph
     let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, graphOptions));
-
-    document.getElementById('graphs').hidden = false;
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
 }</pre>
             </div>
         </div>
