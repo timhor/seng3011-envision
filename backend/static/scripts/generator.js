@@ -79,6 +79,8 @@ function drawGraphs() {
         let volumeData = new Array();
         let volumePctData = new Array();
 
+        let instrumentColor = getRandomColor();
+
         instrument.Data.forEach(rec => {
             if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
             if (rec.Return_pct !== undefined) {returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));}
@@ -105,7 +107,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: returnData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -118,7 +120,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: cmReturnData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -131,7 +133,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: avReturnData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -146,7 +148,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: returnPctData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -159,7 +161,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: cmReturnPctData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -172,7 +174,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: avReturnPctData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -187,7 +189,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: volumeData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -202,7 +204,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: volumePctData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
@@ -217,7 +219,7 @@ function drawGraphs() {
                     label: instrument.InstrumentID,
                     data: dailySpreadData,
                     fill: false,
-                    borderColor: getRandomColor(),
+                    borderColor: instrumentColor,
                     lineTension: 0.1,
                 }
             );
