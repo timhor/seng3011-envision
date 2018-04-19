@@ -24,7 +24,6 @@ function getData(){
     if (getListOfVars != '') {
         $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             apiData = data;
-            console.log(apiData);
             let dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
@@ -35,7 +34,6 @@ function getData(){
     } else {
         $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
             apiData = data;
-            console.log(apiData);
             let dataString = JSON.stringify(data, null, 3);
             document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
             document.getElementById('loadingSpinner').hidden = true;
@@ -109,7 +107,6 @@ function drawGraphs() {
 
         // Add datasets for just returns graph
         if (returnData.length > 0) {
-            // console.log("Return data for "+instrument.InstrumentID+" is:" + returnData);
             returnDatasets[instrument.InstrumentID] = new Array();
             returnDatasets[instrument.InstrumentID].push(
                 {
