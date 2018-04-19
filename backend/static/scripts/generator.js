@@ -3,7 +3,6 @@ let apiData;
 window.onload = function() {
     updateAPIQuery();
     document.getElementById('loadingSpinner').hidden = true;
-    // document.getElementById('graphSectionTitle').hidden = true;
 };
 
 function getData(){
