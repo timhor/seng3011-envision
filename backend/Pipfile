@@ -7,10 +7,10 @@ name = "pypi"
 
 [packages]
 
-flask = "*"
+Flask = "*"
 requests = "*"
 pandas = "*"
-sqlalchemy = "*"
+SQLAlchemy = "*"
 "psycopg2-binary" = "*"
 "markdown2" = "*"
 coverage = "*"
