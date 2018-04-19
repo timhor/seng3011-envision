@@ -34,7 +34,7 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
     try:
         if len(instrument_id[0]) == 0:
             raise ParamException("No instruments given")
-        instr = instrument_id[0].split(',')
+        instr = instrument_id[0].replace(' ', '').split(',')
         if len(instr) > 10:
             raise ParamException("Only a maximum of 10 instruments can be queried per request")
     except ValueError:
@@ -50,7 +50,7 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
     try:
         if len(list_of_var[0]) == 0:
             raise ParamException("No variables given")
-        var_list = list_of_var[0].split(',')
+        var_list = list_of_var[0].replace(' ', '').split(',')
     except ValueError:
         var_list = list_of_var
 
