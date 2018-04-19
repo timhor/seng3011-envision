@@ -239,71 +239,86 @@ function drawGraphs() {
 
     // Build returns graph
     if (shouldDrawReturns) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_graph"></canvas></div>');
-        let rtn = document.getElementById('return_graph').getContext('2d');
-        let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
-    }
-
-    // Build cm returns graph
-    if (shouldDrawCMReturns) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="cm_return_graph"></canvas></div>');
-        let cmRtn = document.getElementById('cm_return_graph').getContext('2d');
-        let cmRtnChart = new Chart(cmRtn, buildGraphData(dates, cmReturnDatasets, buildGraphOptions('Cumulative Returns', 'Returns ($)')));
-    }
-
-    // Build av returns graph
-    if (shouldDrawAVReturns) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="av_return_graph"></canvas></div>');
-        let avRtn = document.getElementById('av_return_graph').getContext('2d');
-        let avRtnChart = new Chart(avRtn, buildGraphData(dates, avReturnDatasets, buildGraphOptions('Average Returns', 'Returns ($)')));
+        let rtnChart = new Chart(
+            getCanvas('return_graph'),
+            buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)'))
+        );
     }
 
     // Build returns percentage graph
     if (shouldDrawReturnsPct) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_percentage_graph"></canvas></div>');
-        let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-        let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)')));
+        let rtnPctChart = new Chart(
+            getCanvas('return_percentage_graph'),
+            buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)'))
+        );
+    }
+
+    // Build cm returns graph
+    if (shouldDrawCMReturns) {
+        let cmRtnChart = new Chart(
+            getCanvas('cm_return_graph'),
+            buildGraphData(dates, cmReturnDatasets, buildGraphOptions('Cumulative Returns', 'Returns ($)'))
+        );
     }
 
     // Build cm returns percentage graph
     if (shouldDrawCMReturnsPct) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="cm_return_percentage_graph"></canvas></div>');
-        let cmRtnPct = document.getElementById('cm_return_percentage_graph').getContext('2d');
-        let cmRtnPctChart = new Chart(cmRtnPct, buildGraphData(dates, cmReturnPercentageDatasets, buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)')));
+        let cmRtnPctChart = new Chart(
+            getCanvas('cm_return_percentage_graph'),
+            buildGraphData(dates, cmReturnPercentageDatasets, buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
+        );
+    }
+
+    // Build av returns graph
+    if (shouldDrawAVReturns) {
+        let avRtnChart = new Chart(
+            getCanvas('av_return_graph'),
+            buildGraphData(dates, avReturnDatasets, buildGraphOptions('Average Returns', 'Returns ($)'))
+        );
     }
 
     // Build av returns percentage graph
     if (shouldDrawAVReturnsPct) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="av_return_percentage_graph"></canvas></div>');
-        let avRtnPct = document.getElementById('av_return_percentage_graph').getContext('2d');
-        let avRtnPctChart = new Chart(avRtnPct, buildGraphData(dates, avReturnPercentageDatasets, buildGraphOptions('Average Returns Percentage', 'Returns (%)')));
+        let avRtnPctChart = new Chart(
+            getCanvas('av_return_percentage_graph'),
+            buildGraphData(dates, avReturnPercentageDatasets, buildGraphOptions('Average Returns Percentage', 'Returns (%)'))
+        );
     }
 
     // Build volume graph
     if (shouldDrawVolume) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_graph"></canvas></div>');
-        let vol = document.getElementById('volume_graph').getContext('2d');
-        let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)')));
+        let volChart = new Chart(
+            getCanvas('volume_graph'),
+            buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)'))
+        );
     }
 
 
     // Build volume percentage graph
     if (shouldDrawVolumePct) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_percentage_graph"></canvas></div>');
-        let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-        let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)')));
+        let volPctChart = new Chart(
+            getCanvas('volume_percentage_graph'),
+            buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)'))
+        );
     }
 
 
     // Build daily spread graph
     if (shouldDrawSpread) {
-        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="daily_spread_graph"></canvas></div>');
-        let spread = document.getElementById('daily_spread_graph').getContext('2d');
-        let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)')));
+        let spreadChart = new Chart(
+            getCanvas('daily_spread_graph'),
+            buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)'))
+        );
     }
 
     document.getElementById('graphSeparator').hidden = false;
     document.getElementById('graphs').hidden = false;
+}
+
+function getCanvas(name) {
+    const graphHtml = '<div class="mdl-cell mdl-cell--6-col"><canvas id="' + name + '"></canvas></div>';
+    document.getElementById('graphs').insertAdjacentHTML('beforeend', graphHtml);
+    return document.getElementById(name).getContext('2d');
 }
 
 function buildGraphData(dates, datasets, graphOptions) {
