@@ -11,19 +11,116 @@
                 <h2 class="mdl-card__title-text mdl-typography--font-bold">API Integration within Client</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                Our API has been integrated with this client to demonstrate its functionality and possible usages. The data is retrieved and visualized with the following JavaScript libraries:
+                This is a brief description of how to integrate the envision API into an application. To see a demo application, go to the query generator via the naviagtion bar on the left of the screen.
             </div>
-            <div class="mdl-card__title card-subtitle">
-                <a href="https://jquery.com/" target="_blank"><h2 class="mdl-card__subtitle-text mdl-typography--font-bold">jQuery</h2></a>
-            </div>
-            <div class="blog-entry mdl-card__supporting-text" align="left">
-                We've written a JavaScript function which is called upon submission of the HTML form. The API endpoint is then called using <code>getJSON()</code> method from jQuery's library with each request arguments appropriately set with inputs from the form. The JSON is then displayed to the user with colour coded syntax done by adding CSS dynamically with JavaScript
-            </div>
-            <div class="mdl-card__title card-subtitle">
-                <a href="https://www.chartjs.org/" target="_blank"><h2 class="mdl-card__subtitle-text mdl-typography--font-bold">Chart.js</h2></a>
+            <div class="mdl-card__title" id="cardTitle">
+                <h3 class="mdl-card__title-text mdl-typography--font-bold">Getting data from the API</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                We display the JSON data retrieved in a form of a line graph with the assistance of Chart.js library. The data requires conversion to an array type, so for each query variable, an array was generated. Each array was then placed into its respective <code>Chart()</code> which populated the graph with data. The graphs title and axis labels were handled upon creation of each <code>Chart()</code>
+                Firstly, we must make a request to the envision API. Since the envision API is a RESTful service, we can use a large number of programming languages to do this. Some examples for curl, python and jquery are avalible on the docuemntation page. Since our demo application is on a web page we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.
+                <pre>
+$.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&lower_window=3&upper_window=5&list_of_var=Return`, (data) => {
+    let dataString = JSON.stringify(data, null, 3);
+})
+                </pre>
+                Once we have the dataString we can modify it so that we can show a syntax highlighted version on the right and graphs below.
+            </div>
+            <div class="mdl-card__title" id="cardTitle">
+                    <h3 class="mdl-card__title-text mdl-typography--font-bold">Using the data in Chart.js</h2>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                For graphing we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> although there are many other suitable charting libraries avalible in javascript. 
+                <br>
+                To display a graph we need to incorporate several elements. Firstly we must obtain a copy of the chart.js library and add it as a script to our page.
+                <pre>
+&lt;script src="pathTo/Chart.bundle.min.js'"&gt;&lt;/script&gt;
+                </pre>
+                We need a canvas element for our chart
+                <pre>
+&lt;canvas id="return_graph"&gt;&lt;/canvas&gt;
+                </pre>
+                And finally we need some code to interpret our data. The format of data from the envision API can be obtained from the documentation page. Our demo application is another good way of exploring the output of the API.
+                <pre>
+function buildGraphData(dates, datasets, graphOptions) {
+    var formatOutput = {
+        type: 'line',
+            data: {
+                labels: dates,
+                datasets: datasets
+            },
+            options: graphOptions
+        }
+    return formatOutput;
+}
+
+function drawGraphs() {
+    var graphOptions = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+
+    // Convert API Data to Array
+    var returnData = new Array();
+
+    var dates = new Array();
+
+
+    // Fill up data arrays
+    apiData.Company_Returns[0].Data.forEach(rec => {
+
+        if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
+        let mydate = new Date(rec.Date);
+        let formattedDate = mydate.toLocaleDateString();
+        dates.push(formattedDate);
+    });
+
+    // Add datasets for just returns graph
+    if (returnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Return',
+                data: returnData,
+                fill: false,
+                borderColor: "rgb(57, 106, 177)",
+                lineTension: 0.1,
+            }
+        );
+    }
+    if (cmReturnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Cumulative Return',
+                data: cmReturnData,
+                fill: false,
+                borderColor: "rgb(218, 124, 48)",
+                lineTension: 0.1,
+            }
+        );
+    }
+    if (avReturnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Average Return',
+                data: avReturnData,
+                fill: false,
+                borderColor: "rgb(62, 150, 81)",
+                lineTension: 0.1,
+            }
+        );
+    }
+
+    // Build Returns Graph
+    let rtn = document.getElementById('return_graph').getContext('2d');
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, graphOptions));
+
+    document.getElementById('graphs').hidden = false;
+}
+                </pre>
             </div>
             <br>
         </div>
