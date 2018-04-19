@@ -78,7 +78,6 @@ function drawGraphs() {
 
     // Populate data arrays
     apiData.Company_Returns.forEach(instrument => {
-
         // Convert API Data to Array
         let returnData = new Array();
         let returnPctData = new Array();
@@ -293,7 +292,6 @@ function drawGraphs() {
         );
     }
 
-
     // Build volume percentage graph
     if (shouldDrawVolumePct) {
         let volPctChart = new Chart(
@@ -301,7 +299,6 @@ function drawGraphs() {
             buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)'))
         );
     }
-
 
     // Build daily spread graph
     if (shouldDrawSpread) {
@@ -322,13 +319,10 @@ function getCanvas(name) {
 }
 
 function buildGraphData(dates, datasets, graphOptions) {
-
     var dataArray = new Array();
     jQuery.each(datasets, function (i,val) {
         dataArray.push(val[0]);
     });
-
-    console.log(dataArray);
     return {
         type: 'line',
         data: {
