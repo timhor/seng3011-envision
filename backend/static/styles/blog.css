@@ -22,3 +22,11 @@ pre {
     color: #0a0a0a;
     overflow-x: scroll;
 }
+
+#copyableCode {
+    font-size: .9em;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+}
