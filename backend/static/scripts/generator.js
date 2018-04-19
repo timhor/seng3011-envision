@@ -49,6 +49,9 @@ function scrollToGraphs() {
 }
 
 function drawGraphs() {
+    // Clear previous graphs
+    document.getElementById('graphs').innerHTML = ``;
+
     // Convert API Data to Array
     let returnData = new Array();
     let returnPctData = new Array();
@@ -210,8 +213,10 @@ function drawGraphs() {
         shouldDrawSpread = true;
     }
 
+
     // Build returns graph
     if (shouldDrawReturns) {
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_graph"></canvas></div>');
         let rtn = document.getElementById('return_graph').getContext('2d');
         let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
     }
@@ -219,6 +224,7 @@ function drawGraphs() {
 
     // Build returns percentage graph
     if (shouldDrawReturnsPct) {
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_percentage_graph"></canvas></div>');
         let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
         let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)')));
     }
@@ -226,6 +232,7 @@ function drawGraphs() {
 
     // Build volume graph
     if (shouldDrawVolume) {
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_graph"></canvas></div>');
         let vol = document.getElementById('volume_graph').getContext('2d');
         let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)')));
     }
@@ -233,6 +240,7 @@ function drawGraphs() {
 
     // Build volume percentage graph
     if (shouldDrawVolumePct) {
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_percentage_graph"></canvas></div>');
         let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
         let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)')));
     }
@@ -240,6 +248,7 @@ function drawGraphs() {
 
     // Build daily spread graph
     if (shouldDrawSpread) {
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="daily_spread_graph"></canvas></div>');
         let spread = document.getElementById('daily_spread_graph').getContext('2d');
         let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)')));
     }
