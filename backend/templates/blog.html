@@ -11,36 +11,30 @@
                 <h2 class="mdl-card__title-text mdl-typography--font-bold">API Integration within Client</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                This is a brief description of how to integrate the envision API into an application. To see a demo application, go to the query generator via the navigation bar on the left of the screen.
+                <p>This is a brief description of how to integrate the Envision API into an application. To see a demo application, go to the <a href="generator">Query Generator</a>.</p>
             </div>
             <div class="mdl-card__title" id="cardTitle">
                 <h3 class="mdl-card__title-text mdl-typography--font-bold">Getting data from the API</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                Firstly, we must make a request to the envision API. Since the envision API is a RESTful service, we can use a large number of programming languages to do this. Some examples of Curl, Python and JQuery are available on the documentation page. Since our demo application is on a web page we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.
-<pre id="copyableCode">
+                <p>Firstly, we must make a request to the Envision API. Since it is a RESTful service, we could use several programming languages to do this. Some examples for cURL, Python and jQuery are available on the <a href="documentation">Documentation</a> page. Since our demo application is web-based, we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.</p>
+                <pre>
 $.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&lower_window=3&upper_window=5&list_of_var=Return`, (data) => {
     let dataString = JSON.stringify(data, null, 3);
-})
-</pre>
-                Once we have the dataString we can modify it so that we can show a syntax highlighted version on the right and graphs below.
+})</pre>
+                <p>Once we have the <code>dataString</code>, we can modify it to show a syntax highlighted version of the output as well as visualise it using graphs.</p>
             </div>
             <div class="mdl-card__title" id="cardTitle">
                     <h3 class="mdl-card__title-text mdl-typography--font-bold">Using the data in Chart.js</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                For graphing, we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> although there are many other suitable charting libraries available in JavaScript.
-                <br>
-                To display a graph we need to incorporate several elements. Firstly we must obtain a copy of the chart.js library and add it as a script to our page.
-<pre id="copyableCode">
-&lt;script src="pathTo/Chart.bundle.min.js'"&gt;&lt;/script&gt;
-</pre>
-                We need a canvas element for our chart
-<pre id="copyableCode">
-&lt;canvas id="return_graph"&gt;&lt;/canvas&gt;
-</pre>
-                And finally, we need some code to interpret our data. The format of data from the envision API can be obtained from the documentation page. Our demo application is another good way of exploring the output of the API.
-<pre id="copyableCode">
+                <p>For graphing, we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>, although there are many other suitable charting libraries available in JavaScript too.</p>
+                <p>To display a graph we need to incorporate several elements. Firstly, we must obtain a copy of the Chart.js library and add it as a script to our page.</p>
+                <pre>&lt;script src="pathTo/Chart.bundle.min.js'"&gt;&lt;/script&gt;</pre>
+                <p>We also need a canvas element for our chart...</p>
+                <pre>&lt;canvas id="return_graph"&gt;&lt;/canvas&gt;</pre>
+                <p>...and some code to interpret our data. The format of data from the Envision API can be obtained from the <a href="documentation">Documentation</a> page. Our demo application is another good way of exploring the output of the API.</p>
+                <pre>TODO UPDATE THIS CODE
 function buildGraphData(dates, datasets, graphOptions) {
     var formatOutput = {
         type: 'line',
@@ -119,10 +113,8 @@ function drawGraphs() {
     let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, graphOptions));
 
     document.getElementById('graphs').hidden = false;
-}
-</pre>
+}</pre>
             </div>
-            <br>
         </div>
     </div>
 </div>

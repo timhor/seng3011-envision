@@ -1,5 +1,11 @@
 #versionsCard{
-	width: 90%;
+    width: 90%;
+    padding-top: 36px;
+    padding-bottom: 20px;
+}
+
+#cardTitle {
+    padding-top: 20px;
 }
 
 .card-subtitle {
@@ -13,20 +19,12 @@
 
 pre {
     font-size: .9em;
-    border-radius: 3px;
-    padding: .125rem .3125rem .0625rem;
+    border-radius: 5px;
     border: 1px solid #cacaca;
-    background-color: #e6e6e6;
     font-family: Consolas,"Liberation Mono",Courier,monospace;
     font-weight: 400;
     color: #0a0a0a;
-    overflow-x: scroll;
-}
-
-#copyableCode {
-    font-size: .9em;
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
+    overflow-x: auto;
+    padding: 1.3rem;
     background-color: rgb(240, 240, 240);
-    border-radius: 5px;
 }
