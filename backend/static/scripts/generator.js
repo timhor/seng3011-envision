@@ -3,6 +3,7 @@ let apiData;
 window.onload = function() {
     updateAPIQuery();
     document.getElementById('loadingSpinner').hidden = true;
+    // document.getElementById('graphSectionTitle').hidden = true;
 };
 
 function getData(){
@@ -15,6 +16,7 @@ function getData(){
 
     document.getElementById('scrollToGraphsBtn').hidden = true;
     document.getElementById('graphSeparator').hidden = true;
+    document.getElementById('graphSectionTitle').hidden = true;
     document.getElementById('graphs').hidden = true;
     document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
 
@@ -45,7 +47,7 @@ function getData(){
 };
 
 function scrollToGraphs() {
-    document.getElementById('graphs').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    document.getElementById('graphSectionTitle').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 function drawGraphs() {
@@ -220,6 +222,7 @@ function drawGraphs() {
     let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)')));
 
     document.getElementById('graphSeparator').hidden = false;
+    document.getElementById('graphSectionTitle').hidden = false;
     document.getElementById('graphs').hidden = false;
 }
 
