@@ -34,17 +34,17 @@ logger.addHandler(fh)
 logger.info('Logger initialised')
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', endpoint='/')
+@app.route('/home', endpoint='home')
 @app.route('/generator')
 def generator():
     latest = list(VALID_VERSIONS.values())[-1]
-    return render_template('generator.html', current_page="generator", variables_list=latest.VALID_VARS)
+    return render_template('generator.html', variables_list=latest.VALID_VARS)
 
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html', current_page="documentation")
+    return render_template('documentation.html')
 
 
 @app.route('/gettingstarted')
@@ -56,16 +56,16 @@ def gettingstarted():
         readme = ""
         print("Could not read file: README.md")
     readme = markdown(readme)
-    return render_template('gettingstarted.html', current_page="gettingstarted", readme=readme)
+    return render_template('gettingstarted.html', readme=readme)
 
 @app.route('/team')
 def team():
-    return render_template('team.html', current_page="team")
+    return render_template('team.html')
 
 
 @app.route('/versions')
 def versions():
-    return render_template('versions.html', current_page="versions")
+    return render_template('versions.html')
 
 
 
@@ -76,7 +76,7 @@ def logs():
     info = info.replace('\n', '<br>')
     if request.args.get('raw'):
         return info
-    return render_template('logs.html', current_page="logs", logs=info)
+    return render_template('logs.html', logs=info)
 
 
 @app.route('/api/<version>/')
