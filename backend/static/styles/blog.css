@@ -1,5 +1,11 @@
 #versionsCard{
-	width: 90%;
+    width: 90%;
+    padding-top: 36px;
+    padding-bottom: 20px;
+}
+
+#cardTitle {
+    padding-top: 20px;
 }
 
 .card-subtitle {
