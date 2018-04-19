@@ -17,12 +17,12 @@
                 <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Retrieving data from the API</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                <p>We obtain the data by making a request to the Envision API. Since it is a RESTful service, we could use several programming languages to do this. Some examples using cURL, Python, and jQuery are available on the <a href="documentation">Documentation</a> page. Since our demo application is web-based, we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.</p>
+                <p>We obtain the data by making a request to Envision API. Since it is a RESTful service, we could use several programming languages to do this. Some examples using cURL, Python, and jQuery are available on the <a href="documentation">Documentation</a> page. Since our demo application is web-based, we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.</p>
                 <pre>
 $.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&lower_window=3&upper_window=5&list_of_var=Return`, (data) => {
     let dataString = JSON.stringify(data, null, 3);
 })</pre>
-                <p>Once we have the <code>dataString</code>, we can display it with highlighted done by adding CSS dynamically with JavaScript.</p>
+                <p>Once we have the <code>dataString</code>, we display it with highlighted syntax done by adding CSS dynamically using JavaScript.</p>
             </div>
             <div class="mdl-card__title card-subtitle">
                     <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Visualizing the data with Chart.js</h2>
