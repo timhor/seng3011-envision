@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% block body_contents %}
+<link rel="stylesheet" href="{{url_for('static', filename='styles/blog.css')}}">
+<div class="mdl-grid" align="center">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h2>Blog</h2>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="versionsCard">
+            <div class="mdl-card__title" id="cardTitle">
+                <h2 class="mdl-card__title-text mdl-typography--font-bold">API Integration within Client</h2>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                Our API has been integrated with this client to demonstrate its functionality and possible usages. The data is retrieved and visualized with the following JavaScript libraries:
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                <a href="https://jquery.com/" target="_blank"><h2 class="mdl-card__subtitle-text mdl-typography--font-bold">jQuery</h2></a>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                We've written a JavaScript function which is called upon submission of the HTML form. The API endpoint is then called using <code>getJSON()</code> method from jQuery's library with each request arguments appropriately set with inputs from the form. The JSON is then displayed to the user with colour coded syntax done by adding CSS dynamically with JavaScript
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                <a href="https://www.chartjs.org/" target="_blank"><h2 class="mdl-card__subtitle-text mdl-typography--font-bold">Chart.js</h2></a>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                We display the JSON data retrieved in a form of a line graph with the assistance of Chart.js library. The data requires conversion to an array type, so for each query variable, an array was generated. Each array was then placed into its respective <code>Chart()</code> which populated the graph with data. The graphs title and axis labels were handled upon creation of each <code>Chart()</code>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
