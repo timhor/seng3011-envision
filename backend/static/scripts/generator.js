@@ -15,37 +15,29 @@ function getData(){
 
     document.getElementById('scrollToGraphsBtn').hidden = true;
     document.getElementById('graphSeparator').hidden = true;
+    document.getElementById('graphSectionTitle').hidden = true;
     document.getElementById('graphs').hidden = true;
     document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
 
     document.getElementById('queryResults').hidden = true;
     document.getElementById('loadingSpinner').hidden = false;
 
-    if (getListOfVars != '') {
-        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
-            apiData = data;
-            let dataString = JSON.stringify(data, null, 3);
-            document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
-            document.getElementById('loadingSpinner').hidden = true;
-            document.getElementById('queryResults').hidden = false;
-            drawGraphs();
-            document.getElementById('scrollToGraphsBtn').hidden = false;
-        })
-    } else {
-        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
-            apiData = data;
-            let dataString = JSON.stringify(data, null, 3);
-            document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
-            document.getElementById('loadingSpinner').hidden = true;
-            document.getElementById('queryResults').hidden = false;
-            drawGraphs();
-            document.getElementById('scrollToGraphsBtn').hidden = false;
-        })
-    }
+    instrumentID = instrumentID.replace(' ', '');
+
+    $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+        apiData = data;
+        let dataString = JSON.stringify(data, null, 3);
+        document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
+        document.getElementById('loadingSpinner').hidden = true;
+        document.getElementById('queryResults').hidden = false;
+        drawGraphs();
+        document.getElementById('scrollToGraphsBtn').hidden = false;
+    })
+
 };
 
 function scrollToGraphs() {
-    document.getElementById('graphs').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    document.getElementById('graphSectionTitle').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 function drawGraphs() {
@@ -306,6 +298,7 @@ function drawGraphs() {
     }
 
     document.getElementById('graphSeparator').hidden = false;
+    document.getElementById('graphSectionTitle').hidden = false;
     document.getElementById('graphs').hidden = false;
 }
 
@@ -400,14 +393,11 @@ function updateAPIQuery() {
     let lowerWindow = document.getElementById('lower_window').value;
     let upperWindow = document.getElementById('upper_window').value;
 
+    instrumentID = instrumentID.replace(' ', '');
+
     let listOfVar = getListOfVars();
 
-    let apiQuery;
-    if (listOfVar != '') {
-        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
-    } else {
-        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
-    }
+    let apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     document.getElementById('apiQuery').innerText = apiQuery;
 }
 
