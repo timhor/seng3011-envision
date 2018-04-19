@@ -11,10 +11,10 @@
                 <h2 class="mdl-card__title-text mdl-typography--font-bold">API Integration within Client</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
-                <p>This is a brief description of how to integrate the Envision API into an application. To see a demo application, go to the <a href="generator">Query Generator</a>.</p>
+                <p>This is a brief description of how we integrated Envision API into this application. To see a demo application, go to the <a href="generator">Query Generator</a>.</p>
             </div>
-            <div class="mdl-card__title" id="cardTitle">
-                <h3 class="mdl-card__title-text mdl-typography--font-bold">Getting data from the API</h2>
+            <div class="mdl-card__title card-subtitle">
+                <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Getting data from the API</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
                 <p>Firstly, we must make a request to the Envision API. Since it is a RESTful service, we could use several programming languages to do this. Some examples for cURL, Python and jQuery are available on the <a href="documentation">Documentation</a> page. Since our demo application is web-based, we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.</p>
@@ -24,8 +24,8 @@ $.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?inst
 })</pre>
                 <p>Once we have the <code>dataString</code>, we can modify it to show a syntax highlighted version of the output as well as visualise it using graphs.</p>
             </div>
-            <div class="mdl-card__title" id="cardTitle">
-                    <h3 class="mdl-card__title-text mdl-typography--font-bold">Using the data in Chart.js</h2>
+            <div class="mdl-card__title card-subtitle">
+                    <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Using the data in Chart.js</h2>
             </div>
             <div class="blog-entry mdl-card__supporting-text" align="left">
                 <p>For graphing, we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>, although there are many other suitable charting libraries available in JavaScript too.</p>
