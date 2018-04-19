@@ -79,6 +79,7 @@ function drawGraphs() {
 
     // Populate data arrays
     apiData.Company_Returns[0].Data.forEach(rec => {
+
         if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
         if (rec.Return_pct !== undefined) {returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));}
         if (rec.CM_Return !== undefined) {cmReturnData.push(Number((rec.CM_Return).toFixed(4)));}
@@ -212,44 +213,44 @@ function drawGraphs() {
         shouldDrawSpread = true;
     }
 
+
     // Build returns graph
     if (shouldDrawReturns) {
-        let rtnChart = new Chart(
-            getCanvas('return_graph'),
-            buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)'))
-        );
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_graph"></canvas></div>');
+        let rtn = document.getElementById('return_graph').getContext('2d');
+        let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
     }
+
 
     // Build returns percentage graph
     if (shouldDrawReturnsPct) {
-        let rtnPctChart = new Chart(
-            getCanvas('return_percentage_graph'),
-            buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)'))
-        );
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="return_percentage_graph"></canvas></div>');
+        let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
+        let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)')));
     }
+
 
     // Build volume graph
     if (shouldDrawVolume) {
-        let volChart = new Chart(
-            getCanvas('volume_graph'),
-            buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)'))
-        );
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_graph"></canvas></div>');
+        let vol = document.getElementById('volume_graph').getContext('2d');
+        let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)')));
     }
+
 
     // Build volume percentage graph
     if (shouldDrawVolumePct) {
-        let volPctChart = new Chart(
-            getCanvas('volume_percentage_graph'),
-            buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)'))
-        );
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="volume_percentage_graph"></canvas></div>');
+        let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
+        let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)')));
     }
+
 
     // Build daily spread graph
     if (shouldDrawSpread) {
-        let spreadChart = new Chart(
-            getCanvas('daily_spread_graph'),
-            buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)'))
-        );
+        document.getElementById('graphs').insertAdjacentHTML('beforeend', '<div class="mdl-cell mdl-cell--6-col"><canvas id="daily_spread_graph"></canvas></div>');
+        let spread = document.getElementById('daily_spread_graph').getContext('2d');
+        let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)')));
     }
 
     document.getElementById('graphSeparator').hidden = false;
@@ -301,12 +302,6 @@ function buildGraphOptions(name, yLabel){
             sensitivity: 3,
         }
     });
-}
-
-function getCanvas(name) {
-    const graphHtml = '<div class="mdl-cell mdl-cell--6-col"><canvas id="' + name + '"></canvas></div>';
-    document.getElementById('graphs').insertAdjacentHTML('beforeend', graphHtml);
-    return document.getElementById(name).getContext('2d');
 }
 
 function syntaxHighlight(json) {
