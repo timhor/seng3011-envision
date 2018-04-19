@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
+from random import sample
 import logging
 import warnings
 import os
@@ -20,6 +21,14 @@ app.debug = True
 
 VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
+}
+
+CREDITS = {
+    'z5115401 - Soham Dinesh Patel': 'https://github.com/SohamPatel',
+    'z5113367 - Vintony Padmadiredja': 'https://github.com/VintonyPadmadiredja',
+    'z3461919 - Michael Tran': 'https://github.com/mqtran01',
+    'z5019242 - Tim Hor': 'https://github.com/timhor',
+    'z5109924 - James Mangos': 'https://github.com/jamesmangos'
 }
 
 
@@ -60,7 +69,7 @@ def gettingstarted():
 
 @app.route('/team')
 def team():
-    return render_template('team.html')
+    return render_template('team.html', credits=sample(CREDITS.items(), len(CREDITS)))
 
 
 @app.route('/versions')
