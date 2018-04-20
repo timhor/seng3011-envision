@@ -7,7 +7,7 @@
     width: 100%;
 }
 
-#formTitle {
+.form-title {
     padding-top: 50px;
     margin: 0 auto;
     text-align: center;
@@ -115,10 +115,19 @@ hr {
     margin: 35px 0;
 }
 
-canvas{
+canvas {
     width: 500px;
     height: 300px;
     background-color: rgb(250, 250, 250);
+}
+
+ul {
+    display: inline-block;
+    text-align: left;
+}
+
+#graphSectionTitle {
+    margin: -16px auto 0;
 }
 
 #graphSupportText {

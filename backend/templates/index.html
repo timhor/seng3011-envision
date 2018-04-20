@@ -54,11 +54,6 @@
                             if request.path == url_for('versions') else 'mdl-navigation__link'}}"
                             href="{{url_for('versions')}}">Version History</a>
 
-                <!-- Team Page Link -->
-                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
-                            if request.path == url_for('team') else 'mdl-navigation__link'}}"
-                            href="{{url_for('team')}}">Team & Project</a>
-
                 <!-- Blog Page Link -->
                 <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
                             if request.path == url_for('blog') else 'mdl-navigation__link'}}"
@@ -68,6 +63,11 @@
                 <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
                             if request.path == url_for('logs') else 'mdl-navigation__link'}}"
                             href="{{url_for('logs')}}">Logs</a>
+
+                <!-- Team Page Link -->
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('team') else 'mdl-navigation__link'}}"
+                            href="{{url_for('team')}}">Team & Project</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
