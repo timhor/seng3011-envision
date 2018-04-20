@@ -1,0 +1,65 @@
+{% extends "index.html" %}
+{% block body_contents %}
+<link rel="stylesheet" href="{{url_for('static', filename='styles/blog.css')}}">
+<div class="mdl-grid" align="center">
+    <div class="mdl-cell mdl-cell--12-col">
+        <h2>Blog</h2>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="versionsCard">
+            <div class="mdl-card__title" id="cardTitle">
+                <h2 class="mdl-card__title-text mdl-typography--font-bold">API Integration within Client</h2>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                <p>This is a brief description of how we integrated Envision API into this application. To see a demo application, go to the <a href="generator">Query Generator</a>.</p>
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Retrieving data from the API</h2>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                <p>We obtain the data by making a request to the Envision API. Since it is a RESTful service, we could use several programming languages to do this. Some examples using cURL, Python, and jQuery, along with the format of response data, are available on the <a href="documentation">Documentation</a> page. Since our demo application is web-based, we have used <a href="https://jquery.com/" target="_blank">jQuery</a>.</p>
+                <pre>
+$.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&lower_window=3&upper_window=5&list_of_var=Return`, (data) => {
+    let dataString = JSON.stringify(data, null, 3);
+})</pre>
+                <p>Once we have the <code>dataString</code>, we display it with highlighted syntax by adding CSS dynamically using JavaScript.</p>
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                    <h3 class="mdl-card__subtitle-text mdl-typography--font-bold">Visualising the data with Chart.js</h2>
+            </div>
+            <div class="blog-entry mdl-card__supporting-text" align="left">
+                <p>For graphing, we have used <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>, although there are many other suitable charting libraries available in JavaScript too.</p>
+                <p>To display a graph we need to manipulate the data retrieved to the required format of the library. The code below shows how we did this for returns data.</p>
+                <pre>function drawGraphs() {
+    let returnData = new Array();
+    let dates = new Array();
+
+    apiData.Company_Returns[0].Data.forEach(rec => {
+        if (rec.Return !== undefined) {
+            returnData.push(Number((rec.Return).toFixed(4)));
+        }
+        let mydate = new Date(rec.Date);
+        let formattedDate = mydate.toLocaleDateString();
+        dates.push(formattedDate);
+    });
+
+    if (returnData.length > 0) {
+        returnDatasets.push(
+            {
+                label: 'Return',
+                data: returnData,
+                fill: false,
+                borderColor: 'rgb(57, 106, 177)',
+                lineTension: 0.1,
+            }
+        );
+    }
+
+    let rtn = document.getElementById('return_graph').getContext('2d');
+    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
+}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
