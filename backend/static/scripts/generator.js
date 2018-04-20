@@ -15,7 +15,7 @@ function getData(){
 
     document.getElementById('scrollToGraphsBtn').hidden = true;
     document.getElementById('graphSeparator').hidden = true;
-    document.getElementById('graphSectionTitle').hidden = true;
+    document.getElementById('graphSectionHeader').hidden = true;
     document.getElementById('graphs').hidden = true;
     document.getElementById('queryResultsCard').scrollIntoView({block: 'start', behavior: 'smooth'});
 
@@ -37,7 +37,7 @@ function getData(){
 };
 
 function scrollToGraphs() {
-    document.getElementById('graphSectionTitle').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    document.getElementById('graphSectionHeader').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 function drawGraphs() {
@@ -300,7 +300,7 @@ function drawGraphs() {
     }
 
     document.getElementById('graphSeparator').hidden = false;
-    document.getElementById('graphSectionTitle').hidden = false;
+    document.getElementById('graphSectionHeader').hidden = false;
     document.getElementById('graphs').hidden = false;
 }
 
