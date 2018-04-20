@@ -22,27 +22,18 @@ function getData(){
     document.getElementById('queryResults').hidden = true;
     document.getElementById('loadingSpinner').hidden = false;
 
-    if (getListOfVars != '') {
-        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
-            apiData = data;
-            let dataString = JSON.stringify(data, null, 3);
-            document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
-            document.getElementById('loadingSpinner').hidden = true;
-            document.getElementById('queryResults').hidden = false;
-            drawGraphs();
-            document.getElementById('scrollToGraphsBtn').hidden = false;
-        })
-    } else {
-        $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
-            apiData = data;
-            let dataString = JSON.stringify(data, null, 3);
-            document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
-            document.getElementById('loadingSpinner').hidden = true;
-            document.getElementById('queryResults').hidden = false;
-            drawGraphs();
-            document.getElementById('scrollToGraphsBtn').hidden = false;
-        })
-    }
+    instrumentID = instrumentID.replace(' ', '');
+
+    $.getJSON(`api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+        apiData = data;
+        let dataString = JSON.stringify(data, null, 3);
+        document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
+        document.getElementById('loadingSpinner').hidden = true;
+        document.getElementById('queryResults').hidden = false;
+        drawGraphs();
+        document.getElementById('scrollToGraphsBtn').hidden = false;
+    })
+
 };
 
 function scrollToGraphs() {
@@ -50,187 +41,285 @@ function scrollToGraphs() {
 }
 
 function drawGraphs() {
-    // Convert API Data to Array
-    let returnData = new Array();
-    let returnPctData = new Array();
-    let cmReturnData = new Array();
-    let cmReturnPctData = new Array();
-    let avReturnData = new Array();
-    let avReturnPctData = new Array();
-    let dailySpreadData = new Array();
-    let volumeData = new Array();
-    let volumePctData = new Array();
+    // Clear previous graphs
+    document.getElementById('graphs').innerHTML = ``;
 
     let dates = new Array();
 
-    returnDatasets = new Array();
-    returnPercentageDatasets = new Array();
-    volumeDatasets = new Array();
-    volumePercentageDatasets = new Array();
-    dailySpreadDatasets = new Array();
+    returnDatasets = {};
+    cmReturnDatasets = {};
+    avReturnDatasets = {};
+    returnPercentageDatasets = {};
+    cmReturnPercentageDatasets = {};
+    avReturnPercentageDatasets = {};
+    volumeDatasets = {};
+    volumePercentageDatasets = {};
+    dailySpreadDatasets = {};
+
+    var shouldDrawReturns = false;
+    var shouldDrawCMReturns = false;
+    var shouldDrawAVReturns = false;
+    var shouldDrawReturnsPct = false;
+    var shouldDrawCMReturnsPct = false;
+    var shouldDrawAVReturnsPct = false;
+    var shouldDrawVolume = false;
+    var shouldDrawVolumePct = false;
+    var shouldDrawSpread = false;
 
     // Populate data arrays
-    apiData.Company_Returns[0].Data.forEach(rec => {
+    apiData.Company_Returns.forEach(instrument => {
+        // Convert API Data to Array
+        let returnData = new Array();
+        let returnPctData = new Array();
+        let cmReturnData = new Array();
+        let cmReturnPctData = new Array();
+        let avReturnData = new Array();
+        let avReturnPctData = new Array();
+        let dailySpreadData = new Array();
+        let volumeData = new Array();
+        let volumePctData = new Array();
 
-        if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
-        if (rec.Return_pct !== undefined) {returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));}
-        if (rec.CM_Return !== undefined) {cmReturnData.push(Number((rec.CM_Return).toFixed(4)));}
-        if (rec.CM_Return_pct !== undefined) {cmReturnPctData.push(Number((rec.CM_Return_pct*100).toFixed(4)));}
-        if (rec.AV_Return !== undefined) {avReturnData.push(Number((rec.AV_Return).toFixed(4)));}
-        if (rec.AV_Return_pct !== undefined) {avReturnPctData.push(Number((rec.AV_Return_pct*100).toFixed(4)));}
-        if (rec.Daily_Spread !== undefined) {dailySpreadData.push(Number((rec.Daily_Spread).toFixed(2)));}
-        if (rec.Volume !== undefined) {volumeData.push(Number((rec.Volume).toFixed(4)));}
-        if (rec.Volume_pct !== undefined) {volumePctData.push(Number((rec.Volume_pct*100).toFixed(4)));}
+        let instrumentColor = getRandomColor();
 
-        let mydate = new Date(rec.Date);
-        let formattedDate = mydate.toLocaleDateString();
-        dates.push(formattedDate);
-    });
+        instrument.Data.forEach(rec => {
+            if (rec.Return !== undefined) {returnData.push(Number((rec.Return).toFixed(4)));}
+            if (rec.Return_pct !== undefined) {returnPctData.push(Number((rec.Return_pct*100).toFixed(4)));}
+            if (rec.CM_Return !== undefined) {cmReturnData.push(Number((rec.CM_Return).toFixed(4)));}
+            if (rec.CM_Return_pct !== undefined) {cmReturnPctData.push(Number((rec.CM_Return_pct*100).toFixed(4)));}
+            if (rec.AV_Return !== undefined) {avReturnData.push(Number((rec.AV_Return).toFixed(4)));}
+            if (rec.AV_Return_pct !== undefined) {avReturnPctData.push(Number((rec.AV_Return_pct*100).toFixed(4)));}
+            if (rec.Daily_Spread !== undefined) {dailySpreadData.push(Number((rec.Daily_Spread).toFixed(2)));}
+            if (rec.Volume !== undefined) {volumeData.push(Number((rec.Volume).toFixed(4)));}
+            if (rec.Volume_pct !== undefined) {volumePctData.push(Number((rec.Volume_pct*100).toFixed(4)));}
 
-    // Add datasets for just returns graph
-    if (returnData.length > 0) {
-        returnDatasets.push(
-            {
-                label: 'Return',
-                data: returnData,
-                fill: false,
-                borderColor: 'rgb(57, 106, 177)',
-                lineTension: 0.1,
+            let mydate = new Date(rec.Date);
+            let formattedDate = mydate.toLocaleDateString();
+            if ($.inArray(formattedDate, dates) === -1){
+                dates.push(formattedDate);
             }
-        );
-    }
-    if (cmReturnData.length > 0) {
-        returnDatasets.push(
-            {
-                label: 'Cumulative Return',
-                data: cmReturnData,
-                fill: false,
-                borderColor: 'rgb(218, 124, 48)',
-                lineTension: 0.1,
-            }
-        );
-    }
-    if (avReturnData.length > 0) {
-        returnDatasets.push(
-            {
-                label: 'Average Return',
-                data: avReturnData,
-                fill: false,
-                borderColor: 'rgb(62, 150, 81)',
-                lineTension: 0.1,
-            }
-        );
-    }
+        });
 
-    // Add datasets for percentage returns graph
-    if (returnPctData.length > 0) {
-        returnPercentageDatasets.push(
-            {
-                label: 'Return Percentage',
-                data: returnPctData,
-                fill: false,
-                borderColor: 'rgb(57, 106, 177)',
-                lineTension: 0.1,
-            }
-        );
-    }
-    if (cmReturnPctData.length > 0) {
-        returnPercentageDatasets.push(
-            {
-                label: 'Cumulative Return Percentage',
-                data: cmReturnPctData,
-                fill: false,
-                borderColor: 'rgb(218, 124, 48)',
-                lineTension: 0.1,
-            }
-        );
-    }
-    if (avReturnPctData.length > 0) {
-        returnPercentageDatasets.push(
-            {
-                label: 'Average Return Percentage',
-                data: avReturnPctData,
-                fill: false,
-                borderColor: 'rgb(62, 150, 81)',
-                lineTension: 0.1,
-            }
-        );
-    }
+        // Add datasets for just returns graph
+        if (returnData.length > 0) {
+            returnDatasets[instrument.InstrumentID] = new Array();
+            returnDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: returnData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawReturns = true;
+        }
+        if (cmReturnData.length > 0) {
+            cmReturnDatasets[instrument.InstrumentID] = new Array();
+            cmReturnDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: cmReturnData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawCMReturns = true;
+        }
+        if (avReturnData.length > 0) {
+            avReturnDatasets[instrument.InstrumentID] = new Array();
+            avReturnDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: avReturnData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawAVReturns = true;
+        }
 
-    // Add datasets for volume graph
-    if (volumeData.length > 0) {
-        volumeDatasets.push(
-            {
-                label: 'Volume Traded',
-                data: volumeData,
-                fill: false,
-                borderColor: 'rgb(107, 76, 154)',
-                lineTension: 0.1,
-            }
-        );
-    }
+        // Add datasets for percentage returns graph
+        if (returnPctData.length > 0) {
+            returnPercentageDatasets[instrument.InstrumentID] = new Array();
+            returnPercentageDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: returnPctData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawReturnsPct = true;
+        }
+        if (cmReturnPctData.length > 0) {
+            cmReturnPercentageDatasets[instrument.InstrumentID] = new Array();
+            cmReturnPercentageDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: cmReturnPctData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawCMReturnsPct = true;
+        }
+        if (avReturnPctData.length > 0) {
+            avReturnPercentageDatasets[instrument.InstrumentID] = new Array();
+            avReturnPercentageDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: avReturnPctData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawAVReturnsPct = true;
+        }
 
-    // Add datasets for volume percentage graph
-    if (volumePctData.length > 0) {
-        volumePercentageDatasets.push(
-            {
-                label: 'Volume Traded Percentage',
-                data: volumePctData,
-                fill: false,
-                borderColor: 'rgb(107, 76, 154)',
-                lineTension: 0.1,
-            }
-        );
-    }
+        // Add datasets for volume graph
+        if (volumeData.length > 0) {
+            volumeDatasets[instrument.InstrumentID] = new Array();
+            volumeDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: volumeData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawVolume = true;
+        }
 
-    // Add datasets for daily spread graph
-    if (dailySpreadData.length > 0) {
-        dailySpreadDatasets.push(
-            {
-                label: 'Daily Spread',
-                data: dailySpreadData,
-                fill: false,
-                borderColor: 'rgb(148, 139, 61)',
-                lineTension: 0.1,
-            }
-        );
-    }
+        // Add datasets for volume percentage graph
+        if (volumePctData.length > 0) {
+            volumePercentageDatasets[instrument.InstrumentID] = new Array();
+            volumePercentageDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: volumePctData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawVolumePct = true;
+        }
+
+        // Add datasets for daily spread graph
+        if (dailySpreadData.length > 0) {
+            dailySpreadDatasets[instrument.InstrumentID] = new Array();
+            dailySpreadDatasets[instrument.InstrumentID].push(
+                {
+                    label: instrument.InstrumentID,
+                    data: dailySpreadData,
+                    fill: false,
+                    borderColor: instrumentColor,
+                    lineTension: 0.1,
+                }
+            );
+            shouldDrawSpread = true;
+        }
+    })
 
     // Build returns graph
-    let rtn = document.getElementById('return_graph').getContext('2d');
-    let rtnChart = new Chart(rtn, buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)')));
-
+    if (shouldDrawReturns) {
+        let rtnChart = new Chart(
+            getCanvas('return_graph'),
+            buildGraphData(dates, returnDatasets, buildGraphOptions('Returns', 'Returns ($)'))
+        );
+    }
 
     // Build returns percentage graph
-    let rtnPct = document.getElementById('return_percentage_graph').getContext('2d');
-    let rtnPctChart = new Chart(rtnPct, buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)')));
+    if (shouldDrawReturnsPct) {
+        let rtnPctChart = new Chart(
+            getCanvas('return_percentage_graph'),
+            buildGraphData(dates, returnPercentageDatasets, buildGraphOptions('Returns Percentage', 'Returns (%)'))
+        );
+    }
 
+    // Build CM returns graph
+    if (shouldDrawCMReturns) {
+        let cmRtnChart = new Chart(
+            getCanvas('cm_return_graph'),
+            buildGraphData(dates, cmReturnDatasets, buildGraphOptions('Cumulative Returns', 'Returns ($)'))
+        );
+    }
+
+    // Build CM returns percentage graph
+    if (shouldDrawCMReturnsPct) {
+        let cmRtnPctChart = new Chart(
+            getCanvas('cm_return_percentage_graph'),
+            buildGraphData(dates, cmReturnPercentageDatasets, buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
+        );
+    }
+
+    // Build AV returns graph
+    if (shouldDrawAVReturns) {
+        let avRtnChart = new Chart(
+            getCanvas('av_return_graph'),
+            buildGraphData(dates, avReturnDatasets, buildGraphOptions('Average Returns', 'Returns ($)'))
+        );
+    }
+
+    // Build AV returns percentage graph
+    if (shouldDrawAVReturnsPct) {
+        let avRtnPctChart = new Chart(
+            getCanvas('av_return_percentage_graph'),
+            buildGraphData(dates, avReturnPercentageDatasets, buildGraphOptions('Average Returns Percentage', 'Returns (%)'))
+        );
+    }
 
     // Build volume graph
-    let vol = document.getElementById('volume_graph').getContext('2d');
-    let volChart = new Chart(vol, buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)')));
-
+    if (shouldDrawVolume) {
+        let volChart = new Chart(
+            getCanvas('volume_graph'),
+            buildGraphData(dates, volumeDatasets, buildGraphOptions('Volume Traded', 'Volume ($)'))
+        );
+    }
 
     // Build volume percentage graph
-    let volPct = document.getElementById('volume_percentage_graph').getContext('2d');
-    let volPctChart = new Chart(volPct, buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)')));
-
+    if (shouldDrawVolumePct) {
+        let volPctChart = new Chart(
+            getCanvas('volume_percentage_graph'),
+            buildGraphData(dates, volumePercentageDatasets, buildGraphOptions('Volume Traded Percentage', 'Volume (%)'))
+        );
+    }
 
     // Build daily spread graph
-    let spread = document.getElementById('daily_spread_graph').getContext('2d');
-    let spreadChart = new Chart(spread, buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)')));
+    if (shouldDrawSpread) {
+        let spreadChart = new Chart(
+            getCanvas('daily_spread_graph'),
+            buildGraphData(dates, dailySpreadDatasets, buildGraphOptions('Daily Spread', 'Spread ($)'))
+        );
+    }
 
     document.getElementById('graphSeparator').hidden = false;
     document.getElementById('graphSectionTitle').hidden = false;
     document.getElementById('graphs').hidden = false;
 }
 
+function getCanvas(name) {
+    const graphHtml = '<div class="mdl-cell mdl-cell--6-col"><canvas id="' + name + '"></canvas></div>';
+    document.getElementById('graphs').insertAdjacentHTML('beforeend', graphHtml);
+    return document.getElementById(name).getContext('2d');
+}
+
 function buildGraphData(dates, datasets, graphOptions) {
+    let dataArray = new Array();
+    jQuery.each(datasets, (i,val) => {
+        dataArray.push(val[0]);
+    });
     return {
         type: 'line',
         data: {
             labels: dates,
-            datasets: datasets
+            datasets: dataArray
         },
         options: graphOptions
     };
@@ -272,6 +361,15 @@ function buildGraphOptions(name, yLabel){
     });
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function syntaxHighlight(json) {
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
@@ -297,14 +395,11 @@ function updateAPIQuery() {
     let lowerWindow = document.getElementById('lower_window').value;
     let upperWindow = document.getElementById('upper_window').value;
 
+    instrumentID = instrumentID.replace(' ', '');
+
     let listOfVar = getListOfVars();
 
-    let apiQuery;
-    if (listOfVar != '') {
-        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
-    } else {
-        apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
-    }
+    let apiQuery = window.location.protocol + '//' + window.location.host + `/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     document.getElementById('apiQuery').innerText = apiQuery;
 }
 
