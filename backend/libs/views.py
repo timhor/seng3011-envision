@@ -135,6 +135,7 @@ def api(version):
         query_load = session.execute(q).first()
     except exc.SQLAlchemyError:
         session = Session() # Old session likely expired, spin up a new one for next time
+        query_load = None
 
     if query_load:
         returns = json.loads(query_load[-2])
