@@ -21,6 +21,8 @@ app.debug = True
 
 VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
+    'v1.0.1': v1_0,
+    'v1.0.2' : v1_0,
 }
 
 CREDITS = {
@@ -48,12 +50,13 @@ logger.info('Logger initialised')
 @app.route('/generator')
 def generator():
     latest = list(VALID_VERSIONS.values())[-1]
-    return render_template('generator.html', variables_list=latest.VALID_VARS)
+    return render_template('generator.html', variables_list=latest.VALID_VARS, api_version=list(VALID_VERSIONS.keys())[-1])
 
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html')
+    latest_ver = list(VALID_VERSIONS.keys())[-1]
+    return render_template('documentation.html', version_number=latest_ver)
 
 
 @app.route('/gettingstarted')
