@@ -1,4 +1,4 @@
-{% extends "index.html" %} 
+{% extends "index.html" %}
 {% block body_contents %}
 <!-- CSS -->
 <link rel="stylesheet" href="{{url_for('static', filename='styles/team.css')}}">
@@ -14,11 +14,9 @@
                 <h2 class="mdl-card__title-text">Team Members</h2>
             </div>
             <div class="mdl-card__supporting-text">
-                z5115401 - Soham Dinesh Patel
-                <br> z5113367 - Vintony Padmadiredja
-                <br> z3461919 - Michael Tran
-                <br> z5019242 - Tim Hor
-                <br> z5109924 - James Mangos
+                {% for name, link in credits %}
+                    <a href="{{link}}" target="_blank">{{name}}</a><br>
+                {% endfor %}
             </div>
         </div>
     </div>
