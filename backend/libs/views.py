@@ -70,7 +70,9 @@ def team():
 def versions():
     return render_template('versions.html', current_page="versions")
 
-
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', current_page="blog")
 
 @app.route('/logs')
 def logs():
