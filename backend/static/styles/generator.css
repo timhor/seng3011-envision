@@ -115,10 +115,15 @@ hr {
     margin: 35px 0;
 }
 
-canvas{
+canvas {
     width: 500px;
     height: 300px;
     background-color: rgb(250, 250, 250);
+}
+
+ul {
+    display: inline-block;
+    text-align: left;
 }
 
 #graphSectionTitle {
