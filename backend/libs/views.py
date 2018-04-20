@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
+from random import sample
 import logging
 import warnings
 import os
@@ -22,6 +23,14 @@ VALID_VERSIONS = {
     'v1.0': v1_0,  # Latest is the last one in the dict
 }
 
+CREDITS = {
+    'z5115401 - Soham Dinesh Patel': 'https://github.com/SohamPatel',
+    'z5113367 - Vintony Padmadiredja': 'https://github.com/VintonyPadmadiredja',
+    'z3461919 - Michael Tran': 'https://github.com/mqtran01',
+    'z5019242 - Tim Hor': 'https://github.com/timhor',
+    'z5109924 - James Mangos': 'https://github.com/jamesmangos'
+}
+
 
 # Logging information
 logger = logging.getLogger('logger')
@@ -34,17 +43,17 @@ logger.addHandler(fh)
 logger.info('Logger initialised')
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', endpoint='/')
+@app.route('/home', endpoint='home')
 @app.route('/generator')
 def generator():
     latest = list(VALID_VERSIONS.values())[-1]
-    return render_template('generator.html', current_page="generator", variables_list=latest.VALID_VARS)
+    return render_template('generator.html', variables_list=latest.VALID_VARS)
 
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html', current_page="documentation")
+    return render_template('documentation.html')
 
 
 @app.route('/gettingstarted')
@@ -56,16 +65,16 @@ def gettingstarted():
         readme = ""
         print("Could not read file: README.md")
     readme = markdown(readme)
-    return render_template('gettingstarted.html', current_page="gettingstarted", readme=readme)
+    return render_template('gettingstarted.html', readme=readme)
 
 @app.route('/team')
 def team():
-    return render_template('team.html', current_page="team")
+    return render_template('team.html', credits=sample(CREDITS.items(), len(CREDITS)))
 
 
 @app.route('/versions')
 def versions():
-    return render_template('versions.html', current_page="versions")
+    return render_template('versions.html')
 
 @app.route('/blog')
 def blog():
@@ -78,7 +87,7 @@ def logs():
     info = info.replace('\n', '<br>')
     if request.args.get('raw'):
         return info
-    return render_template('logs.html', current_page="logs", logs=info)
+    return render_template('logs.html', logs=info)
 
 
 @app.route('/api/<version>/')
