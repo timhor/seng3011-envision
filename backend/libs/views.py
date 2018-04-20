@@ -41,7 +41,7 @@ logger.info('Logger initialised')
 @app.route('/generator')
 def generator():
     latest = list(VALID_VERSIONS.values())[-1]
-    return render_template('generator.html', current_page="generator", variables_list=latest.VALID_VARS)
+    return render_template('generator.html', current_page="generator", variables_list=latest.VALID_VARS, api_version=list(VALID_VERSIONS.keys())[-1])
 
 
 @app.route('/documentation')
