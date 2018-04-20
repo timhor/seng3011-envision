@@ -6,14 +6,14 @@ import logging
 import warnings
 import os
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 from db_manage import Dump
 import json
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     engine = create_engine(os.environ['DB_CONN'])
 Session = sessionmaker(bind=engine)
-session = Session()
+session= Session()
 
 app = Flask('envision-server-api')
 app.debug = True
@@ -118,7 +118,11 @@ def api(version):
         'upper':request.args['upper_window'],
     }
     q = session.query(Dump).filter_by(**query_args)
-    query_load = session.execute(q).first()
+    try:
+        query_load = session.execute(q).first()
+    except exc.SQLAlchemyError:
+        session = Session() # Old session likely expired, spin up a new one for next time
+
     if query_load:
         returns = json.loads(query_load[-2])
         if len(query_load[-1]) > 0:
@@ -132,8 +136,11 @@ def api(version):
             created=datetime.now(),
             payload=json.dumps(returns),
             errors='|'.join(error_messages))
-        session.add(db_item)
-        session.commit()
+        try:
+            session.add(db_item)
+            session.commit()
+        except exc.SQLAlchemyError:
+            session = Session() # Old session likely expired, spin up a new one for next time
 
     end_time = datetime.now()
 
