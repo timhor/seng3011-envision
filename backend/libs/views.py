@@ -13,7 +13,7 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     engine = create_engine(os.environ['DB_CONN'])
 Session = sessionmaker(bind=engine)
-session= Session()
+session = Session()
 
 app = Flask('envision-server-api')
 app.debug = True
