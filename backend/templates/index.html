@@ -35,47 +35,39 @@
             </div>
             <nav class="mdl-navigation">
                 <!-- Home/Query Generator Page Link -->
-                {% if current_page == "generator" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('generator')}}">Query Generator</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('generator')}}">Query Generator</a>
-                {% endif %}
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('generator') or request.path == url_for('/') or request.path == url_for('home') else 'mdl-navigation__link'}}"
+                            href="{{url_for('generator')}}">Query Generator</a>
 
                 <!-- Getting Started Page Link -->
-                {% if current_page == "gettingstarted" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title" href="{{url_for('gettingstarted')}}">Getting Started</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('gettingstarted')}}">Getting Started</a>
-                {% endif %}
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('gettingstarted') else 'mdl-navigation__link'}}"
+                            href="{{url_for('gettingstarted')}}">Getting Started</a>
 
                 <!-- Documentation Page Link -->
-                {% if current_page == "documentation" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('documentation')}}">Documentation</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('documentation')}}">Documentation</a>
-                {% endif %}
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('documentation') else 'mdl-navigation__link'}}"
+                            href="{{url_for('documentation')}}">Documentation</a>
 
                 <!-- Version Page Link -->
-                {% if current_page == "versions" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('versions')}}">Version History</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('versions')}}">Version History</a>
-                {% endif %}
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('versions') else 'mdl-navigation__link'}}"
+                            href="{{url_for('versions')}}">Version History</a>
 
                 <!-- Team Page Link -->
-                {% if current_page == "team" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Team / Project</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('team')}}">Team & Project</a>
-                {% endif %}
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('team') else 'mdl-navigation__link'}}"
+                            href="{{url_for('team')}}">Team & Project</a>
+
+                <!-- Blog Page Link -->
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('blog') else 'mdl-navigation__link'}}"
+                            href="{{url_for('blog')}}">Blog</a>
 
                 <!-- Logs Link -->
-                {% if current_page == "logs" %}
-                    <a class="mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white" href="{{url_for('team')}}">Logs</a>
-                {% else %}
-                    <a class="mdl-navigation__link" href="{{url_for('logs')}}">Logs</a>
-                {% endif %}
-
+                <a class="{{'mdl-navigation__link mdl-navigation__link--current mdl-color--blue mdl-color-text--white mdl-typography--title'
+                            if request.path == url_for('logs') else 'mdl-navigation__link'}}"
+                            href="{{url_for('logs')}}">Logs</a>
             </nav>
         </div>
         <main class="mdl-layout__content">

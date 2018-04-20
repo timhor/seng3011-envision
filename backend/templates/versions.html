@@ -5,11 +5,41 @@
     <div class="mdl-cell mdl-cell--12-col">
         <h2>Version History</h2>
     </div>
+    <!-- v1.0.2 -->
+    <div class="mdl-cell mdl-cell--12-col">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="versionsCard">
+            <div class="mdl-card__title" id="cardTitle">
+                <h2 class="mdl-card__title-text mdl-typography--font-bold">Version 1.0.2 (Current)</h2>
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                <h2 class="mdl-card__subtitle-text mdl-typography--font-bold">Release Date</h2>
+            </div>
+            <div class="release-date mdl-card__supporting-text" align="left">
+                19/04/2018
+            </div>
+            <div class="mdl-card__title card-subtitle">
+                <h2 class="mdl-card__subtitle-text mdl-typography--font-bold">Changelog</h2>
+            </div>
+            <div class="changelog-list mdl-card__supporting-text" align="left">
+                <ul>
+                    <li>Added graph to demonstrate API capabilities</li>
+                    <li>Cached returns data and refactored backend to reduce query time</li>
+                    <li>Reduced size of favicon to reduce page load time</li>
+                    <li>Added testing framework to evaluate coverage and perform profiling</li>
+                    <li>Limited instrument count to a maximum of 10 to minimise traffic congestion</li>
+                    <li>Misc. improvements to user experience</li>
+                    <li>Handled invalid parameters more gracefully</li>
+                    <li>Concurrency to handle multiple instrument queries to significantly reduce query time</li>
+                </ul>
+            </div>
+            <br>
+        </div>
+    </div>
     <!-- v1.0.1 -->
     <div class="mdl-cell mdl-cell--12-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="versionsCard">
             <div class="mdl-card__title" id="cardTitle">
-                <h2 class="mdl-card__title-text mdl-typography--font-bold">Version 1.0.1 (Current)</h2>
+                <h2 class="mdl-card__title-text mdl-typography--font-bold">Version 1.0.1</h2>
             </div>
             <div class="mdl-card__title card-subtitle">
                 <h2 class="mdl-card__subtitle-text mdl-typography--font-bold">Release Date</h2>
@@ -25,6 +55,7 @@
                     <li>Updated API URL</li>
                     <li>Added documentation for API usage</li>
                     <li>Added more requestable variables for <code>list_of_var</code></li>
+                    <li>Hid error messages for successful queries</li>
                 </ul>
             </div>
             <br>

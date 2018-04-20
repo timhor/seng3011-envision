@@ -2,6 +2,10 @@
 <!-- CSS -->
 <link rel="stylesheet" href="{{url_for('static', filename='styles/generator.css')}}">
 <script src="{{url_for('static', filename='scripts/generator.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/Chart.bundle.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.3/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
 <!-- Page Heading -->
 <div class="centeritems mdl-grid">
     <div class="mdl-layout-spacer"></div>
@@ -41,15 +45,15 @@
                             <label class="mdl-textfield__label mdl-color-text--blue" id="variablesLabel">Variables</label>
 
                             <ul class="mdl-list">
-                                {%  for var in variables_list %}
+                                {% for var in variables_list %}
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-secondary-action">
                                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{ loop.index }}">
-                                                <input type="checkbox" id="list-checkbox-{{ loop.index }}" class="mdl-checkbox__input"  onchange="updateAPIQuery()" />
+                                                 <span id="checkboxLabel" class="mdl-list__item-primary-content mdl-color-text--grey-600">
+                                                     {{ variables_list[var] }}
+                                                 </span>
+                                                 <input type="checkbox" id="list-checkbox-{{ loop.index }}" class="mdl-checkbox__input"  onchange="updateAPIQuery()" />
                                             </label>
-                                        </span>
-                                        <span class="mdl-list__item-primary-content mdl-color-text--grey-600">
-                                            {{ variables_list[var] }}
                                         </span>
                                     </li>
                                 {% endfor %}
@@ -94,9 +98,18 @@
         </div>
     </div>
     <div id="formSubmit" class="mdl-cell mdl-cell--1-col" align="center">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="getData()" id="formSubmitBtn">
-            <i class="material-icons">arrow_forward</i>
-        </button>
+        <!-- the entire div is sticky relative to the formSubmit column -->
+        <div id="midColumnButtons">
+            <!-- submit button is absolutely positioned within the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="getData()" id="formSubmitBtn">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+            <!-- graphs button is relatively positioned to the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="scrollToGraphs()"
+                    id="scrollToGraphsBtn" hidden="true">
+                <img src="../static/assets/Graph_Icon.png" width="32px" style="margin: 5px 0 0 1px;">
+            </button>
+        </div>
     </div>
     <div id="queryResultsCard" class="mdl-cell mdl-cell--5-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
@@ -113,7 +126,22 @@
     </div>
     <div class="mdl-layout-spacer"></div>
 </div>
+
+<hr id="graphSeparator" hidden="true">
+<div class="centeritems mdl-grid" id="graphSectionTitle" hidden="true">
+    <div class="mdl-card__title" id="formTitle">
+        <h2 class="mdl-card__title-text  mdl-typography--font-bold">Graphs</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="graphSupportText" align="center">
+        NOTE* Use scroll wheel to zoom in and out of graphs
+    </div>
+</div>
+<div class="mdl-grid" id="graphs" hidden="true"></div>
+
 <script>
+    // Get current version of api
+    var apiVersion = "{{api_version}}";
+
     function getListOfVars() {
         let firstVariable = true;
         let listOfVar = '';

@@ -13,9 +13,15 @@ pandas = "*"
 SQLAlchemy = "*"
 "psycopg2-binary" = "*"
 "markdown2" = "*"
+coverage = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]
 
 jupyter = "*"
 awsebcli = "*"
+
+[scripts]
+start = "python application.py"
+nuke = "python db_manage.py -n -b"

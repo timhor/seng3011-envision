@@ -28,19 +28,19 @@
                                     <span>http</span>
                                 </h5>
                                 <h5>Version:
-                                    <span>1.0.1</span>
+                                    <span>{{ version_number[1:] }}</span>
                                 </h5>
                             </section>
                         </div>
                     </div>
                 </div>
-                <h1>Paths</h1>
+                <h1 id="pathTitle">Paths</h1>
                 <span id="path--v1.0"></span>
                 <div id="operation--v1.0-get" class="operation panel" data-traverse-target="operation--v1.0-get">
                     <!-- <section class="operation-tags row"> -->
                     <!-- <div class="doc-copy"> -->
                     <div class="operation-tags">
-                        <a class="label" href="#tag-Public">Public</a>
+                        <span class="label">Public</span>
                         <!---->
                     </div>
                     <!-- </div> -->
@@ -52,7 +52,7 @@
                         <div class="doc-copy">
                             <section class="swagger-operation-path">
                                 <span class="operation-method">GET</span>
-                                <span class="operation-path">/v1.0</span>
+                                <span class="operation-path">/{{ version_number }}</span>
                             </section>
                         </div>
                     </div>
@@ -60,31 +60,6 @@
                         <div class="doc-copy">
                             <section class="swagger-operation-description">
                                 <p>Get information about a particular companies returns.</p>
-                                <p>Example usages:</p>
-                                <p>
-                                    <b>Curl:</b>
-<pre id="copyableCode">curl -X GET "http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5"</pre>
-                                </p>
-                                <p>
-                                    <b>Python3:</b>
-<pre id="copyableCode">import requests
-r = requests.get('http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0', params={
-    'instrument_id': 'ABP.AX',
-    'date_of_interest': '2012-12-10',
-    'lower_window': 3,
-    'upper_window': 5,
-    'list_of_var' : 'Return'
-})
-data = r.json()
-</pre>
-                                </p>
-                                <p>
-                                    <b>JQuery:</b>
-<pre id="copyableCode">$.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
-    let dataString = JSON.stringify(data, null, 3);
-})
-</pre>
-                                </p>
                             </section>
                         </div>
                     </div>
@@ -177,7 +152,33 @@ data = r.json()
                                 </div>
                             </section>
                         </div>
-                        <div class="doc-examples"></div>
+                        <div class="doc-examples">
+                            <h5>Request Examples</h5>
+                            <p>
+                                <b>Curl:</b>
+<pre id="copyableCode">curl -X GET "http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/{{ version_number }}?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5"</pre>
+                            </p>
+                            <p>
+                                <b>Python3:</b>
+<pre id="copyableCode">import requests
+r = requests.get('http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/{{ version_number }}', params={
+    'instrument_id': 'ABP.AX',
+    'date_of_interest': '2012-12-10',
+    'lower_window': 3,
+    'upper_window': 5,
+    'list_of_var' : 'Return'
+})
+data = r.json()
+</pre>
+                            </p>
+                            <p>
+                                <b>JQuery:</b>
+<pre id="copyableCode">$.getJSON(`http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/{{ version_number }}?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+    let dataString = JSON.stringify(data, null, 3);
+})
+</pre>
+                            </p>
+                        </div>
                     </div>
                     <div class="doc-row">
                         <div class="doc-copy">
