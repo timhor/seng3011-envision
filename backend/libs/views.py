@@ -95,6 +95,7 @@ def logs():
 
 @app.route('/api/<version>/')
 def api(version):
+    global session
     if version not in VALID_VERSIONS:
         return f'Unknown API version: {version}'
 

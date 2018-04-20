@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from libs.views import app
-
 # To rename the app to be used by AWS
 application = app
 
