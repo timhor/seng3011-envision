@@ -64,12 +64,16 @@ mat-divider {
     padding: 6px;
 }
 
+.search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
 .fill-space {
     /* This fills the remaining space, by using flexbox.
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
-}
-
-mat-icon {
-    vertical-align: middle;
 }
