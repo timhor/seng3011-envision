@@ -4,7 +4,7 @@ mat-card {
     text-align: center;
 }
 
-.example-container {
+.container {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -76,4 +76,12 @@ mat-divider {
     /* This fills the remaining space, by using flexbox.
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
+}
+
+.mat-nav-list a {
+    color: #f9f6fa;
+}
+
+.mat-nav-list a mat-icon {
+    margin-right: 20px;
 }

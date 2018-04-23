@@ -1,4 +1,4 @@
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container class="container">
   <mat-sidenav #sidenav mode="side" opened>
     <div id="heading">
       <h3>
@@ -7,6 +7,20 @@
       </h3>
     </div>
     <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-list-item routerLink="/trending">
+        <mat-icon>show_chart</mat-icon>
+        <span>Trending</span>
+      </a>
+      <a mat-list-item routerLink="/about_us">
+        <mat-icon>info_outline</mat-icon>
+        <span>About</span>
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="text-align: center">
