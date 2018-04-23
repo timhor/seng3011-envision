@@ -20,7 +20,7 @@ mat-sidenav {
 
 mat-toolbar {
     width: 100%;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -48,6 +48,7 @@ mat-divider {
     height: 70%;
     width: 300px;
     border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-left: 16px;
 }
 
 .search-bar .search-form input {
@@ -62,4 +63,10 @@ mat-divider {
 
 .search-form {
     padding: 6px;
+}
+
+.fill-space {
+    /* This fills the remaining space, by using flexbox.
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
 }
