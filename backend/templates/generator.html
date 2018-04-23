@@ -2,6 +2,10 @@
 <!-- CSS -->
 <link rel="stylesheet" href="{{url_for('static', filename='styles/generator.css')}}">
 <script src="{{url_for('static', filename='scripts/generator.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/Chart.bundle.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.3/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
 <!-- Page Heading -->
 <div class="centeritems mdl-grid">
     <div class="mdl-layout-spacer"></div>
@@ -17,7 +21,7 @@
     <div id="queryBuilderCard" class="mdl-cell mdl-cell--5-col">
         <div class="mdl-cell mdl-cell--12-col">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
-                <div class="mdl-card__title" width="100%" id="formTitle">
+                <div class="mdl-card__title form-title" width="100%">
                     <h2 class="mdl-card__title-text mdl-typography--font-bold">Build API Query</h2>
                 </div>
                 <div class="mdl-card__supporting-text" align="center">
@@ -76,7 +80,7 @@
         <br>
         <div class="mdl-cell mdl-cell--12-col">
             <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="liveAPICard" align="center">
-                <div class="mdl-card__title" width="100%" id="formTitle">
+                <div class="mdl-card__title form-title" width="100%">
                     <h2 class="mdl-card__title-text mdl-typography--font-bold">View Query</h2>
                 </div>
                 <div class="mdl-card__supporting-text" id="liveAPI">
@@ -93,14 +97,23 @@
             <span for="copyBtn" class="mdl-tooltip" id="copyBtnTooltip">Copy to Clipboard</span>
         </div>
     </div>
-    <div id="formSubmit" class="mdl-cell mdl-cell--1-col">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="getData()" id="formSubmitBtn">
-            <i class="material-icons">arrow_forward</i>
-        </button>
+    <div id="formSubmit" class="mdl-cell mdl-cell--1-col" align="center">
+        <!-- the entire div is sticky relative to the formSubmit column -->
+        <div id="midColumnButtons">
+            <!-- submit button is absolutely positioned within the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="getData()" id="formSubmitBtn">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+            <!-- graphs button is relatively positioned to the div -->
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect action-btn" onclick="scrollToGraphs()"
+                    id="scrollToGraphsBtn" hidden="true">
+                <img src="../static/assets/Graph_Icon.png" width="32px" style="margin: 5px 0 0 1px;">
+            </button>
+        </div>
     </div>
     <div id="queryResultsCard" class="mdl-cell mdl-cell--5-col">
         <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="formInput">
-            <div class="mdl-card__title" id="formTitle">
+            <div class="mdl-card__title form-title">
                 <h2 class="mdl-card__title-text  mdl-typography--font-bold">Output</h2>
             </div>
             <div class="mdl-card__supporting-text">
@@ -113,7 +126,25 @@
     </div>
     <div class="mdl-layout-spacer"></div>
 </div>
+
+<hr id="graphSeparator" hidden="true">
+<div class="centeritems mdl-grid" id="graphSectionHeader" hidden="true">
+    <div class="mdl-card__title" id="graphSectionTitle">
+        <h2 class="mdl-card__title-text mdl-typography--font-bold">Graphs</h2>
+    </div>
+    <div class="mdl-card__supporting-text" id="graphSupportText" align="center">
+        <ul>
+            <li>Scroll while hovering over a graph to zoom in and out</li>
+            <li>Click on an instrument ID to toggle its visibility on a graph</li>
+        </ul>
+    </div>
+</div>
+<div class="mdl-grid" id="graphs" hidden="true"></div>
+
 <script>
+    // Get current version of api
+    var apiVersion = "{{api_version}}";
+
     function getListOfVars() {
         let firstVariable = true;
         let listOfVar = '';

@@ -2,24 +2,35 @@ from flask import Flask, request, jsonify, render_template
 from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
+from random import sample
 import logging
+import warnings
+import os
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, exc
+from db_manage import Dump
+import json
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    engine = create_engine(os.environ['DB_CONN'])
+Session = sessionmaker(bind=engine)
+session = Session()
 
 app = Flask('envision-server-api')
 app.debug = True
 
-VALID_VARS = {
-    'Return': 'Return',
-    'Return_pct': 'Return Percentage',
-    'CM_Return': 'Cumulative Return',
-    'CM_Return_pct': 'Cumulative Return Percentage',
-    'AV_Return': 'Average Return',
-    'AV_Return_pct': 'Average Return Percentage',
-    'Daily_Spread': 'Daily Spread',
-    'Volume': 'Volume',
-    'Volume_pct': 'Volume Percentage'
-}
 VALID_VERSIONS = {
-    'v1.0': v1_0,
+    'v1.0': v1_0,  # Latest is the last one in the dict
+    'v1.0.1': v1_0,
+    'v1.0.2' : v1_0,
+}
+
+CREDITS = {
+    'z5115401 - Soham Dinesh Patel': 'https://github.com/SohamPatel',
+    'z5113367 - Vintony Padmadiredja': 'https://github.com/VintonyPadmadiredja',
+    'z3461919 - Michael Tran': 'https://github.com/mqtran01',
+    'z5019242 - Tim Hor': 'https://github.com/timhor',
+    'z5109924 - James Mangos': 'https://github.com/jamesmangos'
 }
 
 
@@ -34,16 +45,18 @@ logger.addHandler(fh)
 logger.info('Logger initialised')
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', endpoint='/')
+@app.route('/home', endpoint='home')
 @app.route('/generator')
 def generator():
-    return render_template('generator.html', current_page="generator", variables_list=VALID_VARS)
+    latest = list(VALID_VERSIONS.values())[-1]
+    return render_template('generator.html', variables_list=latest.VALID_VARS, api_version=list(VALID_VERSIONS.keys())[-1])
 
 
 @app.route('/documentation')
 def documentation():
-    return render_template('documentation.html', current_page="documentation")
+    latest_ver = list(VALID_VERSIONS.keys())[-1]
+    return render_template('documentation.html', version_number=latest_ver)
 
 
 @app.route('/gettingstarted')
@@ -55,18 +68,20 @@ def gettingstarted():
         readme = ""
         print("Could not read file: README.md")
     readme = markdown(readme)
-    return render_template('gettingstarted.html', current_page="gettingstarted", readme=readme)
+    return render_template('gettingstarted.html', readme=readme)
 
 @app.route('/team')
 def team():
-    return render_template('team.html', current_page="team")
+    return render_template('team.html', credits=sample(CREDITS.items(), len(CREDITS)))
 
 
 @app.route('/versions')
 def versions():
-    return render_template('versions.html', current_page="versions")
+    return render_template('versions.html')
 
-
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', current_page="blog")
 
 @app.route('/logs')
 def logs():
@@ -75,94 +90,100 @@ def logs():
     info = info.replace('\n', '<br>')
     if request.args.get('raw'):
         return info
-    return render_template('logs.html', current_page="logs", logs=info)
+    return render_template('logs.html', logs=info)
 
 
 @app.route('/api/<version>/')
 def api(version):
-    if version in VALID_VERSIONS.keys():
-        compute_engine = VALID_VERSIONS[version]
-        start_time = datetime.now()
-        success = True
-        all_error_messages = []
-        consists_success = False
+    global session
+    if version not in VALID_VERSIONS:
+        return f'Unknown API version: {version}'
 
-        try:
-            instr = request.args['instrument_id']
-            date_string = request.args['date_of_interest']
-            var_list = request.args['list_of_var']
-            lower = int(request.args['lower_window'])
-            upper = int(request.args['upper_window'])
-        except KeyError:
-            return "Incorrect arguments supplied"
+    compute_engine = VALID_VERSIONS[version]
+    start_time = datetime.now()
+    success = True
+    metadata = {
+        'team': 'Envision',
+        'module': f'Envision_API {version}',
+    }
 
-        instr, date, var_list = compute_engine.parse_args(instr, date_string, var_list)
+    # Check that the arguments are correct
+    try:
+        instr, date, var_list, lower, upper = compute_engine.parse_args(**request.args)
+    except compute_engine.ParamException as e:
+        metadata['error_messages'] = f"Error: {e}"
+        success = False
+    except TypeError:
+        # Not enough arguments to call parse_args
+        metadata['error_messages'] = "Not all required arguments supplied"
+        success = False
 
-        returns = []
-        for i in instr:
-            try:
-                df = compute_engine.generate_table(i, date, lower, upper, var_list)
-
-                df.index = df.index.format()
-
-                # Alternative implementation
-                def listed_dict(df):
-                    info_list = []
-                    for i in df.iterrows():
-                        info = {'Date': i[0]}
-                        info.update(i[1].to_dict())
-                        info_list.append(info)
-                    return info_list
-
-                data = listed_dict(df)
-
-                consists_success = True
-
-            except Exception as e:
-                print(e)
-                error_message = "Error: " + str(e)
-                data = error_message
-                all_error_messages.append(error_message)
-                success = False
-
-            returns.append({
-                'InstrumentID': i,
-                'Data': data
-            })
-
-        end_time = datetime.now()
-
-        elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
-        start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
-        end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
-
-        metadata = {
-            'team': 'Envision',
-            'module': f'Envision_API {version}',
-            'parameters': {
-                'instrument_id': instr,
-                'date_of_interest': date_string,
-                'list_of_var': var_list,
-                'lower_window': lower,
-                'upper_window': upper,
-            },
-            'success': success
-        }
-
+    if not success:
+        metadata['success'] = False
         logger.info(f'{metadata}')
+        return jsonify({'Metadata': metadata})
 
-        if consists_success:
-            metadata['start_time'] = start_time
-            metadata['end_time'] = end_time
-            metadata['elapsed_time'] = elapsed_time
-        elif not success:
-            metadata['error_messages'] = all_error_messages
+    query_args = {
+        'instr': request.args['instrument_id'],
+        'date': request.args['date_of_interest'],
+        'vars': request.args['list_of_var'],
+        'lower': request.args['lower_window'],
+        'upper':request.args['upper_window'],
+    }
+    q = session.query(Dump).filter_by(**query_args)
+    try:
+        query_load = session.execute(q).first()
+    except exc.SQLAlchemyError:
+        session = Session() # Old session likely expired, spin up a new one for next time
+        query_load = None
 
-        payload = {
-            'Metadata': metadata,
-            'Company_Returns': returns
-        }
-
-        return jsonify(payload)
+    if query_load:
+        returns = json.loads(query_load[-2])
+        if len(query_load[-1]) > 0:
+            error_messages = query_load[-1].split('|')
+        else:
+            error_messages = []
     else:
-        return f'Unknown version: {version}'
+        returns, error_messages = compute_engine.calculate_returns(instr, date, var_list, lower, upper)
+        db_item = Dump(
+            **query_args,
+            created=datetime.now(),
+            payload=json.dumps(returns),
+            errors='|'.join(error_messages))
+        try:
+            session.add(db_item)
+            session.commit()
+        except exc.SQLAlchemyError:
+            session = Session() # Old session likely expired, spin up a new one for next time
+
+    end_time = datetime.now()
+
+    elapsed_time = '{:.2f}ms'.format((end_time - start_time) / timedelta(milliseconds=1))
+    start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
+    end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
+
+    metadata['parameters'] =  {
+        'instrument_id': instr,
+        'date_of_interest': request.args['date_of_interest'],
+        'list_of_var': var_list,
+        'lower_window': lower,
+        'upper_window': upper,
+    }
+
+    metadata['start_time'] = start_time
+    metadata['end_time'] = end_time
+    metadata['elapsed_time'] = elapsed_time
+
+    if error_messages:
+        metadata['error_messages'] = error_messages
+        metadata['success'] = False
+    else:
+        metadata['success'] = True
+
+    logger.info(f'{metadata}')
+    payload = {
+        'Metadata': metadata,
+        'Company_Returns': returns
+    }
+
+    return jsonify(payload)

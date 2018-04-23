@@ -1,0 +1,153 @@
+{
+    "Company_Returns": [
+      {
+        "Data": [
+          {
+            "AV_Return": 0.0022222222222222244, 
+            "AV_Return_pct": 0.0011362855479171892, 
+            "CM_Return": 0.020000000000000018, 
+            "CM_Return_pct": 0.010226569931254703, 
+            "Daily_Spread": 0.024900000000000144, 
+            "Date": "2012-12-07", 
+            "Relative_Date": -3.0, 
+            "Return": 0.0, 
+            "Return_pct": 0.0, 
+            "Volume": 311761.0, 
+            "Volume_pct": 0.13135290615687387
+          }, 
+          {
+            "AV_Return": 0.005533333333333316, 
+            "AV_Return_pct": 0.002757789520057785, 
+            "CM_Return": 0.049799999999999844, 
+            "CM_Return_pct": 0.024820105680520066, 
+            "Daily_Spread": 0.0, 
+            "Date": "2012-12-08", 
+            "Relative_Date": -2.0, 
+            "Return": 0.0, 
+            "Return_pct": 0.0, 
+            "Volume": 0.0, 
+            "Volume_pct": 0.0
+          }, 
+          {
+            "AV_Return": 0.009955555555555544, 
+            "AV_Return_pct": 0.004902417173899794, 
+            "CM_Return": 0.0895999999999999, 
+            "CM_Return_pct": 0.04412175456509815, 
+            "Daily_Spread": 0.0, 
+            "Date": "2012-12-09", 
+            "Relative_Date": -1.0, 
+            "Return": 0.0, 
+            "Return_pct": 0.0, 
+            "Volume": 0.0, 
+            "Volume_pct": 0.0
+          }, 
+          {
+            "AV_Return": 0.006644444444444453, 
+            "AV_Return_pct": 0.0032568992775122213, 
+            "CM_Return": 0.059800000000000075, 
+            "CM_Return_pct": 0.029312093497609992, 
+            "Daily_Spread": 0.029799999999999827, 
+            "Date": "2012-12-10", 
+            "Relative_Date": 0.0, 
+            "Return": -0.029799999999999827, 
+            "Return_pct": -0.014593535749265363, 
+            "Volume": 263228.0, 
+            "Volume_pct": 0.06933577492924921
+          }, 
+          {
+            "AV_Return": 0.006644444444444453, 
+            "AV_Return_pct": 0.0032568992775122213, 
+            "CM_Return": 0.059800000000000075, 
+            "CM_Return_pct": 0.029312093497609992, 
+            "Daily_Spread": 0.029799999999999827, 
+            "Date": "2012-12-11", 
+            "Relative_Date": 1.0, 
+            "Return": 0.029799999999999827, 
+            "Return_pct": 0.014809661067488156, 
+            "Volume": 209039.0, 
+            "Volume_pct": 0.05998829729015403
+          }, 
+          {
+            "AV_Return": 0.012177777777777819, 
+            "AV_Return_pct": 0.005889563343233688, 
+            "CM_Return": 0.10960000000000036, 
+            "CM_Return_pct": 0.053006070089103186, 
+            "Daily_Spread": 0.03489999999999993, 
+            "Date": "2012-12-12", 
+            "Relative_Date": 2.0, 
+            "Return": 0.020000000000000018, 
+            "Return_pct": 0.009794319294809117, 
+            "Volume": 584883.0, 
+            "Volume_pct": 0.13864090511509497
+          }, 
+          {
+            "AV_Return": 0.008855555555555592, 
+            "AV_Return_pct": 0.004345492780758218, 
+            "CM_Return": 0.07970000000000033, 
+            "CM_Return_pct": 0.03910943502682396, 
+            "Daily_Spread": 0.029900000000000038, 
+            "Date": "2012-12-13", 
+            "Relative_Date": 3.0, 
+            "Return": 0.0, 
+            "Return_pct": 0.0, 
+            "Volume": 582559.0, 
+            "Volume_pct": 0.12209393469421972
+          }, 
+          {
+            "AV_Return": 0.014377777777777774, 
+            "AV_Return_pct": 0.007009138012789993, 
+            "CM_Return": 0.12939999999999996, 
+            "CM_Return_pct": 0.06308224211510993, 
+            "Daily_Spread": 0.059800000000000075, 
+            "Date": "2012-12-14", 
+            "Relative_Date": 4.0, 
+            "Return": 0.03980000000000006, 
+            "Return_pct": 0.019301648884578082, 
+            "Volume": 1844954.0, 
+            "Volume_pct": 0.35318059981324035
+          }, 
+          {
+            "AV_Return": 0.012177777777777819, 
+            "AV_Return_pct": 0.005882443011019133, 
+            "CM_Return": 0.10960000000000036, 
+            "CM_Return_pct": 0.052941987099172194, 
+            "Daily_Spread": 0.0, 
+            "Date": "2012-12-15", 
+            "Relative_Date": 5.0, 
+            "Return": 0.0, 
+            "Return_pct": 0.0, 
+            "Volume": 0.0, 
+            "Volume_pct": 0.0
+          }
+        ], 
+        "InstrumentID": "ABP.AX"
+      }
+    ], 
+    "Metadata": {
+      "elapsed_time": "3186.96ms", 
+      "end_time": "2018-04-15 03:50:19", 
+      "module": "Envision_API v1.0", 
+      "parameters": {
+        "date_of_interest": "2012-12-10", 
+        "instrument_id": [
+          "ABP.AX"
+        ], 
+        "list_of_var": [
+          "Return", 
+          "Return_pct", 
+          "CM_Return", 
+          "CM_Return_pct", 
+          "AV_Return", 
+          "AV_Return_pct", 
+          "Daily_Spread", 
+          "Volume", 
+          "Volume_pct"
+        ], 
+        "lower_window": 3, 
+        "upper_window": 5
+      }, 
+      "start_time": "2018-04-15 03:50:15", 
+      "success": true, 
+      "team": "Envision"
+    }
+  }

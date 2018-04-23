@@ -7,7 +7,7 @@
     width: 100%;
 }
 
-#formTitle {
+.form-title {
     padding-top: 50px;
     margin: 0 auto;
     text-align: center;
@@ -19,18 +19,33 @@
 }
 
 #formSubmit {
-    margin-top: 250px;
+    padding-bottom: 200px;
 }
 
-#formSubmitBtn {
+#midColumnButtons {
+    position: sticky;
+    top: 260px;
+}
+
+#scrollToGraphsBtn {
+    top: 200px;
+    position: relative;
+}
+
+.action-btn {
     color: rgb(0, 35, 0);
     border: transparent 2px solid;
     transition: border .15s ease-in-out;
-    position: fixed;
+    /* needed to make button remain clickable after scrolling with position: sticky */
+    overflow: visible;
 }
 
-#formSubmitBtn:hover {
+.action-btn:hover {
     border: dodgerblue 2px solid;
+}
+
+#queryResultsCard {
+    margin-left: 20px;
 }
 
 #outputPlaceholder {
@@ -56,11 +71,11 @@
 #apiQuery {
     width: 100%;
     padding: 20px;
-    padding-bottom: 50px;
+    min-height: 90px;
     border: dodgerblue 1px solid;
     border-radius: 10px;
     font-size: 12px;
-    overflow: hidden;
+    overflow: auto;
     outline: none;
     resize: none;
 }
@@ -93,4 +108,28 @@
 }
 .key {
     color: rgb(75, 116, 156);
+}
+
+hr {
+    width: 100%;
+    margin: 35px 0;
+}
+
+canvas {
+    width: 500px;
+    height: 300px;
+    background-color: rgb(250, 250, 250);
+}
+
+ul {
+    display: inline-block;
+    text-align: left;
+}
+
+#graphSectionTitle {
+    margin: -16px auto 0;
+}
+
+#graphSupportText {
+    width: 100%;
 }
