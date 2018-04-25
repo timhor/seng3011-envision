@@ -23,7 +23,7 @@ class TestCase(unittest.TestCase):
         actual_output = json.loads(response.get_data(as_text=True))
         with open('testfiles/test1_output.json','r') as test_file:
             expected_output = json.load(test_file)
-        assert(actual_output['Company_Returns'] == expected_output['Company_Returns'])
+        self.assertTrue(actual_output['Company_Returns'], expected_output['Company_Returns'])
 
 
 class TestParseArgs(unittest.TestCase):
