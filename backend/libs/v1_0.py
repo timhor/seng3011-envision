@@ -167,7 +167,6 @@ def get_ts_daily_adjusted(instrument_id, adjusted=False, full=True):
     return df
 
 
-
 def working_data(df, date_of_interest, lower_window, upper_window):
     """Creates an enriched dataset to work with"""
 

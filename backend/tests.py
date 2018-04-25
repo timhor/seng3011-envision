@@ -6,6 +6,7 @@ import json
 from libs import v1_0
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 
 from application import application
 
@@ -299,6 +300,119 @@ class TestWorkingData(unittest.TestCase):
         self.assertEqual(len(df), expected_len)
         self.assertEqual(df.Relative_Date[date_of_interest], 0)
 
+class TestTagRelativeDate(unittest.TestCase):
+    def test_relative_date_within(self):
+        row = pd.Series(data={
+            'test': 0
+        }, name=pd.to_datetime('2018-04-05'))
+        date_of_interest = datetime(2018, 4, 5)
+        lower_window = date_of_interest + timedelta(days=-5)
+        upper_window = date_of_interest + timedelta(days=6)
+        row = v1_0.tag_relative_date(row, date_of_interest, lower_window, upper_window)
+        self.assertEqual(row.Relative_Date, 0)
+
+    def test_relative_date_outside(self):
+        row = pd.Series(data={
+            'test': 0
+        }, name=pd.to_datetime('2017-04-05'))
+        date_of_interest = datetime(2018, 4, 5)
+        lower_window = date_of_interest + timedelta(days=-5)
+        upper_window = date_of_interest + timedelta(days=6)
+        row = v1_0.tag_relative_date(row, date_of_interest, lower_window, upper_window)
+        self.assertTrue(np.isnan(row.Relative_Date))
+
+    def test_relative_date_lower_edge(self):
+        row = pd.Series(data={
+            'test': 0
+        }, name=pd.to_datetime('2018-03-31'))
+        date_of_interest = datetime(2018, 4, 5)
+        lower_window = date_of_interest + timedelta(days=-5)
+        upper_window = date_of_interest + timedelta(days=6)
+        row = v1_0.tag_relative_date(row, date_of_interest, lower_window, upper_window)
+        self.assertEqual(row.Relative_Date, -5)
+
+    def test_relative_date_upper_edge(self):
+        row = pd.Series(data={
+            'test': 0
+        }, name=pd.to_datetime('2018-04-11'))
+        date_of_interest = datetime(2018, 4, 5)
+        lower_window = date_of_interest + timedelta(days=-5)
+        upper_window = date_of_interest + timedelta(days=6)
+        row = v1_0.tag_relative_date(row, date_of_interest, lower_window, upper_window)
+        self.assertEqual(row.Relative_Date, 6)
+
+
+class TestAddPerformance(unittest.TestCase):
+    def test_add_performance(self):
+        lower_window = 5
+        upper_window = 6
+        # date_of_interest = '2018-04-05'
+        with open('testfiles/working_data.csv','r') as test_file:
+            df = pd.read_csv(test_file, index_col='timestamp')
+        v1_0.add_performance(df, lower_window, upper_window)
+        for i in ('CM_Return', 'AV_Return', 'CM_Return_pct', 'AV_Return_pct'):
+            self.assertIn(i, df.columns)
+            self.assertFalse(np.isnan(df[i]['2018-04-05']))
+            self.assertTrue(np.isnan(df[i]['2018-03-30']))
+            self.assertTrue(np.isnan(df[i]['2018-04-12']))
+
+
+class TestAddAdvancedData(unittest.TestCase):
+    def test_add_advanced_data(self):
+        lower_window = 5
+        upper_window = 6
+        # date_of_interest = '2018-04-05'
+        with open('testfiles/working_data.csv','r') as test_file:
+            df = pd.read_csv(test_file, index_col='timestamp')
+        v1_0.add_advanced_data(df, lower_window, upper_window)
+        for i in ('Volume_pct',):
+            self.assertIn(i, df.columns)
+            self.assertFalse(np.isnan(df[i]['2018-04-05']))
+            self.assertTrue(np.isnan(df[i]['2018-03-30']))
+            self.assertTrue(np.isnan(df[i]['2018-04-12']))
+
+
+class TestFilterDataFrame(unittest.TestCase):
+    # date_of_interest = '2018-04-05'
+    lower_window = 5  # Defined in the given dataset
+    upper_window = 6  # Defined in the given dataset
+    with open('testfiles/perf_data.csv','r') as test_file:
+        df = pd.read_csv(test_file, index_col='timestamp')
+
+    def test_filter_data_frame(self):
+        result = v1_0.filter_data_frame(self.df, ['Return'])
+        self.assertCountEqual(result.columns, ['Relative_Date', 'Return'])
+        expected_len = self.lower_window + self.upper_window + 1
+        self.assertEqual(len(result), expected_len)
+
+    def test_filter_data_frame_many_var(self):
+        result = v1_0.filter_data_frame(self.df, ['Return', 'CM_Return_pct', 'Daily_Spread', 'Volume', 'AV_Return'])
+        self.assertCountEqual(result.columns,
+            ['Relative_Date', 'Return', 'CM_Return_pct', 'Daily_Spread', 'Volume', 'AV_Return'])
+        expected_len = self.lower_window + self.upper_window + 1
+        self.assertEqual(len(result), expected_len)
+
+    def test_filter_data_frame_no_var(self):
+        result = v1_0.filter_data_frame(self.df, [])
+        self.assertCountEqual(result.columns, ['Relative_Date'])
+        expected_len = self.lower_window + self.upper_window + 1
+        self.assertEqual(len(result), expected_len)
+
+
+class TestListedDict(unittest.TestCase):
+    # Defined in the given dataset
+    lower_window = 5
+    upper_window = 6
+    list_of_var = ['Return', 'AV_Return', 'AV_Return_pct', 'Daily_Spread', 'Volume']
+    with open('testfiles/output_data.csv','r') as test_file:
+        df = pd.read_csv(test_file, index_col='timestamp')
+
+    def test_listed_dict(self):
+        data = v1_0.listed_dict(self.df)
+        # Dates are in ascending order
+        self.assertTrue(all(x['Date'] < y['Date'] for x, y in zip(data, data[1:])))
+        for i in data:
+            self.assertCountEqual(i.keys(), ['Date', 'Relative_Date'] + self.list_of_var)
 
 
 if __name__ == '__main__':
