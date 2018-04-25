@@ -4,7 +4,8 @@ import unittest
 import requests
 import json
 from libs import v1_0
-from datetime import datetime
+from datetime import datetime, timedelta
+import pandas as pd
 
 from application import application
 
@@ -240,6 +241,64 @@ class TestGetTSDailyAdjusted(unittest.TestCase):
         self.assertEqual(df.index.name, 'timestamp')
         self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'adjusted_close', 'volume',
             'dividend_amount', 'split_coefficient'])
+
+
+class TestGenerateTable(unittest.TestCase):
+    def test_generate_table(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Return'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date['2018-04-05'], 0)
+
+    def test_generate_table_multi_var(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'Daily_Spread', 'CM_Return']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Return', 'Daily_Spread', 'CM_Return'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
+
+class TestWorkingData(unittest.TestCase):
+    with open('testfiles/raw_df.csv','r') as test_file:
+        raw_df = pd.read_csv(test_file, index_col='timestamp')
+        raw_df = raw_df.apply(pd.to_numeric)
+        raw_df.index = pd.to_datetime(raw_df.index)
+        raw_df.index += timedelta(days=1)
+
+    def test_working_data(self):
+        date_of_interest = datetime(2018, 4, 5)
+        lower_window = 5
+        upper_window = 6
+        df= v1_0.working_data(self.raw_df, date_of_interest, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'adjusted_close', 'Volume',
+            'dividend_amount', 'split_coefficient', 'Relative_Date', 'Return',
+            'Return_pct', 'Daily_Spread'])
+        expected_len = (lower_window * 2 + 1) + (upper_window * 2) + 1  # Includes date 0
+        self.assertEqual(len(df), expected_len)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
+
+    def test_working_data_older_date(self):
+        date_of_interest = datetime(2015, 2, 1)
+        lower_window = 5
+        upper_window = 6
+        df= v1_0.working_data(self.raw_df, date_of_interest, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'adjusted_close', 'Volume',
+            'dividend_amount', 'split_coefficient', 'Relative_Date', 'Return',
+            'Return_pct', 'Daily_Spread'])
+        expected_len = (lower_window * 2 + 1) + (upper_window * 2) + 1  # Includes date 0
+        self.assertEqual(len(df), expected_len)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
 
 
 if __name__ == '__main__':
