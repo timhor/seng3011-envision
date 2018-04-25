@@ -416,7 +416,12 @@ class TestListedDict(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    cov = coverage.Coverage(branch=True, omit=['flask/*','tests.py', '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/*'])
+    cov = coverage.Coverage(branch=True, omit=[
+        'flask/*',
+        'tests.py',
+        '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/*',
+        '~/.local/share/virtualenvs/backend-sK7bS5JP/lib/python3.6/site-packages/*'
+    ])
     cov.start()
     try:
         unittest.main()
@@ -425,3 +430,4 @@ if __name__ == '__main__':
     cov.stop()
     cov.report(show_missing=True)
     cov.save()
+    cov.html_report(directory="coverage_report")
