@@ -214,16 +214,41 @@ class TestParseArgs(unittest.TestCase):
             upper_window)
 
 
+class TestGetTSDailyAdjusted(unittest.TestCase):
+    def test_default_params(self):
+        instrument_id = 'CBA.AX'
+        df = v1_0.get_ts_daily_adjusted(instrument_id)
+        self.assertEqual(df.index.name, 'timestamp')
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'volume'])
 
+    def test_adj_full_false(self):
+        instrument_id = 'CBA.AX'
+        df = v1_0.get_ts_daily_adjusted(instrument_id, adjusted=False, full=False)
+        self.assertEqual(df.index.name, 'timestamp')
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'volume'])
+
+    def test_adj_full_true(self):
+        instrument_id = 'CBA.AX'
+        df = v1_0.get_ts_daily_adjusted(instrument_id, adjusted=True, full=True)
+        self.assertEqual(df.index.name, 'timestamp')
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'adjusted_close', 'volume',
+            'dividend_amount', 'split_coefficient'])
+
+    def test_adj_true_full_false(self):
+        instrument_id = 'CBA.AX'
+        df = v1_0.get_ts_daily_adjusted(instrument_id, adjusted=True, full=False)
+        self.assertEqual(df.index.name, 'timestamp')
+        self.assertCountEqual(df.columns, ['open', 'high', 'low', 'close', 'adjusted_close', 'volume',
+            'dividend_amount', 'split_coefficient'])
 
 
 if __name__ == '__main__':
-    cov = coverage.Coverage(branch=True, omit=['flask/*','tests.py', '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/*'])
-    cov.start()
+    # cov = coverage.Coverage(branch=True, omit=['flask/*','tests.py', '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/*'])
+    # cov.start()
     try:
         unittest.main()
     except:
         pass
-    cov.stop()
-    cov.report(show_missing=True)
-    cov.save()
+    # cov.stop()
+    # cov.report(show_missing=True)
+    # cov.save()
