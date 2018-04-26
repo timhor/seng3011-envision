@@ -31,99 +31,99 @@ class TestBlackBox(unittest.TestCase):
         upper = 5
         lower = 3
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
-        check_envision_output(self, instr, date, var, upper, lower, url)
+        self._check_envision_output(instr, date, var, upper, lower, url)
 
         url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
-        check_distribution_output(self, instr, date, var, upper, lower, url)
+        self._check_distribution_output(instr, date, var, upper, lower, url)
 
         url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
-        check_optiver_output(self, instr, date, var, upper, lower, url)
+        self._check_optiver_output(instr, date, var, upper, lower, url)
 
-def check_envision_output(self, instr, date, var, upper, lower, url):
-    url = requests.get(url)
-    output = url.json()
+    def _check_envision_output(self, instr, date, var, upper, lower, url):
+        url = requests.get(url)
+        output = url.json()
 
-    self.assertEqual(output['Metadata']['success'], True)
+        self.assertEqual(output['Metadata']['success'], True)
 
-    param = output['Metadata']['parameters']
-    self.assertEqual(param['date_of_interest'], date)
+        param = output['Metadata']['parameters']
+        self.assertEqual(param['date_of_interest'], date)
 
-    index = 0
-    date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
-    for i in instr:
-        self.assertEqual(param['instrument_id'][index], i)
-        self.assertEqual(output['Company_Returns'][index]['InstrumentID'], i)
-        data = output['Company_Returns'][index]['Data']
+        index = 0
+        date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
+        for i in instr:
+            self.assertEqual(param['instrument_id'][index], i)
+            self.assertEqual(output['Company_Returns'][index]['InstrumentID'], i)
+            data = output['Company_Returns'][index]['Data']
 
-        self.assertEqual(len(data), upper+lower+1)
-        date_range = date
-        for j in range(0, len(data)):
-            self.assertEqual(data[j]['Date'], date_range.strftime('%Y-%m-%d'))
-            self.assertIsNot(data[j]['CM_Return'], None)
-            date_range = date_range + timedelta(days=1)
-        index += 1
+            self.assertEqual(len(data), upper+lower+1)
+            date_range = date
+            for j in range(0, len(data)):
+                self.assertEqual(data[j]['Date'], date_range.strftime('%Y-%m-%d'))
+                self.assertIsNot(data[j]['CM_Return'], None)
+                date_range = date_range + timedelta(days=1)
+            index += 1
 
-    index = 0
-    for v in var:
-        self.assertEqual(param['list_of_var'][index], v)
-        index += 1
+        index = 0
+        for v in var:
+            self.assertEqual(param['list_of_var'][index], v)
+            index += 1
 
-    self.assertEqual(param['upper_window'], upper)
-    self.assertEqual(param['lower_window'], lower)
+        self.assertEqual(param['upper_window'], upper)
+        self.assertEqual(param['lower_window'], lower)
 
-def check_distribution_output(self, instr, date, var, upper, lower, url):
-    url = requests.get(url)
-    output = url.json()
+    def _check_distribution_output(self, instr, date, var, upper, lower, url):
+        url = requests.get(url)
+        output = url.json()
 
-    self.assertEqual(output['ok'], True)
+        self.assertEqual(output['ok'], True)
 
-    param = output['request']
-    self.assertEqual(param['date'], date)
+        param = output['request']
+        self.assertEqual(param['date'], date)
 
-    date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
-    for i in instr:
-        self.assertEqual(param['id'], i)
-        self.assertEqual(output['data']['id'], i)
-        data = output['data']['entries']
+        date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
+        for i in instr:
+            self.assertEqual(param['id'], i)
+            self.assertEqual(output['data']['id'], i)
+            data = output['data']['entries']
 
-        self.assertEqual(len(data), upper+lower+1)
-        date_range = date
-        for key in data.keys():
-            self.assertEqual(key, date_range.strftime('%Y-%m-%d'))
-            self.assertIsNot(data[key]['CM_returns'], None)
-            date_range = date_range + timedelta(days=1)
+            self.assertEqual(len(data), upper+lower+1)
+            date_range = date
+            for key in data.keys():
+                self.assertEqual(key, date_range.strftime('%Y-%m-%d'))
+                self.assertIsNot(data[key]['CM_returns'], None)
+                date_range = date_range + timedelta(days=1)
 
-    self.assertEqual(param['varlist'], ','.join(var))
+        self.assertEqual(param['varlist'], ','.join(var))
 
-    self.assertEqual(param['upper'], str(upper))
-    self.assertEqual(param['lower'], str(lower))
+        self.assertEqual(param['upper'], str(upper))
+        self.assertEqual(param['lower'], str(lower))
 
-def check_optiver_output(self, instr, date, var, upper, lower, url):
-    url = requests.get(url)
-    output = url.json()
+    def _check_optiver_output(self, instr, date, var, upper, lower, url):
+        url = requests.get(url)
+        output = url.json()
 
-    self.assertEqual(output['Log'][0]['Success'], True)
+        self.assertEqual(output['Log'][0]['Success'], True)
 
-    param = output['Log'][0]['Parameters']
-    self.assertEqual(param['Date'], date)
+        param = output['Log'][0]['Parameters']
+        self.assertEqual(param['Date'], date)
 
-    date = datetime.strptime(date, '%Y-%m-%d') + timedelta(days=upper) #Group sorts dates in reverse
-    for i in instr:
-        self.assertEqual(param['Instrument ID'], i)
-        self.assertEqual(output['CompanyReturns'][0]['InstrumentID'], i)
-        data = output['CompanyReturns'][0]['Data']
+        date = datetime.strptime(date, '%Y-%m-%d') + timedelta(days=upper) #Group sorts dates in reverse
+        for i in instr:
+            self.assertEqual(param['Instrument ID'], i)
+            self.assertEqual(output['CompanyReturns'][0]['InstrumentID'], i)
+            data = output['CompanyReturns'][0]['Data']
 
-        date_range = date
-        self.assertEqual(len(data), upper+lower+1)
-        for j in range(0, len(data)):
-            self.assertEqual(data[j]['date'], date_range.strftime('%Y-%m-%d'))
-            self.assertIsNot(data[j]['cumulative_return'], None)
-            date_range = date_range - timedelta(days=1)
+            date_range = date
+            self.assertEqual(len(data), upper+lower+1)
+            for j in range(0, len(data)):
+                self.assertEqual(data[j]['date'], date_range.strftime('%Y-%m-%d'))
+                self.assertIsNot(data[j]['cumulative_return'], None)
+                date_range = date_range - timedelta(days=1)
 
-    # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
+        # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
 
-    self.assertEqual(param['Upper Window'], str(upper))
-    self.assertEqual(param['Lower Window'], str(lower))
+        self.assertEqual(param['Upper Window'], str(upper))
+        self.assertEqual(param['Lower Window'], str(lower))
 
 
 
