@@ -32,14 +32,11 @@ def listed_dict(df):
 
 def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper_window, **kwargs):
     # Instrument
-    try:
-        if len(instrument_id[0]) == 0:
-            raise ParamException("No instruments given")
-        instr = instrument_id[0].replace(' ', '').split(',')
-        if len(instr) > 10:
-            raise ParamException("Only a maximum of 10 instruments can be queried per request")
-    except ValueError:
-        instr = instrument_id
+    if len(instrument_id[0]) == 0:
+        raise ParamException("No instruments given")
+    instr = instrument_id[0].replace(' ', '').split(',')
+    if len(instr) > 10:
+        raise ParamException("Only a maximum of 10 instruments can be queried per request")
 
     # Date
     try:
@@ -48,12 +45,9 @@ def parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper
         raise ParamException("date_of_interest needs to be in the correct format")
 
     # Vars
-    try:
-        if len(list_of_var[0]) == 0:
-            raise ParamException("No variables given")
-        var_list = list_of_var[0].replace(' ', '').split(',')
-    except ValueError:
-        var_list = list_of_var
+    if len(list_of_var[0]) == 0:
+        raise ParamException("No variables given")
+    var_list = list_of_var[0].replace(' ', '').split(',')
 
     for i in var_list:
         if i not in VALID_VARS.keys():
@@ -84,13 +78,8 @@ def calc_individual_returns(instrument_id,
         df.index = df.index.format()
         data = listed_dict(df)
         lock.acquire()
-    except KeyError as e:
+    except Exception:
         data = f"Error: {instrument_id} does not exist"
-        lock.acquire()
-        error_messages.append(data)
-    except Exception as e:
-        data = "Error: " + str(e)
-        print(data)
         lock.acquire()
         error_messages.append(data)
 

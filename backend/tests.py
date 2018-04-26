@@ -3,12 +3,14 @@ import os
 import unittest
 import requests
 import json
-from libs import v1_0
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import pandas as pd
 import numpy as np
-
+from threading import Lock
+from libs import v1_0
 from application import application
+from importlib import reload
+
 
 class TestCase(unittest.TestCase):
     def setUp(self):
@@ -83,6 +85,19 @@ class TestParseArgs(unittest.TestCase):
         self.assertEqual(result[3], 5)
         self.assertEqual(result[4], 6)
 
+    def test_multi_instr_spaces(self):
+        instrument_id = ['CBA.AX  ,WOW .AX,     MQ G.AX']
+        date_of_interest = ['2018-04-05']
+        list_of_var = ['Return,CM_Return,Daily_Spread']
+        lower_window = ['5']
+        upper_window = ['6']
+        result = v1_0.parse_args(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertEqual(result[0], ['CBA.AX', 'WOW.AX', 'MQG.AX'])
+        self.assertEqual(result[1], datetime(2018, 4, 5))
+        self.assertEqual(result[2], ['Return', 'CM_Return', 'Daily_Spread'])
+        self.assertEqual(result[3], 5)
+        self.assertEqual(result[4], 6)
+
     def test_too_many_instr(self):
         instrument_id = ['1,2,3,4,6,7,8,9,10,11,12']
         date_of_interest = ['2018-04-05']
@@ -90,6 +105,20 @@ class TestParseArgs(unittest.TestCase):
         lower_window = ['5']
         upper_window = ['6']
         self.assertRaisesRegex(v1_0.ParamException, "Only a maximum of 10 instruments can be queried per request",
+            v1_0.parse_args,
+            instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window)
+
+    def test_too_no_instr(self):
+        instrument_id = ['']
+        date_of_interest = ['2018-04-05']
+        list_of_var = ['Return']
+        lower_window = ['5']
+        upper_window = ['6']
+        self.assertRaisesRegex(v1_0.ParamException, "No instruments given",
             v1_0.parse_args,
             instrument_id,
             date_of_interest,
@@ -267,6 +296,51 @@ class TestGenerateTable(unittest.TestCase):
         self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
         self.assertEqual(df.Relative_Date[date_of_interest], 0)
 
+    def test_generate_table_recent(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime.now() - timedelta(days=30)
+        list_of_var = ['Return']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Return'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
+    def test_generate_table_old(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime(2010, 1, 10)
+        list_of_var = ['Volume']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Volume'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
+
+    def test_generate_table_recent_adjusted(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime.now() - timedelta(days=30)
+        list_of_var = ['Volume']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Volume'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
+    def test_generate_table_old_adjusted(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime(2010, 1, 10)
+        list_of_var = ['Volume']
+        lower_window = 5
+        upper_window = 6
+        df = v1_0.generate_table(instrument_id, date_of_interest, list_of_var, lower_window, upper_window)
+        self.assertCountEqual(df.columns, ['Relative_Date', 'Volume'])
+        self.assertEqual(len(df[(df.Relative_Date < -5) & (df.Relative_Date > 6)]), 0)
+        self.assertEqual(df.Relative_Date[date_of_interest], 0)
+
 
 class TestWorkingData(unittest.TestCase):
     with open('testfiles/raw_df.csv','r') as test_file:
@@ -415,14 +489,111 @@ class TestListedDict(unittest.TestCase):
             self.assertCountEqual(i.keys(), ['Date', 'Relative_Date'] + self.list_of_var)
 
 
+class TestCalcIndividualReturn(unittest.TestCase):
+    def test_calc_normal(self):
+        instrument_id = 'CBA.AX'
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'CM_Return', 'Daily_Spread']
+        lower_window = 5
+        upper_window = 6
+        lock = Lock()
+        returns = []
+        error_messages = []
+        v1_0.calc_individual_returns(instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window,
+            returns,
+            error_messages,
+            lock)
+        self.assertFalse(error_messages)
+        self.assertTrue(len(returns), len(instrument_id))
+        self.assertCountEqual([i['InstrumentID'] for i in returns], ['CBA.AX'])
+
+class TestCalculateReturns(unittest.TestCase):
+    def test_calc_returns_single(self):
+        instrument_id = ['CBA.AX']
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'CM_Return', 'Daily_Spread']
+        lower_window = 5
+        upper_window = 6
+        returns, errors = v1_0.calculate_returns(instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window)
+        self.assertFalse(errors)
+        self.assertTrue(len(returns), len(instrument_id))
+        self.assertCountEqual([i['InstrumentID'] for i in returns], instrument_id)
+
+
+    def test_calc_returns_multi(self):
+        instrument_id = ['CBA.AX', 'WOW.AX', 'MQG.AX']
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'CM_Return', 'Daily_Spread']
+        lower_window = 5
+        upper_window = 6
+        returns, errors = v1_0.calculate_returns(instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window)
+        self.assertFalse(errors)
+        self.assertEqual(len(returns), len(instrument_id))
+        self.assertCountEqual([i['InstrumentID'] for i in returns], instrument_id)
+
+
+    def test_calc_returns_bad_instr(self):
+        instrument_id = ['FAKEINSTR']
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'CM_Return', 'Daily_Spread']
+        lower_window = 5
+        upper_window = 6
+        returns, errors = v1_0.calculate_returns(instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window)
+        self.assertEqual(len(errors), 1)
+        self.assertEqual(len(returns), 1)
+        for i in errors:
+            self.assertRegex(i, r'Error: .* does not exist')
+
+
+    def test_calc_returns_mix(self):
+        instrument_id = ['FAKEINSTR', 'CBA.AX', 'BADNAME', 'WOW.AX']
+        date_of_interest = datetime(2018, 4, 5)
+        list_of_var = ['Return', 'CM_Return', 'Daily_Spread']
+        lower_window = 5
+        upper_window = 6
+        returns, errors = v1_0.calculate_returns(instrument_id,
+            date_of_interest,
+            list_of_var,
+            lower_window,
+            upper_window)
+        self.assertEqual(len(errors), 2)
+        self.assertEqual(len(returns), 4)
+        self.assertCountEqual([i['InstrumentID'] for i in returns], instrument_id)
+        for i in errors:
+            self.assertRegex(i, r'^Error: .* does not exist')
+
+
 if __name__ == '__main__':
     cov = coverage.Coverage(branch=True, omit=[
         'flask/*',
         'tests.py',
         '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/*',
-        '~/.local/share/virtualenvs/backend-sK7bS5JP/lib/python3.6/site-packages/*'
+        '~/.local/share/virtualenvs/backend-sK7bS5JP/lib/python3.6/site-packages/*',
+        '~/virtualenvs/backend-bSxktZG6/lib/python3.6/site-packages/*'
     ])
     cov.start()
+
+    # Reloaded here to be within the coverage reporting
+    reload(v1_0)
+    from libs import views
+    reload(views)
+
     try:
         unittest.main()
     except:
