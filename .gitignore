@@ -14,3 +14,5 @@
 **/logging.log
 
 .coverage
+/backend/coverage_report/*
+
