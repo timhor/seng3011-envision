@@ -24,20 +24,20 @@ class TestCase(unittest.TestCase):
         assert(actual_output['Company_Returns'] == expected_output['Company_Returns'])
 
 class TestBlackBox(unittest.TestCase):
-    def test_success_queries(self):
-        instr = ["ABP.AX"]
-        date ="2012-12-10"
-        var = ["CM_Return"]
-        upper = 5
-        lower = 3
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
-        self._check_envision_success(instr, date, var, upper, lower, url)
+    # def test_success_queries(self):
+    #     instr = ["ABP.AX"]
+    #     date ="2012-12-10"
+    #     var = ["CM_Return"]
+    #     upper = 5
+    #     lower = 3
+    #     url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
+    #     self._check_envision_success(instr, date, var, upper, lower, url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
-        self._check_distribution_success(instr, date, var, upper, lower, url)
+    #     url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
+    #     self._check_distribution_success(instr, date, var, upper, lower, url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
-        self._check_optiver_success(instr, date, var, upper, lower, url)
+    #     url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
+    #     self._check_optiver_success(instr, date, var, upper, lower, url)
 
     # All Empty Parameters
     def test_all_empty_parameters(self):
@@ -108,91 +108,110 @@ class TestBlackBox(unittest.TestCase):
 
     # Negative Windows
     def test_negative_windows(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=-3&upper_window=-5'
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=-3&upper_window=-5'
         self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=-3&upper=-5'
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=-3&upper=-5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=-5&lower_window=-3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=cureturn&upper_window=-5&lower_window=-3'
         self._check_optiver_failed(url)
 
     # Non-existing Instrument ID
     def test_non_existing_instr_ID(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=SENG&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=SENG&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=SENG&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        url = 'http://team-distribution.info/api/v2/returns?id=SENG&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=SENG&date=2012-12-10&type=none&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=SENG&date=2012-12-10&type=cureturn&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Non-existing API Version
     def test_non_existing_api_version(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v99.99/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v99.99/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v99.99/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        url = 'http://team-distribution.info/api/v99.99/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v99.99/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v99.99/api?id=ABP.AX&date=2012-12-10&type=cureturn&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Previous API Version
     def test_prev_api_version(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.0/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
-        self._check_envision_success(url)
+        instr = ["ABP.AX"]
+        date ="2012-12-10"
+        env_dist_var = ["CM_Return"]
+        optiver_var = ["cureturn"]
+        upper = 5
+        lower = 3
+        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(env_dist_var)}&lower_window={lower}&upper_window={upper}'
+        self._check_envision_success(instr, date, env_dist_var, upper, lower, url)
 
-        url = f'http://team-distribution.info/api/v1/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
-        self._check_distribution_success(url)
+        url = f'http://team-distribution.info/api/v1/returns?id={",".join(instr)}&date={date}&varlist={",".join(env_dist_var)}&lower={lower}&upper={upper}'
+        self._check_distribution_success(instr, date, env_dist_var, upper, lower, url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
-        self._check_optiver_success(url)
+        url = f'http://128.199.82.8:8000/api_v1/api?id={",".join(instr)}&date={date}&type={",".join(optiver_var)}&upper_window={upper}&lower_window={lower}'
+        self._check_optiver_success(instr, date, optiver_var, upper, lower, url)
 
     # Dates in the future
     def test_future_dates(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2018-12-12&list_of_var=Return&lower_window=3&upper_window=5'
-        self._check_envision_success(url)
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2018-12-12&list_of_var=Return&lower_window=3&upper_window=5'
+        self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2018-12-12&varlist=CM_Return&lower=3&upper=5'
-        self._check_distribution_success(url)
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2018-12-12&varlist=CM_Return&lower=3&upper=5'
+        self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2018-12-12&type=none&upper_window=5&lower_window=3'
-        self._check_optiver_success(url)
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2018-12-12&type=cureturn&upper_window=5&lower_window=3'
+        self._check_optiver_failed(url)
 
     # Potentially dangerous parameters
     def test_dangerous_parameters(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=");DROP%20TABLE%20RETURNS;--&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=");DROP%20TABLE%20RETURNS;--&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        url = 'http://team-distribution.info/api/v2/returns?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=none&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Normal input
     def test_normal_input(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
-        self._check_envision_success(url)
+        instr = ["ABP.AX"]
+        date ="2012-12-10"
+        env_dist_var = ["CM_Return"]
+        optiver_var = ["cureturn"]
+        upper = 5
+        lower = 3
+        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(env_dist_var)}&lower_window={lower}&upper_window={upper}'
+        self._check_envision_success(instr, date, env_dist_var, upper, lower, url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
-        self._check_distribution_success(url)
+        url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(env_dist_var)}&lower={lower}&upper={upper}'
+        self._check_distribution_success(instr, date, env_dist_var, upper, lower, url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
-        self._check_optiver_success(url)
+        url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(optiver_var)}&upper_window={upper}&lower_window={lower}'
+        self._check_optiver_success(instr, date, optiver_var, upper, lower, url)
 
     # Multiple Variables
     def test_multiple_variables(self):
-        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return,CM_Return,Volume&lower_window=3&upper_window=5'
-        self._check_envision_success(url)
+        instr = ["ABP.AX"]
+        date ="2012-12-10"
+        env_var = ["Return", "CM_Return", "AV_Return"]
+        dist_var = ["CM_Return", "AV_Return"]
+        optiver_var = ["cureturn", "avreturn"]
+        upper = 5
+        lower = 3
+        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(env_var)}&lower_window={lower}&upper_window={upper}'
+        self._check_envision_success(instr, date, env_var, upper, lower, url)
 
-        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return,AV_Return&lower=3&upper=5'
-        self._check_distribution_success(url)
+        url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(dist_var)}&lower={lower}&upper={upper}'
+        self._check_distribution_success(instr, date, dist_var, upper, lower, url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none,return_percentage&upper_window=5&lower_window=3'
-        self._check_optiver_success(url)
+        url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(optiver_var)}&upper_window={upper}&lower_window={lower}'
+        self._check_optiver_success(instr, date, optiver_var, upper, lower, url)
 
 
     def _check_envision_success(self, instr, date, var, upper, lower, url):
