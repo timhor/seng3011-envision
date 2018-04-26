@@ -31,15 +31,15 @@ class TestBlackBox(unittest.TestCase):
         upper = 5
         lower = 3
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
-        self._check_envision_output(instr, date, var, upper, lower, url)
+        self._check_envision_success(instr, date, var, upper, lower, url)
 
         url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
-        self._check_distribution_output(instr, date, var, upper, lower, url)
+        self._check_distribution_success(instr, date, var, upper, lower, url)
 
         url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
-        self._check_optiver_output(instr, date, var, upper, lower, url)
+        self._check_optiver_success(instr, date, var, upper, lower, url)
 
-    def _check_envision_output(self, instr, date, var, upper, lower, url):
+    def _check_envision_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
 
@@ -59,7 +59,7 @@ class TestBlackBox(unittest.TestCase):
             date_range = date
             for j in range(0, len(data)):
                 self.assertEqual(data[j]['Date'], date_range.strftime('%Y-%m-%d'))
-                self.assertIsNot(data[j]['CM_Return'], None)
+                self.assertIsNotNone(data[j]['CM_Return'])
                 date_range = date_range + timedelta(days=1)
             index += 1
 
@@ -71,7 +71,7 @@ class TestBlackBox(unittest.TestCase):
         self.assertEqual(param['upper_window'], upper)
         self.assertEqual(param['lower_window'], lower)
 
-    def _check_distribution_output(self, instr, date, var, upper, lower, url):
+    def _check_distribution_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
 
@@ -90,7 +90,7 @@ class TestBlackBox(unittest.TestCase):
             date_range = date
             for key in data.keys():
                 self.assertEqual(key, date_range.strftime('%Y-%m-%d'))
-                self.assertIsNot(data[key]['CM_returns'], None)
+                self.assertIsNotNone(data[key]['CM_returns'])
                 date_range = date_range + timedelta(days=1)
 
         self.assertEqual(param['varlist'], ','.join(var))
@@ -98,7 +98,7 @@ class TestBlackBox(unittest.TestCase):
         self.assertEqual(param['upper'], str(upper))
         self.assertEqual(param['lower'], str(lower))
 
-    def _check_optiver_output(self, instr, date, var, upper, lower, url):
+    def _check_optiver_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
 
@@ -117,7 +117,7 @@ class TestBlackBox(unittest.TestCase):
             self.assertEqual(len(data), upper+lower+1)
             for j in range(0, len(data)):
                 self.assertEqual(data[j]['date'], date_range.strftime('%Y-%m-%d'))
-                self.assertIsNot(data[j]['cumulative_return'], None)
+                self.assertIsNotNone(data[j]['cumulative_return'])
                 date_range = date_range - timedelta(days=1)
 
         # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
@@ -125,6 +125,26 @@ class TestBlackBox(unittest.TestCase):
         self.assertEqual(param['Upper Window'], str(upper))
         self.assertEqual(param['Lower Window'], str(lower))
 
+    def _check_envision_failed(self, url):
+        url = requests.get(url)
+        output = url.json()
+
+        self.assertEqual(output['Metadata']['success'], False)
+        self.assertIsNotNone(output['Metadata']['error_messages'])
+
+    def _check_distribution_failed(self, url):
+        url = requests.get(url)
+        output = url.json()
+
+        self.assertEqual(output['ok'], False)
+        self.assertIsNotNone(output['error'])
+
+    def _check_optiver_failed(self, url):
+        url = requests.get(url)
+        output = url.json()
+
+        self.assertEqual(output['Log'][0]['Success'], False)
+        self.assertIsNotNone(output['Log'][0]['Error'])
 
 
 if __name__ == '__main__':
