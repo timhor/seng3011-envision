@@ -224,6 +224,14 @@ class TestBlackBox(unittest.TestCase):
         self.assertEqual(param['date_of_interest'], date)
 
         index = 0
+        for v in var:
+            self.assertEqual(param['list_of_var'][index], v)
+            index += 1
+
+        self.assertEqual(param['upper_window'], upper)
+        self.assertEqual(param['lower_window'], lower)
+
+        index = 0
         date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
         for i in instr:
             self.assertEqual(param['instrument_id'][index], i)
@@ -239,14 +247,6 @@ class TestBlackBox(unittest.TestCase):
                 date_range = date_range + timedelta(days=1)
             index += 1
 
-        index = 0
-        for v in var:
-            self.assertEqual(param['list_of_var'][index], v)
-            index += 1
-
-        self.assertEqual(param['upper_window'], upper)
-        self.assertEqual(param['lower_window'], lower)
-
     def _check_distribution_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
@@ -255,6 +255,16 @@ class TestBlackBox(unittest.TestCase):
 
         param = output['request']
         self.assertEqual(param['date'], date)
+        self.assertEqual(param['varlist'], ','.join(var))
+        self.assertEqual(param['upper'], str(upper))
+        self.assertEqual(param['lower'], str(lower))
+
+        # convert valid vars to dict keys which exists in json output
+        for i in range(0, len(var)):
+            if var[i] == "CM_Return":
+                var[i] = "CM_returns"
+            elif var[i] == "AV_Return":
+                var[i] = "AV_returns"
 
         date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
         for i in instr:
@@ -270,11 +280,6 @@ class TestBlackBox(unittest.TestCase):
                     self.assertIsNotNone(data[key][v])
                 date_range = date_range + timedelta(days=1)
 
-        self.assertEqual(param['varlist'], ','.join(var))
-
-        self.assertEqual(param['upper'], str(upper))
-        self.assertEqual(param['lower'], str(lower))
-
     def _check_optiver_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
@@ -283,6 +288,15 @@ class TestBlackBox(unittest.TestCase):
 
         param = output['Log'][0]['Parameters']
         self.assertEqual(param['Date'], date)
+        self.assertEqual(param['Return Type'], ','.join(var))
+        self.assertEqual(param['Upper Window'], str(upper))
+        self.assertEqual(param['Lower Window'], str(lower))
+
+        for i in range(0, len(var)):
+            if var[i] == "cureturn":
+                var[i] = "cumulative_return"
+            elif var[i] == "avreturn":
+                var[i] = "average_return"
 
         date = datetime.strptime(date, '%Y-%m-%d') + timedelta(days=upper) #Group sorts dates in reverse
         for i in instr:
@@ -297,11 +311,6 @@ class TestBlackBox(unittest.TestCase):
                 for v in var:
                     self.assertIsNotNone(data[j][v])
                 date_range = date_range - timedelta(days=1)
-
-        # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
-
-        self.assertEqual(param['Upper Window'], str(upper))
-        self.assertEqual(param['Lower Window'], str(lower))
 
     def _check_envision_failed(self, url):
         url = requests.get(url)
