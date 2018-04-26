@@ -19,8 +19,10 @@ session = Session()
 app = Flask('envision-server-api')
 app.debug = True
 
+# Latest is the last one in the dict
 VALID_VERSIONS = {
-    'v1.0': v1_0,  # Latest is the last one in the dict
+    'v1.0': v1_0,
+    'v1.0.0': v1_0,
     'v1.0.1': v1_0,
     'v1.0.2' : v1_0,
 }
