@@ -25,18 +25,18 @@ class TestCase(unittest.TestCase):
 class TestBlackBox(unittest.TestCase):
     def test_success_queries(self):
         instr = ["ABP.AX"]
-        date="2012-12-10"
-        var= ["Return"]
-        upper=5
-        lower=3
+        date ="2012-12-10"
+        var = ["CM_Return"]
+        upper = 5
+        lower = 3
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
         check_envision_output(self, instr, date, var, upper, lower, url)
 
         url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
-        #check_distribution_output(self, instr, date, var, upper, lower, url)
+        check_distribution_output(self, instr, date, var, upper, lower, url)
 
         url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
-        #check_optiver_output(self, instr, date, var, upper, lower, url)
+        check_optiver_output(self, instr, date, var, upper, lower, url)
 
 def check_envision_output(self, instr, date, var, upper, lower, url):
     url = requests.get(url)
@@ -56,7 +56,7 @@ def check_envision_output(self, instr, date, var, upper, lower, url):
         self.assertEqual(len(data), upper+lower+1)
         for j in range(0, len(data)):
             self.assertEqual(data[j]['Date'], '2012-12-{0:02}'.format(j+7)) #start date is 07
-            self.assertIsNot(data[j]['Return'], None)
+            self.assertIsNot(data[j]['CM_Return'], None)
         index += 1
 
     index = 0
@@ -66,6 +66,57 @@ def check_envision_output(self, instr, date, var, upper, lower, url):
 
     self.assertEqual(param['upper_window'], upper)
     self.assertEqual(param['lower_window'], lower)
+
+def check_distribution_output(self, instr, date, var, upper, lower, url):
+    url = requests.get(url)
+    output = url.json()
+
+    self.assertEqual(output['ok'], True)
+
+    param = output['request']
+    self.assertEqual(param['date'], date)
+
+    for i in instr:
+        self.assertEqual(param['id'], i)
+        self.assertEqual(output['data']['id'], i)
+        data = output['data']['entries']
+
+        self.assertEqual(len(data), upper+lower+1)
+        j = 7
+        for key in data.keys():
+            self.assertEqual(key, '2012-12-{0:02}'.format(j))
+            self.assertIsNot(data[key]['CM_returns'], None)
+            j += 1
+
+    self.assertEqual(param['varlist'], ','.join(var))
+
+    self.assertEqual(param['upper'], str(upper))
+    self.assertEqual(param['lower'], str(lower))
+
+def check_optiver_output(self, instr, date, var, upper, lower, url):
+    url = requests.get(url)
+    output = url.json()
+
+    self.assertEqual(output['Log'][0]['Success'], True)
+
+    param = output['Log'][0]['Parameters']
+    self.assertEqual(param['Date'], date)
+
+    for i in instr:
+        self.assertEqual(param['Instrument ID'], i)
+        self.assertEqual(output['CompanyReturns'][0]['InstrumentID'], i)
+        data = output['CompanyReturns'][0]['Data']
+
+        self.assertEqual(len(data), upper+lower+1)
+        for j in range(0, len(data)):
+            self.assertEqual(data[j]['date'], '2012-12-{0:02}'.format(15-j)) #start date is 07-15. group sorts it in reverse
+            self.assertIsNot(data[j]['cumulative_return'], None)
+
+    # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
+
+    self.assertEqual(param['Upper Window'], str(upper))
+    self.assertEqual(param['Lower Window'], str(lower))
+
 
 
 if __name__ == '__main__':
