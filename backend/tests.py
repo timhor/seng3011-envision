@@ -234,7 +234,8 @@ class TestBlackBox(unittest.TestCase):
             date_range = date
             for j in range(0, len(data)):
                 self.assertEqual(data[j]['Date'], date_range.strftime('%Y-%m-%d'))
-                self.assertIsNotNone(data[j]['CM_Return'])
+                for v in var:
+                    self.assertIsNotNone(data[j][v])
                 date_range = date_range + timedelta(days=1)
             index += 1
 
@@ -265,7 +266,8 @@ class TestBlackBox(unittest.TestCase):
             date_range = date
             for key in data.keys():
                 self.assertEqual(key, date_range.strftime('%Y-%m-%d'))
-                self.assertIsNotNone(data[key]['CM_returns'])
+                for v in var:
+                    self.assertIsNotNone(data[key][v])
                 date_range = date_range + timedelta(days=1)
 
         self.assertEqual(param['varlist'], ','.join(var))
@@ -292,7 +294,8 @@ class TestBlackBox(unittest.TestCase):
             self.assertEqual(len(data), upper+lower+1)
             for j in range(0, len(data)):
                 self.assertEqual(data[j]['date'], date_range.strftime('%Y-%m-%d'))
-                self.assertIsNotNone(data[j]['cumulative_return'])
+                for v in var:
+                    self.assertIsNotNone(data[j][v])
                 date_range = date_range - timedelta(days=1)
 
         # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
