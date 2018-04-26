@@ -58,7 +58,7 @@ class TestBlackBox(unittest.TestCase):
         url = 'http://team-distribution.info/api/v2/returns?id=&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = 'http://128.199.82.8:8000/api_v2/api?id=&date=2012-12-10&type=cumulative_return&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Date of Interest Removed
@@ -69,7 +69,7 @@ class TestBlackBox(unittest.TestCase):
         url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=&type=cumulative_return&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Variables List Removed
@@ -91,7 +91,7 @@ class TestBlackBox(unittest.TestCase):
         url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=&upper=5'
         self._check_distribution_failed(url)
 
-        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=cumulative_return&upper_window=5&lower_window='
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window='
         self._check_optiver_failed(url)
 
     # Upper Window Removed
@@ -102,7 +102,7 @@ class TestBlackBox(unittest.TestCase):
         url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper='
         self._check_distribution_failed(url)
 
-        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=cumulative_return&upper_window=&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=&lower_window=3'
         self._check_optiver_failed(url)
 
 
@@ -114,7 +114,7 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=-3&upper=-5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=return&upper_window=-5&lower_window=-3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=-5&lower_window=-3'
         self._check_optiver_failed(url)
 
     # Non-existing Instrument ID
@@ -125,7 +125,7 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://team-distribution.info/api/v2/returns?id=SENG&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v2/api?id=SENG&date=2012-12-10&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=SENG&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Non-existing API Version
@@ -136,7 +136,7 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://team-distribution.info/api/v99.99/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v99.99/api?id=ABP.AX&date=2012-12-10&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v99.99/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Previous API Version
@@ -147,7 +147,7 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://team-distribution.info/api/v1/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_success(url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2012-12-10&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_success(url)
 
     # Dates in the future
@@ -155,10 +155,10 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2018-12-12&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_success(url)
 
-        url = f'http://team-distribution.info/api/v1/returns?id=ABP.AX&date=2018-12-12&varlist=CM_Return&lower=3&upper=5'
+        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2018-12-12&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_success(url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2018-12-12&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2018-12-12&type=none&upper_window=5&lower_window=3'
         self._check_optiver_success(url)
 
     # Potentially dangerous parameters
@@ -166,10 +166,10 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=");DROP%20TABLE%20RETURNS;--&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_failed(url)
 
-        url = f'http://team-distribution.info/api/v1/returns?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        url = f'http://team-distribution.info/api/v2/returns?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Normal input
@@ -177,10 +177,10 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5'
         self._check_envision_success(url)
 
-        url = f'http://team-distribution.info/api/v1/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_success(url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2012-12-10&type=return&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none&upper_window=5&lower_window=3'
         self._check_optiver_success(url)
 
     # Multiple Variables
@@ -188,10 +188,10 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return,CM_Return,Volume&lower_window=3&upper_window=5'
         self._check_envision_success(url)
 
-        url = f'http://team-distribution.info/api/v1/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return,AV_Return&lower=3&upper=5'
+        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return,AV_Return&lower=3&upper=5'
         self._check_distribution_success(url)
 
-        url = f'http://128.199.82.8:8000/api_v1/api?id=ABP.AX&date=2012-12-10&type=return,return_percentage&upper_window=5&lower_window=3'
+        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=none,return_percentage&upper_window=5&lower_window=3'
         self._check_optiver_success(url)
 
 
