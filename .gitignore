@@ -15,4 +15,4 @@
 
 .coverage
 /backend/coverage_report/*
-
+**/.DS_Store
