@@ -87,11 +87,13 @@ def blog():
 
 @app.route('/logs')
 def logs():
-    with open('logging.log') as file:
-        info = file.read()
-    info = info.replace('\n', '<br>')
     if request.args.get('raw'):
+        with open('logging.log') as file:
+            info = file.read()
+        info = info.replace('\n', '<br>')
         return info
+    info = os.popen('tail -n 100 logging.log').read()
+    info = info.replace('\n', '<br>')
     return render_template('logs.html', logs=info)
 
 
