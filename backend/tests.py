@@ -4,6 +4,7 @@ import unittest
 import requests
 import json
 from libs import v1_0
+from datetime import datetime, timedelta, date
 
 from application import application
 
@@ -48,15 +49,18 @@ def check_envision_output(self, instr, date, var, upper, lower, url):
     self.assertEqual(param['date_of_interest'], date)
 
     index = 0
+    date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
     for i in instr:
         self.assertEqual(param['instrument_id'][index], i)
         self.assertEqual(output['Company_Returns'][index]['InstrumentID'], i)
         data = output['Company_Returns'][index]['Data']
 
         self.assertEqual(len(data), upper+lower+1)
+        date_range = date
         for j in range(0, len(data)):
-            self.assertEqual(data[j]['Date'], '2012-12-{0:02}'.format(j+7)) #start date is 07
+            self.assertEqual(data[j]['Date'], date_range.strftime('%Y-%m-%d'))
             self.assertIsNot(data[j]['CM_Return'], None)
+            date_range = date_range + timedelta(days=1)
         index += 1
 
     index = 0
@@ -76,17 +80,18 @@ def check_distribution_output(self, instr, date, var, upper, lower, url):
     param = output['request']
     self.assertEqual(param['date'], date)
 
+    date = datetime.strptime(date, '%Y-%m-%d') - timedelta(days=lower)
     for i in instr:
         self.assertEqual(param['id'], i)
         self.assertEqual(output['data']['id'], i)
         data = output['data']['entries']
 
         self.assertEqual(len(data), upper+lower+1)
-        j = 7
+        date_range = date
         for key in data.keys():
-            self.assertEqual(key, '2012-12-{0:02}'.format(j))
+            self.assertEqual(key, date_range.strftime('%Y-%m-%d'))
             self.assertIsNot(data[key]['CM_returns'], None)
-            j += 1
+            date_range = date_range + timedelta(days=1)
 
     self.assertEqual(param['varlist'], ','.join(var))
 
@@ -102,15 +107,18 @@ def check_optiver_output(self, instr, date, var, upper, lower, url):
     param = output['Log'][0]['Parameters']
     self.assertEqual(param['Date'], date)
 
+    date = datetime.strptime(date, '%Y-%m-%d') + timedelta(days=upper) #Group sorts dates in reverse
     for i in instr:
         self.assertEqual(param['Instrument ID'], i)
         self.assertEqual(output['CompanyReturns'][0]['InstrumentID'], i)
         data = output['CompanyReturns'][0]['Data']
 
+        date_range = date
         self.assertEqual(len(data), upper+lower+1)
         for j in range(0, len(data)):
-            self.assertEqual(data[j]['date'], '2012-12-{0:02}'.format(15-j)) #start date is 07-15. group sorts it in reverse
+            self.assertEqual(data[j]['date'], date_range.strftime('%Y-%m-%d'))
             self.assertIsNot(data[j]['cumulative_return'], None)
+            date_range = date_range - timedelta(days=1)
 
     # self.assertEqual(param['varlist'], ','.join(var)) -- team has no varlist
 
