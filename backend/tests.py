@@ -39,6 +39,18 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
         self._check_optiver_success(instr, date, var, upper, lower, url)
 
+    def test_negative_windows(self):
+        url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return&lower_window=-3&upper_window=-5'
+        self._check_envision_failed(url)
+
+        url = f'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=-3&upper=-5'
+        self._check_distribution_failed(url)
+
+        # Note, Optiver Prime does not support the use of windows, but rather starting date, and end date
+        url = f'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=return&upper_window=-5&lower_window=-3'
+        self._check_optiver_failed(url)
+
+
     def _check_envision_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
