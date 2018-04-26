@@ -39,6 +39,73 @@ class TestBlackBox(unittest.TestCase):
         url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
         self._check_optiver_success(instr, date, var, upper, lower, url)
 
+    # All Empty Parameters
+    def test_all_empty_parameters(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=&date_of_interest=&list_of_var=&lower_window=&upper_window='
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=&date=&varlist=&lower=&upper='
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=&date=&type=&upper_window=&lower_window='
+        self._check_optiver_failed(url)
+
+    # Instrument ID Removed
+    def test_instrument_id_removed(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=&date_of_interest=2012-12-10&list_of_var=CM_Return&lower_window=3&upper_window=5'
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=&date=2012-12-10&type=cumulative_return&upper_window=5&lower_window=3'
+        self._check_optiver_failed(url)
+
+    # Date of Interest Removed
+    def test_date_removed(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=ABP.AX&date_of_interest=&list_of_var=CM_Return&lower_window=3&upper_window=5'
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=&varlist=CM_Return&lower=3&upper=5'
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=&type=cumulative_return&upper_window=5&lower_window=3'
+        self._check_optiver_failed(url)
+
+    # Variables List Removed
+    def test_variables_removed(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=&lower_window=3&upper_window=5'
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=&lower=3&upper=5'
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=&upper_window=5&lower_window=3'
+        self._check_optiver_failed(url)
+
+    # Lower Window Removed
+    def test_lower_removed(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=CM_Return&lower_window=&upper_window=5'
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=&upper=5'
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=cumulative_return&upper_window=5&lower_window='
+        self._check_optiver_failed(url)
+
+    # Upper Window Removed
+    def test_upper_removed(self):
+        url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=CM_Return&lower_window=3&upper_window='
+        self._check_envision_failed(url)
+
+        url = 'http://team-distribution.info/api/v2/returns?id=ABP.AX&date=2012-12-10&varlist=CM_Return&lower=3&upper='
+        self._check_distribution_failed(url)
+
+        url = 'http://128.199.82.8:8000/api_v2/api?id=ABP.AX&date=2012-12-10&type=cumulative_return&upper_window=&lower_window=3'
+        self._check_optiver_failed(url)
+
+
     def _check_envision_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
         output = url.json()
@@ -144,7 +211,7 @@ class TestBlackBox(unittest.TestCase):
         output = url.json()
 
         self.assertEqual(output['Log'][0]['Success'], False)
-        self.assertIsNotNone(output['Log'][0]['Error'])
+        self.assertIsNotNone(output['Log'][0]['Error']) # No error messages provided
 
 
 if __name__ == '__main__':
