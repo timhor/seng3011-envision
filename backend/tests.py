@@ -24,21 +24,6 @@ class TestCase(unittest.TestCase):
         assert(actual_output['Company_Returns'] == expected_output['Company_Returns'])
 
 class TestBlackBox(unittest.TestCase):
-    # def test_success_queries(self):
-    #     instr = ["ABP.AX"]
-    #     date ="2012-12-10"
-    #     var = ["CM_Return"]
-    #     upper = 5
-    #     lower = 3
-    #     url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
-    #     self._check_envision_success(instr, date, var, upper, lower, url)
-
-    #     url = f'http://team-distribution.info/api/v2/returns?id={",".join(instr)}&date={date}&varlist={",".join(var)}&lower={lower}&upper={upper}'
-    #     self._check_distribution_success(instr, date, var, upper, lower, url)
-
-    #     url = f'http://128.199.82.8:8000/api_v2/api?id={",".join(instr)}&date={date}&type={",".join(var)}&upper_window={upper}&lower_window={lower}'
-    #     self._check_optiver_success(instr, date, var, upper, lower, url)
-
     # All Empty Parameters
     def test_all_empty_parameters(self):
         url = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id=&date_of_interest=&list_of_var=&lower_window=&upper_window='
