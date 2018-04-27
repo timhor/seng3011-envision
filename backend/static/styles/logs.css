@@ -20,3 +20,14 @@
 #readmeMarkdown {
     text-align: left;
 }
+
+#logsInfo {
+    color: #3c6676;
+    background-color: #d8ecf0;
+    border-color: #c6d8e9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 0px auto;
+}

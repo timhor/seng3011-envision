@@ -19,8 +19,10 @@ session = Session()
 app = Flask('envision-server-api')
 app.debug = True
 
+# Latest is the last one in the dict
 VALID_VERSIONS = {
-    'v1.0': v1_0,  # Latest is the last one in the dict
+    'v1.0': v1_0,
+    'v1.0.0': v1_0,
     'v1.0.1': v1_0,
     'v1.0.2' : v1_0,
 }
@@ -85,11 +87,13 @@ def blog():
 
 @app.route('/logs')
 def logs():
-    with open('logging.log') as file:
-        info = file.read()
-    info = info.replace('\n', '<br>')
     if request.args.get('raw'):
+        with open('logging.log') as file:
+            info = file.read()
+        info = info.replace('\n', '<br>')
         return info
+    info = os.popen('tail -n 100 logging.log').read()
+    info = info.replace('\n', '<br>')
     return render_template('logs.html', logs=info)
 
 
