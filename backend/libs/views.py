@@ -26,13 +26,20 @@ VALID_VERSIONS = {
 }
 
 CREDITS = {
-    'z5115401 - Soham Dinesh Patel': 'https://github.com/SohamPatel',
-    'z5113367 - Vintony Padmadiredja': 'https://github.com/VintonyPadmadiredja',
-    'z3461919 - Michael Tran': 'https://github.com/mqtran01',
-    'z5019242 - Tim Hor': 'https://github.com/timhor',
-    'z5109924 - James Mangos': 'https://github.com/jamesmangos'
+    'Soham Dinesh Patel<br>z5115401': 'https://github.com/SohamPatel',
+    'Vintony Padmadiredja<br>z5113367': 'https://github.com/VintonyPadmadiredja',
+    'Michael Tran<br>z3461919': 'https://github.com/mqtran01',
+    'Tim Hor<br>z5019242': 'https://github.com/timhor',
+    'James Mangos<br>z5109924': 'https://github.com/jamesmangos'
 }
 
+CREDITS_PHOTO = {
+    'Soham Dinesh Patel<br>z5115401': '/static/assets/Soham.jpg',
+    'Vintony Padmadiredja<br>z5113367': '/static/assets/Vintony.jpg',
+    'Michael Tran<br>z3461919': '/static/assets/Michael.jpg',
+    'Tim Hor<br>z5019242': '/static/assets/Tim.jpg',
+    'James Mangos<br>z5109924': '/static/assets/James.jpg'
+}
 
 # Logging information
 logger = logging.getLogger('logger')
@@ -72,7 +79,7 @@ def gettingstarted():
 
 @app.route('/team')
 def team():
-    return render_template('team.html', credits=sample(CREDITS.items(), len(CREDITS)))
+    return render_template('team.html', credits=sample(CREDITS.items(), len(CREDITS)), credits_photo=CREDITS_PHOTO)
 
 
 @app.route('/versions')

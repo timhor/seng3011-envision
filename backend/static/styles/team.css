@@ -1,14 +1,8 @@
-#teamInformation {
-    background: url(/static/assets/Night_Photography.jpg) bottom / cover;
-}
-
 #projectInformation {
     background: url(/static/assets/Laptop_Coffee.jpg) center / cover;
 }
 
 .demo-card-wide.mdl-card {
-    width: 30vw;
-    min-width: 300px;
     word-wrap: break-word;
 }
 
@@ -19,4 +13,25 @@
 
 .demo-card-wide>.mdl-card__menu {
     color: #fff;
+}
+
+#pictureCard {
+    cursor: pointer;
+    width: 175px !important;
+}
+
+.profilePhoto {
+    width: auto;
+    height: 100%;
+}
+
+#projectCard {
+    width: 30vw;
+    min-width: 300px;
+}
+
+#photoName {
+    padding: 0px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 }
