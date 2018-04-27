@@ -12,20 +12,71 @@ from application import application
 from importlib import reload
 
 
-class TestCase(unittest.TestCase):
+class TestWebsite(unittest.TestCase):
     def setUp(self):
         self.app = application.test_client()
 
     def tearDown(self):
         pass
 
-    def test_1(self):
-        url='/api/v1.0/?instrument_id=ABP.AX&date_of_interest=2012-12-10&list_of_var=Return,Return_pct,CM_Return,CM_Return_pct,AV_Return,AV_Return_pct,Daily_Spread,Volume,Volume_pct&lower_window=3&upper_window=5'
-        response = self.app.get(url)
+    def test_home(self):
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_documentation(self):
+        response = self.app.get('/documentation')
+        self.assertEqual(response.status_code, 200)
+
+    def test_getting_started(self):
+        response = self.app.get('/gettingstarted')
+        self.assertEqual(response.status_code, 200)
+
+    def test_team(self):
+        response = self.app.get('/team')
+        self.assertEqual(response.status_code, 200)
+
+    def test_versions(self):
+        response = self.app.get('/versions')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blog(self):
+        response = self.app.get('/blog')
+        self.assertEqual(response.status_code, 200)
+
+    def test_logs(self):
+        response = self.app.get('/logs')
+        self.assertEqual(response.status_code, 200)
+
+    def test_raw_logs(self):
+        response = self.app.get('/logs?raw=True')
+        self.assertEqual(response.status_code, 200)
+
+    def test_api(self):
+        response = self.app.get('/api/v1.0.2/'
+                + '?instrument_id=ABP.AX&date_of_interest=2012-12-10&'
+                + 'list_of_var=Return,Return_pct,CM_Return,CM_Return_pct,AV_Return,AV_Return_pct,Daily_Spread,Volume,Volume_pct'
+                + '&lower_window=3&upper_window=5')
         actual_output = json.loads(response.get_data(as_text=True))
         with open('testfiles/test1_output.json','r') as test_file:
             expected_output = json.load(test_file)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(actual_output['Company_Returns'], expected_output['Company_Returns'])
+
+    def test_api_wrong_version(self):
+        response = self.app.get('/api/v100.0.0/')
+        self.assertEqual(response.status_code, 200)
+        self.assertRegex(response.body, r'.*Unknown API.*')
+
+    def test_api_bad_var(self):
+        response = self.app.get('/api/v1.0.2/'
+            +'?instrument_id=FAKE&date_of_interest=2012-12-10&list_of_var=Return&lower_window=3&upper_window=5')
+        self.assertEqual(response.status_code, 200)
+        self.assertRegex(response.get_data(as_text=True), r'.*"success":\s*false.*')
+
+    def test_api_missing_args(self):
+        response = self.app.get('/api/v1.0.2/')
+        self.assertEqual(response.status_code, 200)
+        self.assertRegex(response.get_data(as_text=True), r'."Metadata":')
 
 
 class TestParseArgs(unittest.TestCase):
