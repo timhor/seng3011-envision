@@ -131,6 +131,7 @@ class TestBlackBox(unittest.TestCase):
             url = 'http://128.199.82.8:8000/api_v99.99/api?id=ABP.AX&date=2012-12-10&type=cureturn&upper_window=5&lower_window=3'
             self._check_optiver_failed(url)
         except:
+            self.assertTrue()
             print ("--##--##--EXCEPTION PRODUCED Optiver Prime--##--##--")
 
     # Previous API Version
@@ -169,7 +170,7 @@ class TestBlackBox(unittest.TestCase):
         url = 'http://team-distribution.info/api/v2/returns?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&varlist=CM_Return&lower=3&upper=5'
         self._check_distribution_failed(url)
 
-        url = 'http://128.199.82.8:8000/api_v2/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=none&upper_window=5&lower_window=3'
+        url = 'http://128.199.82.8:8000/api_v2/api?id=");DROP%20TABLE%20RETURNS;--&date=2012-12-10&type=cureturn&upper_window=5&lower_window=3'
         self._check_optiver_failed(url)
 
     # Normal input
