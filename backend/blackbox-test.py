@@ -398,6 +398,8 @@ class TestBlackBoxOptiver(unittest.TestCase):
             self.assertEqual(param['Instrument ID'], i)
             self.assertEqual(output['CompanyReturns'][0]['InstrumentID'], i)
             data = output['CompanyReturns'][0]['Data']
+            if "api_v1" in url:
+                data = output['CompanyReturns'][0]['Data'][0]
 
             date_range = date
             self.assertEqual(len(data), upper+lower+1)
