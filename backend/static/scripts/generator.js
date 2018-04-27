@@ -24,7 +24,7 @@ function getData(){
 
     instrumentID = instrumentID.replace(' ', '');
 
-    $.getJSON(`api/${apiVersion}?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
+    $.getJSON(`api/${apiVersion}/?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`, (data) => {
         apiData = data;
         let dataString = JSON.stringify(data, null, 3);
         document.getElementById('queryResults').innerHTML = syntaxHighlight(dataString);
@@ -399,7 +399,7 @@ function updateAPIQuery() {
 
     let listOfVar = getListOfVars();
 
-    let apiQuery = window.location.protocol + '//' + window.location.host + `/api/${apiVersion}?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
+    let apiQuery = window.location.protocol + '//' + window.location.host + `/api/${apiVersion}/?instrument_id=${instrumentID}&date_of_interest=${dateOfInterest}&list_of_var=${listOfVar}&lower_window=${lowerWindow}&upper_window=${upperWindow}`;
     document.getElementById('apiQuery').innerText = apiQuery;
 }
 

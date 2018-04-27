@@ -7,10 +7,10 @@ name = "pypi"
 
 [packages]
 
-Flask = "*"
+flask = "*"
 requests = "*"
 pandas = "*"
-SQLAlchemy = "*"
+sqlalchemy = "*"
 "psycopg2-binary" = "*"
 "markdown2" = "*"
 coverage = "*"
@@ -21,7 +21,10 @@ coverage = "*"
 
 jupyter = "*"
 awsebcli = "*"
+line-profiler = "*"
+
 
 [scripts]
+
 start = "python application.py"
 nuke = "python db_manage.py -n -b"
