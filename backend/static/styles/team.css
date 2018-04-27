@@ -37,5 +37,12 @@
 }
 
 #teamTip {
-
+    color: #3c7641;
+    background-color: #d8f0d8;
+    border-color: #c6e9d5;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 0px auto;
 }
