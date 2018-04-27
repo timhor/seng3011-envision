@@ -65,7 +65,7 @@ class TestWebsite(unittest.TestCase):
     def test_api_wrong_version(self):
         response = self.app.get('/api/v100.0.0/')
         self.assertEqual(response.status_code, 200)
-        self.assertRegex(response.body, r'.*Unknown API.*')
+        self.assertRegex(response.get_data(as_text=True), r'.*Unknown API.*')
 
     def test_api_bad_var(self):
         response = self.app.get('/api/v1.0.2/'
