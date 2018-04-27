@@ -106,7 +106,7 @@ class TestBlackBoxEnvsion(unittest.TestCase):
         upper = 5
         lower = 3
         url = f'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0/?instrument_id={",".join(instr)}&date_of_interest={date}&list_of_var={",".join(var)}&lower_window={lower}&upper_window={upper}'
-        self._check_envision_success(instr, date, env_var, upper, lower, url)
+        self._check_envision_success(instr, date, var, upper, lower, url)
 
     def _check_envision_success(self, instr, date, var, upper, lower, url):
         url = requests.get(url)
