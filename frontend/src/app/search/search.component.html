@@ -1,0 +1,6 @@
+<form (ngSubmit)="onSubmit()">
+  <input type="text" placeholder="ASX Code" required
+    [(ngModel)]="company" name="company">
+  <input type="datetime-local" placeholder="When" required
+    [(ngModel)]="date" name="date">
+</form>
