@@ -1,0 +1,87 @@
+mat-card {
+    max-width: 80%;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+mat-sidenav {
+    width: 240px;
+    background: linear-gradient(45deg, #d64161, #6b5b95);
+    color: #f9f6fa;
+}
+
+mat-toolbar {
+    width: 100%;
+    background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+mat-divider {
+    background-color: hsla(0, 0%, 100%, .5);
+}
+
+#heading {
+    height: 84px;
+    text-align: center;
+    padding: 5px 0;
+    margin-bottom: 5px;
+}
+
+#envisionLogo {
+	width: 50px;
+	margin-right: 6px;
+    border: 3px solid hsla(0, 0%, 100%, .5);
+    border-radius: 100%;
+}
+
+.search-bar {
+    display: block;
+    height: 70%;
+    width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-left: 16px;
+}
+
+.search-bar .search-form input {
+    font-size: 1rem;
+    cursor: text;
+    text-indent: 10px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: 0;
+}
+
+.search-form {
+    padding: 6px;
+}
+
+.search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.fill-space {
+    /* This fills the remaining space, by using flexbox.
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+.mat-nav-list a {
+    color: #f9f6fa;
+}
+
+.mat-nav-list a mat-icon {
+    margin-right: 20px;
+}
