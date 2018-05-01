@@ -14,7 +14,7 @@ mat-card {
 
 mat-sidenav {
     width: 240px;
-    background: linear-gradient(45deg, #d64161, #6b5b95);
+    background: #2b2b2b;
     color: #f9f6fa;
 }
 
@@ -38,7 +38,7 @@ mat-divider {
 #envisionLogo {
 	width: 50px;
 	margin-right: 6px;
-    border: 3px solid hsla(0, 0%, 100%, .5);
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 100%;
 }
 
@@ -84,4 +84,9 @@ mat-divider {
 
 .mat-nav-list a mat-icon {
     margin-right: 20px;
+}
+
+.mat-nav-list a.active{
+    border-left: salmon solid 3px;
+    background-color: #202020;
 }

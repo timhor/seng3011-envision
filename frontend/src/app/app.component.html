@@ -1,59 +1,59 @@
 <mat-sidenav-container class="container">
-  <mat-sidenav #sidenav mode="side" opened>
-    <div id="heading">
-      <h3>
-        <img id="envisionLogo" style="vertical-align: middle;" src="/assets/favicon.png">
-        <span>Envision Client</span>
-      </h3>
-    </div>
-    <mat-divider></mat-divider>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/home">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </a>
-      <a mat-list-item routerLink="/trending">
-        <mat-icon>show_chart</mat-icon>
-        <span>Trending</span>
-      </a>
-      <a mat-list-item routerLink="/about_us">
-        <mat-icon>info_outline</mat-icon>
-        <span>About</span>
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div style="text-align: center">
-      <mat-toolbar>
-        <button mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-
-        <div class="search-bar">
-          <form class="search-form">
-            <button class="search-button">
-              <mat-icon>search</mat-icon>
-            </button>
-            <input matInput type="search" placeholder="Search" style="margin-left: -15px;">
-          </form>
+    <mat-sidenav #sidenav mode="side" opened>
+        <div id="heading">
+            <h3>
+                <img id="envisionLogo" style="vertical-align: middle;" src="/assets/favicon.png">
+                <span>Envision Client</span>
+            </h3>
         </div>
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+            </a>
+            <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>show_chart</mat-icon>
+                <span>Trending</span>
+            </a>
+            <a mat-list-item routerLink="/about_us" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>info_outline</mat-icon>
+                <span>About</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="text-align: center">
+            <mat-toolbar>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
 
-        <span class="fill-space"></span>
+                <div class="search-bar">
+                    <form class="search-form">
+                        <button class="search-button">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                        <input matInput type="search" placeholder="Search" style="margin-left: -15px;">
+                    </form>
+                </div>
 
-        <div class="profile">
-          <button mat-icon-button>
-            <mat-icon>message</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>notifications</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>person</mat-icon>
-          </button>
+                <span class="fill-space"></span>
+
+                <div class="profile">
+                    <button mat-icon-button>
+                        <mat-icon>message</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>notifications</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>person</mat-icon>
+                    </button>
+                </div>
+            </mat-toolbar>
+            <app-home></app-home>
+            <app-search></app-search>
         </div>
-      </mat-toolbar>
-      <app-home></app-home>
-      <app-search></app-search>
-    </div>
-  </mat-sidenav-content>
+    </mat-sidenav-content>
 </mat-sidenav-container>
