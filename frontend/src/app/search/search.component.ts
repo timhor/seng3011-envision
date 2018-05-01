@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CallerService } from "../caller.service";
 
 @Component({
   selector: 'app-search',
@@ -7,15 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
   public company: string = '';
-  public date: Date = null;
+  public startDate: Date = null;
+  public endDate: Date = null;
 
-  constructor() { }
+  constructor(private callerService: CallerService) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
     console.log("Woooo.");
+    console.log(this.company);
+    console.log(this.startDate);
+    console.log(this.endDate);
+    this.callerService.getStockInfo('').subscribe(
+      (result) => console.log(result)
+    );
   }
 
 }

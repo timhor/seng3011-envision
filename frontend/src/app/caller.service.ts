@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http'
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class CallerService {
   constructor(private http: Http) { }
 
   getStockInfo(endpoint: string) {
-    return this.http.get(this.stockInfo + endpoint).map(response => response.json());
+    return this.http.get(this.stockInfo + endpoint);
   }
 
   getNewsInfo(endpoint: string) {

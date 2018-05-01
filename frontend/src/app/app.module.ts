@@ -4,12 +4,17 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { FormsModule } from "@angular/forms";
-
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 
+import { CallerService } from "./caller.service";
+
+export const serviceProviders = [
+  CallerService
+]
 
 @NgModule({
   declarations: [
@@ -22,9 +27,12 @@ import { SearchComponent } from './search/search.component';
     AppMaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers:
+    serviceProviders
+  ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }
