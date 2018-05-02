@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CallerService } from "../caller.service";
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
@@ -17,11 +18,13 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("Woooo.");
     console.log(this.company);
     console.log(this.startDate);
     console.log(this.endDate);
-    this.callerService.getStockInfo('').subscribe(
+    let params: HttpParams = new HttpParams();
+    params = params.append("instrument_id", this.company);
+    params = params.append("date_of_interest", this.startDate.toString());
+    this.callerService.getStockInfo(params).subscribe(
       (result) => console.log(result)
     );
   }
