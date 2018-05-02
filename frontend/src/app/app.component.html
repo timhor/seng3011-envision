@@ -2,21 +2,20 @@
   <mat-sidenav #sidenav mode="side" opened>
     <div id="heading">
       <h3>
-        <img id="envisionLogo" style="vertical-align: middle;" src="/assets/favicon.png">
-        <span>Envision Client</span>
+        <img id="envisionLogo" style="vertical-align: middle;" src="/assets/logo.png">
       </h3>
     </div>
     <mat-divider></mat-divider>
     <mat-nav-list>
-      <a mat-list-item routerLink="/home">
+      <a mat-list-item routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>
-      <a mat-list-item routerLink="/trending">
+      <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>show_chart</mat-icon>
         <span>Trending</span>
       </a>
-      <a mat-list-item routerLink="/about_us">
+      <a mat-list-item routerLink="/about_us" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>info_outline</mat-icon>
         <span>About</span>
       </a>
