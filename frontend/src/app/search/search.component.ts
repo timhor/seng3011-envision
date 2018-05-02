@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CallerService } from "../caller.service";
 import { HttpParams } from '@angular/common/http';
 
@@ -17,6 +17,8 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
 
+  @Input() response: object = null;
+
   onSubmit() {
     console.log(this.company);
     console.log(this.startDate);
@@ -25,7 +27,10 @@ export class SearchComponent implements OnInit {
     params = params.append("instrument_id", this.company);
     params = params.append("date_of_interest", this.startDate.toString());
     this.callerService.getStockInfo(params).subscribe(
-      (result) => console.log(result)
+      (result) => {
+        console.log(result)
+        this.response = result;
+      }
     );
   }
 

@@ -7,3 +7,9 @@
     [(ngModel)]="endDate" name="endDate">
   <button>Find</button>
 </form>
+
+<br>
+<mat-card *ngIf="response != null">
+  <code><pre>{{ response | json }}</pre></code>
+</mat-card>
+<br>

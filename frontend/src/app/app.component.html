@@ -30,11 +30,12 @@
         </button>
 
         <div class="search-bar">
-          <form class="search-form">
-            <button class="search-button">
+          <form class="search-form" (ngSubmit)="onSubmit()">
+            <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
-            <input matInput type="search" placeholder="Search" style="margin-left: -15px;">
+            <input matInput type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
+              style="margin-left: -15px;" required>
           </form>
         </div>
 
@@ -53,7 +54,7 @@
         </div>
       </mat-toolbar>
       <app-home></app-home>
-      <app-search></app-search>
+      <app-search [response]="searchResponse"></app-search>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

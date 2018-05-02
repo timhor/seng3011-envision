@@ -50,14 +50,15 @@ mat-divider {
     margin-left: 16px;
 }
 
-.search-bar .search-form input {
+.search-form input {
     font-size: 1rem;
     cursor: text;
     text-indent: 10px;
     border: none;
     background: transparent;
-    width: 100%;
+    width: 90%;
     outline: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .search-form {
