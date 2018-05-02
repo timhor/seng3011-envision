@@ -17,7 +17,8 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Input() response: object = null;
+  @Input() stocks: object = null;
+  @Input() news: object = null;
 
   onSubmit() {
     console.log(this.company);
@@ -29,7 +30,18 @@ export class SearchComponent implements OnInit {
     this.callerService.getStockInfo(params).subscribe(
       (result) => {
         console.log(result)
-        this.response = result;
+        this.stocks = result;
+      }
+    );
+
+    params = new HttpParams();
+    params = params.append("company", this.company);
+    params = params.append("start_date", this.startDate.toString());
+    params = params.append("end_date", this.endDate.toString());
+    this.callerService.getNewsInfo(params).subscribe(
+      (result) => {
+        console.log(result)
+        this.news = result;
       }
     );
   }

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 export class CallerService {
 
   private stockInfo: string = "http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/";
-  private newsInfo: string = "";
+  private newsInfo: string = "http://seng.fmap.today/v2/news";
 
   constructor(private http: HttpClient) { }
 
@@ -18,8 +18,9 @@ export class CallerService {
     return this.http.get(this.stockInfo, { params : params });
   }
 
-  getNewsInfo(endpoint: string) {
-    return this.http.get(this.newsInfo + endpoint);
+  getNewsInfo(params: HttpParams) {
+    console.log(params);
+    return this.http.get(this.newsInfo, { params : params });
   }
 
 }

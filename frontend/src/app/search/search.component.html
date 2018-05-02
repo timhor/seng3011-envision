@@ -9,7 +9,13 @@
 </form>
 
 <br>
-<mat-card *ngIf="response != null">
-  <code><pre>{{ response | json }}</pre></code>
+<mat-card *ngIf="stocks != null">
+  <h2>Company Returns</h2>
+  <code><pre>{{ stocks | json }}</pre></code>
+</mat-card>
+<br>
+<mat-card *ngIf="news != null">
+  <h2>News</h2>
+  <code><pre>{{ news | json }}</pre></code>
 </mat-card>
 <br>
