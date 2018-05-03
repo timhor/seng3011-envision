@@ -88,3 +88,8 @@ mat-divider {
   border-left: salmon solid 3px;
   background-color: #202020;
 }
+
+ng2-auto-complete {
+  border: 1px solid #ccc;
+  width: 500px;
+}

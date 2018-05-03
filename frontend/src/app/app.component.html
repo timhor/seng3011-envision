@@ -30,11 +30,12 @@
 
         <div class="search-bar">
           <form class="search-form" (ngSubmit)="onSubmit()">
+            <input matInput ng2-auto-complete [source]="observableSource.bind(this)"
+              type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
+              style="margin-left: -15px;" required autocomplete="off">
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
-            <input matInput type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              style="margin-left: -15px;" required>
           </form>
         </div>
 
@@ -53,7 +54,7 @@
         </div>
       </mat-toolbar>
       <app-home></app-home>
-      <app-search [stocks]="searchResponse"></app-search>
+      <app-search [stocks]="stocksResponse" [news]="newsResponse"></app-search>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
