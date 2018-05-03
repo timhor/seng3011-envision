@@ -1,4 +1,29 @@
+@import url("../../bootstrap/bootstrap.min.css");
+
 .container {
     width:80%; 
     margin:0px auto;
+}
+
+mat-card {
+    padding: 10px;
+}
+
+.spacer {
+    padding: 1px;
+    margin: 0px;
+}
+
+.trending-title {
+    padding-top:10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.trending-content {
+    padding-top:10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    text-align: left;
 }
