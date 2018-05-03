@@ -1,5 +1,6 @@
 pre {
   text-align: left;
+  overflow: auto;
 }
 
 mat-card {
