@@ -28,11 +28,12 @@ export const serviceProviders = [
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers:
-    serviceProviders
-  ,
+  providers: [
+      CallerService,
+      serviceProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
