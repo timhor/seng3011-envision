@@ -11,11 +11,12 @@ export class SearchComponent implements OnInit {
   public company: string = '';
   public startDate: Date = null;
   public endDate: Date = null;
+  private results: string[] = [];
 
   constructor(private callerService: CallerService) { }
 
   ngOnInit() {
-  }
+}
 
   @Input() stocks: object = null;
   @Input() news: object = null;
@@ -44,6 +45,10 @@ export class SearchComponent implements OnInit {
         this.news = result;
       }
     );
+  }
+
+  changeDropDown(q:string){
+    this.results = q ? this.callerService.instrumentFuzzySearch(q) : [];
   }
 
 }
