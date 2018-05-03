@@ -2,8 +2,6 @@ import { Component, ViewChild, OnInit, HostListener } from '@angular/core';
 import { CallerService } from './caller.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSidenav } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 
 @Component({
   selector: 'app-root',
@@ -75,8 +73,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  observableSource = (q: string): Observable<any[]> => {
+  updateAutocomplete(q: string) {
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
-    return (Observable.of(this.companySuggestions));
+    return this.companySuggestions;
   }
 }
