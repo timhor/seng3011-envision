@@ -1,5 +1,5 @@
 export class Company {
-    name: string;
-    code: string;
-    group: string;
-  }
+  name: string;
+  code: string;
+  group: string;
+}

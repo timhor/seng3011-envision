@@ -18,11 +18,11 @@ const routes: Routes = [
     path: 'search',
     component: SearchComponent
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

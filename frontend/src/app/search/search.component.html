@@ -2,9 +2,9 @@
   <input #searchBox type="text" placeholder="ASX Code" required
     [(ngModel)]="company" name="company" autofocus (keyup)="changeDropDown(searchBox.value)">
     <ul>
-        <li *ngFor="let result of results">
-            <p>{{result}}</p>
-        </li>
+      <li *ngFor="let result of results">
+        <p>{{result}}</p>
+      </li>
     </ul>
   <input type="date" placeholder="Start" required
     [(ngModel)]="startDate" name="startDate">

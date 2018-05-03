@@ -1,90 +1,90 @@
 mat-card {
-    max-width: 80%;
-    margin: 2em auto;
-    text-align: center;
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
 }
 
 .container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 mat-sidenav {
-    width: 240px;
-    background: #2b2b2b;
-    color: #f9f6fa;
+  width: 240px;
+  background: #2b2b2b;
+  color: #f9f6fa;
 }
 
 mat-toolbar {
-    width: 100%;
-    background: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 mat-divider {
-    background-color: hsla(0, 0%, 100%, .5);
+  background-color: hsla(0, 0%, 100%, .5);
 }
 
 #heading {
-    text-align: center;
-    padding: 5px 0;
-    margin-bottom: 5px;
+  text-align: center;
+  padding: 5px 0;
+  margin-bottom: 5px;
 }
 
 #envisionLogo {
-    width: 90%;
-    height: auto;
+  width: 90%;
+  height: auto;
 }
 
 .search-bar {
-    display: block;
-    height: 70%;
-    width: 300px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    margin-left: 16px;
+  display: block;
+  height: 70%;
+  width: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-left: 16px;
 }
 
 .search-form input {
-    font-size: 1rem;
-    cursor: text;
-    text-indent: 10px;
-    border: none;
-    background: transparent;
-    width: 90%;
-    outline: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  cursor: text;
+  text-indent: 10px;
+  border: none;
+  background: transparent;
+  width: 90%;
+  outline: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .search-form {
-    padding: 6px;
+  padding: 6px;
 }
 
 .search-button {
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    vertical-align: middle;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
 }
 
 .fill-space {
-    /* This fills the remaining space, by using flexbox.
-       Every toolbar row uses a flexbox row layout. */
-    flex: 1 1 auto;
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
 }
 
 .mat-nav-list a {
-    color: #f9f6fa;
+  color: #f9f6fa;
 }
 
 .mat-nav-list a mat-icon {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .mat-nav-list a.active{
-    border-left: salmon solid 3px;
-    background-color: #202020;
+  border-left: salmon solid 3px;
+  background-color: #202020;
 }
