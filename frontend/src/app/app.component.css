@@ -42,6 +42,7 @@ mat-divider {
 #envisionLogo {
   width: 90%;
   height: auto;
+  margin-left: -10px;
 }
 
 .search-bar {
