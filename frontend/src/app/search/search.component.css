@@ -5,3 +5,7 @@ mat-card {
   margin-right: auto;
   text-align: left;
 }
+
+input {
+  margin: 30px 0;
+}
