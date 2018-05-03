@@ -18,52 +18,53 @@ export class AppComponent implements OnInit {
   public news: Object = null;
 
   public indexNames: Map<string, string> = new Map<string, string>();
-  public indices: Map<string, string> = new Map<string, string>();
+  public industries: Map<string, string> = new Map<string, string>();
 
   constructor(private callerService: CallerService) {
-    this.indexNames.set("XGD", "All Ordinaries Gold Index");
-    this.indexNames.set("XPJ", "A-REIT Index");
-    this.indexNames.set("XDJ", "Consumer Discretionary Index");
-    this.indexNames.set("XSJ", "Consumer Staples Index");
-    this.indexNames.set("XEJ", "Energy Index");
-    this.indexNames.set("XFJ", "Financial Index");
-    this.indexNames.set("XXJ", "Financials excluding A-REITs Index");
-    this.indexNames.set("XHJ", "Health Care Index");
-    this.indexNames.set("XNJ", "Industrials Index");
-    this.indexNames.set("XIJ", "Information Technology Index");
-    this.indexNames.set("XMJ", "Materials Index");
-    this.indexNames.set("XMM", "Metals and Mining Index");
-    this.indexNames.set("XJR", "Resources Index");
-    this.indexNames.set("XTJ", "Telecommunications Services Index");
-    this.indexNames.set("XUJ", "Utilities Index");
-    this.indexNames.set("XJO", "ASX200 Index");  // Default
+    // Commented out ones are currently not used by any of our industries
+    // this.indexNames.set("^AXGD", "All Orginaries Gold Index");
+    this.indexNames.set("^AXPJ", "A-REIT Index");
+    this.indexNames.set("^AXDJ", "Consumer Discretionary Index");
+    this.indexNames.set("^AXSJ", "Consumer Staples Index");
+    this.indexNames.set("^AXEJ", "Energy Index");
+    this.indexNames.set("^AXFJ", "Financial Index");
+    // this.indexNames.set("^AXXJ", "Financials excluding A-REITs Index");
+    this.indexNames.set("^AXHJ", "Health Care Index");
+    this.indexNames.set("^AXNJ", "Industrials Index");
+    this.indexNames.set("^AXIJ", "Information Technology Index");
+    this.indexNames.set("^AXMJ", "Materials Index");
+    // this.indexNames.set("^AXMM", "Metals and Mining Index");
+    // this.indexNames.set("^AXJR", "Resources Index");
+    this.indexNames.set("^AXTJ", "Telecommunications Services Index");
+    this.indexNames.set("^AXUJ", "Utilities Index");
+    this.indexNames.set("^AXJO", "ASX200 Index");  // Default
 
-    this.indices.set("Automobiles & Components", "XDJ");
-    this.indices.set("Banks", "XPJ");
-    this.indices.set("Capital Goods", "XNJ");
-    this.indices.set("Class Pend", "XJO");
-    this.indices.set("Commercial & Professional Services", "XNJ");
-    this.indices.set("Consumer Durables & Apparel", "XDJ");
-    this.indices.set("Consumer Services", "XDJ");
-    this.indices.set("Diversified Financials", "XPJ");
-    this.indices.set("Energy", "XEJ");
-    this.indices.set("Food & Staples Retailing", "XSJ");
-    this.indices.set("Food, Beverage & Tobacco", "XSJ");
-    this.indices.set("Health Care Equipment & Services", "XHJ");
-    this.indices.set("Household & Personal Products", "XSJ");
-    this.indices.set("Insurance", "XFJ");
-    this.indices.set("Materials", "XMJ");
-    this.indices.set("Media", "XDJ");
-    this.indices.set("Not Applic", "XJO");
-    this.indices.set("Pharmaceuticals, Biotechnology & Life Sciences", "XHJ");
-    this.indices.set("Real Estate", "XPJ"); // Technically in XFJ - Financials
-    this.indices.set("Retailing", "XDJ");
-    this.indices.set("Semiconductors & Semiconductor Equipment", "XIJ");
-    this.indices.set("Software & Services", "XIJ");
-    this.indices.set("Technology Hardware & Equipment", "XIJ");
-    this.indices.set("Telecommunication Services", "XTJ");
-    this.indices.set("Transportation", "XNJ");
-    this.indices.set("Utilities", "XUJ");
+    this.industries.set("Automobiles & Components", "^AXDJ");
+    this.industries.set("Banks", "^AXPJ"); // Should we use XXJ - Financial sans REIT
+    this.industries.set("Capital Goods", "^AXNJ");
+    this.industries.set("Class Pend", "^AXJO"); // Default to ASX:XJO - ASX200
+    this.industries.set("Commercial & Professional Services", "^AXNJ");
+    this.industries.set("Consumer Durables & Apparel", "^AXDJ");
+    this.industries.set("Consumer Services", "^AXDJ");
+    this.industries.set("Diversified Financials", "^AXPJ");
+    this.industries.set("Energy", "^AXEJ");
+    this.industries.set("Food & Staples Retailing", "^AXSJ");
+    this.industries.set("Food, Beverage & Tobacco", "^AXSJ");
+    this.industries.set("Health Care Equipment & Services", "^AXHJ");
+    this.industries.set("Household & Personal Products", "^AXSJ");
+    this.industries.set("Insurance", "^AXFJ");
+    this.industries.set("Materials", "^AXMJ");
+    this.industries.set("Media", "^AXDJ");
+    this.industries.set("Not Applic", "^AXJO"); // Default to ASX:XJO - ASX200
+    this.industries.set("Pharmaceuticals, Biotechnology & Life Sciences", "^AXHJ");
+    this.industries.set("Real Estate", "^AXPJ"); // Technically in XFJ - Financials
+    this.industries.set("Retailing", "^AXDJ");
+    this.industries.set("Semiconductors & Semiconductor Equipment", "^AXIJ");
+    this.industries.set("Software & Services", "^AXIJ");
+    this.industries.set("Technology Hardware & Equipment", "^AXIJ");
+    this.industries.set("Telecommunication Services", "^AXTJ");
+    this.industries.set("Transportation", "^AXNJ");
+    this.industries.set("Utilities", "^AXUJ");
   }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
