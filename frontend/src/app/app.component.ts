@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, HostListener } from '@angular/core';
 import { CallerService } from './caller.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSidenav } from '@angular/material';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,12 @@ import { MatSidenav } from '@angular/material';
 })
 export class AppComponent implements OnInit {
   public company = '';
-  public stocksResponse: Object = null;
-  public newsResponse: Object = null;
   private companySuggestions: string[] = [];
-  public startDate: Date = null;
-  public endDate: Date = null;
-  public news: Object = null;
 
   public indexNames: Map<string, string> = new Map<string, string>();
   public industries: Map<string, string> = new Map<string, string>();
 
-  constructor(private callerService: CallerService) {
+  public constructor(private callerService: CallerService, private router: Router) {
     // Commented out ones are currently not used by any of our industries
     // this.indexNames.set("^AXGD", "All Orginaries Gold Index");
     this.indexNames.set("^AXPJ", "A-REIT Index");
@@ -95,30 +91,12 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.company.length > 0) {
-      let stockParams: HttpParams = new HttpParams();
-      stockParams = stockParams.append('instrument_id', this.company);
-      stockParams = stockParams.append('date_of_interest', '2018-05-02');
-      this.callerService.getStockInfo(stockParams).subscribe(
-        (result) => {
-          console.log(result);
-          this.stocksResponse = result;
-        }
-      );
-    }
-    if (this.company.length > 0 && this.startDate !== null && this.endDate !== null) {
-      let newsParams: HttpParams = new HttpParams();
-      newsParams = new HttpParams();
-      newsParams = newsParams.append('company', this.company);
-      newsParams = newsParams.append('start_date', this.startDate.toString());
-      newsParams = newsParams.append('end_date', this.endDate.toString());
-      this.callerService.getNewsInfo(newsParams).subscribe(
-        (result) => {
-          console.log(result);
-          this.newsResponse = result;
-        }
-      );
-    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          'search_query': this.company
+      }
+    };
+    this.router.navigate(['search'], navigationExtras);
   }
 
   updateAutocomplete(q: string) {
