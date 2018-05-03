@@ -30,12 +30,17 @@
 
         <div class="search-bar">
           <form class="search-form" (ngSubmit)="onSubmit()">
-            <input matInput ng2-auto-complete [source]="observableSource.bind(this)"
+            <input matInput #searchBox
               type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              style="margin-left: -15px;" required autocomplete="off">
+              required [matAutocomplete]="auto" (keyup)="observableSource(searchBox.value)">
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let company of companySuggestions" [value]="company">
+                {{ company }}
+              </mat-option>
+            </mat-autocomplete>
           </form>
         </div>
 

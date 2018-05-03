@@ -48,7 +48,7 @@ mat-divider {
 .search-bar {
   display: block;
   height: 70%;
-  width: 300px;
+  width: 400px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   margin-left: 16px;
 }
@@ -59,7 +59,7 @@ mat-divider {
   text-indent: 10px;
   border: none;
   background: transparent;
-  width: 90%;
+  width: 85%;
   outline: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
@@ -93,9 +93,4 @@ mat-divider {
 .mat-nav-list a.active{
   border-left: salmon solid 3px;
   background-color: #202020;
-}
-
-ng2-auto-complete {
-  border: 1px solid #ccc;
-  width: 500px;
 }
