@@ -46,25 +46,30 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    let params: HttpParams = new HttpParams();
-    params = params.append('instrument_id', this.company);
-    params = params.append('date_of_interest', '2018-05-02');
-    this.callerService.getStockInfo(params).subscribe(
-      (result) => {
-        console.log(result);
-        this.searchResponse = result;
-      }
-    );
-    params = new HttpParams();
-    params = params.append('company', this.company);
-    params = params.append('start_date', this.startDate.toString());
-    params = params.append('end_date', this.endDate.toString());
-    this.callerService.getNewsInfo(params).subscribe(
-      (result) => {
-        console.log(result);
-        this.news = result;
-      }
-    );
+    if (this.company.length > 0) {
+      let stockParams: HttpParams = new HttpParams();
+      stockParams = stockParams.append('instrument_id', this.company);
+      stockParams = stockParams.append('date_of_interest', '2018-05-02');
+      this.callerService.getStockInfo(stockParams).subscribe(
+        (result) => {
+          console.log(result);
+          this.searchResponse = result;
+        }
+      );
+    }
+    if (this.company.length > 0 && this.startDate !== null && this.endDate !== null) {
+      let newsParams: HttpParams = new HttpParams();
+      newsParams = new HttpParams();
+      newsParams = newsParams.append('company', this.company);
+      newsParams = newsParams.append('start_date', this.startDate.toString());
+      newsParams = newsParams.append('end_date', this.endDate.toString());
+      this.callerService.getNewsInfo(newsParams).subscribe(
+        (result) => {
+          console.log(result);
+          this.news = result;
+        }
+      );
+    }
   }
 
   updateDropdown(q: string) {
