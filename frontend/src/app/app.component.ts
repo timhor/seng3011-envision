@@ -17,7 +17,54 @@ export class AppComponent implements OnInit {
   public endDate: Date = null;
   public news: Object = null;
 
-  constructor(private callerService: CallerService) {}
+  public indexNames: Map<string, string> = new Map<string, string>();
+  public indices: Map<string, string> = new Map<string, string>();
+
+  constructor(private callerService: CallerService) {
+    this.indexNames.set("XGD", "All Ordinaries Gold Index");
+    this.indexNames.set("XPJ", "A-REIT Index");
+    this.indexNames.set("XDJ", "Consumer Discretionary Index");
+    this.indexNames.set("XSJ", "Consumer Staples Index");
+    this.indexNames.set("XEJ", "Energy Index");
+    this.indexNames.set("XFJ", "Financial Index");
+    this.indexNames.set("XXJ", "Financials excluding A-REITs Index");
+    this.indexNames.set("XHJ", "Health Care Index");
+    this.indexNames.set("XNJ", "Industrials Index");
+    this.indexNames.set("XIJ", "Information Technology Index");
+    this.indexNames.set("XMJ", "Materials Index");
+    this.indexNames.set("XMM", "Metals and Mining Index");
+    this.indexNames.set("XJR", "Resources Index");
+    this.indexNames.set("XTJ", "Telecommunications Services Index");
+    this.indexNames.set("XUJ", "Utilities Index");
+    this.indexNames.set("XJO", "ASX200 Index");  // Default
+
+    this.indices.set("Automobiles & Components", "XDJ");
+    this.indices.set("Banks", "XPJ");
+    this.indices.set("Capital Goods", "XNJ");
+    this.indices.set("Class Pend", "XJO");
+    this.indices.set("Commercial & Professional Services", "XNJ");
+    this.indices.set("Consumer Durables & Apparel", "XDJ");
+    this.indices.set("Consumer Services", "XDJ");
+    this.indices.set("Diversified Financials", "XPJ");
+    this.indices.set("Energy", "XEJ");
+    this.indices.set("Food & Staples Retailing", "XSJ");
+    this.indices.set("Food, Beverage & Tobacco", "XSJ");
+    this.indices.set("Health Care Equipment & Services", "XHJ");
+    this.indices.set("Household & Personal Products", "XSJ");
+    this.indices.set("Insurance", "XFJ");
+    this.indices.set("Materials", "XMJ");
+    this.indices.set("Media", "XDJ");
+    this.indices.set("Not Applic", "XJO");
+    this.indices.set("Pharmaceuticals, Biotechnology & Life Sciences", "XHJ");
+    this.indices.set("Real Estate", "XPJ"); // Technically in XFJ - Financials
+    this.indices.set("Retailing", "XDJ");
+    this.indices.set("Semiconductors & Semiconductor Equipment", "XIJ");
+    this.indices.set("Software & Services", "XIJ");
+    this.indices.set("Technology Hardware & Equipment", "XIJ");
+    this.indices.set("Telecommunication Services", "XTJ");
+    this.indices.set("Transportation", "XNJ");
+    this.indices.set("Utilities", "XUJ");
+  }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';
