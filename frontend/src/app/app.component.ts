@@ -10,7 +10,7 @@ import { MatSidenav } from '@angular/material';
 })
 export class AppComponent implements OnInit {
   public company = '';
-  public searchResponse: object;
+  public searchResponse: Object = null;
   private companySuggestions: string[] = [];
   public startDate: Date = null;
   public endDate: Date = null;
