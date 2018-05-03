@@ -12,6 +12,11 @@ export class AppComponent implements OnInit {
   public company = '';
   public searchResponse: object;
   private companySuggestions: string[] = [];
+  public startDate: Date = null;
+  public endDate: Date = null;
+  public news: Object = null;
+
+  constructor(private callerService: CallerService) {}
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';
@@ -40,8 +45,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  constructor(private callerService: CallerService) { }
-
   onSubmit() {
     let params: HttpParams = new HttpParams();
     params = params.append('instrument_id', this.company);
@@ -50,6 +53,16 @@ export class AppComponent implements OnInit {
       (result) => {
         console.log(result);
         this.searchResponse = result;
+      }
+    );
+    params = new HttpParams();
+    params = params.append('company', this.company);
+    params = params.append('start_date', this.startDate.toString());
+    params = params.append('end_date', this.endDate.toString());
+    this.callerService.getNewsInfo(params).subscribe(
+      (result) => {
+        console.log(result);
+        this.news = result;
       }
     );
   }
