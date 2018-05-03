@@ -28,7 +28,7 @@ export const serviceProviders = [
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
       CallerService,

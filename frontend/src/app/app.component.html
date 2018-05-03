@@ -30,11 +30,17 @@
 
         <div class="search-bar">
           <form class="search-form" (ngSubmit)="onSubmit()">
+            <input matInput #searchBox
+              type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
+              required [matAutocomplete]="auto" (keyup)="updateAutocomplete(searchBox.value)">
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
-            <input matInput type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              style="margin-left: -15px;" required>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let company of companySuggestions" [value]="company">
+                {{ company }}
+              </mat-option>
+            </mat-autocomplete>
           </form>
         </div>
 
@@ -53,7 +59,19 @@
         </div>
       </mat-toolbar>
       <app-home></app-home>
-      <app-search [stocks]="searchResponse"></app-search>
+      <app-search></app-search>
+
+      <input style="margin: 30px 0;" type="date" required [(ngModel)]="startDate" name="startDate">
+      <input style="margin: 30px 0;" type="date" required [(ngModel)]="endDate" name="endDate">
+
+      <mat-card *ngIf="stocksResponse !== null">
+        <h2>Stocks</h2>
+        <pre>{{ stocksResponse | json }}</pre>
+      </mat-card>
+      <mat-card *ngIf="newsResponse !== null">
+        <h2>News</h2>
+        <code><pre>{{ newsResponse | json }}</pre></code>
+      </mat-card>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
