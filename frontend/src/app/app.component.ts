@@ -11,6 +11,7 @@ import { MatSidenav } from '@angular/material';
 export class AppComponent implements OnInit {
   public company = '';
   public searchResponse: object;
+  private companySuggestions: string[] = [];
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';
@@ -51,5 +52,9 @@ export class AppComponent implements OnInit {
         this.searchResponse = result;
       }
     );
+  }
+
+  updateDropdown(q: string) {
+    this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
   }
 }

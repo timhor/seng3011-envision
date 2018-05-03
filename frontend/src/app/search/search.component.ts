@@ -11,7 +11,6 @@ export class SearchComponent {
   public company = '';
   public startDate: Date = null;
   public endDate: Date = null;
-  private results: string[] = [];
 
   constructor(private callerService: CallerService) { }
 
@@ -42,10 +41,6 @@ export class SearchComponent {
         this.news = result;
       }
     );
-  }
-
-  changeDropDown(q: string) {
-    this.results = q ? this.callerService.instrumentFuzzySearch(q) : [];
   }
 
 }

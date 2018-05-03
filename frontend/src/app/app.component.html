@@ -33,8 +33,8 @@
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
-            <input matInput type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              style="margin-left: -15px;" required>
+            <input #searchBox matInput type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
+              style="margin-left: -15px;" (keyup)="updateDropdown(searchBox.value)" required>
           </form>
         </div>
 
@@ -54,6 +54,15 @@
       </mat-toolbar>
       <app-home></app-home>
       <app-search [stocks]="searchResponse"></app-search>
+      <ul>
+        <li *ngFor="let suggestion of companySuggestions">
+          <p>{{ suggestion }}</p>
+        </li>
+      </ul>
+      <mat-card *ngIf="searchResponse != null">
+        <h2>Stocks</h2>
+        <pre>{{ searchResponse | json }}</pre>
+      </mat-card>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
