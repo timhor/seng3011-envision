@@ -1,3 +1,8 @@
+pre {
+  text-align: left;
+  overflow: auto;
+}
+
 mat-card {
   max-width: 80%;
   margin: 2em auto;
@@ -37,6 +42,7 @@ mat-divider {
 #envisionLogo {
   width: 90%;
   height: auto;
+  margin-left: -10px;
 }
 
 .search-bar {
