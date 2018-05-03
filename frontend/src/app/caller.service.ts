@@ -10,8 +10,56 @@ export class CallerService {
   private newsInfo = 'http://seng.fmap.today/v2/news';
   private companies: Company[];
 
+  public indexNames: Map<string, string> = new Map<string, string>();
+  public industries: Map<string, string> = new Map<string, string>();
+
+
   constructor(private http: HttpClient) {
     this.http.get('../assets/ASXListedCompanies.json').subscribe(val => this.companies = <Company[]> val);
+    // Commented out ones are currently not used by any of our industries
+    // this.indexNames.set('^AXGD', 'All Orginaries Gold Index');
+    this.indexNames.set('^AXPJ', 'A-REIT Index');
+    this.indexNames.set('^AXDJ', 'Consumer Discretionary Index');
+    this.indexNames.set('^AXSJ', 'Consumer Staples Index');
+    this.indexNames.set('^AXEJ', 'Energy Index');
+    this.indexNames.set('^AXFJ', 'Financial Index');
+    // this.indexNames.set('^AXXJ', 'Financials excluding A-REITs Index');
+    this.indexNames.set('^AXHJ', 'Health Care Index');
+    this.indexNames.set('^AXNJ', 'Industrials Index');
+    this.indexNames.set('^AXIJ', 'Information Technology Index');
+    this.indexNames.set('^AXMJ', 'Materials Index');
+    // this.indexNames.set('^AXMM', 'Metals and Mining Index');
+    // this.indexNames.set('^AXJR', 'Resources Index');
+    this.indexNames.set('^AXTJ', 'Telecommunications Services Index');
+    this.indexNames.set('^AXUJ', 'Utilities Index');
+    this.indexNames.set('^AXJO', 'ASX200 Index');  // Default
+
+    this.industries.set('Automobiles & Components', '^AXDJ');
+    this.industries.set('Banks', '^AXPJ'); // Should we use XXJ - Financial sans REIT
+    this.industries.set('Capital Goods', '^AXNJ');
+    this.industries.set('Class Pend', '^AXJO'); // Default to ASX:XJO - ASX200
+    this.industries.set('Commercial & Professional Services', '^AXNJ');
+    this.industries.set('Consumer Durables & Apparel', '^AXDJ');
+    this.industries.set('Consumer Services', '^AXDJ');
+    this.industries.set('Diversified Financials', '^AXPJ');
+    this.industries.set('Energy', '^AXEJ');
+    this.industries.set('Food & Staples Retailing', '^AXSJ');
+    this.industries.set('Food, Beverage & Tobacco', '^AXSJ');
+    this.industries.set('Health Care Equipment & Services', '^AXHJ');
+    this.industries.set('Household & Personal Products', '^AXSJ');
+    this.industries.set('Insurance', '^AXFJ');
+    this.industries.set('Materials', '^AXMJ');
+    this.industries.set('Media', '^AXDJ');
+    this.industries.set('Not Applic', '^AXJO'); // Default to ASX:XJO - ASX200
+    this.industries.set('Pharmaceuticals, Biotechnology & Life Sciences', '^AXHJ');
+    this.industries.set('Real Estate', '^AXPJ'); // Technically in XFJ - Financials
+    this.industries.set('Retailing', '^AXDJ');
+    this.industries.set('Semiconductors & Semiconductor Equipment', '^AXIJ');
+    this.industries.set('Software & Services', '^AXIJ');
+    this.industries.set('Technology Hardware & Equipment', '^AXIJ');
+    this.industries.set('Telecommunication Services', '^AXTJ');
+    this.industries.set('Transportation', '^AXNJ');
+    this.industries.set('Utilities', '^AXUJ');
   }
 
   getStockInfo(params: HttpParams) {
@@ -44,6 +92,18 @@ export class CallerService {
       .map((x: Company) => x.name)
       .filter((x: string) => x.toLowerCase().indexOf(queryString) !== -1);
     return this.shuffleArray(tempArray).slice(0, 7);
+  }
+
+  // Gets the stock index we want to compare to
+  getStockIndex(company: string) {
+    this.companies.forEach(e => {
+      if (e.code === company) {
+        if (this.industries.has(e.group)) {
+          return this.industries.get(e.group);
+        }
+      }
+    });
+    return '^AXJO'; // Default
   }
 
 }
