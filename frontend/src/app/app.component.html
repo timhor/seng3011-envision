@@ -11,6 +11,10 @@
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>
+      <a mat-list-item routerLink="/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+        <mat-icon>search</mat-icon>
+        <span>Search</span>
+      </a>
       <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>show_chart</mat-icon>
         <span>Trending</span>
@@ -58,8 +62,8 @@
           </button>
         </div>
       </mat-toolbar>
-      <app-home></app-home>
-      <app-search></app-search>
+
+      <router-outlet (deactivate)="onDeactivate()"></router-outlet>
 
       <input style="margin: 30px 0;" type="date" required [(ngModel)]="startDate" name="startDate">
       <input style="margin: 30px 0;" type="date" required [(ngModel)]="endDate" name="endDate">

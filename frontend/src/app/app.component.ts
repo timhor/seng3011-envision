@@ -125,4 +125,8 @@ export class AppComponent implements OnInit {
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
     return this.companySuggestions;
   }
+
+  onDeactivate() {
+    window.scrollTo(0, 0);
+  }
 }
