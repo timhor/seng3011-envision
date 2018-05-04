@@ -62,6 +62,15 @@ pre {
   font-weight: bolder;
 }
 
+.filterBoxSpacer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.filterSubmitBtn {
+  padding: 10px;
+}
+
 .graph-card {
   font-family: 'Open Sans', sans-serif;
   height: 250px;

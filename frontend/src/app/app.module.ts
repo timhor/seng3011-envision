@@ -12,6 +12,8 @@ import { SearchComponent } from './search/search.component';
 
 import { CallerService } from './caller.service';
 
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
 export const serviceProviders = [
   CallerService
 ];
@@ -28,7 +30,8 @@ export const serviceProviders = [
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2FlatpickrModule
   ],
   providers: [
       CallerService,
