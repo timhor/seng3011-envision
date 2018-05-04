@@ -30,10 +30,10 @@ export class HomeComponent {
           newsParams.append('company', instrumentID);
           this.callerService.getNewsInfo(newsParams).subscribe((data) => {
             // Check if there are any news posted
-            if (data.totalResults >= 0) {
+            if (data['totalResults'] >= 0) {
               // Keep track articles, to find a single article which has an image url
               let foundArticle: Boolean = false;
-              data.articles.forEach(article => {
+              data['articles'].forEach(article => {
                 // Check if article has url, and we havent found an article already
                 if (article.urlToImage != null && foundArticle !== true) {
                   console.log(article);
