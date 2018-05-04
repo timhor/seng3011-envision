@@ -18,11 +18,14 @@
       </div>
   </mat-expansion-panel>
   <div *ngIf="query" style="margin-top: 62px">
-    <div class="container">
+    <div class="container" *ngFor="let resp of guardianResponse">
       <div class="row">
         <div class="col-md-8">
           <div class="row">
-            <mat-card class="news-card">NEWS</mat-card>
+            <mat-card class="news-card">NEWS:
+              {{ resp.title }}
+              <a [href]="resp.url">{{resp.url}}</a>
+            </mat-card>
           </div>
           <hr class="spacer">
           <div class="row" style="padding-top:5px;">
@@ -40,6 +43,7 @@
           <mat-card class="analysis-card">ANALYSIS</mat-card>
         </div>
       </div>
+      <mat-divider style="margin: 30px 0;"></mat-divider>
     </div>
   </div>
   <br>

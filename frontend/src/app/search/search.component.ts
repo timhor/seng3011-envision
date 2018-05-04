@@ -17,6 +17,7 @@ export class SearchComponent {
   public startDate: Date = null;
   public endDate: Date = null;
   public panelState = false;
+  public guardianResponse: any[] = [];
 
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
 
@@ -130,7 +131,7 @@ export class SearchComponent {
     this.getQuery();
   }
 
-  public getQuery() {
+  private getQuery() {
     if (this.startDate !== null) {
       this.analyseTrends(this.query, this.startDate); // TODO: Use this to find stuff
     }
@@ -145,5 +146,18 @@ export class SearchComponent {
         }
       );
     }
+    let guardianParams: HttpParams = new HttpParams();
+    guardianParams = guardianParams.append('q', this.query);
+    this.callerService.getGuardianInfo(guardianParams).subscribe(
+      (result) => {
+        this.newsResponse = result;
+        this.newsResponse['response']['results'].forEach(e => {
+          const news = {'title': '', 'url': ''};
+          news.title = e['webTitle'];
+          news.url = e['webUrl'];
+          this.guardianResponse.push(news);
+        });
+      }
+    );
   }
 }
