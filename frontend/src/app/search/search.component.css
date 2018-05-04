@@ -40,3 +40,18 @@ pre {
 .col-md-6 {
   padding: 0px;
 }
+
+.expansion_panel {
+  /* margin-right: calc(2em + 12px); */
+  margin-right: 5%;
+  position: absolute;
+  right: 0;
+  width: 200px;
+  z-index: 1;
+}
+
+@media only screen and (min-width: 990px) {
+  .expansion_panel {
+      margin-right: 6%;
+  }
+}
