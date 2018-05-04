@@ -3,8 +3,13 @@ pre {
   overflow: auto;
 }
 
-mat-card {
+.json_card {
   max-width: 80%;
   margin: 2em auto;
   text-align: center;
+}
+
+mat-card {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
 }
