@@ -1,0 +1,94 @@
+@import url("../../bootstrap/bootstrap.min.css");
+
+.container {
+  margin:0 auto;
+  width: 90%;
+}
+
+.spacer {
+  margin: 0px;
+  padding: 2.5px;
+}
+
+.hidden-spacer {
+  border: none;
+  margin: 5px;
+}
+
+@media only screen and (min-width: 992px) {
+  .hidden-spacer {
+      display: none;
+  }
+}
+
+pre {
+  overflow: auto;
+  text-align: left;
+}
+
+.json_card {
+  margin: 2em auto;
+  max-width: 80%;
+  text-align: center;
+}
+
+/* mat-card {
+  width: calc(100% - 70px);
+  height: 200px;
+} */
+
+.col-md-6 {
+  padding: 0;
+}
+
+.expansion_panel {
+  /* margin-right: calc(2em + 12px); */
+  font-family: 'Open Sans', sans-serif;
+  margin-right: 5%;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  width: 200px;
+  z-index: 1;
+}
+
+.filterGap {
+  border-color: transparent;
+}
+
+.filterBtn {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.filterBoxSpacer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.filterSubmitBtn {
+  padding: 10px;
+}
+
+.graph-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 250px;
+  
+}
+
+.news-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 450px;
+}
+
+.analysis-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 710px;
+}
+
+@media only screen and (min-width: 990px) {
+  .expansion_panel {
+      margin-right: 5.25vw;
+  }
+}
