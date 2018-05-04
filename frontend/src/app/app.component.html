@@ -2,26 +2,26 @@
   <mat-sidenav #sidenav mode="{{ navMode }}" opened>
     <div id="heading">
       <h3>
-        <img id="envisionLogo" style="vertical-align: middle;" src="/assets/logo.png">
+        <img id="envisionLogo" style="vertical-align: middle;" src="/assets/logo.png" routerLink="/" (click)="onLinkClick()">
       </h3>
     </div>
     <mat-divider></mat-divider>
-    <mat-nav-list>
+    <mat-nav-list class="navLinks">
       <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>home</mat-icon>
-        <span>Home</span>
+        <span class="navLinkText">Home</span>
       </a>
       <a mat-list-item routerLink="/search" routerLinkActive="active" (click)="onLinkClick()">
         <mat-icon>search</mat-icon>
-        <span>Search</span>
+        <span class="navLinkText">Search</span>
       </a>
       <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>show_chart</mat-icon>
-        <span>Trending</span>
+        <span class="navLinkText">Trending</span>
       </a>
       <a mat-list-item routerLink="/about_us" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>info_outline</mat-icon>
-        <span>About</span>
+        <span class="navLinkText">About</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
