@@ -33,7 +33,6 @@ export class SearchComponent {
           }
           if (this.startDate !== null && this.endDate !== null) {
             let newsParams: HttpParams = new HttpParams();
-            newsParams = new HttpParams();
             newsParams = newsParams.append('company', this.query);
             newsParams = newsParams.append('start_date', this.startDate.toString());
             newsParams = newsParams.append('end_date', this.endDate.toString());
@@ -138,6 +137,7 @@ export class SearchComponent {
     const answer = step1 / step4;
 
     return answer;
+  }
 
   public togglePanel() {
     this.panel.close();

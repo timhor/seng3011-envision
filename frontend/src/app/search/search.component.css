@@ -32,11 +32,6 @@ pre {
   text-align: center;
 }
 
-/* mat-card {
-  width: calc(100% - 70px);
-  height: 200px;
-} */
-
 .col-md-6 {
   padding: 0;
 }
@@ -74,7 +69,7 @@ pre {
 .graph-card {
   font-family: 'Open Sans', sans-serif;
   height: 250px;
-  
+
 }
 
 .news-card {
