@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   updateAutocomplete(q: string) {
+    q = q.toLowerCase();
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
     return this.companySuggestions;
   }
