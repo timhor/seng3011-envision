@@ -22,13 +22,13 @@
 }
 
 pre {
-  text-align: left;
   overflow: auto;
+  text-align: left;
 }
 
 .json_card {
-  max-width: 80%;
   margin: 2em auto;
+  max-width: 80%;
   text-align: center;
 }
 
@@ -38,20 +38,48 @@ pre {
 } */
 
 .col-md-6 {
-  padding: 0px;
+  padding: 0;
 }
 
 .expansion_panel {
   /* margin-right: calc(2em + 12px); */
+  font-family: 'Open Sans', sans-serif;
   margin-right: 5%;
   position: absolute;
   right: 0;
+  text-align: left;
   width: 200px;
   z-index: 1;
 }
 
+.filterGap {
+  border-color: transparent;
+}
+
+.filterBtn {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.graph-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 250px;
+  
+}
+
+.news-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 450px;
+}
+
+.analysis-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 710px;
+}
+
 @media only screen and (min-width: 990px) {
   .expansion_panel {
-      margin-right: 6%;
+      margin-right: 5.25vw;
   }
 }

@@ -4,38 +4,40 @@
   <mat-expansion-panel  *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Filters
+          <p class="filterBtn">Filters</p>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <span>Start:</span>
       <input style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate">
       <span>End:</span>
       <input style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate">
-      <button mat-raised-button (click)="togglePanel()">Update</button>
+      <div style="margin: 0 auto; text-align:center;">
+        <button mat-raised-button (click)="togglePanel()">Update</button>
+      </div>
   </mat-expansion-panel>
-  <hr>
-  <hr>
+  <hr class="filterGap">
+  <hr class="filterGap">
   <div *ngIf="query">
     <div class="container">
       <div class="row">
         <div class="col-md-8">
           <div class="row">
-            <mat-card style="height: 450px;">NEWS</mat-card>
+            <mat-card class="news-card">NEWS</mat-card>
           </div>
           <hr class="spacer">
           <div class="row" style="padding-top:5px;">
             <div class="col-md-6" style="padding: 0px; padding-right:5px;">
-              <mat-card style="height: 250px;">GRAPH #1</mat-card>
+              <mat-card class="graph-card">GRAPH #1</mat-card>
             </div>
             <hr class="hidden-spacer">
             <div class="col-md-6" style="padding: 0px; padding-left:5px;">
-              <mat-card style="height: 250px;">GRAPH #2</mat-card>
+              <mat-card class="graph-card">GRAPH #2</mat-card>
             </div>
           </div>
         </div>
         <hr class="hidden-spacer">
         <div class="col-md-4">
-          <mat-card style="height: 710px;">ANALYSIS</mat-card>
+          <mat-card class="analysis-card">ANALYSIS</mat-card>
         </div>
       </div>
     </div>
