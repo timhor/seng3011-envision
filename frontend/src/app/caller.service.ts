@@ -10,8 +10,8 @@ export class CallerService {
   private newsInfo = 'http://seng.fmap.today/v2/news';
   private companies: Company[];
 
-  public indexNames: Map<string, string> = new Map<string, string>();
-  public industries: Map<string, string> = new Map<string, string>();
+  private indexNames: Map<string, string> = new Map<string, string>();
+  private industries: Map<string, string> = new Map<string, string>();
 
 
   constructor(private http: HttpClient) {
@@ -65,7 +65,7 @@ export class CallerService {
   getStockInfo(params: HttpParams) {
     params = params.append('lower_window', '5');
     params = params.append('upper_window', '15');
-    params = params.append('list_of_var', 'Return');
+    params = params.append('list_of_var', 'Return,Return_pct');
     console.log(params);
     return this.http.get(this.stockInfo, { params : params });
   }
@@ -99,6 +99,7 @@ export class CallerService {
     this.companies.forEach(e => {
       if (e.code === company) {
         if (this.industries.has(e.group)) {
+          console.log(this.industries.get(e.group));
           return this.industries.get(e.group);
         }
       }
