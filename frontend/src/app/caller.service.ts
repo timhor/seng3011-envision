@@ -75,8 +75,12 @@ export class CallerService {
     return this.http.get(this.newsInfo, { params : params });
   }
 
+  getCompanies() {
+    return this.http.get('../assets/ASXListedCompanies.json');
+  }
+
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
-  private shuffleArray(array: string[]) {
+  shuffleArray(array: string[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const temp = array[i];
