@@ -32,6 +32,7 @@ mat-divider {
   width: 90%;
   height: auto;
   margin-left: -10px;
+  cursor: pointer;
 }
 
 .search-bar {
@@ -50,7 +51,7 @@ mat-divider {
   background: transparent;
   width: 85%;
   outline: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .search-form {
@@ -79,7 +80,11 @@ mat-divider {
   margin-right: 20px;
 }
 
-.mat-nav-list a.active{
+.navLinkText {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.navLinks a.active{
   border-left: salmon solid 3px;
   background-color: #202020;
 }

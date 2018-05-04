@@ -1,17 +1,90 @@
-<br>
 <div>
-  <input style="margin: 30px 0;" type="date" required [(ngModel)]="startDate" name="startDate">
-  <input style="margin: 30px 0;" type="date" required [(ngModel)]="endDate" name="endDate">
-
+  <br>
+  <span *ngIf="!query">Search a news article using the above search bar</span>
+  <mat-expansion-panel  *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p class="filterBtn">Filters</p>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <span>Start:</span>
+      <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"></ng2-flatpickr>
+      <!-- <input style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"> -->
+      <br>
+      <span>End:</span>
+      <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"></ng2-flatpickr>
+      <!-- <input style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"> -->
+      <hr class="filterBoxSpacer">
+      <div style="margin: 0 auto; text-align:center;">
+        <button mat-raised-button (click)="togglePanel()" class="filterSubmitBtn">Update</button>
+      </div>
+  </mat-expansion-panel>
+  <hr class="filterGap">
+  <hr class="filterGap">
+  <div *ngIf="query">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <mat-card class="news-card">NEWS</mat-card>
+          </div>
+          <hr class="spacer">
+          <div class="row" style="padding-top:5px;">
+            <div class="col-md-6" style="padding: 0px; padding-right:5px;">
+              <mat-card class="graph-card">GRAPH #1</mat-card>
+            </div>
+            <hr class="hidden-spacer">
+            <div class="col-md-6" style="padding: 0px; padding-left:5px;">
+              <mat-card class="graph-card">GRAPH #2</mat-card>
+            </div>
+          </div>
+        </div>
+        <hr class="hidden-spacer">
+        <div class="col-md-4">
+          <mat-card class="analysis-card">ANALYSIS</mat-card>
+        </div>
+      </div>
+    </div>
+    <!-- <mat-grid-list cols="3" rowHeight="200px" gutterSize="15px">
+  <div *ngIf="query" style="margin: 2em;">
+    <mat-grid-list cols="3" rowHeight="200px" gutterSize="15px">
+      <mat-grid-tile
+          colspan="2"
+          rowspan="2">
+        <mat-card>
+          NEWS
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile
+        colspan="1"
+        rowspan="3">
+        <mat-card>
+          ANALYSIS
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile
+        colspan="1"
+        rowspan="1">
+        <mat-card>
+          GRAPH#1
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile
+        colspan="1"
+        rowspan="1">
+        <mat-card>
+          GRAPH#2
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list> -->
+  </div>
   <br>
 
-  <span *ngIf="!query">Search a news article using the above search bar</span>
-
-  <mat-card *ngIf="stocksResponse !== null">
+  <mat-card class="json_card" *ngIf="stocksResponse !== null">
     <h2>Stocks</h2>
     <pre>{{ stocksResponse | json }}</pre>
   </mat-card>
-  <mat-card *ngIf="newsResponse !== null">
+  <mat-card class="json_card" *ngIf="newsResponse !== null">
     <h2>News</h2>
     <code><pre>{{ newsResponse | json }}</pre></code>
   </mat-card>

@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS, cross_origin
 from libs import v1_0
 from datetime import datetime, timedelta
 from markdown2 import markdown
@@ -18,6 +19,7 @@ session = Session()
 
 app = Flask('envision-server-api')
 app.debug = True
+cors = CORS(app)
 
 # Latest is the last one in the dict
 VALID_VERSIONS = {
