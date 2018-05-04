@@ -1,7 +1,7 @@
 <div>
   <br>
   <span *ngIf="!query">Search a news article using the above search bar</span>
-  <mat-expansion-panel  *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
+  <mat-expansion-panel *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p class="filterBtn">Filters</p>
@@ -9,24 +9,23 @@
       </mat-expansion-panel-header>
       <span>Start:</span>
       <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"></ng2-flatpickr>
-      <!-- <input style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"> -->
       <br>
       <span>End:</span>
       <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"></ng2-flatpickr>
-      <!-- <input style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"> -->
       <hr class="filterBoxSpacer">
       <div style="margin: 0 auto; text-align:center;">
         <button mat-raised-button (click)="togglePanel()" class="filterSubmitBtn">Update</button>
       </div>
   </mat-expansion-panel>
-  <hr class="filterGap">
-  <hr class="filterGap">
-  <div *ngIf="query">
-    <div class="container">
+  <div *ngIf="query" style="margin-top: 62px">
+    <div class="container" *ngFor="let resp of guardianResponse">
       <div class="row">
         <div class="col-md-8">
           <div class="row">
-            <mat-card class="news-card">NEWS</mat-card>
+            <mat-card class="news-card">NEWS:
+              {{ resp.title }}
+              <a [href]="resp.url">{{resp.url}}</a>
+            </mat-card>
           </div>
           <hr class="spacer">
           <div class="row" style="padding-top:5px;">
@@ -44,6 +43,7 @@
           <mat-card class="analysis-card">ANALYSIS</mat-card>
         </div>
       </div>
+      <mat-divider style="margin: 30px 0;"></mat-divider>
     </div>
   </div>
   <br>

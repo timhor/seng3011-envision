@@ -28,7 +28,7 @@ pre {
 
 .json_card {
   margin: 2em auto;
-  max-width: 80%;
+  max-width: 90%;
   text-align: center;
 }
 
@@ -58,8 +58,8 @@ pre {
 }
 
 .filterBoxSpacer {
-  margin-top: 15px;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .filterSubmitBtn {
