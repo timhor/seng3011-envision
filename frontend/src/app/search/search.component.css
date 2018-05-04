@@ -1,3 +1,26 @@
+@import url("../../bootstrap/bootstrap.min.css");
+
+.container {
+  margin:0 auto;
+  width: 90%;
+}
+
+.spacer {
+  margin: 0px;
+  padding: 2.5px;
+}
+
+.hidden-spacer {
+  border: none;
+  margin: 5px;
+}
+
+@media only screen and (min-width: 992px) {
+  .hidden-spacer {
+      display: none;
+  }
+}
+
 pre {
   text-align: left;
   overflow: auto;
@@ -9,7 +32,11 @@ pre {
   text-align: center;
 }
 
-mat-card {
+/* mat-card {
   width: calc(100% - 70px);
-  height: calc(100% - 70px);
+  height: 200px;
+} */
+
+.col-md-6 {
+  padding: 0px;
 }

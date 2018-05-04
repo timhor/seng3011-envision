@@ -5,8 +5,31 @@
   <br>
   <span *ngIf="!query">Search a news article using the above search bar</span>
 
-  <div *ngIf="query" style="width:90%; height:90%; margin: 2em auto;">
-    <mat-grid-list cols="3" rowHeight="200px" gutterSize="15px">
+  <div *ngIf="query">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <mat-card style="height: 450px;">NEWS</mat-card>
+          </div>
+          <hr class="spacer">
+          <div class="row" style="padding-top:5px;">
+            <div class="col-md-6" style="padding: 0px; padding-right:5px;">
+              <mat-card style="height: 250px;">GRAPH #1</mat-card>
+            </div>
+            <hr class="hidden-spacer">
+            <div class="col-md-6" style="padding: 0px; padding-left:5px;">
+              <mat-card style="height: 250px;">GRAPH #2</mat-card>
+            </div>
+          </div>
+        </div>
+        <hr class="hidden-spacer">
+        <div class="col-md-4">
+          <mat-card style="height: 710px;">ANALYSIS</mat-card>
+        </div>
+      </div>
+    </div>
+    <!-- <mat-grid-list cols="3" rowHeight="200px" gutterSize="15px">
       <mat-grid-tile
           colspan="2"
           rowspan="2">
@@ -35,7 +58,7 @@
           GRAPH#2
         </mat-card>
       </mat-grid-tile>
-    </mat-grid-list>
+    </mat-grid-list> -->
   </div>
   <br>
 
