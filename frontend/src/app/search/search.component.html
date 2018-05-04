@@ -88,4 +88,11 @@
     <h2>News</h2>
     <code><pre>{{ newsResponse | json }}</pre></code>
   </mat-card>
+  <mat-card *ngIf="!trendInfo.hidden">
+    <h2>trendInfo</h2>
+    <code><pre>{{ trendInfo.shortRangeCorrelation }}</pre></code>
+    <code><pre>{{ trendInfo.longRangeCorrelation }}</pre></code>
+    <code><pre>{{ trendInfo.analysis }}</pre></code>
+
+  </mat-card>
 </div>
