@@ -138,6 +138,7 @@ export class SearchComponent {
     const answer = step1 / step4;
 
     return answer;
+  }
 
   public togglePanel() {
     this.panel.close();
