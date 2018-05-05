@@ -91,7 +91,7 @@ pre {
 .trending-title {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bolder;
   padding-top: 10px;
   text-align: left;
@@ -126,14 +126,28 @@ a.no-underline:hover {
   width: 100%;
   overflow: hidden;
   vertical-align: middle;
+  background: grey;
 }
 
 @media (min-width: 1080px) {
   .img-container {
-    height: 70%;
+    height: 65%;
   }
 }
 
 .img-container img {
   width: 100%;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+mat-card {
+  padding: 10px;
+}
+
+a img:hover {
+  opacity: 0.6;
 }
