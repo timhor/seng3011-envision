@@ -125,29 +125,51 @@ a.no-underline:hover {
   height: auto;
   width: 100%;
   overflow: hidden;
-  vertical-align: middle;
-  background: grey;
-}
-
-@media (min-width: 1080px) {
-  .img-container {
-    height: 65%;
-  }
 }
 
 .img-container img {
   width: 100%;
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  transition: all 1s ease;
 }
 
 mat-card {
   padding: 10px;
 }
 
-a img:hover {
+.img-container:hover {
   opacity: 0.6;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.img-container:hover .hover-text {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.hover-text {
+  color: white;
+  font-size: 28px;
+  position: absolute;
+  top: 32.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+}
+
+@media (min-width: 1080px) {
+  .img-container {
+    height: 65%;
+  }
+  .hover-text {
+    font-size: 36px;
+  }
 }
