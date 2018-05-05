@@ -14,7 +14,7 @@ export class HomeComponent {
   public trendingNews: any[] = [];
   private companies: Company[];
   private newsResponse: Object = null;
-  private const pageSize = 10;
+  private pageSize = 10;
 
   constructor (private callerService: CallerService) {
 
