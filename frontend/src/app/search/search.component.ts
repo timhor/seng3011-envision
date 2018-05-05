@@ -70,11 +70,19 @@ export class SearchComponent {
       // Pearson correlation coefficient
       this.trendInfo.longRangeCorrelation = this.getPearsonCorrelation(this.indexTS, this.companyTS);
       this.trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(this.indexTS.slice(4, 15), this.companyTS.slice(4, 15));
-      this.trendInfo.analysis = 'Test123';
+      this.trendInfo.analysis = this.stateAnalysis();
       this.trendInfo.hidden = false;
       console.log(this.trendInfo);
     });
 
+  }
+
+  private stateAnalysis() {
+    // Check if it was an overall increase or not
+    if (Math.abs(this.trendInfo.longRangeCorrelation - this.trendInfo.shortRangeCorrelation)) {
+
+    }
+    return 'Test123';
   }
 
   /*

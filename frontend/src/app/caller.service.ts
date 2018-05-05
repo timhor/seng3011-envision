@@ -66,7 +66,7 @@ export class CallerService {
   getStockInfo(params: HttpParams) {
     params = params.append('lower_window', '5');
     params = params.append('upper_window', '15');
-    params = params.append('list_of_var', 'Return,Return_pct');
+    params = params.append('list_of_var', 'Return,Return_pct,CM_Return_pct');
     console.log(params);
     return this.http.get(this.stockInfo, { params : params });
   }
