@@ -48,7 +48,8 @@ export class SearchComponent {
     const index: string = this.callerService.getStockIndex(companyID);
     let params: HttpParams = new HttpParams();
     params = params.append('instrument_id', company + ',' + index);
-    params = params.append('date_of_interest', date.toString());
+    const tempDate: string = new Date(date).toISOString().slice(0, 10);
+    params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
       this.stocksResponse = result;
@@ -145,8 +146,8 @@ export class SearchComponent {
     }
     if (this.startDate !== null && this.endDate !== null) {
       let newsParams: HttpParams = new HttpParams();
-      const startDateStr: string = this.startDate.toISOString().slice(0, 10);
-      const endDateStr: string = this.endDate.toISOString().slice(0, 10);
+      const startDateStr: string = new Date(this.startDate).toISOString().slice(0, 10);
+      const endDateStr: string = new Date(this.endDate).toISOString().slice(0, 10);
       newsParams = newsParams.append('company', this.query);
       newsParams = newsParams.append('start_date', startDateStr);
       newsParams = newsParams.append('end_date', endDateStr);
