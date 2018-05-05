@@ -6,16 +6,16 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+        <img src="{{trendingNews[0].thumbnail}}" width="100%">
         <mat-card-header class="trending-title">
-          Main Article
+          <a class="no-underline" href="{{trendingNews[0].webUrl}}">{{trendingNews[0].headline}}</a>
         </mat-card-header>
         <mat-card-content class="trending-content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales nulla tellus, a sollicitudin nibh porta ac. Integer a dolor a turpis semper sodales non vel tortor.
+            {{trendingNews[0].trailtext}}
           </p>
           <p class="article-author">
-            by Soham Patel
+            by {{trendingNews[0].byline}}
           </p>
         </mat-card-content>
       </mat-card>
@@ -27,19 +27,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[1].webUrl}}">{{trendingNews[1].headline}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[1].byline}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img src="{{trendingNews[1].thumbnail}}" width="100%">
             </div>
           </div>
         </mat-card>
@@ -51,19 +48,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[2].webUrl}}">{{trendingNews[2].headline}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[2].byline}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img src="{{trendingNews[2].thumbnail}}" width="100%">
             </div>
           </div>
         </mat-card>
@@ -74,19 +68,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[3].webUrl}}">{{trendingNews[3].headline}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[3].byline}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img src="{{trendingNews[3].thumbnail}}" width="100%">
             </div>
           </div>
         </mat-card>
@@ -97,19 +88,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[4].webUrl}}">{{trendingNews[4].headline}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[4].byline}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img src="{{trendingNews[4].thumbnail}}" width="100%">
             </div>
           </div>
         </mat-card>

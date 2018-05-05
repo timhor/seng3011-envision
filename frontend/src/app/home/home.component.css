@@ -35,6 +35,7 @@ mat-card {
     font-size: 25px;
     font-weight: bolder;
     padding-top:10px;
+    text-align: left;
 }
 
 .trending-content {
@@ -52,6 +53,7 @@ mat-card {
     font-size: 15px;
     font-weight: bolder;
     padding-top:10px;
+    text-align: left;
 }
 
 .top-content {
@@ -62,11 +64,16 @@ mat-card {
     text-align: left;
 }
 
-.trending-title:hover, .top-title:hover {
-    color: royalblue;
-}
-
 .article-author {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
+}
+
+a.no-underline {
+    color: black;
+    text-decoration: none; 
+}
+
+a.no-underline:hover {
+    color: royalblue;
 }

@@ -8,7 +8,7 @@ export class CallerService {
 
   private stockInfo = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/';
   private newsInfo = 'http://seng.fmap.today/v2/news';
-  private guardianInfo = 'https://content.guardianapis.com/search'
+  private guardianInfo = 'http://content.guardianapis.com/search';
   private companies: Company[];
 
   private indexNames: Map<string, string> = new Map<string, string>();
@@ -77,7 +77,7 @@ export class CallerService {
   }
 
   getGuardianInfo(params: HttpParams) {
-    params = params.append('api-key', '5dfacfce-5df1-47d1-9cbc-ee207b3ec525');
+    params = params.append('api-key', '24756ef7-a162-400a-ae15-361f58433bc6');
     return this.http.get(this.guardianInfo, { params : params });
   }
 
