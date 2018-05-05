@@ -72,6 +72,7 @@ export class HomeComponent {
   private randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+}
     // this.callerService.getCompanies().subscribe((val) => {
     //   this.companies = <Company[]> val;
     //   let tempArray: string[] = this.companies.map((x: Company) => x.code);
