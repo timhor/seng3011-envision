@@ -79,11 +79,50 @@ export class SearchComponent {
   }
 
   private stateAnalysis() {
-    // Check if it was an overall increase or not
-    if (Math.abs(this.trendInfo.longRangeCorrelation - this.trendInfo.shortRangeCorrelation)) {
+    const trend = this.trendInfo.rawQuery['Company_Returns'][0]['Data'][5]['CM_Return_pct'] > 0 ? 1 : -1;
 
+    let correlation: number;
+    if (Math.abs(this.trendInfo.shortRangeCorrelation) > 0.8) {
+      correlation = 2;
+    } else if (Math.abs(this.trendInfo.shortRangeCorrelation) > 0.7) {
+      correlation = 1;
+    } else {
+      correlation = 0;
     }
-    return 'Test123';
+
+    let coincidenceIndex = false;
+    if (Math.abs(this.trendInfo.longRangeCorrelation - this.trendInfo.shortRangeCorrelation) > 0.1) {
+        // Check if the stock was moving inline with the index
+        coincidenceIndex = true;
+    }
+
+    let outputString = '';
+    if (trend === 1) {
+      outputString += 'Positive growth ';
+    } else {
+      outputString += 'Negative growth ';
+    }
+
+    switch (correlation) {
+      case 1:
+        outputString += 'with very high correlation to index';
+        break;
+
+      case 2:
+        outputString += 'with high correlation';
+        break;
+
+      default:
+        outputString += 'with low correlation to index';
+        break;
+    }
+
+    if (coincidenceIndex) {
+      outputString += ', however can be a coincidence as the trend was similar'
+    }
+
+
+    return outputString;
   }
 
   /*
