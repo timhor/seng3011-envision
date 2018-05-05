@@ -22,9 +22,25 @@
       <div class="row">
         <div class="col-md-8">
           <div class="row">
-            <mat-card class="news-card">NEWS:
+            <!-- <mat-card class="news-card">NEWS:
               {{ resp.title }}
               <a [href]="resp.url">{{resp.url}}</a>
+            </mat-card> -->
+            <mat-card class="news-card">
+              <div class="img-container">
+                <a href="{{ resp.url }}" target="_blank">
+                  <img src="{{ resp.thumbnail }}">
+                </a>
+              </div>
+              <mat-card-header class="trending-title">
+                <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
+              </mat-card-header>
+              <mat-card-content class="trending-content">
+                <p [innerHtml]="resp.trailtext"></p>
+                <p class="article-author">
+                  by {{ resp.byline }}
+                </p>
+              </mat-card-content>
             </mat-card>
           </div>
           <hr class="spacer">

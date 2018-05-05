@@ -18,6 +18,7 @@ export class SearchComponent {
   public endDate: Date = null;
   public panelState = false;
   public guardianResponse: any[] = [];
+  private pageSize = '10';
 
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
 
@@ -198,13 +199,19 @@ export class SearchComponent {
     }
     let guardianParams: HttpParams = new HttpParams();
     guardianParams = guardianParams.append('q', this.query);
+    guardianParams = guardianParams.append('order-by', 'newest');
+    guardianParams = guardianParams.append('show-fields', 'byline,thumbnail,trailText');
+    guardianParams = guardianParams.append('page-size', this.pageSize);
     this.callerService.getGuardianInfo(guardianParams).subscribe(
       (result) => {
         this.newsResponse = result;
         this.newsResponse['response']['results'].forEach(e => {
-          const news = {'title': '', 'url': ''};
+          const news = {'title': '', 'url': '', 'byline': '', 'thumbnail': '', 'trailtext': ''};
           news.title = e['webTitle'];
           news.url = e['webUrl'];
+          news.byline = e['fields']['byline'];
+          news.thumbnail = e['fields']['thumbnail'];
+          news.trailtext = e['fields']['trailText'];
           this.guardianResponse.push(news);
         });
       }
