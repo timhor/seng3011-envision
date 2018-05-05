@@ -39,30 +39,29 @@ export class HomeComponent {
           this.newsResponse = result;
           // Select random of the 10 news
           let isDuplicate = true;
-          let e = null;
+          let newsArticle = null;
           let index = 0;
-          // Keep finding until we have found a non-duplicate news
+          // Keep searching until we have found a non-duplicate news
           while (isDuplicate === true) {
             isDuplicate = false;
-            e = this.newsResponse['response']['results'][index];
-            // Check if this article has already been selected
-            this.trendingNews.forEach(element => {
-              if (element['headline'] ===  e['fields']['headline']) {
+            newsArticle = this.newsResponse['response']['results'][index];
+            for (let i = 0; i < this.trendingNews.length; i++) {
+              if (this.trendingNews[i]['headline'] ===  newsArticle['fields']['headline']) {
                 isDuplicate = true;
+                break;
               }
-            });
+            }
             index++;
           }
-          const news = {'headline': '', 'trailtext': '', 'byline': '', thumbnail: '', webUrl: '', 'date': '', 'instrument': instrument};
-          news.headline = e['fields']['headline'];
-          news.trailtext = e['fields']['trailText'];
-          news.byline = e['fields']['byline'];
-          news.webUrl = e['webUrl'];
+          const news = {'headline': '', 'trailtext': '', 'byline': '', thumbnail: '', webUrl: ''};
+          news.headline = newsArticle['fields']['headline'];
+          news.trailtext = newsArticle['fields']['trailText'];
+          news.byline = newsArticle['fields']['byline'];
+          news.webUrl = newsArticle['webUrl'];
           if (news.byline === '') {
             news.byline = 'Guardian news';
           }
-          news.thumbnail = e['fields']['thumbnail'];
-          news.date = e['webPublicationDate'];
+          news.thumbnail = newsArticle['fields']['thumbnail'];
           this.trendingNews.push(news);
           console.log(news);
         });
