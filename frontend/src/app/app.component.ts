@@ -13,7 +13,14 @@ export class AppComponent implements OnInit {
   public company = '';
   private companySuggestions: string[] = [];
 
-  public constructor(private callerService: CallerService, private router: Router) {}
+  public constructor(private callerService: CallerService, private router: Router) {
+    // override the route reuse strategy so that accessing the same page with different params
+    // continues to call all the necessary functions (otherwise search page doesn't show results
+    // after the first query)
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+    };
+  }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';

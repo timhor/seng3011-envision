@@ -1,0 +1,72 @@
+<br>
+<div class="container" *ngIf="showingOverview">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <mat-card class="news-card">
+          <div class="img-container">
+            <a href="{{ newsInfo.url }}" target="_blank">
+              <img src="{{ newsInfo.imageUrl }}">
+              <div class="hover-text">VISIT ARTICLE</div>
+            </a>
+          </div>
+          <mat-card-header class="trending-title">
+            <a class="no-underline" href="{{ newsInfo.url }}" target="_blank">{{ newsInfo.title }}</a>
+          </mat-card-header>
+          <mat-card-content class="trending-content">
+            <p [innerHtml]="newsInfo.description"></p>
+            <p class="article-author">
+              by {{ newsInfo.author }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <hr class="spacer">
+      <div class="row" style="padding-top:5px;">
+        <div class="col-md-6" style="padding: 0px; padding-right:5px;">
+          <mat-card class="graph-card">GRAPH #1
+            <button mat-icon-button (click)="expandGraph1()">
+              <mat-icon>call_made</mat-icon>
+            </button>
+          </mat-card>
+        </div>
+        <div class="col-md-6" style="padding: 0px; padding-left:5px;">
+          <mat-card class="graph-card">GRAPH #2
+            <button mat-icon-button (click)="expandGraph2()">
+              <mat-icon>call_made</mat-icon>
+            </button>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <mat-card class="analysis-card"> <!-- *ngIf="!trendInfo.hidden" -->
+        <!-- {{trendInfo.analysis}} -->
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="showingGraph1">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="expanded-card">
+        GRAPH#1
+        <button mat-icon-button (click)="expandGraph1()">
+          <mat-icon>call_received</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="showingGraph2">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="expanded-card">
+        GRAPH#2
+        <button mat-icon-button (click)="expandGraph2()">
+          <mat-icon>call_received</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+</div>

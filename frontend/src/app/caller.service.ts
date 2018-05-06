@@ -7,12 +7,23 @@ import { Company } from './company';
 export class CallerService {
 
   private stockInfo = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/';
-  private newsInfo = 'http://seng.fmap.today/v2/news';
-  private guardianInfo = 'https://content.guardianapis.com/search'
+  private newsInfo = 'https://newsapi.org/v2/everything';
+  private guardianInfo = 'http://content.guardianapis.com/search';
   private companies: Company[];
 
   private indexNames: Map<string, string> = new Map<string, string>();
   private industries: Map<string, string> = new Map<string, string>();
+
+  private newsToAnalyse: Object = null;
+  private instrument: string = null;
+
+  private newsAPIKeys: Array<string> = [
+    '79791a6d2dac43258d382335a7dea367',
+    'e9627d435bbd4f78ba672f45c71507b0',
+    'd737b028898f49dda166eeb09427d22a',
+    '4a88a66efffd4ee6b44841779075b45b',
+    '37aebd18d2e1451dbee5e82ed1b4acd3'
+  ];
 
 
   constructor(private http: HttpClient) {
@@ -66,18 +77,19 @@ export class CallerService {
   getStockInfo(params: HttpParams) {
     params = params.append('lower_window', '5');
     params = params.append('upper_window', '15');
-    params = params.append('list_of_var', 'Return,Return_pct');
+    params = params.append('list_of_var', 'Return,Return_pct,CM_Return_pct');
     console.log(params);
     return this.http.get(this.stockInfo, { params : params });
   }
 
   getNewsInfo(params: HttpParams) {
-    console.log(params);
+    // console.log(params);
+    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * 4)]);
     return this.http.get(this.newsInfo, { params : params });
   }
 
   getGuardianInfo(params: HttpParams) {
-    params = params.append('api-key', '5dfacfce-5df1-47d1-9cbc-ee207b3ec525');
+    params = params.append('api-key', '24756ef7-a162-400a-ae15-361f58433bc6');
     return this.http.get(this.guardianInfo, { params : params });
   }
 
@@ -106,15 +118,37 @@ export class CallerService {
 
   // Gets the stock index we want to compare to
   getStockIndex(company: string) {
+    let found = '^AXJO'; // Default
     this.companies.forEach(e => {
       if (e.code === company) {
         if (this.industries.has(e.group)) {
-          console.log(this.industries.get(e.group));
-          return this.industries.get(e.group);
+          found = this.industries.get(e.group);
         }
       }
     });
-    return '^AXJO'; // Default
+    return found;
+  }
+
+  getCompanyCode(companyName: string) {
+    let found: string = null;
+    this.companies.forEach(e => {
+      if (e.name === companyName) {
+        found = e.code;
+      }
+    });
+    return found;
+  }
+
+  setAnalysisInfo(news: Object) {
+    this.newsToAnalyse = news;
+  }
+
+  getAnalysisInfo() {
+    return this.newsToAnalyse;
+  }
+
+  getInstrument() {
+    return this.instrument;
   }
 
 }

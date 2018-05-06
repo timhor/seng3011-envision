@@ -6,18 +6,21 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+        <img class="trending-image" src="{{trendingNews[0]?.imageUrl}}" width="100%">
         <mat-card-header class="trending-title">
-          Main Article
+          <a class="no-underline" href="{{trendingNews[0]?.url}}" target="_blank">{{trendingNews[0]?.title}}</a>
         </mat-card-header>
         <mat-card-content class="trending-content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales nulla tellus, a sollicitudin nibh porta ac. Integer a dolor a turpis semper sodales non vel tortor.
+            {{trendingNews[0]?.description}}
           </p>
           <p class="article-author">
-            by Soham Patel
+            by {{trendingNews[0]?.author}}
           </p>
         </mat-card-content>
+        <form (ngSubmit)="analyse(trendingNews[0])" style="text-align: right">
+          <button mat-raised-button class="analysis-button">Envisualise!</button>
+        </form>
       </mat-card>
     </div>
     <hr class="top-trending-split">
@@ -27,21 +30,21 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[1]?.url}}" target="_blank">{{trendingNews[1]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[1]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img class="top-image" src="{{trendingNews[1]?.imageUrl}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[1])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -51,21 +54,21 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[2]?.url}}" target="_blank">{{trendingNews[2]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[2]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img class="top-image" src="{{trendingNews[2]?.imageUrl}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[2])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -74,21 +77,21 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[3]?.url}}" target="_blank">{{trendingNews[3]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[3]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img class="top-image" src="{{trendingNews[3]?.imageUrl}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[3])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -97,23 +100,24 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[4]?.url}}" target="_blank">{{trendingNews[4]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[4]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <img class="top-image" src="{{trendingNews[4]?.imageUrl}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
     </div>
   </div>
 </div>
+<hr style="border:transparent;">
