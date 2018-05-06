@@ -103,10 +103,12 @@ a.no-underline:hover {
 }
 
 .analysis-button {
-  color: white;
-  background-color: tomato;
+  background-color: white; 
+  border: salmon 2px solid; 
+  border-radius: 5px;
+  color: salmon; 
+  margin-top: 10px;
   padding: 5px;
-  margin-top: 5px;
 }
 
 img {
