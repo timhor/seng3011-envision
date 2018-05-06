@@ -66,20 +66,9 @@ pre {
   padding: 10px;
 }
 
-.graph-card {
-  font-family: 'Open Sans', sans-serif;
-  height: 250px;
-
-}
-
 .news-card {
   font-family: 'Open Sans', sans-serif;
-  height: 450px;
-}
-
-.analysis-card {
-  font-family: 'Open Sans', sans-serif;
-  height: 710px;
+  height: 420px;
 }
 
 @media only screen and (min-width: 990px) {
@@ -165,7 +154,7 @@ mat-card {
   opacity: 0;
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 500px) {
   .img-container {
     height: 65%;
   }

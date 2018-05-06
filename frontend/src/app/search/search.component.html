@@ -20,49 +20,26 @@
   <div *ngIf="query" style="margin-top: 62px">
     <div class="container" *ngFor="let resp of guardianResponse">
       <div class="row">
-        <div class="col-md-8">
-          <div class="row">
-            <!-- <mat-card class="news-card">NEWS:
-              {{ resp.title }}
-              <a [href]="resp.url">{{resp.url}}</a>
-            </mat-card> -->
-            <mat-card class="news-card">
-              <div class="img-container">
-                <a href="{{ resp.url }}" target="_blank">
-                  <img src="{{ resp.thumbnail }}">
-                  <div class="hover-text">VISIT ARTICLE</div>
-                </a>
-              </div>
-              <mat-card-header class="trending-title">
-                <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
-              </mat-card-header>
-              <mat-card-content class="trending-content">
-                <p [innerHtml]="resp.trailtext"></p>
-                <p class="article-author">
-                  by {{ resp.byline }}
-                </p>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <hr class="spacer">
-          <div class="row" style="padding-top:5px;">
-            <div class="col-md-6" style="padding: 0px; padding-right:5px;">
-              <mat-card class="graph-card">GRAPH #1</mat-card>
+        <div class="col-md-12">
+          <mat-card class="news-card">
+            <div class="img-container">
+              <a href="{{ resp.url }}" target="_blank">
+                <img src="{{ resp.thumbnail }}">
+                <div class="hover-text">VISIT ARTICLE</div>
+              </a>
             </div>
-            <hr class="hidden-spacer">
-            <div class="col-md-6" style="padding: 0px; padding-left:5px;">
-              <mat-card class="graph-card">GRAPH #2</mat-card>
-            </div>
-          </div>
-        </div>
-        <hr class="hidden-spacer">
-        <div class="col-md-4">
-          <mat-card class="analysis-card">
-            <form (ngSubmit)="analyse(resp)">
-              <button>Analysis</button>
-            </form>
+            <mat-card-header class="trending-title">
+              <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
+            </mat-card-header>
+            <mat-card-content class="trending-content">
+              <p [innerHtml]="resp.trailtext"></p>
+              <p class="article-author">
+                by {{ resp.byline }}
+              </p>
+            </mat-card-content>
           </mat-card>
         </div>
+        <hr class="hidden-spacer">
       </div>
       <mat-divider style="margin: 30px 0;"></mat-divider>
     </div>
