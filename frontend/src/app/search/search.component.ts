@@ -92,7 +92,7 @@ export class SearchComponent {
     }
 
     let coincidenceIndex = false;
-    if (Math.abs(this.trendInfo.longRangeCorrelation - this.trendInfo.shortRangeCorrelation) > 0.1) {
+    if (Math.abs(this.trendInfo.longRangeCorrelation - this.trendInfo.shortRangeCorrelation) < 0.1) {
         // Check if the stock was moving inline with the index
         coincidenceIndex = true;
     }
