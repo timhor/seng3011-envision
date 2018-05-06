@@ -47,6 +47,10 @@ mat-card {
   text-align: left;
 }
 
+.trending-image {
+  height: 400px;
+}
+
 .top-title {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
@@ -62,6 +66,10 @@ mat-card {
   font-size: 15px;
   padding-top:10px;
   text-align: left;
+}
+
+.top-image {
+  height: 100px;
 }
 
 .article-author {
@@ -82,4 +90,5 @@ a.no-underline:hover {
   color: white;
   background-color: tomato;
   padding: 5px;
+  margin-top: 5px;
 }

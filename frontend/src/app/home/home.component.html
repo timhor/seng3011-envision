@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img src="{{trendingNews[0]?.imageUrl}}" width="100%">
+        <img class="trending-image" src="{{trendingNews[0]?.imageUrl}}" width="100%">
         <mat-card-header class="trending-title">
           <a class="no-underline" href="{{trendingNews[0]?.url}}" target="_blank">{{trendingNews[0]?.title}}</a>
         </mat-card-header>
@@ -19,7 +19,7 @@
           </p>
         </mat-card-content>
         <form (ngSubmit)="analyse(trendingNews[0])" style="text-align: right">
-          <button mat-raised-button class="analysis-button">Envisualize!</button>
+          <button mat-raised-button class="analysis-button">Envisualise!</button>
         </form>
       </mat-card>
     </div>
@@ -39,7 +39,7 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[1]?.imageUrl}}" width="100%">
+              <img class="top-image" src="{{trendingNews[1]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[1])" style="text-align: right">
@@ -63,7 +63,7 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[2]?.imageUrl}}" width="100%">
+              <img class="top-image" src="{{trendingNews[2]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[2])" style="text-align: right">
@@ -86,7 +86,7 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[3]?.imageUrl}}" width="100%">
+              <img class="top-image" src="{{trendingNews[3]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[3])" style="text-align: right">
@@ -109,7 +109,7 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[4]?.imageUrl}}" width="100%">
+              <img class="top-image" src="{{trendingNews[4]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[4])" style="text-align: right">
@@ -120,3 +120,4 @@
     </div>
   </div>
 </div>
+<hr style="border:transparent;">
