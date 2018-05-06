@@ -65,7 +65,7 @@ export class SearchComponent {
           news.date = e['publishedAt'];
           this.searchedNews.push(news);
         });
-    }
+    });
   }
 
   analyse(news: any) {
