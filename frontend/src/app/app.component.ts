@@ -13,7 +13,12 @@ export class AppComponent implements OnInit {
   public company = '';
   private companySuggestions: string[] = [];
 
-  public constructor(private callerService: CallerService, private router: Router) {}
+  public constructor(private callerService: CallerService, private router: Router) {
+    // override the route reuse strategy
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+    };
+  }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';
