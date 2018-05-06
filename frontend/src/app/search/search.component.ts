@@ -38,14 +38,18 @@ export class SearchComponent {
   }
 
   private getQuery() {
+    this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
     newsParams = newsParams.append('q', this.query);
     newsParams = newsParams.append('sortBy', 'relevancy');
-    // TODO: incorporate dates into search
-    // if (this.startDate !== null && this.endDate !== null) {
-    // newsParams = newsParams.append('from', startDateStr);
-    //   newsParams = newsParams.append('to', endDateStr);
-    // }
+    if (this.startDate !== null && this.endDate !== null) {
+      const from = new Date(this.startDate);
+      const to = new Date(this.endDate);
+      if (from.getTime() < to.getTime()) {
+        newsParams = newsParams.append('from', from.toISOString().substr(0, 10));
+        newsParams = newsParams.append('to', to.toISOString().substr(0, 10));
+      }
+    }
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
