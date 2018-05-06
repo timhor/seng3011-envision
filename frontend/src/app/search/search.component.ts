@@ -41,7 +41,7 @@ export class SearchComponent {
     this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
     newsParams = newsParams.append('q', this.query);
-    newsParams = newsParams.append('sortBy', 'relevancy');
+    newsParams = newsParams.append('sortBy', 'relevance');
     if (this.startDate !== null && this.endDate !== null) {
       const from = new Date(this.startDate);
       const to = new Date(this.endDate);
@@ -66,7 +66,7 @@ export class SearchComponent {
           news.imageUrl = 'http://via.placeholder.com/1300x350';
         }
         news.description = e['description'];
-        news.date = e['publishedAt'];
+        news.date = new Date(e['publishedAt']).toLocaleDateString();
         this.searchedNews.push(news);
       });
     });
