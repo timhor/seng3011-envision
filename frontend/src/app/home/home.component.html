@@ -6,16 +6,16 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img src="{{trendingNews[0]?.thumbnail}}" width="100%">
+        <img src="{{trendingNews[0]?.imageUrl}}" width="100%">
         <mat-card-header class="trending-title">
-          <a class="no-underline" href="{{trendingNews[0]?.webUrl}}" target="_blank">{{trendingNews[0]?.headline}}</a>
+          <a class="no-underline" href="{{trendingNews[0]?.url}}" target="_blank">{{trendingNews[0]?.title}}</a>
         </mat-card-header>
         <mat-card-content class="trending-content">
           <p>
-            {{trendingNews[0]?.trailtext}}
+            {{trendingNews[0]?.description}}
           </p>
           <p class="article-author">
-            by {{trendingNews[0]?.byline}}
+            by {{trendingNews[0]?.author}}
           </p>
         </mat-card-content>
         <form (ngSubmit)="analyse(trendingNews[0])" style="text-align: right">
@@ -30,16 +30,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                <a class="no-underline" href="{{trendingNews[1]?.webUrl}}" target="_blank">{{trendingNews[1]?.headline}}</a>
+                <a class="no-underline" href="{{trendingNews[1]?.url}}" target="_blank">{{trendingNews[1]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
                 <p class="article-author">
-                  by {{trendingNews[1]?.byline}}
+                  by {{trendingNews[1]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[1]?.thumbnail}}" width="100%">
+              <img src="{{trendingNews[1]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[1])" style="text-align: right">
@@ -54,16 +54,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                <a class="no-underline" href="{{trendingNews[2]?.webUrl}}" target="_blank">{{trendingNews[2]?.headline}}</a>
+                <a class="no-underline" href="{{trendingNews[2]?.url}}" target="_blank">{{trendingNews[2]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
                 <p class="article-author">
-                  by {{trendingNews[2]?.byline}}
+                  by {{trendingNews[2]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[2]?.thumbnail}}" width="100%">
+              <img src="{{trendingNews[2]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[2])" style="text-align: right">
@@ -77,16 +77,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                <a class="no-underline" href="{{trendingNews[3]?.webUrl}}" target="_blank">{{trendingNews[3]?.headline}}</a>
+                <a class="no-underline" href="{{trendingNews[3]?.url}}" target="_blank">{{trendingNews[3]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
                 <p class="article-author">
-                  by {{trendingNews[3]?.byline}}
+                  by {{trendingNews[3]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[3]?.thumbnail}}" width="100%">
+              <img src="{{trendingNews[3]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[3])" style="text-align: right">
@@ -100,16 +100,16 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                <a class="no-underline" href="{{trendingNews[4]?.webUrl}}" target="_blank">{{trendingNews[4]?.headline}}</a>
+                <a class="no-underline" href="{{trendingNews[4]?.url}}" target="_blank">{{trendingNews[4]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
                 <p class="article-author">
-                  by {{trendingNews[4]?.byline}}
+                  by {{trendingNews[4]?.author}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="{{trendingNews[4]?.thumbnail}}" width="100%">
+              <img src="{{trendingNews[4]?.imageUrl}}" width="100%">
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[4])" style="text-align: right">
