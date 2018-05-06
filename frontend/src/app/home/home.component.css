@@ -72,6 +72,21 @@ mat-card {
   height: 100px;
 }
 
+@media only screen and (max-width: 992px) {
+  .top-image {
+    height: 300px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .trending-image {
+    height: 300px;
+  }
+  
+  .top-image {
+    height: 200px;
+  }
+}
+
 .article-author {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
