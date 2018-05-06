@@ -18,6 +18,9 @@
             by {{trendingNews[0]?.byline}}
           </p>
         </mat-card-content>
+        <form (ngSubmit)="analyse(trendingNews[0])">
+          <button>Analysis</button>
+        </form>
       </mat-card>
     </div>
     <hr class="top-trending-split">
@@ -39,6 +42,9 @@
               <img src="{{trendingNews[1]?.thumbnail}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[1])">
+            <button>Analysis</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -60,6 +66,9 @@
               <img src="{{trendingNews[2]?.thumbnail}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[2])">
+            <button>Analysis</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -80,6 +89,9 @@
               <img src="{{trendingNews[3]?.thumbnail}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[3])">
+            <button>Analysis</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -100,6 +112,9 @@
               <img src="{{trendingNews[4]?.thumbnail}}" width="100%">
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[4])">
+            <button>Analysis</button>
+          </form>
         </mat-card>
       </div>
     </div>

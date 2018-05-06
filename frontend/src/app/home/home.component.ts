@@ -3,6 +3,7 @@ import { Company } from '../company';
 import { Subscription } from 'rxjs/Subscription';
 import { CallerService } from '../caller.service';
 import { HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent {
   private newsResponse: Object = null;
   private pageSize = 10;
 
-  constructor (private callerService: CallerService) {
+  constructor (private callerService: CallerService, private router: Router) {
 
     this.callerService.getCompanies().subscribe((val) => {
       this.companies = <Company[]> val;
@@ -52,7 +53,7 @@ export class HomeComponent {
             });
             index++;
           }
-          const news = {'headline': '', 'trailtext': '', 'byline': '', thumbnail: '', webUrl: ''};
+          const news = {'headline': '', 'trailtext': '', 'byline': '', thumbnail: '', webUrl: '', 'date': '', 'instrument': instrument};
           news.headline = e['fields']['headline'];
           news.trailtext = e['fields']['trailText'];
           news.byline = e['fields']['byline'];
@@ -61,6 +62,7 @@ export class HomeComponent {
             news.byline = 'Guardian news';
           }
           news.thumbnail = e['fields']['thumbnail'];
+          news.date = e['webPublicationDate'];
           this.trendingNews.push(news);
           console.log(news);
         });
@@ -71,6 +73,12 @@ export class HomeComponent {
   // https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
   private randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  analyse(news: any) {
+    console.log(news);
+    this.callerService.setAnalysisInfo(news);
+    this.router.navigate(['analysis']);
   }
 }
     // this.callerService.getCompanies().subscribe((val) => {

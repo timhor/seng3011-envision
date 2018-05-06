@@ -14,6 +14,9 @@ export class CallerService {
   private indexNames: Map<string, string> = new Map<string, string>();
   private industries: Map<string, string> = new Map<string, string>();
 
+  private newsToAnalyse: Object = null;
+  private instrument: string = null;
+
 
   constructor(private http: HttpClient) {
     this.http.get('../assets/ASXListedCompanies.json').subscribe(val => this.companies = <Company[]> val);
@@ -125,6 +128,18 @@ export class CallerService {
       }
     });
     return found;
+  }
+
+  setAnalysisInfo(news: Object) {
+    this.newsToAnalyse = news;
+  }
+
+  getAnalysisInfo() {
+    return this.newsToAnalyse;
+  }
+
+  getInstrument() {
+    return this.instrument;
   }
 
 }
