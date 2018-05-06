@@ -183,6 +183,7 @@ export class SearchComponent {
   }
 
   private getQuery() {
+    this.guardianResponse = [];
     if (this.startDate !== null) {
       this.trendInfo = this.analyseTrends(this.query, this.startDate); // TODO: Use this to find stuff
     }
