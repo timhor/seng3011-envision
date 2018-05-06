@@ -15,6 +15,9 @@ export class AnalysisComponent implements OnInit {
 
   public newsInfo: any = null;
   public trendInfo: TrendInfo = null;
+  public showingOverview = true;
+  public showingGraph1 = false;
+  public showingGraph2 = false;
 
   constructor(private callerService: CallerService, private router: Router) {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -165,4 +168,13 @@ export class AnalysisComponent implements OnInit {
     return answer;
   }
 
+  public expandGraph1() {
+    this.showingOverview = !this.showingOverview;
+    this.showingGraph1 = !this.showingGraph1;
+  }
+
+  public expandGraph2() {
+    this.showingOverview = !this.showingOverview;
+    this.showingGraph2 = !this.showingGraph2;
+  }
 }

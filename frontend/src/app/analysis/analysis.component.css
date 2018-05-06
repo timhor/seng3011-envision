@@ -64,6 +64,11 @@ a.no-underline:hover {
   height: 661px;
 }
 
+.expanded-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 661px;
+}
+
 .img-container {
   height: auto;
   width: 100%;
