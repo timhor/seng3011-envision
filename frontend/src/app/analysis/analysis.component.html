@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <br>
 <div class="container">
   <div class="row">
@@ -39,31 +38,4 @@
     </div>
   </div>
   <mat-divider style="margin: 30px 0;"></mat-divider>
-=======
-<p>
-  analysis works!
-</p>
-<div class="row">
-  <div class="col-md-7">
-    <mat-card>
-      <img src="{{newsInfo?.thumbnail}}" width="100%">
-      <mat-card-header class="trending-title">
-        <a class="no-underline" href="{{newsInfo?.webUrl}}" target="_blank">{{newsInfo?.headline}}</a>
-      </mat-card-header>
-      <mat-card-content class="trending-content">
-        <p>
-          {{newsInfo?.trailtext}}
-        </p>
-        <p class="article-author">
-          by {{newsInfo?.byline}}
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <hr class="top-trending-split">
-</div>
-
-<div *ngIf="!trendInfo.hidden">
-  <pre><code>{{trendInfo.analysis}}</code></pre>
->>>>>>> cd969462517c7cf405c4cdcbdf6c7d7db705ab0d
 </div>
