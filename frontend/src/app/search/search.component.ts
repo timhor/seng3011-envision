@@ -58,6 +58,9 @@ export class SearchComponent {
             news.author = 'Unknown';
           }
           news.imageUrl = e['urlToImage'];
+          if (e['urlToImage'] === undefined || e['urlToImage'] === '' || e['urlToImage'] === null) {
+            news.imageUrl = 'http://via.placeholder.com/1300x350';
+          }
           news.description = e['description'];
           news.date = e['publishedAt'];
           this.searchedNews.push(news);
