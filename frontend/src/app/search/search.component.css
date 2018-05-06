@@ -163,8 +163,13 @@ mat-card {
   }
 }
 
+@media (min-width: 500px) and (max-width: 1200px) {
+  .news-card {
+    height: 550px;
+  }
+}
+
 .analysis-button {
-  float: right;
   margin-top: -35px;
   color: white;
   background-color: tomato;

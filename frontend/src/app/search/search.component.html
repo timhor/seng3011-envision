@@ -36,7 +36,9 @@
               <p class="article-author">
                 by {{ resp.byline }}
               </p>
-              <button mat-raised-button (click)="analyse(guardianResponse[i])" class="analysis-button">Envisualize!</button>
+              <form (ngSubmit)="analyse(guardianResponse[i])" style="text-align: right">
+                  <button mat-raised-button class="analysis-button">Envisualize!</button>
+              </form>
             </mat-card-content>
           </mat-card>
         </div>
