@@ -104,6 +104,12 @@
   optionalDependencies:
     node-sass "^4.7.2"
 
+"@angular/common@^5.0.0":
+  version "5.2.10"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.2.10.tgz#828308df8505a31f219a6895ff91dbb178ebac98"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/common@^5.2.0":
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.2.8.tgz#25c81609305e4cee6734d90c8ff1132ab35f81bf"
@@ -2464,6 +2470,10 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
+flatpickr@^4.0.6:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.4.4.tgz#fdeb083ca3d580eecb822a4080f67b06f0294fc7"
+
 flush-write-stream@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.0.2.tgz#c81b90d8746766f1a609a46809946c45dd8ae417"
@@ -4288,6 +4298,13 @@ neo-async@^2.5.0:
 netmask@~1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
+
+ng2-flatpickr@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/ng2-flatpickr/-/ng2-flatpickr-1.5.1.tgz#84b898d43cc473a7b15987c9d1c34b7ad4cec4c4"
+  dependencies:
+    "@angular/common" "^5.0.0"
+    flatpickr "^4.0.6"
 
 no-case@^2.2.0:
   version "2.3.2"

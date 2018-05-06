@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../node_modules/flatpickr/dist/flatpickr.min.css"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js"
