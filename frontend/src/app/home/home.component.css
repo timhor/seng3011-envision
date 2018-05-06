@@ -78,15 +78,17 @@ mat-card {
 }
 
 a.no-underline {
-    color: black;
-    text-decoration: none;
-    margin-left: -15px;
+  color: black;
+  text-decoration: none;
 }
 
 a.no-underline:hover {
   color: royalblue;
 }
 
-img {
-    margin-top: 13px;
+.analysis-button {
+  color: white;
+  background-color: tomato;
+  padding: 5px;
+  margin-top: 5px;
 }
