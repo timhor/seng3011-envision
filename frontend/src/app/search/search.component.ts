@@ -46,8 +46,8 @@ export class SearchComponent {
       const from = new Date(this.startDate);
       const to = new Date(this.endDate);
       if (from.getTime() < to.getTime()) {
-        newsParams = newsParams.append('from', from.toISOString().substr(0, 10));
-        newsParams = newsParams.append('to', to.toISOString().substr(0, 10));
+        newsParams = newsParams.append('from', this.getDateString(from));
+        newsParams = newsParams.append('to', this.getDateString(to));
       }
     }
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
@@ -76,5 +76,10 @@ export class SearchComponent {
     console.log(news);
     this.callerService.setAnalysisInfo(news);
     this.router.navigate(['analysis']);
+  }
+
+  private getDateString(date: Date) {
+    // month starts at 0
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 }
