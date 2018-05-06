@@ -106,15 +106,15 @@ export class CallerService {
 
   // Gets the stock index we want to compare to
   getStockIndex(company: string) {
+    let found = '^AXJO'; // Default
     this.companies.forEach(e => {
       if (e.code === company) {
         if (this.industries.has(e.group)) {
-          console.log(this.industries.get(e.group));
-          return this.industries.get(e.group);
+          found = this.industries.get(e.group);
         }
       }
     });
-    return '^AXJO'; // Default
+    return found;
   }
 
   getCompanyCode(companyName: string) {

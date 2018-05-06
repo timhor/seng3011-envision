@@ -20,6 +20,8 @@ export class SearchComponent {
   public guardianResponse: any[] = [];
   private pageSize = '10';
 
+  public searchResponse: Object[] = [];
+
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
 
   public companyTS: number[] = null;
@@ -39,15 +41,11 @@ export class SearchComponent {
   }
 
   private analyseTrends(company: string, date: Date) {
-    // let companyID: string = company;
-    // if (company.includes(':')) {
-    //   companyID = company.split(':')[1];
-    // } else if (company.includes('.')) {
-    //   companyID = company.split('.')[0];
-    // }
-    console.log(company);
+    const trendInfo = new TrendInfo();
     const companyCode = this.callerService.getCompanyCode(company);
-    console.log(companyCode);
+    if (companyCode == null) {
+      return;
+    }
 
     const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
@@ -57,7 +55,7 @@ export class SearchComponent {
 
     this.callerService.getStockInfo(params).subscribe((result) => {
       this.stocksResponse = result;
-      this.trendInfo.rawQuery = result;
+      trendInfo.rawQuery = result;
 
       let i: number;
       let array: number[];
@@ -73,12 +71,13 @@ export class SearchComponent {
         }
       }
       // Pearson correlation coefficient
-      this.trendInfo.longRangeCorrelation = this.getPearsonCorrelation(this.indexTS, this.companyTS);
-      this.trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(this.indexTS.slice(4, 15), this.companyTS.slice(4, 15));
-      this.trendInfo.analysis = this.stateAnalysis();
-      this.trendInfo.hidden = false;
-      console.log(this.trendInfo);
+      trendInfo.longRangeCorrelation = this.getPearsonCorrelation(this.indexTS, this.companyTS);
+      trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(this.indexTS.slice(4, 15), this.companyTS.slice(4, 15));
+      trendInfo.analysis = this.stateAnalysis();
+      trendInfo.hidden = false;
+      console.log(trendInfo);
     });
+    return trendInfo;
 
   }
 
@@ -185,7 +184,7 @@ export class SearchComponent {
 
   private getQuery() {
     if (this.startDate !== null) {
-      this.analyseTrends(this.query, this.startDate); // TODO: Use this to find stuff
+      this.trendInfo = this.analyseTrends(this.query, this.startDate); // TODO: Use this to find stuff
     }
     if (this.startDate !== null && this.endDate !== null) {
       let newsParams: HttpParams = new HttpParams();
@@ -209,12 +208,14 @@ export class SearchComponent {
       (result) => {
         this.newsResponse = result;
         this.newsResponse['response']['results'].forEach(e => {
-          const news = {'title': '', 'url': '', 'byline': '', 'thumbnail': '', 'trailtext': ''};
+          const news = {'title': '', 'url': '', 'byline': '', 'thumbnail': '', 'trailtext': '', 'trendInfo': null};
           news.title = e['webTitle'];
           news.url = e['webUrl'];
           news.byline = e['fields']['byline'];
           news.thumbnail = e['fields']['thumbnail'];
           news.trailtext = e['fields']['trailText'];
+          // Need to add this in after we move to the analysis page
+          // news.trendInfo = this.analyseTrends(this.query, e.webPublicationDate);
           this.guardianResponse.push(news);
         });
       }
