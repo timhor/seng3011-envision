@@ -69,10 +69,6 @@
   </div>
   <br>
 
-  <mat-card class="json_card" *ngIf="stocksResponse !== null">
-    <h2>Stocks</h2>
-    <pre>{{ stocksResponse | json }}</pre>
-  </mat-card>
   <mat-card class="json_card" *ngIf="newsResponse !== null">
     <h2>News</h2>
     <code><pre>{{ newsResponse | json }}</pre></code>
