@@ -1,0 +1,79 @@
+@import url("../../bootstrap/bootstrap.min.css");
+
+h1 {
+    font-family: 'Francois One', sans-serif;
+    font-size: 50px;
+    text-decoration: underline salmon solid;
+}
+.container {
+    margin:0 auto;
+}
+@media only screen and (max-width: 1450px) {
+    .container {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .top-trending-split {
+        display: none;
+    }
+}
+
+mat-card {
+    padding: 10px;
+}
+
+.spacer {
+    margin: 0px;
+    padding: 2.5px;
+}
+
+.trending-title {
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+    padding-top:10px;
+    text-align: left;
+}
+
+.trending-content {
+    color: rgb(125, 125, 125);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    padding-bottom: 8px;
+    padding-top:10px;
+    text-align: left;
+}
+
+.top-title {
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bolder;
+    padding-top:10px;
+    text-align: left;
+}
+
+.top-content {
+    color: rgb(125, 125, 125);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    padding-top:10px;
+    text-align: left;
+}
+
+.article-author {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+}
+
+a.no-underline {
+    color: black;
+    text-decoration: none;
+}
+
+a.no-underline:hover {
+    color: royalblue;
+}
