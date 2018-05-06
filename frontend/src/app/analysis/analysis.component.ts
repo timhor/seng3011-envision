@@ -19,16 +19,15 @@ export class AnalysisComponent implements OnInit {
   public showingGraph1 = false;
   public showingGraph2 = false;
 
-  constructor(private callerService: CallerService, private router: Router) {
+  constructor(private callerService: CallerService, private router: Router) {}
+
+  ngOnInit() {
     this.newsInfo = this.callerService.getAnalysisInfo();
     if (this.newsInfo === null) {
       this.router.navigate(['home']);
     }
     console.log(this.newsInfo.date);
     this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
-  }
-
-  ngOnInit() {
   }
 
   private analyseTrends(company: string, date: string) {
