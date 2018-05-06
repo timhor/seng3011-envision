@@ -61,9 +61,9 @@ export class SearchComponent {
       (result) => {
         this.newsResponse = result;
         this.newsResponse['response']['results'].forEach(e => {
-          const news = {'title': '', 'url': '', 'byline': '', 'thumbnail': '', 'trailtext': '', 'date': '', 'instrument': this.query};
-          news.title = e['webTitle'];
-          news.url = e['webUrl'];
+          const news = {'headline': '', 'webUrl': '', 'byline': '', 'thumbnail': '', 'trailtext': '', 'date': '', 'instrument': this.query};
+          news.headline = e['webTitle'];
+          news.webUrl = e['webUrl'];
           news.byline = e['fields']['byline'];
           news.thumbnail = e['fields']['thumbnail'];
           news.trailtext = e['fields']['trailText'];

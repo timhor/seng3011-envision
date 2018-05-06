@@ -1,12 +1,12 @@
 @import url("../../bootstrap/bootstrap.min.css");
 
 .container {
-  margin:0 auto;
+  margin: 0 auto;
   width: 90%;
 }
 
 .spacer {
-  margin: 0px;
+  margin: 0;
   padding: 2.5px;
 }
 
@@ -68,7 +68,7 @@ pre {
 
 .news-card {
   font-family: 'Open Sans', sans-serif;
-  height: 420px;
+  height: 450px;
 }
 
 @media only screen and (min-width: 990px) {
@@ -161,4 +161,12 @@ mat-card {
   .hover-text {
     font-size: 36px;
   }
+}
+
+.analysis-button {
+  float: right;
+  margin-top: -35px;
+  color: white;
+  background-color: tomato;
+  padding: 5px;
 }

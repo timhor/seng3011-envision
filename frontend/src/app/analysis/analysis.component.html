@@ -1,25 +1,22 @@
-<p>
-  analysis works!
-</p>
-
-<div class="container" *ngIf="!trendInfo.hidden">
+<br>
+<div class="container">
   <div class="row">
     <div class="col-md-8">
       <div class="row">
         <mat-card class="news-card">
           <div class="img-container">
-            <a href="{{ resp.url }}" target="_blank">
-              <img src="{{ resp.thumbnail }}">
+            <a href="{{ newsInfo.webUrl }}" target="_blank">
+              <img src="{{ newsInfo.thumbnail }}">
               <div class="hover-text">VISIT ARTICLE</div>
             </a>
           </div>
           <mat-card-header class="trending-title">
-            <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
+            <a class="no-underline" href="{{ newsInfo.webUrl }}" target="_blank">{{ newsInfo.headline }}</a>
           </mat-card-header>
           <mat-card-content class="trending-content">
-            <p [innerHtml]="resp.trailtext"></p>
+            <p [innerHtml]="newsInfo.trailtext"></p>
             <p class="article-author">
-              by {{ resp.byline }}
+              by {{ newsInfo.byline }}
             </p>
           </mat-card-content>
         </mat-card>
@@ -29,16 +26,14 @@
         <div class="col-md-6" style="padding: 0px; padding-right:5px;">
           <mat-card class="graph-card">GRAPH #1</mat-card>
         </div>
-        <hr class="hidden-spacer">
         <div class="col-md-6" style="padding: 0px; padding-left:5px;">
           <mat-card class="graph-card">GRAPH #2</mat-card>
         </div>
       </div>
     </div>
-    <hr class="hidden-spacer">
     <div class="col-md-4">
-      <mat-card class="analysis-card">
-        {{trendInfo.analysis}}
+      <mat-card class="analysis-card"> <!-- *ngIf="!trendInfo.hidden" -->
+        <!-- {{trendInfo.analysis}} -->
       </mat-card>
     </div>
   </div>

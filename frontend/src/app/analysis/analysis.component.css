@@ -1,0 +1,118 @@
+@import url("../../bootstrap/bootstrap.min.css");
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.spacer {
+  margin: 0;
+  padding: 2.5px;
+}
+
+.hidden-spacer {
+  border: none;
+  margin: 5px;
+}
+
+.trending-title {
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+  padding-top: 10px;
+  text-align: left;
+  margin-left: -17px;
+}
+
+.trending-content {
+  color: rgb(125, 125, 125);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  padding-bottom: 8px;
+  padding-top:10px;
+  text-align: left;
+}
+
+.article-author {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+
+a.no-underline {
+  color: black;
+  text-decoration: none;
+}
+
+a.no-underline:hover {
+  color: royalblue;
+}
+
+.graph-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 250px;
+
+}
+
+.news-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 400px;
+}
+
+.analysis-card {
+  font-family: 'Open Sans', sans-serif;
+  height: 661px;
+}
+
+.img-container {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.img-container img {
+  width: 100%;
+}
+
+mat-card {
+  padding: 10px;
+}
+
+.img-container:hover {
+  opacity: 0.6;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.img-container:hover .hover-text {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.hover-text {
+  color: white;
+  font-size: 28px;
+  position: absolute;
+  top: 32.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+}
+
+@media (min-width: 500px) {
+  .img-container {
+    height: 65%;
+  }
+  .hover-text {
+    font-size: 36px;
+  }
+}
