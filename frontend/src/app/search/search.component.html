@@ -18,25 +18,25 @@
       </div>
   </mat-expansion-panel>
   <div *ngIf="query" style="margin-top: 62px">
-    <div class="container" *ngFor="let resp of guardianResponse; let i = index;">
+    <div class="container" *ngFor="let resp of searchedNews; let i = index;">
       <div class="row">
         <div class="col-md-12">
           <mat-card class="news-card">
             <div class="img-container">
-              <a href="{{ resp.webUrl }}" target="_blank">
-                <img src="{{ resp.thumbnail }}">
+              <a href="{{ resp.url }}" target="_blank">
+                <img src="{{ resp.imageUrl }}">
                 <div class="hover-text">VISIT ARTICLE</div>
               </a>
             </div>
             <mat-card-header class="trending-title">
-              <a class="no-underline" href="{{ resp.webUrl }}" target="_blank">{{ resp.headline }}</a>
+              <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
             </mat-card-header>
             <mat-card-content class="trending-content">
-              <p [innerHtml]="resp.trailtext"></p>
+              <p [innerHtml]="resp.description"></p>
               <p class="article-author">
-                by {{ resp.byline }}
+                by {{ resp.author }}
               </p>
-              <form (ngSubmit)="analyse(guardianResponse[i])" style="text-align: right">
+              <form (ngSubmit)="analyse(searchedNews[i])" style="text-align: right">
                   <button mat-raised-button class="analysis-button">Envisualise!</button>
               </form>
             </mat-card-content>

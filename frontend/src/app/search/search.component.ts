@@ -16,7 +16,7 @@ export class SearchComponent {
   public startDate: Date = null;
   public endDate: Date = null;
   public panelState = false;
-  public guardianResponse: any[] = [];
+  public searchedNews: any[] = [];
   private pageSize = '10';
 
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
@@ -38,40 +38,31 @@ export class SearchComponent {
   }
 
   private getQuery() {
-    this.guardianResponse = [];
-    if (this.startDate !== null && this.endDate !== null) {
-      let newsParams: HttpParams = new HttpParams();
-      const startDateStr: string = new Date(this.startDate).toISOString().slice(0, 10);
-      const endDateStr: string = new Date(this.endDate).toISOString().slice(0, 10);
-      newsParams = newsParams.append('company', this.query);
-      newsParams = newsParams.append('start_date', startDateStr);
-      newsParams = newsParams.append('end_date', endDateStr);
-      this.callerService.getNewsInfo(newsParams).subscribe(
-        (result) => {
-          this.newsResponse = result;
-        }
-      );
-    }
-    let guardianParams: HttpParams = new HttpParams();
-    guardianParams = guardianParams.append('q', this.query);
-    guardianParams = guardianParams.append('order-by', 'newest');
-    guardianParams = guardianParams.append('show-fields', 'byline,thumbnail,trailText');
-    guardianParams = guardianParams.append('page-size', this.pageSize);
-    this.callerService.getGuardianInfo(guardianParams).subscribe(
-      (result) => {
-        this.newsResponse = result;
-        this.newsResponse['response']['results'].forEach(e => {
-          const news = {'headline': '', 'webUrl': '', 'byline': '', 'thumbnail': '', 'trailtext': '', 'date': '', 'instrument': this.query};
-          news.headline = e['webTitle'];
-          news.webUrl = e['webUrl'];
-          news.byline = e['fields']['byline'];
-          news.thumbnail = e['fields']['thumbnail'];
-          news.trailtext = e['fields']['trailText'];
-          news.date = e['webPublicationDate'];
-          this.guardianResponse.push(news);
+    let newsParams: HttpParams = new HttpParams();
+    newsParams = newsParams.append('q', this.query);
+    newsParams = newsParams.append('sortBy', 'relevancy');
+    // TODO: incorporate dates into search
+    // if (this.startDate !== null && this.endDate !== null) {
+    // newsParams = newsParams.append('from', startDateStr);
+    //   newsParams = newsParams.append('to', endDateStr);
+    // }
+    this.callerService.getNewsInfo(newsParams).subscribe((result) => {
+      this.newsResponse = result;
+        this.newsResponse['articles'].forEach(e => {
+          const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': this.query};
+          // TODO: search for business name from query and set it as instrument
+          news.title = e['title'];
+          news.url = e['url'];
+          news.author = e['author'];
+          if (news.author === null) {
+            news.author = 'Unknown';
+          }
+          news.imageUrl = e['urlToImage'];
+          news.description = e['description'];
+          news.date = e['publishedAt'];
+          this.searchedNews.push(news);
         });
-      }
-    );
+    }
   }
 
   analyse(news: any) {
