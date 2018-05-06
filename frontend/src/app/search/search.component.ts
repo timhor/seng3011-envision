@@ -48,24 +48,24 @@ export class SearchComponent {
     // }
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
-        this.newsResponse['articles'].forEach(e => {
-          const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': this.query};
-          // TODO: search for business name from query and set it as instrument
-          news.title = e['title'];
-          news.url = e['url'];
-          news.author = e['author'];
-          if (news.author === null) {
-            news.author = 'Unknown';
-          }
-          news.imageUrl = e['urlToImage'];
-          if (e['urlToImage'] === undefined || e['urlToImage'] === '' || e['urlToImage'] === null) {
-            news.imageUrl = 'http://via.placeholder.com/1300x350';
-          }
-          news.description = e['description'];
-          news.date = e['publishedAt'];
-          this.searchedNews.push(news);
-        });
-    }
+      this.newsResponse['articles'].forEach(e => {
+        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': this.query};
+        // TODO: search for business name from query and set it as instrument
+        news.title = e['title'];
+        news.url = e['url'];
+        news.author = e['author'];
+        if (news.author === null) {
+          news.author = 'Unknown';
+        }
+        news.imageUrl = e['urlToImage'];
+        if (e['urlToImage'] === undefined || e['urlToImage'] === '' || e['urlToImage'] === null) {
+          news.imageUrl = 'http://via.placeholder.com/1300x350';
+        }
+        news.description = e['description'];
+        news.date = e['publishedAt'];
+        this.searchedNews.push(news);
+      });
+    });
   }
 
   analyse(news: any) {
