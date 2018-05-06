@@ -117,4 +117,14 @@ export class CallerService {
     return '^AXJO'; // Default
   }
 
+  getCompanyCode(companyName: string) {
+    let found: string = null;
+    this.companies.forEach(e => {
+      if (e.name === companyName) {
+        found = e.code;
+      }
+    });
+    return found;
+  }
+
 }

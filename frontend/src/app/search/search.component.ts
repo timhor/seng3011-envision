@@ -39,16 +39,19 @@ export class SearchComponent {
   }
 
   private analyseTrends(company: string, date: Date) {
-    let companyID: string = company;
-    if (company.includes(':')) {
-      companyID = company.split(':')[1];
-    } else if (company.includes('.')) {
-      companyID = company.split('.')[0];
-    }
+    // let companyID: string = company;
+    // if (company.includes(':')) {
+    //   companyID = company.split(':')[1];
+    // } else if (company.includes('.')) {
+    //   companyID = company.split('.')[0];
+    // }
+    console.log(company);
+    const companyCode = this.callerService.getCompanyCode(company);
+    console.log(companyCode);
 
-    const index: string = this.callerService.getStockIndex(companyID);
+    const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
-    params = params.append('instrument_id', company + ',' + index);
+    params = params.append('instrument_id', companyCode + ',' + index);
     const tempDate: string = new Date(date).toISOString().slice(0, 10);
     params = params.append('date_of_interest', tempDate);
 
