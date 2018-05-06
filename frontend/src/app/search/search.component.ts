@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
   public query = '';
-  public stocksResponse: Object = null;
   public newsResponse: Object = null;
   public startDate: Date = null;
   public endDate: Date = null;
@@ -20,13 +19,7 @@ export class SearchComponent {
   public guardianResponse: any[] = [];
   private pageSize = '10';
 
-  public searchResponse: Object[] = [];
-
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
-
-  public companyTS: number[] = null;
-  public indexTS: number[] = null;
-  // public trendInfo: TrendInfo = new TrendInfo();
 
   public constructor(private route: ActivatedRoute, private callerService: CallerService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -34,13 +27,10 @@ export class SearchComponent {
         if (this.query) {
           this.getQuery();
         } else {
-          this.stocksResponse = null;
           this.newsResponse = null;
         }
     });
   }
-
-
 
   public togglePanel() {
     this.panel.close();
@@ -78,8 +68,6 @@ export class SearchComponent {
           news.thumbnail = e['fields']['thumbnail'];
           news.trailtext = e['fields']['trailText'];
           news.date = e['webPublicationDate'];
-          // Need to add this in after we move to the analysis page
-          // news.trendInfo = this.analyseTrends(this.query, e.webPublicationDate);
           this.guardianResponse.push(news);
         });
       }

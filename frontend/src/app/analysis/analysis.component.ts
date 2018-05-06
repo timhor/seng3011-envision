@@ -14,6 +14,7 @@ import { HttpParams } from '@angular/common/http';
 export class AnalysisComponent implements OnInit {
 
   public newsInfo: any = null;
+  public trendInfo: TrendInfo = null;
 
   constructor(private callerService: CallerService, private router: Router) {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -21,7 +22,7 @@ export class AnalysisComponent implements OnInit {
       this.router.navigate(['home']);
     }
     console.log(this.newsInfo.date);
-    this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
+    this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
   }
 
   ngOnInit() {
