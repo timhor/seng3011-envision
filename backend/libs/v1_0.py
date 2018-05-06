@@ -132,6 +132,7 @@ def generate_table(instrument_id, date_of_interest, list_of_var, lower_window, u
         add_advanced_data(df, lower_window, upper_window)
     add_performance(df, lower_window, upper_window)
     df = filter_data_frame(df, list_of_var)
+    df = df.fillna(0)
     return df
 
 
