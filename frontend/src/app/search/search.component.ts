@@ -48,9 +48,7 @@ export class SearchComponent {
   }
 
   private getQuery() {
-    // if (this.startDate !== null) {
-    //   this.trendInfo = this.analyseTrends(this.query, this.startDate); // TODO: Use this to find stuff
-    // }
+    this.guardianResponse = [];
     if (this.startDate !== null && this.endDate !== null) {
       let newsParams: HttpParams = new HttpParams();
       const startDateStr: string = new Date(this.startDate).toISOString().slice(0, 10);
