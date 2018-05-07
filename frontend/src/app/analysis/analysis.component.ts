@@ -54,22 +54,27 @@ export class AnalysisComponent implements OnInit {
       let array: number[];
       for (i = 0; i < 2; i++) {
         array = [];
-        result['Company_Returns'][i]['Data'].forEach(e => {
-          array.push(e['Return_pct']);
-        });
-        if (result['Company_Returns'][i]['InstrumentID'] === index) {
-          indexTS = array;
-        } else {
-          companyTS = array;
-          this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+        try {
+            result['Company_Returns'][i]['Data'].forEach(e => {
+              array.push(e['Return_pct']);
+            });
+            if (result['Company_Returns'][i]['InstrumentID'] === index) {
+              indexTS = array;
+            } else {
+              companyTS = array;
+              this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+            }
+            // Pearson correlation coefficient
+            trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
+            trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+            trendInfo.analysis = this.stateAnalysis(trendInfo);
+            trendInfo.hidden = false;
+            console.log(trendInfo);
+        } catch (error) {
+          trendInfo.analysis = 'Company stock information does not exist sorry!';
+          trendInfo.error = true;
         }
       }
-      // Pearson correlation coefficient
-      trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
-      trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
-      trendInfo.analysis = this.stateAnalysis(trendInfo);
-      trendInfo.hidden = false;
-      console.log(trendInfo);
     });
     trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
     return trendInfo;
