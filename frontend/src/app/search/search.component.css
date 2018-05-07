@@ -201,3 +201,16 @@ mat-card {
 mat-chip:not(.mat-basic-chip) {
   padding: 2px 5px;
 }
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
