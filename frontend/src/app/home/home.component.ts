@@ -70,7 +70,7 @@ export class HomeComponent {
             }
             news.url = e['url'];
             news.imageUrl = e['urlToImage'];
-            news.date = e['publishedAt'];
+            news.date = new Date(e['publishedAt']).toLocaleDateString();
             // Add this news object to trendingNews
             this.trendingNews.push(news);
             console.log(this.trendingNews.length.toString());

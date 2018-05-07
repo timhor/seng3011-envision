@@ -39,12 +39,13 @@ pre {
 .expansion_panel {
   /* margin-right: calc(2em + 12px); */
   font-family: 'Open Sans', sans-serif;
-  margin-right: 5%;
+  /* margin-right: 5%; */
   position: absolute;
   right: 0;
   text-align: left;
   width: 200px;
   z-index: 1;
+  margin-right: 1vw;
 }
 
 .filterGap {
@@ -68,13 +69,7 @@ pre {
 
 .news-card {
   font-family: 'Open Sans', sans-serif;
-  height: 450px;
-}
-
-@media only screen and (min-width: 990px) {
-  .expansion_panel {
-      margin-right: 5.25vw;
-  }
+  height: 675px;
 }
 
 .trending-title {
@@ -91,8 +86,8 @@ pre {
   color: rgb(125, 125, 125);
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  padding-bottom: 8px;
-  padding-top:10px;
+  /* padding-bottom: 8px; */
+  /* padding-top:10px; */
   text-align: left;
 }
 
@@ -156,22 +151,53 @@ mat-card {
 
 @media (min-width: 500px) {
   .img-container {
-    height: 65%;
+    height: 400px;
   }
   .hover-text {
     font-size: 36px;
   }
 }
 
+@media (min-width: 1200) {
+  .img-container {
+    height: 200px;
+  }
+}
+
 @media (min-width: 500px) and (max-width: 1200px) {
   .news-card {
-    height: 550px;
+    height: 500px;
+  }
+  .img-container{
+    height: 200px;
+  }
+}
+
+@media (min-width: 200px) {
+  .news-card {
+    height: 465px;
+  }
+}
+@media (min-width: 1200px) {
+  .news-card {
+    height: 650px;
   }
 }
 
 .analysis-button {
-  margin-top: -35px;
-  color: white;
-  background-color: tomato;
+  background-color: white; 
+  border: rgb(255, 90, 72) 2px solid; 
+  border-radius: 5px;
+  color: rgb(255, 90, 72); 
+  margin-top: 10px;
   padding: 5px;
+}
+
+.analysis-button:hover {
+  background-color: rgb(255, 90, 72);
+  color: white; 
+}
+
+mat-chip:not(.mat-basic-chip) {
+  padding: 2px 5px;
 }
