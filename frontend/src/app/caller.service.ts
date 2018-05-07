@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Company } from './company';
+import * as Fuse from 'fuse.js';
 
 @Injectable()
 export class CallerService {
@@ -105,17 +106,13 @@ export class CallerService {
     return result;
   }
 
-  // because fuzzysearch ~= random elements
   instrumentFuzzySearch(queryString: string) {
     queryString = queryString.toUpperCase();
-    const tempArray: Company[] = this.companies
-      .filter((comp: Company) => (comp.name.indexOf(queryString) !== -1) || comp.code.indexOf(queryString) !== -1);
-    if (tempArray.length < 5){
-        return tempArray.sort(() => .5 - Math.random());
-    }
-    else{
-        return this.getRandomSample(tempArray, 5).sort(() => .5 - Math.random());
-    }
+    var options = {
+        keys: ['name', 'code'],
+      };
+    var fuse = new Fuse(this.companies, options);
+    return <Company[]> fuse.search(queryString).slice(0,5);
   }
 
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
