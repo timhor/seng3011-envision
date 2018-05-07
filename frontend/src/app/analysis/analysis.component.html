@@ -49,6 +49,10 @@
         Cumulative Returns: {{trendInfo.cumulativeReturn}}<br>
         5-day Correlation: {{trendInfo.shortRangeCorrelation}}<br>
         20-day Correlation: {{trendInfo.longRangeCorrelation}}<br>
+        Related companies:
+        <div class="container" *ngFor="let related of trendInfo.relatedCompanies">
+          - {{related}}<br>
+        </div>
       </mat-card>
     </div>
   </div>
