@@ -36,7 +36,7 @@
           <form class="search-form" (ngSubmit)="onSubmit()">
             <input matInput #searchBox
               type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              required [matAutocomplete]="auto" (keyup)="updateAutocomplete(searchBox.value)">
+              required [matAutocomplete]="auto" (input)="updateAutocomplete(searchBox.value)">
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
