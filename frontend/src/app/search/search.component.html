@@ -1,26 +1,30 @@
 <div>
   <br>
   <span *ngIf="!query">Search a news article using the above search bar</span>
-  <mat-expansion-panel *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <p class="filterBtn">Filters</p>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <span>Start:</span>
-      <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"></ng2-flatpickr>
-      <br>
-      <span>End:</span>
-      <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"></ng2-flatpickr>
-      <hr class="filterBoxSpacer">
-      <div style="margin: 0 auto; text-align:center;">
-        <button mat-raised-button (click)="togglePanel()" class="filterSubmitBtn">Update</button>
-      </div>
-  </mat-expansion-panel>
+  <div class="col-md-10"></div>
+  <div class="col-md-2">
+    <mat-expansion-panel *ngIf="query" #filtersPanel class="expansion_panel" [expanded]="panelState">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <p class="filterBtn">Filters</p>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <span>Start:</span>
+        <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="startDate" name="startDate"></ng2-flatpickr>
+        <br>
+        <span>End:</span>
+        <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"></ng2-flatpickr>
+        <hr class="filterBoxSpacer">
+        <div style="margin: 0 auto; text-align:center;">
+          <button mat-raised-button (click)="togglePanel()" class="filterSubmitBtn">Update</button>
+        </div>
+    </mat-expansion-panel>
+  </div>
   <div *ngIf="query" style="margin-top: 62px">
     <div class="container" *ngFor="let resp of searchedNews; let i = index;">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
           <mat-card class="news-card">
             <div class="img-container">
               <a href="{{ resp.url }}" target="_blank">
@@ -32,19 +36,31 @@
               <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
             </mat-card-header>
             <mat-card-content class="trending-content">
-              <p [innerHtml]="resp.description"></p>
+              <div style="height: 75px; overflow: scroll; text-overflow: ellipsis;">
+                <p [innerHtml]="resp.description"></p>
+              </div>
               <p class="article-author">
                 by {{ resp.author }} | {{ resp.date }}
               </p>
+              <mat-chip-list style="text-align:left;">
+                <mat-chip color="accent" selected="true">{{ searchedNews[i]?.instrument }}</mat-chip>
+              </mat-chip-list>
               <form (ngSubmit)="analyse(searchedNews[i])" style="text-align: right">
                   <button mat-raised-button class="analysis-button">Envisualise!</button>
               </form>
             </mat-card-content>
           </mat-card>
         </div>
-        <hr class="hidden-spacer">
+        <div class="col-md-2"></div>
+        <!-- <hr class="hidden-spacer"> -->
       </div>
-      <mat-divider style="margin: 30px 0;"></mat-divider>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" align="center">
+          <mat-divider style="margin: 20px 0; width:75%;"></mat-divider>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
     </div>
   </div>
   <br>

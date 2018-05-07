@@ -56,17 +56,17 @@ a.no-underline:hover {
 
 .news-card {
   font-family: 'Open Sans', sans-serif;
-  height: 400px;
+  height: 600px;
 }
 
 .analysis-card {
   font-family: 'Open Sans', sans-serif;
-  height: 661px;
+  height: 861px;
 }
 
 .expanded-card {
   font-family: 'Open Sans', sans-serif;
-  height: 661px;
+  height: 861px;
 }
 
 .img-container {
@@ -120,4 +120,14 @@ mat-card {
   .hover-text {
     font-size: 36px;
   }
+}
+
+mat-chip {
+  padding: 0;
+  font-size: 9px;
+  margin: 0;
+}
+
+mat-chip:not(.mat-basic-chip) {
+  padding: 2px 5px;
 }

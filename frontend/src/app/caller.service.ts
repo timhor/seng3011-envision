@@ -18,11 +18,21 @@ export class CallerService {
   private instrument: string = null;
 
   private newsAPIKeys: Array<string> = [
-    '79791a6d2dac43258d382335a7dea367',
-    'e9627d435bbd4f78ba672f45c71507b0',
-    'd737b028898f49dda166eeb09427d22a',
-    '4a88a66efffd4ee6b44841779075b45b',
-    '37aebd18d2e1451dbee5e82ed1b4acd3'
+    // '79791a6d2dac43258d382335a7dea367',
+    // 'e9627d435bbd4f78ba672f45c71507b0',
+    // 'd737b028898f49dda166eeb09427d22a',
+    // '4a88a66efffd4ee6b44841779075b45b',
+    // '37aebd18d2e1451dbee5e82ed1b4acd3',
+    'd444e37791f147429a8568d40ab6e618',
+    'dddcd54a00eb4ad89708103512d9628d',
+    '0642b9d1bd0843f3aef17671a85a94a7',
+    '1db93c6f87194c1da5dd876670e43d69',
+    'd59df2d91c504f21aa03230772707b4f',
+    '6c49eb7bc9a1439596c597cb35632d43',
+    'ee2e1819d2bc487bb033304079a5e0f0',
+    'aaaf86a72e2b4fed9e70b533ed0f984a',
+    'cf6c1b16adad48e0b4bed1d68790b055',
+    '3ca4aae81c4a46908fdfc8f1e63c8921'
   ];
 
 
