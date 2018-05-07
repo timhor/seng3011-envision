@@ -160,16 +160,18 @@ def api(version):
             error_messages = []
     else:
         returns, error_messages = compute_engine.calculate_returns(instr, date, var_list, lower, upper)
-        db_item = Dump(
-            **query_args,
-            created=datetime.now(),
-            payload=json.dumps(returns),
-            errors='|'.join(error_messages))
-        try:
-            session.add(db_item)
-            session.commit()
-        except exc.SQLAlchemyError:
-            session = Session() # Old session likely expired, spin up a new one for next time
+        # Prevents caching stuff which includes the future (because data will change)
+        if date + timedelta(days=upper * 2 + 2) < datetime.today():
+            db_item = Dump(
+                **query_args,
+                created=datetime.now(),
+                payload=json.dumps(returns),
+                errors='|'.join(error_messages))
+            try:
+                session.add(db_item)
+                session.commit()
+            except exc.SQLAlchemyError:
+                session = Session() # Old session likely expired, spin up a new one for next time
 
     end_time = datetime.now()
 
