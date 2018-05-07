@@ -18,6 +18,9 @@
             <p class="article-author">
               by {{ newsInfo.author }} | {{ newsInfo.date }}
             </p>
+            <mat-chip-list style="text-align:left;">
+              <mat-chip color="accent" selected="true">{{ newsInfo.instrument }}</mat-chip>
+            </mat-chip-list>
           </mat-card-content>
         </mat-card>
       </div>
@@ -70,3 +73,4 @@
     </div>
   </div>
 </div>
+<br>
