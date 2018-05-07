@@ -19,11 +19,9 @@ export class AnalysisComponent implements OnInit {
   public showingOverview = true;
   public showingGraph1 = false;
   public showingGraph2 = false;
-  public graph_type;
-  public rtn_data;
-  public cm_rtn_data;
-  public rtn_options;
-  public cm_rtn_options;
+  public type;
+  public data;
+  public options;
   public positiveSummary = false;
 
   constructor(private callerService: CallerService, private router: Router) {}
@@ -163,19 +161,26 @@ export class AnalysisComponent implements OnInit {
         shouldDrawCMReturnsPct = true;
       }
 
-      this.graph_type = 'line';
-      this.rtn_options = this.buildGraphOptions('Returns Percentage', 'Returns (%)');
-      this.cm_rtn_options = this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)');
-      this.rtn_data = {
-        labels: dates,
-        datasets: returnPercentageDatasets
-      };
-      this.cm_rtn_data = {
-        labels: dates,
-        datasets: cmReturnPercentageDatasets
-      };
-      console.log(this.rtn_data);
-      console.log(this.cm_rtn_data);
+      // Build returns percentage graph
+      if (shouldDrawReturnsPct === true) {
+        const ctx = <HTMLCanvasElement> document.getElementById('returnsGraph');
+        const context = ctx.getContext('2d');
+        const rtnPctChart = new Chart(
+          context,
+          this.buildGraphData(dates, returnPercentageDatasets, this.buildGraphOptions('Returns Percentage', 'Returns (%)'))
+        );
+      }
+
+
+      // Build CM returns percentage graph
+      if (shouldDrawCMReturnsPct) {
+        const ctx = <HTMLCanvasElement> document.getElementById('cmReturnsGraph');
+        const context = ctx.getContext('2d');
+        const cmRtnPctChart = new Chart(
+          context,
+          this.buildGraphData(dates, cmReturnPercentageDatasets, this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
+        );
+      }
       return;
     });
   }
@@ -222,6 +227,15 @@ export class AnalysisComponent implements OnInit {
           }
         }]
       },
+      pan: {
+        enabled: true,
+        mode: 'x'
+      },
+      zoom: {
+        enabled: true,
+        mode: 'x',
+        sensitivity: 3,
+      }
     };
     return options;
   }
