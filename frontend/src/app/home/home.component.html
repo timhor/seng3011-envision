@@ -6,18 +6,27 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+        <div class="img-container trending-image">
+          <a href="{{ trendingNews[0]?.url }}" target="_blank">
+            <img src="{{ trendingNews[0]?.imageUrl }}">
+            <div class="hover-text">VISIT ARTICLE</div>
+          </a>
+        </div>
         <mat-card-header class="trending-title">
-          Main Article
+          <a class="no-underline" href="{{trendingNews[0]?.url}}" target="_blank">{{trendingNews[0]?.title}}</a>
         </mat-card-header>
         <mat-card-content class="trending-content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales nulla tellus, a sollicitudin nibh porta ac. Integer a dolor a turpis semper sodales non vel tortor.
+            {{trendingNews[0]?.description}}
           </p>
           <p class="article-author">
-            by Soham Patel
+            by {{trendingNews[0]?.author}} | {{trendingNews[0]?.date}}
           </p>
+          <mat-chip color="accent" selected="true">{{ trendingNews[0]?.instrument }}</mat-chip>
         </mat-card-content>
+        <form (ngSubmit)="analyse(trendingNews[0])" style="text-align: right">
+          <button mat-raised-button class="analysis-button">Envisualise!</button>
+        </form>
       </mat-card>
     </div>
     <hr class="top-trending-split">
@@ -27,21 +36,27 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[1]?.url}}" target="_blank">{{trendingNews[1]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[1]?.author}} | {{trendingNews[1]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[1]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[1]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[1]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[1])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -51,21 +66,27 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[2]?.url}}" target="_blank">{{trendingNews[2]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[2]?.author}} | {{trendingNews[2]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[2]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[2]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[2]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[2])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -74,21 +95,27 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[3]?.url}}" target="_blank">{{trendingNews[3]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[3]?.author}} | {{trendingNews[3]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[3]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[3]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[3]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
+          <form (ngSubmit)="analyse(trendingNews[3])" style="text-align: right">
+            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          </form>
         </mat-card>
       </div>
       <hr class="spacer">
@@ -97,23 +124,32 @@
           <div class="row">
             <div class="col-md-7">
               <mat-card-header class="top-title">
-                Other Article
+                <a class="no-underline" href="{{trendingNews[4]?.url}}" target="_blank">{{trendingNews[4]?.title}}</a>
               </mat-card-header>
               <mat-card-content class="top-content">
-                <p>
-                  Lorem ipsum dolor sit amet...
-                </p>
                 <p class="article-author">
-                  by Soham Patel
+                  by {{trendingNews[4]?.author}} | {{trendingNews[4]?.date}}
                 </p>
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img src="https://i.guim.co.uk/img/media/3f43a1d6f39cafdde82c66da2ccd5fef3060aa7a/0_349_5386_3231/master/5386.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=02883efb9a60c0e7ceb47cd809b69a90" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[4]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[4]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
+          <mat-chip-list style="text-align:left;">
+            <mat-chip color="accent" selected="true">{{ trendingNews[4]?.instrument }}</mat-chip>
+          </mat-chip-list>
+          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align:right;">
+            <button mat-button class="analysis-button">Envisualise</button>
+          </form>
         </mat-card>
       </div>
     </div>
   </div>
 </div>
+<hr style="border:transparent;">

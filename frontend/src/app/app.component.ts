@@ -3,6 +3,7 @@ import { CallerService } from './caller.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSidenav } from '@angular/material';
 import { Router, NavigationExtras } from '@angular/router';
+import { Company } from './company';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,16 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public company = '';
-  private companySuggestions: string[] = [];
+  private companySuggestions: Company[] = [];
 
-  public constructor(private callerService: CallerService, private router: Router) {}
+  public constructor(private callerService: CallerService, private router: Router) {
+    // override the route reuse strategy so that accessing the same page with different params
+    // continues to call all the necessary functions (otherwise search page doesn't show results
+    // after the first query)
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+    };
+  }
 
   @ViewChild('sidenav') sidenav: MatSidenav;
   public navMode = 'side';
@@ -52,7 +60,6 @@ export class AppComponent implements OnInit {
   }
 
   updateAutocomplete(q: string) {
-    q = q.toLowerCase();
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
     return this.companySuggestions;
   }

@@ -2,17 +2,40 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Company } from './company';
+import * as Fuse from 'fuse.js';
+import { NewsInfo } from './newsinfo';
 
 @Injectable()
 export class CallerService {
 
   private stockInfo = 'http://envision-api.ap-southeast-2.elasticbeanstalk.com/api/v1.0.2/';
-  private newsInfo = 'http://seng.fmap.today/v2/news';
-  private guardianInfo = 'https://content.guardianapis.com/search'
+  private newsInfo = 'https://newsapi.org/v2/everything';
+  private guardianInfo = 'http://content.guardianapis.com/search';
   private companies: Company[];
 
   private indexNames: Map<string, string> = new Map<string, string>();
   private industries: Map<string, string> = new Map<string, string>();
+
+  private newsToAnalyse: NewsInfo = null;
+  private instrument: string = null;
+
+  private newsAPIKeys: Array<string> = [
+    // '79791a6d2dac43258d382335a7dea367',
+    // 'e9627d435bbd4f78ba672f45c71507b0',
+    // 'd737b028898f49dda166eeb09427d22a',
+    // '4a88a66efffd4ee6b44841779075b45b',
+    // '37aebd18d2e1451dbee5e82ed1b4acd3',
+    'd444e37791f147429a8568d40ab6e618',
+    'dddcd54a00eb4ad89708103512d9628d',
+    '0642b9d1bd0843f3aef17671a85a94a7',
+    '1db93c6f87194c1da5dd876670e43d69',
+    'd59df2d91c504f21aa03230772707b4f',
+    '6c49eb7bc9a1439596c597cb35632d43',
+    'ee2e1819d2bc487bb033304079a5e0f0',
+    'aaaf86a72e2b4fed9e70b533ed0f984a',
+    'cf6c1b16adad48e0b4bed1d68790b055',
+    '3ca4aae81c4a46908fdfc8f1e63c8921'
+  ];
 
 
   constructor(private http: HttpClient) {
@@ -66,23 +89,41 @@ export class CallerService {
   getStockInfo(params: HttpParams) {
     params = params.append('lower_window', '5');
     params = params.append('upper_window', '15');
-    params = params.append('list_of_var', 'Return,Return_pct');
+    params = params.append('list_of_var', 'Return,Return_pct,CM_Return_pct');
     console.log(params);
     return this.http.get(this.stockInfo, { params : params });
   }
 
   getNewsInfo(params: HttpParams) {
     console.log(params);
+    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * this.newsAPIKeys.length)]);
     return this.http.get(this.newsInfo, { params : params });
   }
 
   getGuardianInfo(params: HttpParams) {
-    params = params.append('api-key', '5dfacfce-5df1-47d1-9cbc-ee207b3ec525');
+    params = params.append('api-key', '24756ef7-a162-400a-ae15-361f58433bc6');
     return this.http.get(this.guardianInfo, { params : params });
   }
 
   getCompanies() {
     return this.http.get('../assets/ASXListedCompanies.json');
+  }
+
+  getRandomSample(sourceArray: Company[], neededElements: Number) {
+    const result = [];
+    for (let i = 0; i < neededElements; i++) {
+        result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
+    }
+    return result;
+  }
+
+  instrumentFuzzySearch(queryString: string) {
+    queryString = queryString.toUpperCase();
+    const options = {
+        keys: ['name', 'code'],
+    };
+    const fuse = new Fuse(this.companies, options);
+    return <Company[]> fuse.search(queryString).slice(0, 5);
   }
 
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
@@ -96,25 +137,39 @@ export class CallerService {
     return array;
   }
 
-  // because fuzzysearch ~= random elements
-  instrumentFuzzySearch(queryString: string) {
-    const tempArray: string[] = this.companies
-      .map((x: Company) => x.name)
-      .filter((x: string) => x.toLowerCase().indexOf(queryString) !== -1);
-    return this.shuffleArray(tempArray).slice(0, 7);
-  }
-
   // Gets the stock index we want to compare to
   getStockIndex(company: string) {
+    let found = '^AXJO'; // Default
     this.companies.forEach(e => {
       if (e.code === company) {
         if (this.industries.has(e.group)) {
-          console.log(this.industries.get(e.group));
-          return this.industries.get(e.group);
+          found = this.industries.get(e.group);
         }
       }
     });
-    return '^AXJO'; // Default
+    return found;
+  }
+
+  getCompanyCode(companyName: string) {
+    let found: string = null;
+    this.companies.forEach(e => {
+      if (e.name === companyName) {
+        found = e.code;
+      }
+    });
+    return found;
+  }
+
+  setAnalysisInfo(news: NewsInfo) {
+    this.newsToAnalyse = news;
+  }
+
+  getAnalysisInfo() {
+    return this.newsToAnalyse;
+  }
+
+  getInstrument() {
+    return this.instrument;
   }
 
 }

@@ -13,6 +13,8 @@ import { SearchComponent } from './search/search.component';
 import { CallerService } from './caller.service';
 
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+import { AnalysisComponent } from './analysis/analysis.component';
+import { AboutComponent } from './about/about.component';
 
 export const serviceProviders = [
   CallerService
@@ -22,7 +24,9 @@ export const serviceProviders = [
   declarations: [
     AppComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    AnalysisComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
