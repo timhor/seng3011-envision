@@ -3,8 +3,9 @@ import { Company } from '../company';
 import { Subscription } from 'rxjs/Subscription';
 import { CallerService } from '../caller.service';
 import { HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NewsInfo } from '../newsinfo';
+
 
 @Component({
   selector: 'app-home',
@@ -12,17 +13,28 @@ import { NewsInfo } from '../newsinfo';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  title = 'Envision Client';
+  public title = 'Trending News';
   public trendingNews: any[] = [];
   private companies: Company[];
   private newsResponse: Object = null;
   private pageSize = 10;
 
-  constructor (private callerService: CallerService, private router: Router) {
+  constructor (private callerService: CallerService, private router: Router, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params['name']) {
+        this.title = params['name'];
+      }
+    });
 
     this.callerService.getCompanies().subscribe((val) => {
       this.companies = <Company[]> val;
-      let tempArray: string[] = this.companies.map((x: Company) => x.name);
+      let tempArray: string[];
+      if (this.title === 'Trending News'){
+        tempArray = this.companies.map((x: Company) => x.name);
+      } else {
+        tempArray = this.companies.filter((x: Company) => x.group === this.title).map((x: Company) => x.name);
+      }
+      console.log(tempArray);
       tempArray = this.callerService.shuffleArray(tempArray);
 
       tempArray = tempArray.slice(0, 10);

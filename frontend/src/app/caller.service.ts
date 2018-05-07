@@ -117,6 +117,10 @@ export class CallerService {
     return result;
   }
 
+  getGroups() {
+    return Array.from(this.industries.keys());
+  }
+
   instrumentFuzzySearch(queryString: string) {
     queryString = queryString.toUpperCase();
     const options = {

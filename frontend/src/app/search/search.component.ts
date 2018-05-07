@@ -63,11 +63,11 @@ export class SearchComponent {
       }
     }
 
+
     // Remove everything after '.' for CBA.AX cases otherwise, CBA will not be an option
     this.query = this.query.replace(/\..*/, '');
     // Remove everything before ':' for ASX:CBA cases
     this.query = this.query.replace(/.*\:/, '');
-    console.log(this.query);
     this.query = this.query.toUpperCase();
     const companies: Company[] = this.callerService.instrumentFuzzySearch(this.query);
     let instrument = '';
@@ -79,7 +79,7 @@ export class SearchComponent {
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
-        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': instrument};
+        const news = new NewsInfo('', '', '', '', '', '', instrument);
         news.title = e['title'];
         news.url = e['url'];
         news.author = e['author'];
