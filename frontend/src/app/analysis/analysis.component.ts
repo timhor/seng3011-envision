@@ -93,8 +93,8 @@ export class AnalysisComponent implements OnInit {
     // Populate data arrays
     this.trendInfo['rawQuery']['Company_Returns'].forEach(instrument => {
       // Convert API Data to Array
-      returnPctData = null;
-      cmReturnPctData = null;
+      returnPctData = [];
+      cmReturnPctData = [];
 
       let instrumentColor: any = this.getRandomColor();
 
@@ -116,7 +116,7 @@ export class AnalysisComponent implements OnInit {
 
       // Add datasets for percentage returns graph
       if (returnPctData.length > 0) {
-        returnPercentageDatasets[instrument['InstrumentID']] = null;
+        returnPercentageDatasets[instrument['InstrumentID']] = [];
         returnPercentageDatasets[instrument['InstrumentID']].push(
           {
             label: instrument['InstrumentID'],
