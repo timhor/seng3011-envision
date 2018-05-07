@@ -17,6 +17,7 @@
           <p class="article-author">
             by {{trendingNews[0]?.author}} | {{trendingNews[0]?.date}}
           </p>
+          <mat-chip color="accent" selected="true">{{ trendingNews[0]?.instrument }}</mat-chip>
         </mat-card-content>
         <form (ngSubmit)="analyse(trendingNews[0])" style="text-align: right">
           <button mat-raised-button class="analysis-button">Envisualise!</button>
@@ -36,6 +37,7 @@
                 <p class="article-author">
                   by {{trendingNews[1]?.author}} | {{trendingNews[1]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[1]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
@@ -60,6 +62,7 @@
                 <p class="article-author">
                   by {{trendingNews[2]?.author}} | {{trendingNews[2]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[2]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
@@ -83,6 +86,7 @@
                 <p class="article-author">
                   by {{trendingNews[3]?.author}} | {{trendingNews[3]?.date}}
                 </p>
+                <mat-chip color="accent" selected="true">{{ trendingNews[3]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
@@ -112,8 +116,11 @@
               <img class="top-image" src="{{trendingNews[4]?.imageUrl}}" width="100%">
             </div>
           </div>
-          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align: right">
-            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          <mat-chip-list style="text-align:left;">
+            <mat-chip color="accent" selected="true">{{ trendingNews[4]?.instrument }}</mat-chip>
+          </mat-chip-list>
+          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align:right;">
+            <button mat-button class="analysis-button">Envisualise</button>
           </form>
         </mat-card>
       </div>
