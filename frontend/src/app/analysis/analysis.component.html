@@ -44,11 +44,48 @@
       </div>
     </div>
     <div class="col-md-4">
-      <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
-        Analysis<br>
-        Summary: {{trendInfo.analysis}}<br>
-        5-day Correlation: {{trendInfo.shortRangeCorrelation}}<br>
-        20-day Correlation: {{trendInfo.longRangeCorrelation}}<br>
+      <mat-card class="analysis-card">
+        <h2 class="analysis-title">Analysis</h2>
+        <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
+        <mat-card-content class="analysis-content" *ngIf="trendInfo.error">
+          <b>Summary:</b>
+          <div class="analysis-data">
+            {{trendInfo.analysis}}
+          </div>
+        </mat-card-content>
+        <mat-card-content class="analysis-content" *ngIf="!trendInfo.hidden">
+          <b>Summary:</b>
+          <div class="analysis-data positive-data" *ngIf="positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <div class="analysis-data negative-data" *ngIf="!positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <b>Cumulative Returns:</b>
+          <div class="analysis-data">
+            {{trendInfo.cumulativeReturn}}
+          </div>
+          <b>5-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.shortRangeCorrelation}}
+          </div>
+          <b>20-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.longRangeCorrelation}}
+          </div>
+          <b>Related Companies:</b>
+          <div class="analysis-related">
+            <ul>
+              <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
+            </ul>
+          </div>
+          <hr>
+          <p style="margin-top: 36px;">
+            <strong>Note:</strong>
+            Visualising data on news within the past few days may not give the best results, since markets may take some time to adjust.
+          </p>
+        </mat-card-content>
+        <br>
       </mat-card>
     </div>
   </div>

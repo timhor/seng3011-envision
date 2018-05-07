@@ -15,10 +15,15 @@
         <mat-icon>search</mat-icon>
         <span class="navLinkText">Search</span>
       </a>
-      <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+      <a mat-list-item [matMenuTriggerFor]="menu">
         <mat-icon>show_chart</mat-icon>
-        <span class="navLinkText">Trending</span>
+        <span class="navLinkText">Groups</span>
+        <span class="fill-space"></span>
+        <mat-icon>arrow_drop_down</mat-icon>
       </a>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item *ngFor="let group of groups" (click)="openGroup(group)">{{ group }}</button>
+      </mat-menu>
       <a mat-list-item routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>info_outline</mat-icon>
         <span class="navLinkText">About</span>

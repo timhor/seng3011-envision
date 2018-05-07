@@ -13,6 +13,7 @@ import { Company } from './company';
 export class AppComponent implements OnInit {
   public company = '';
   private companySuggestions: Company[] = [];
+  public groups: string[] = [];
 
   public constructor(private callerService: CallerService, private router: Router) {
     // override the route reuse strategy so that accessing the same page with different params
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
     if (window.innerWidth < 768) {
       this.navMode = 'over';
     }
+    this.groups = this.callerService.getGroups();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -60,11 +62,24 @@ export class AppComponent implements OnInit {
   }
 
   updateAutocomplete(q: string) {
+    // Remove everything after '.' for CBA.AX cases otherwise, CBA will not be an option
+    q = q.replace(/\..*/, '');
+    // Remove everything before ':' for ASX:CBA cases
+    q = q.replace(/.*\:/, '');
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
     return this.companySuggestions;
   }
 
   onDeactivate() {
     window.scrollTo(0, 0);
+  }
+
+  openGroup(group: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          'name': group
+      }
+    };
+    this.router.navigate(['group'], navigationExtras);
   }
 }

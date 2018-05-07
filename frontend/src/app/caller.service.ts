@@ -125,6 +125,10 @@ export class CallerService {
     return result;
   }
 
+  getGroups() {
+    return Array.from(this.industries.keys());
+  }
+
   instrumentFuzzySearch(queryString: string) {
     queryString = queryString.toUpperCase();
     const options = {
@@ -178,6 +182,27 @@ export class CallerService {
 
   getInstrument() {
     return this.instrument;
+  }
+
+  getRelatedCompanies(companyName: string) {
+    let industry: string = null;
+    const relatedComps: Array<string> = [];
+    this.companies.forEach(e => {
+      if (e.name === companyName) {
+        industry = e.group;
+      }
+    });
+
+    if (industry === null) {
+      return relatedComps;
+    }
+
+    this.companies.forEach(e => {
+      if (e.group === industry) {
+        relatedComps.push(e.name);
+      }
+    });
+    return this.shuffleArray(relatedComps);
   }
 
 }

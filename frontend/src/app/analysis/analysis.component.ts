@@ -7,7 +7,6 @@ import { NewsInfo } from '../newsinfo';
 import { Chart } from 'chart.js';
 import { createText } from '@angular/core/src/view/text';
 
-
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
@@ -23,6 +22,7 @@ export class AnalysisComponent implements OnInit {
   public type;
   public data;
   public options;
+  public positiveSummary = false;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -51,6 +51,7 @@ export class AnalysisComponent implements OnInit {
 
     this.callerService.getStockInfo(params).subscribe((result) => {
       trendInfo.rawQuery = result;
+      console.log(result);
       let indexTS: Array<any>;
       let companyTS: Array<any>;
 
@@ -58,13 +59,26 @@ export class AnalysisComponent implements OnInit {
       let array: number[];
       for (i = 0; i < 2; i++) {
         array = [];
-        result['Company_Returns'][i]['Data'].forEach(e => {
-          array.push(e['Return_pct']);
-        });
-        if (result['Company_Returns'][i]['InstrumentID'] === index) {
-          indexTS = array;
-        } else {
-          companyTS = array;
+        try {
+            result['Company_Returns'][i]['Data'].forEach(e => {
+              array.push(e['Return_pct']);
+            });
+            if (result['Company_Returns'][i]['InstrumentID'] === index) {
+              indexTS = array;
+            } else {
+              companyTS = array;
+              this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+            }
+            // Pearson correlation coefficient
+            trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
+            trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+            trendInfo.analysis = this.stateAnalysis(trendInfo);
+            trendInfo.hidden = false;
+            trendInfo.error = false;
+            console.log(trendInfo);
+        } catch (error) {
+          trendInfo.analysis = 'Company stock information does not exist, sorry!';
+          trendInfo.error = true;
         }
       }
       // Pearson correlation coefficient
@@ -77,15 +91,16 @@ export class AnalysisComponent implements OnInit {
       console.log('This trendInfo' + this.trendInfo);
       console.log(trendInfo);
     });
-    return trendInfo;
 
+    trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
+    return trendInfo;
   }
 
   private generateGraphs() {
-    let dates = [];
+    const dates = [];
 
-    let returnPercentageDatasets = [];
-    let cmReturnPercentageDatasets = [];
+    const returnPercentageDatasets = [];
+    const cmReturnPercentageDatasets = [];
 
     let returnPctData = [];
     let cmReturnPctData = [];
@@ -99,7 +114,7 @@ export class AnalysisComponent implements OnInit {
       returnPctData = [];
       cmReturnPctData = [];
 
-      let instrumentColor: any = this.getRandomColor();
+      const instrumentColor: any = this.getRandomColor();
 
       instrument['Data'].forEach(rec => {
         if (rec['Return_pct'] !== undefined) {
@@ -110,8 +125,8 @@ export class AnalysisComponent implements OnInit {
           cmReturnPctData.push(Number((rec['CM_Return_pct'] * 100).toFixed(4)));
         }
 
-        let mydate: Date = new Date(rec.Date);
-        let formattedDate: string = mydate.toLocaleDateString();
+        const mydate: Date = new Date(rec.Date);
+        const formattedDate: string = mydate.toLocaleDateString();
         if (dates.indexOf(formattedDate) === -1) {
           dates.push(formattedDate);
         }
@@ -148,9 +163,9 @@ export class AnalysisComponent implements OnInit {
 
       // Build returns percentage graph
       if (shouldDrawReturnsPct === true) {
-        let ctx = <HTMLCanvasElement> document.getElementById('returnsGraph');
-        let context = ctx.getContext('2d');
-        let rtnPctChart = new Chart(
+        const ctx = <HTMLCanvasElement> document.getElementById('returnsGraph');
+        const context = ctx.getContext('2d');
+        const rtnPctChart = new Chart(
           context,
           this.buildGraphData(dates, returnPercentageDatasets, this.buildGraphOptions('Returns Percentage', 'Returns (%)'))
         );
@@ -159,9 +174,9 @@ export class AnalysisComponent implements OnInit {
 
       // Build CM returns percentage graph
       if (shouldDrawCMReturnsPct) {
-        let ctx = <HTMLCanvasElement> document.getElementById('cmReturnsGraph');
-        let context = ctx.getContext('2d');
-        let cmRtnPctChart = new Chart(
+        const ctx = <HTMLCanvasElement> document.getElementById('cmReturnsGraph');
+        const context = ctx.getContext('2d');
+        const cmRtnPctChart = new Chart(
           context,
           this.buildGraphData(dates, cmReturnPercentageDatasets, this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
         );
@@ -171,7 +186,7 @@ export class AnalysisComponent implements OnInit {
   }
 
   private buildGraphData(dates: Array<any>, datasets, graphOptions: any) {
-      let dataArray = new Array();
+      const dataArray = new Array();
       for (const key in datasets) {
         if (datasets[key]) {
           const val = datasets[key];
@@ -256,8 +271,10 @@ export class AnalysisComponent implements OnInit {
     let outputString = '';
     if (trend === 1) {
       outputString += 'Positive growth ';
+      this.positiveSummary = true;
     } else {
       outputString += 'Negative growth ';
+      this.positiveSummary = false;
     }
 
     switch (correlation) {
