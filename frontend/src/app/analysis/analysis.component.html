@@ -65,6 +65,12 @@
           <div class="analysis-data">
             {{trendInfo.longRangeCorrelation}}
           </div>
+          <b>Related companies:</b>
+          <div class="analysis-related">
+            <ul>
+              <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
+            </ul>
+          </div>
         </mat-card-content>
         <br>
       </mat-card>

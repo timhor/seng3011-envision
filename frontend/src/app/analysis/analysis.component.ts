@@ -72,6 +72,7 @@ export class AnalysisComponent implements OnInit {
       trendInfo.hidden = false;
       console.log(trendInfo);
     });
+    trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
     return trendInfo;
 
   }

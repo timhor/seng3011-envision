@@ -152,6 +152,11 @@ mat-chip:not(.mat-basic-chip) {
   text-align: center;
 }
 
+.analysis-related {
+  margin-bottom: 7px;
+  padding: 7px;
+}
+
 .positive-data {
   color: green;
 }
