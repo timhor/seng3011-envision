@@ -70,6 +70,7 @@ export class AnalysisComponent implements OnInit {
             trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
             trendInfo.analysis = this.stateAnalysis(trendInfo);
             trendInfo.hidden = false;
+            trendInfo.error = false;
             console.log(trendInfo);
         } catch (error) {
           trendInfo.analysis = 'Company stock information does not exist, sorry!';
