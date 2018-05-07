@@ -180,22 +180,22 @@ mat-card {
 }
 @media (min-width: 1200px) {
   .news-card {
-    height: 650px;
+    height: 675px;
   }
 }
 
 .analysis-button {
-  background-color: white; 
-  border: rgb(255, 90, 72) 2px solid; 
+  background-color: white;
+  border: rgb(255, 90, 72) 2px solid;
   border-radius: 5px;
-  color: rgb(255, 90, 72); 
+  color: rgb(255, 90, 72);
   margin-top: 10px;
   padding: 5px;
 }
 
 .analysis-button:hover {
   background-color: rgb(255, 90, 72);
-  color: white; 
+  color: white;
 }
 
 mat-chip:not(.mat-basic-chip) {
