@@ -180,3 +180,7 @@ mat-progress-spinner {
 .expandBtn {
   margin-top: 24px;
 }
+
+canvas {
+  margin-top: 10px;
+}
