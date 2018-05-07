@@ -46,6 +46,7 @@ export class AnalysisComponent implements OnInit {
 
     this.callerService.getStockInfo(params).subscribe((result) => {
       trendInfo.rawQuery = result;
+      console.log(result);
       let indexTS: Array<any>;
       let companyTS: Array<any>;
 
@@ -60,6 +61,7 @@ export class AnalysisComponent implements OnInit {
           indexTS = array;
         } else {
           companyTS = array;
+          this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
         }
       }
       // Pearson correlation coefficient
