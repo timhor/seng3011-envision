@@ -110,15 +110,17 @@
                 <p class="article-author">
                   by {{trendingNews[4]?.author}} | {{trendingNews[4]?.date}}
                 </p>
-                <mat-chip color="accent" selected="true">{{ trendingNews[4]?.instrument }}</mat-chip>
               </mat-card-content>
             </div>
             <div class="col-md-5">
               <img class="top-image" src="{{trendingNews[4]?.imageUrl}}" width="100%">
             </div>
           </div>
-          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align: right">
-            <button mat-raised-button class="analysis-button">Envisualise!</button>
+          <mat-chip-list style="text-align:left;">
+            <mat-chip color="accent" selected="true">{{ trendingNews[4]?.instrument }}</mat-chip>
+          </mat-chip-list>
+          <form (ngSubmit)="analyse(trendingNews[4])" style="text-align:right;">
+            <button mat-button class="analysis-button">Envisualise</button>
           </form>
         </mat-card>
       </div>

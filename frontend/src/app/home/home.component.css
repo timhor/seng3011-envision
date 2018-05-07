@@ -104,11 +104,16 @@ a.no-underline:hover {
 
 .analysis-button {
   background-color: white; 
-  border: salmon 2px solid; 
+  border: rgb(255, 90, 72) 2px solid; 
   border-radius: 5px;
-  color: salmon; 
+  color: rgb(255, 90, 72); 
   margin-top: 10px;
   padding: 5px;
+}
+
+.analysis-button:hover {
+  background-color: rgb(255, 90, 72);
+  color: white; 
 }
 
 img {
@@ -116,6 +121,11 @@ img {
 }
 
 mat-chip {
-  padding-left: 2px;
-  padding-right: 2px;
+  padding: 0;
+  font-size: 9px;
+  margin: 0;
+}
+
+mat-chip:not(.mat-basic-chip) {
+  padding: 2px 5px;
 }
