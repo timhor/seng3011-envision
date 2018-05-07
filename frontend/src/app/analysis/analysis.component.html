@@ -43,6 +43,15 @@
       </div>
     </div>
     <div class="col-md-4">
+      <mat-card class="analysis-card" *ngIf="trendInfo.error">
+        <h2 class="analysis-title">Analysis</h2>
+        <mat-card-content class="analysis-content">
+          <b>Summary:</b>
+          <div class="analysis-data">
+            {{trendInfo.analysis}}
+          </div>
+        </mat-card-content>
+      </mat-card>
       <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
         <h2 class="analysis-title">Analysis</h2>
         <mat-card-content class="analysis-content">

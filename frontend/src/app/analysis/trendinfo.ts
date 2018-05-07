@@ -6,4 +6,5 @@ export class TrendInfo {
   cumulativeReturn: number;
   relatedCompanies: string[];
   hidden = true;
+  error = false;
 }
