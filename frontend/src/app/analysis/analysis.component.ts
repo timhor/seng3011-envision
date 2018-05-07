@@ -3,6 +3,7 @@ import { CallerService } from '../caller.service';
 import { Router } from '@angular/router';
 import { TrendInfo } from './trendinfo';
 import { HttpParams } from '@angular/common/http';
+import { NewsInfo } from '../newsinfo';
 
 
 
@@ -13,7 +14,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AnalysisComponent implements OnInit {
 
-  public newsInfo: any = null;
+  public newsInfo: NewsInfo = null;
   public trendInfo: TrendInfo = null;
   public showingOverview = true;
   public showingGraph1 = false;
