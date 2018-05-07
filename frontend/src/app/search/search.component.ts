@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material';
 import { Router } from '@angular/router';
 import { Company } from '../company';
+import { NewsInfo } from '../newsinfo';
 
 @Component({
   selector: 'app-search',
@@ -75,7 +76,7 @@ export class SearchComponent {
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
-        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': instrument};
+        const news = new NewsInfo('', '', '', '', '', '', instrument);
         news.title = e['title'];
         news.url = e['url'];
         news.author = e['author'];

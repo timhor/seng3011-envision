@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Company } from './company';
 import * as Fuse from 'fuse.js';
+import { NewsInfo } from './newsinfo';
 
 @Injectable()
 export class CallerService {
@@ -15,7 +16,7 @@ export class CallerService {
   private indexNames: Map<string, string> = new Map<string, string>();
   private industries: Map<string, string> = new Map<string, string>();
 
-  private newsToAnalyse: Object = null;
+  private newsToAnalyse: NewsInfo = null;
   private instrument: string = null;
 
   private newsAPIKeys: Array<string> = [
@@ -163,7 +164,7 @@ export class CallerService {
     return found;
   }
 
-  setAnalysisInfo(news: Object) {
+  setAnalysisInfo(news: NewsInfo) {
     this.newsToAnalyse = news;
   }
 

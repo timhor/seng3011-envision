@@ -43,8 +43,12 @@
       </div>
     </div>
     <div class="col-md-4">
-      <mat-card class="analysis-card"> <!-- *ngIf="!trendInfo.hidden" -->
-        <!-- {{trendInfo.analysis}} -->
+      <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
+        Analysis<br>
+        Summary: {{trendInfo.analysis}}<br>
+        Cumulative Returns: {{trendInfo.cumulativeReturn}}<br>
+        5-day Correlation: {{trendInfo.shortRangeCorrelation}}<br>
+        20-day Correlation: {{trendInfo.longRangeCorrelation}}<br>
       </mat-card>
     </div>
   </div>
