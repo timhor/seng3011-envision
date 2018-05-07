@@ -81,7 +81,7 @@ mat-card {
   .trending-image {
     height: 300px;
   }
-  
+
   .top-image {
     height: 200px;
   }
@@ -95,7 +95,7 @@ mat-card {
 a.no-underline {
   color: black;
   text-decoration: none;
-  margin-left: -15px; 
+  margin-left: -15px;
 }
 
 a.no-underline:hover {
@@ -110,5 +110,54 @@ a.no-underline:hover {
 }
 
 img {
-  margin-top: 13px; 
+  margin-top: 13px;
+}
+
+.img-container {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.img-container img {
+  width: 100%;
+}
+
+.img-container:hover {
+  opacity: 0.6;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.img-container:hover .hover-text {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.hover-text {
+  color: white;
+  font-size: 28px;
+  position: absolute;
+  top: 32.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+}
+
+@media (min-width: 500px) {
+  .img-container {
+    height: 65%;
+  }
+  .hover-text {
+    font-size: 36px;
+  }
 }
