@@ -74,12 +74,17 @@
           <div class="analysis-data">
             {{trendInfo.longRangeCorrelation}}
           </div>
-          <b>Related companies:</b>
+          <b>Related Companies:</b>
           <div class="analysis-related">
             <ul>
               <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
             </ul>
           </div>
+          <hr>
+          <p style="margin-top: 36px;">
+            <strong>Note:</strong>
+            Visualising data on news within the past few days may not give the best results, since markets may take some time to adjust.
+          </p>
         </mat-card-content>
         <br>
       </mat-card>
