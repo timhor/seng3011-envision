@@ -37,7 +37,7 @@ export class HomeComponent {
         }
         this.callerService.getNewsInfo(newsParams).subscribe((result) => {
           this.newsResponse = result;
-          const news = new NewsInfo('', '', '', '', '', '', instrument);;
+          const news = new NewsInfo('', '', '', '', '', '', instrument);
           let index = 0;
           // Check if any articles otherwise continue to next instrument
           if (this.newsResponse['totalResults'] === 0) {

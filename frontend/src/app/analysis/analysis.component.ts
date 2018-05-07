@@ -6,7 +6,6 @@ import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
 
 
-
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
@@ -27,7 +26,6 @@ export class AnalysisComponent implements OnInit {
     if (this.newsInfo === null) {
       this.router.navigate(['home']);
     }
-    console.log(this.newsInfo.date);
     this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
   }
 
@@ -41,7 +39,9 @@ export class AnalysisComponent implements OnInit {
     const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
     params = params.append('instrument_id', companyCode + ',' + index);
-    const tempDate: string = date.slice(0, 10);
+
+    // HACK: Please fix properly after
+    const tempDate = date.split('/').reverse().join('-');
     params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
