@@ -19,7 +19,7 @@
         <mat-icon>show_chart</mat-icon>
         <span class="navLinkText">Trending</span>
       </a>
-      <a mat-list-item routerLink="/about_us" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+      <a mat-list-item routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>info_outline</mat-icon>
         <span class="navLinkText">About</span>
       </a>
@@ -36,13 +36,13 @@
           <form class="search-form" (ngSubmit)="onSubmit()">
             <input matInput #searchBox
               type="search" placeholder="ASX Code / Company Name" [(ngModel)]="company" name="company"
-              required [matAutocomplete]="auto" (keyup)="updateAutocomplete(searchBox.value)">
+              required [matAutocomplete]="auto" (input)="updateAutocomplete(searchBox.value)">
             <button class="search-button" type="submit">
               <mat-icon>search</mat-icon>
             </button>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let company of companySuggestions" [value]="company">
-                {{ company }}
+              <mat-option *ngFor="let company of companySuggestions" [value]="company.name">
+                {{ company.name }}  ({{ company.code }})
               </mat-option>
             </mat-autocomplete>
           </form>

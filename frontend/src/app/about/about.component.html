@@ -1,0 +1,30 @@
+<div>
+  <mat-card>
+    <h2>Website</h2>
+    <p>
+      Envision is a website for retrospective analyisis on the business impact of news events.
+    </p>
+    <p>
+      It uses the <a href='https://newsapi.org/' target="_blank">News API</a> service to retrieve news and the
+      <a href='http://envision-api.ap-southeast-2.elasticbeanstalk.com/' target="_blank">Envision API</a> for stock data.
+    </p>
+    <p>
+      <strong>Note:</strong>
+      Visualising data on news within the past few days may not give the best results since markets may take some time to adjust.
+    </p>
+  </mat-card>
+  <h2>Team</h2>
+  <div id="teamMemberSection">
+    <div *ngFor="let member of teamMembers">
+      <div class="member-card">
+        <mat-card>
+          <img src="{{ member.imageUrl }}">
+          <p>
+          {{ member.name }}<br>
+          {{ member.zID }}
+          </p>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

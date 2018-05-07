@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Company } from './company';
+import * as Fuse from 'fuse.js';
 
 @Injectable()
 export class CallerService {
@@ -94,7 +95,7 @@ export class CallerService {
 
   getNewsInfo(params: HttpParams) {
     console.log(params);
-    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * 4)]);
+    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * this.newsAPIKeys.length)]);
     return this.http.get(this.newsInfo, { params : params });
   }
 
@@ -107,6 +108,23 @@ export class CallerService {
     return this.http.get('../assets/ASXListedCompanies.json');
   }
 
+  getRandomSample(sourceArray: Company[], neededElements: Number) {
+    const result = [];
+    for (let i = 0; i < neededElements; i++) {
+        result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
+    }
+    return result;
+  }
+
+  instrumentFuzzySearch(queryString: string) {
+    queryString = queryString.toUpperCase();
+    const options = {
+        keys: ['name', 'code'],
+    };
+    const fuse = new Fuse(this.companies, options);
+    return <Company[]> fuse.search(queryString).slice(0, 5);
+  }
+
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
   shuffleArray(array: string[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -116,14 +134,6 @@ export class CallerService {
       array[j] = temp;
     }
     return array;
-  }
-
-  // because fuzzysearch ~= random elements
-  instrumentFuzzySearch(queryString: string) {
-    const tempArray: string[] = this.companies
-      .map((x: Company) => x.name)
-      .filter((x: string) => x.toLowerCase().indexOf(queryString) !== -1);
-    return this.shuffleArray(tempArray).slice(0, 7);
   }
 
   // Gets the stock index we want to compare to
