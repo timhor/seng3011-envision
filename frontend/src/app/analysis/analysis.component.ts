@@ -72,7 +72,7 @@ export class AnalysisComponent implements OnInit {
             trendInfo.hidden = false;
             console.log(trendInfo);
         } catch (error) {
-          trendInfo.analysis = 'Company stock information does not exist sorry!';
+          trendInfo.analysis = 'Company stock information does not exist, sorry!';
           trendInfo.error = true;
         }
       }
