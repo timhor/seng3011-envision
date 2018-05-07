@@ -101,10 +101,10 @@ export class AnalysisComponent implements OnInit {
       instrument['Data'].forEach(rec => {
         if (rec['Return_pct'] !== undefined) {
           console.log('Checking: ' + Number((rec.Return_pct * 100).toFixed(4)));
-          returnPctData.push(Number((rec.Return_pct * 100).toFixed(4)));
+          returnPctData.push(Number((rec['Return_pct'] * 100).toFixed(4)));
         }
-        if (rec.CM_Return_pct !== undefined) {
-          cmReturnPctData.push(Number((rec.CM_Return_pct * 100).toFixed(4)));
+        if (rec['CM_Return_pct'] !== undefined) {
+          cmReturnPctData.push(Number((rec['CM_Return_pct'] * 100).toFixed(4)));
         }
 
         let mydate: Date = new Date(rec.Date);
