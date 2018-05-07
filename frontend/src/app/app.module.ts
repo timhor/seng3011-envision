@@ -19,6 +19,9 @@ import { ChartModule } from 'angular2-chartjs';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { AboutComponent } from './about/about.component';
 
+import 'hammerjs';
+import 'chartjs-plugin-zoom';
+
 export const serviceProviders = [
   CallerService
 ];

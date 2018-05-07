@@ -19,10 +19,14 @@ export class AnalysisComponent implements OnInit {
   public showingOverview = true;
   public showingGraph1 = false;
   public showingGraph2 = false;
-  public type;
-  public data;
-  public options;
+  public graph_type;
+  public rtn_data;
+  public rtn_options;
+  public cm_rtn_data;
+  public cm_rtn_options;
   public positiveSummary = false;
+  public loadingReturnsPct = true;
+  public loadingCMReturnsPct = true;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -105,8 +109,11 @@ export class AnalysisComponent implements OnInit {
     let returnPctData = [];
     let cmReturnPctData = [];
 
-    let shouldDrawCMReturnsPct = false;
     let shouldDrawReturnsPct = false;
+    let shouldDrawCMReturnsPct = false;
+
+    this.loadingReturnsPct = true;
+    this.loadingCMReturnsPct = true;
 
     // Populate data arrays
     this.trendInfo['rawQuery']['Company_Returns'].forEach(instrument => {
@@ -163,44 +170,44 @@ export class AnalysisComponent implements OnInit {
 
       // Build returns percentage graph
       if (shouldDrawReturnsPct === true) {
-        const ctx = <HTMLCanvasElement> document.getElementById('returnsGraph');
-        const context = ctx.getContext('2d');
-        const rtnPctChart = new Chart(
-          context,
-          this.buildGraphData(dates, returnPercentageDatasets, this.buildGraphOptions('Returns Percentage', 'Returns (%)'))
-        );
+        const dataArray = new Array();
+        for (const key in returnPercentageDatasets) {
+          if (returnPercentageDatasets[key]) {
+            const val = returnPercentageDatasets[key];
+            dataArray.push(val[0]);
+          }
+        }
+        this.graph_type = 'line';
+        this.rtn_data = {
+          labels: dates,
+          datasets: dataArray
+        };
+        this.rtn_options = this.buildGraphOptions('Returns Percentage', 'Returns (%)');
       }
 
+      this.loadingReturnsPct = false;
 
       // Build CM returns percentage graph
       if (shouldDrawCMReturnsPct) {
-        const ctx = <HTMLCanvasElement> document.getElementById('cmReturnsGraph');
-        const context = ctx.getContext('2d');
-        const cmRtnPctChart = new Chart(
-          context,
-          this.buildGraphData(dates, cmReturnPercentageDatasets, this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
-        );
+        const dataArray = new Array();
+        for (const key in cmReturnPercentageDatasets) {
+          if (cmReturnPercentageDatasets[key]) {
+            const val = cmReturnPercentageDatasets[key];
+            dataArray.push(val[0]);
+          }
+        }
+        this.graph_type = 'line';
+        this.cm_rtn_data = {
+          labels: dates,
+          datasets: dataArray
+        };
+        this.cm_rtn_options = this.buildGraphOptions('CM Returns Percentage', 'Returns (%)');
       }
+
+      this.loadingCMReturnsPct = false;
+
       return;
     });
-  }
-
-  private buildGraphData(dates: Array<any>, datasets, graphOptions: any) {
-      const dataArray = new Array();
-      for (const key in datasets) {
-        if (datasets[key]) {
-          const val = datasets[key];
-          dataArray.push(val[0]);
-        }
-      }
-      return {
-          type: 'line',
-          data: {
-              labels: dates,
-              datasets: dataArray
-          },
-          options: graphOptions
-      };
   }
 
   private buildGraphOptions(name, yLabel) {

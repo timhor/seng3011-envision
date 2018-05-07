@@ -50,8 +50,7 @@ a.no-underline:hover {
 
 .graph-card {
   font-family: 'Open Sans', sans-serif;
-  height: 250px;
-
+  height: 280px;
 }
 
 .news-card {
@@ -61,12 +60,12 @@ a.no-underline:hover {
 
 .analysis-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 891px;
 }
 
 .expanded-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 42vw;
 }
 
 .img-container {
@@ -166,5 +165,21 @@ mat-chip:not(.mat-basic-chip) {
 }
 
 mat-progress-spinner {
-  margin: 200px auto 0;
+  margin: 0 auto;
+}
+
+.analysis-card > mat-progress-spinner {
+  margin-top: 200px;
+}
+
+.graph-card > mat-progress-spinner {
+  margin-top: 90px;
+}
+
+:host ::ng-deep .chartjs-render-monitor {
+  margin-top: 10px;
+}
+
+.expand-button {
+  float: right;
 }
