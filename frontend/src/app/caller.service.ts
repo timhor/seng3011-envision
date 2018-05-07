@@ -94,7 +94,7 @@ export class CallerService {
 
   getNewsInfo(params: HttpParams) {
     console.log(params);
-    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * 4)]);
+    params = params.append('apiKey', this.newsAPIKeys[Math.floor(Math.random() * this.newsAPIKeys.length)]);
     return this.http.get(this.newsInfo, { params : params });
   }
 
