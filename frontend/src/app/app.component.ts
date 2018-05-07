@@ -69,4 +69,13 @@ export class AppComponent implements OnInit {
   onDeactivate() {
     window.scrollTo(0, 0);
   }
+
+  openGroup(group: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          'name': group
+      }
+    };
+    this.router.navigate(['group'], navigationExtras);
+  }
 }

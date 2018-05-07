@@ -22,7 +22,7 @@
         <mat-icon>arrow_drop_down</mat-icon>
       </a>
       <mat-menu #menu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item *ngFor="let group of groups">{{ group }}</button>
+        <button mat-menu-item *ngFor="let group of groups" (click)="openGroup(group)">{{ group }}</button>
       </mat-menu>
       <a mat-list-item routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>info_outline</mat-icon>
