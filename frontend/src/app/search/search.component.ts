@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material';
 import { Router } from '@angular/router';
+import { NewsInfo } from '../newsinfo';
 
 @Component({
   selector: 'app-search',
@@ -63,7 +64,7 @@ export class SearchComponent {
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
-        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': this.query};
+        const news = new NewsInfo('', '', '', '', '', '', this.query);
         // TODO: search for business name from query and set it as instrument
         news.title = e['title'];
         news.url = e['url'];

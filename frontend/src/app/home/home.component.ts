@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { CallerService } from '../caller.service';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NewsInfo } from '../newsinfo';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,7 @@ export class HomeComponent {
         }
         this.callerService.getNewsInfo(newsParams).subscribe((result) => {
           this.newsResponse = result;
-          const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': instrument};
+          const news = new NewsInfo('', '', '', '', '', '', instrument);
           let index = 0;
           // Check if any articles otherwise continue to next instrument
           if (this.newsResponse['totalResults'] === 0) {
