@@ -18,6 +18,8 @@ export class SearchComponent {
   public panelState = false;
   public searchedNews: any[] = [];
   private pageSize = '10';
+  public sortOptions: string[] = ['Relevance', 'Newest', 'Popularity'];
+  public sortBy = '';
 
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
 
