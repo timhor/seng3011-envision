@@ -43,20 +43,43 @@
       </div>
     </div>
     <div class="col-md-4">
-        <mat-card class="analysis-card" *ngIf="trendInfo.error">
-            Analysis<br>
-            Summary: {{trendInfo.analysis}}<br>
-        </mat-card>
+      <mat-card class="analysis-card" *ngIf="trendInfo.error">
+        <h2 class="analysis-title">Analysis</h2>
+        <mat-card-content class="analysis-content">
+          <b>Summary:</b>
+          <div class="analysis-data">
+            {{trendInfo.analysis}}
+          </div>
+        </mat-card-content>
+      </mat-card>
       <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
-        Analysis<br>
-        Summary: {{trendInfo.analysis}}<br>
-        Cumulative Returns: {{trendInfo.cumulativeReturn}}<br>
-        5-day Correlation: {{trendInfo.shortRangeCorrelation}}<br>
-        20-day Correlation: {{trendInfo.longRangeCorrelation}}<br>
-        Related companies:
-        <div class="container" *ngFor="let related of trendInfo.relatedCompanies">
-          - {{related}}<br>
-        </div>
+        <h2 class="analysis-title">Analysis</h2>
+        <mat-card-content class="analysis-content">
+          <b>Summary:</b>
+          <div class="analysis-data positive-data" *ngIf="positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <div class="analysis-data negative-data" *ngIf="!positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <b>Cumulative Returns:</b>
+          <div class="analysis-data">
+            {{trendInfo.cumulativeReturn}}
+          </div>
+          <b>5-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.shortRangeCorrelation}}
+          </div>
+          <b>20-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.longRangeCorrelation}}
+          </div>
+          <b>Related Companies:</b>
+          <div class="container" *ngFor="let related of trendInfo.relatedCompanies">
+              - {{related}}<br>
+          </div>
+        </mat-card-content>
+        <br>
       </mat-card>
     </div>
   </div>

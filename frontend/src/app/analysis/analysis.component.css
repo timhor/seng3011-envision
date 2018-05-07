@@ -131,3 +131,31 @@ mat-chip {
 mat-chip:not(.mat-basic-chip) {
   padding: 2px 5px;
 }
+
+.analysis-title {
+  font-family: 'Francois One', sans-serif;
+  font-size: 36px;
+  text-decoration: underline salmon solid;
+  text-align: center;
+}
+
+.analysis-content {
+  font-size: 14px;
+  text-align: left;
+}
+
+.analysis-data {
+  font-family: 'Courier New', Courier, monospace;
+  font-style: italic;
+  margin-bottom: 7px;
+  padding: 7px;
+  text-align: center;
+}
+
+.positive-data {
+  color: green;
+}
+
+.negative-data {
+  color: red;
+}

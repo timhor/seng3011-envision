@@ -16,6 +16,11 @@ script:
   - pipenv run python tests.py
   # - pylint backend/libs/*.py
 
+branches:
+  only:
+  - master
+  - release
+
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAI3T7JQ4K3VCCD7VA

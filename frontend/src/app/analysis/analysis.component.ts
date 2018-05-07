@@ -18,6 +18,7 @@ export class AnalysisComponent implements OnInit {
   public showingOverview = true;
   public showingGraph1 = false;
   public showingGraph2 = false;
+  public positiveSummary = false;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -102,8 +103,10 @@ export class AnalysisComponent implements OnInit {
     let outputString = '';
     if (trend === 1) {
       outputString += 'Positive growth ';
+      this.positiveSummary = true;
     } else {
       outputString += 'Negative growth ';
+      this.positiveSummary = false;
     }
 
     switch (correlation) {
