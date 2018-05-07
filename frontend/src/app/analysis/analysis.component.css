@@ -176,3 +176,7 @@ mat-progress-spinner {
 .graph-card > mat-progress-spinner {
   margin-top: 90px;
 }
+
+.expandBtn {
+  margin-top: 24px;
+}

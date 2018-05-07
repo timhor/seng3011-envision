@@ -31,7 +31,7 @@
             <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
             <canvas id="returnsGraph"></canvas>
             <div *ngIf="!loadingReturnsPct">
-              <button mat-icon-button (click)="expandGraph1()">
+              <button mat-icon-button class="expandBtn" (click)="expandGraph1()">
                 <mat-icon>call_made</mat-icon>
               </button>
             </div>
@@ -42,7 +42,7 @@
             <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
             <canvas id="cmReturnsGraph"></canvas>
             <div *ngIf="!loadingReturnsPct">
-              <button mat-icon-button (click)="expandGraph2()">
+              <button mat-icon-button class="expandBtn" (click)="expandGraph2()">
                 <mat-icon>call_made</mat-icon>
               </button>
             </div>
