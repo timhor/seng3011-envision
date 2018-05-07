@@ -1,0 +1,18 @@
+mat-card {
+  margin: 50px 150px;
+}
+
+#teamMemberSection {
+  margin-left: 138px;
+}
+
+.member-card > mat-card {
+  width: 158px;
+  height: 204px;
+  margin: 0 20px;
+  float: left; /* to keep them in one row */
+}
+
+img {
+  width: 150px;
+}
