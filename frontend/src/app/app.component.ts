@@ -62,6 +62,10 @@ export class AppComponent implements OnInit {
   }
 
   updateAutocomplete(q: string) {
+    // Remove everything after '.' for CBA.AX cases otherwise, CBA will not be an option
+    q = q.replace(/\..*/, '');
+    // Remove everything before ':' for ASX:CBA cases
+    q = q.replace(/.*\:/, '');
     this.companySuggestions = q ? this.callerService.instrumentFuzzySearch(q) : [];
     return this.companySuggestions;
   }

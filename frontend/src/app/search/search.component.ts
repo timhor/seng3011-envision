@@ -63,8 +63,11 @@ export class SearchComponent {
       }
     }
 
-    // Remove everything after '.' otherwise if given CBA.AX, CBA will not be an option
+
+    // Remove everything after '.' for CBA.AX cases otherwise, CBA will not be an option
     this.query = this.query.replace(/\..*/, '');
+    // Remove everything before ':' for ASX:CBA cases
+    this.query = this.query.replace(/.*\:/, '');
     this.query = this.query.toUpperCase();
     const companies: Company[] = this.callerService.instrumentFuzzySearch(this.query);
     let instrument = '';
