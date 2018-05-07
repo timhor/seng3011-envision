@@ -177,10 +177,10 @@ mat-progress-spinner {
   margin-top: 90px;
 }
 
-.expandBtn {
-  margin-top: 24px;
-}
-
 :host ::ng-deep .chartjs-render-monitor {
   margin-top: 10px;
+}
+
+.expand-button {
+  margin-top: 24px;
 }
