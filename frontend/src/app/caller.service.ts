@@ -172,4 +172,25 @@ export class CallerService {
     return this.instrument;
   }
 
+  getRelatedCompanies(companyName: string) {
+    let industry: string = null;
+    const relatedComps: Array<string> = [];
+    this.companies.forEach(e => {
+      if (e.name === companyName) {
+        industry = e.group;
+      }
+    });
+
+    if (industry === null) {
+      return relatedComps;
+    }
+
+    this.companies.forEach(e => {
+      if (e.group === industry) {
+        relatedComps.push(e.name);
+      }
+    });
+    return this.shuffleArray(relatedComps);
+  }
+
 }
