@@ -168,3 +168,8 @@ mat-chip:not(.mat-basic-chip) {
 mat-progress-spinner {
   margin: 200px auto 0;
 }
+
+.expand-button {
+  display: flex;
+  float: right;
+}
