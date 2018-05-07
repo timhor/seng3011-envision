@@ -97,6 +97,27 @@ export class CallerService {
     return this.http.get('../assets/ASXListedCompanies.json');
   }
 
+  getRandomSample(sourceArray:Company[], neededElements:Number) {
+    var result = [];
+    for (var i = 0; i < neededElements; i++) {
+        result.push(sourceArray[Math.floor(Math.random()*sourceArray.length)]);
+    }
+    return result;
+  }
+
+  // because fuzzysearch ~= random elements
+  instrumentFuzzySearch(queryString: string) {
+    queryString = queryString.toUpperCase();
+    const tempArray: Company[] = this.companies
+      .filter((comp: Company) => (comp.name.indexOf(queryString) !== -1) || comp.code.indexOf(queryString) !== -1);
+    if (tempArray.length < 5){
+        return tempArray.sort(() => .5 - Math.random());
+    }
+    else{
+        return this.getRandomSample(tempArray, 5).sort(() => .5 - Math.random());
+    }
+  }
+
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
   shuffleArray(array: string[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -106,14 +127,6 @@ export class CallerService {
       array[j] = temp;
     }
     return array;
-  }
-
-  // because fuzzysearch ~= random elements
-  instrumentFuzzySearch(queryString: string) {
-    const tempArray: string[] = this.companies
-      .map((x: Company) => x.name)
-      .filter((x: string) => x.toLowerCase().indexOf(queryString) !== -1);
-    return this.shuffleArray(tempArray).slice(0, 7);
   }
 
   // Gets the stock index we want to compare to

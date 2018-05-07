@@ -41,8 +41,8 @@
               <mat-icon>search</mat-icon>
             </button>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let company of companySuggestions" [value]="company">
-                {{ company }}
+              <mat-option *ngFor="let company of companySuggestions" [value]="company.name">
+                {{ company.name }}  ({{ company.code }})
               </mat-option>
             </mat-autocomplete>
           </form>
