@@ -20,6 +20,9 @@ export class AnalysisComponent implements OnInit {
   public showingOverview = true;
   public showingGraph1 = false;
   public showingGraph2 = false;
+  public type;
+  public data;
+  public options;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -167,14 +170,14 @@ export class AnalysisComponent implements OnInit {
     });
   }
 
-  private buildGraphData(dates: Array<any>, datasets: Array<any>, graphOptions: any) {
+  private buildGraphData(dates: Array<any>, datasets, graphOptions: any) {
       let dataArray = new Array();
-      datasets.forEach((val) => {
-        dataArray.push(val[0]);
-      });
-      // jQuery.each(datasets, (i,val) => {
-      //     dataArray.push(val[0]);
-      // });
+      for (const key in datasets) {
+        if (datasets[key]) {
+          const val = datasets[key];
+          dataArray.push(val[0]);
+        }
+      }
       return {
           type: 'line',
           data: {
