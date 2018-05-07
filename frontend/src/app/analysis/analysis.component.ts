@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { TrendInfo } from './trendinfo';
 import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
+import { Chart } from '../../assets/Chart.bundle.min.js';
+import { createText } from '@angular/core/src/view/text';
 
 
 @Component({
@@ -67,11 +69,168 @@ export class AnalysisComponent implements OnInit {
       trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
       trendInfo.analysis = this.stateAnalysis(trendInfo);
       trendInfo.hidden = false;
+
+      this.generateGraphs();
+      console.log('This trendInfo' + this.trendInfo);
       console.log(trendInfo);
     });
     return trendInfo;
 
   }
+
+  private generateGraphs() {
+    let dates: Array<any>;
+
+    let returnPercentageDatasets: Array<any>;
+    let cmReturnPercentageDatasets: Array<any>;
+
+    let returnPctData: Array<any>;
+    let cmReturnPctData: Array<any>;
+
+    let shouldDrawCMReturnsPct = false;
+    let shouldDrawReturnsPct = false;
+
+    // Populate data arrays
+    this.trendInfo['rawQuery']['Company_Returns'].forEach(instrument => {
+      // Convert API Data to Array
+      returnPctData = null;
+      cmReturnPctData = null;
+
+      let instrumentColor: any = this.getRandomColor();
+
+      instrument['Data'].forEach(rec => {
+        if (rec['Return_pct'] !== undefined) {
+          console.log('Checking: ' + Number((rec.Return_pct * 100).toFixed(4)));
+          returnPctData.push(Number((rec.Return_pct * 100).toFixed(4)));
+        }
+        if (rec.CM_Return_pct !== undefined) {
+          cmReturnPctData.push(Number((rec.CM_Return_pct * 100).toFixed(4)));
+        }
+
+        let mydate: Date = new Date(rec.Date);
+        let formattedDate: string = mydate.toLocaleDateString();
+        if (dates.indexOf(formattedDate) === -1) {
+          dates.push(formattedDate);
+        }
+      });
+
+      // Add datasets for percentage returns graph
+      if (returnPctData.length > 0) {
+        returnPercentageDatasets[instrument['InstrumentID']] = null;
+        returnPercentageDatasets[instrument['InstrumentID']].push(
+          {
+            label: instrument['InstrumentID'],
+            data: returnPctData,
+            fill: false,
+            borderColor: instrumentColor,
+            lineTension: 0.1,
+          }
+        );
+        shouldDrawReturnsPct = true;
+      }
+
+      if (cmReturnPctData.length > 0) {
+        cmReturnPercentageDatasets[instrument.InstrumentID] = new Array();
+        cmReturnPercentageDatasets[instrument.InstrumentID].push(
+          {
+            label: instrument['InstrumentID'],
+            data: cmReturnPctData,
+            fill: false,
+            borderColor: instrumentColor,
+            lineTension: 0.1,
+          }
+        );
+        shouldDrawCMReturnsPct = true;
+      }
+
+      // Build returns percentage graph
+      if (shouldDrawReturnsPct === true) {
+        let ctx = <HTMLCanvasElement> document.getElementById('returnsGraph');
+        let context = ctx.getContext('2d');
+        let rtnPctChart = new Chart(
+          context,
+          this.buildGraphData(dates, returnPercentageDatasets, this.buildGraphOptions('Returns Percentage', 'Returns (%)'))
+        );
+      }
+
+
+      // Build CM returns percentage graph
+      if (shouldDrawCMReturnsPct) {
+        let ctx = <HTMLCanvasElement> document.getElementById('cmReturnsGraph');
+        let context = ctx.getContext('2d');
+        let cmRtnPctChart = new Chart(
+          context,
+          this.buildGraphData(dates, cmReturnPercentageDatasets, this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
+        );
+      }
+      return;
+    });
+  }
+
+  private buildGraphData(dates: Array<any>, datasets: Array<any>, graphOptions: any) {
+      let dataArray = new Array();
+      datasets.forEach((val) => {
+        dataArray.push(val[0]);
+      });
+      // jQuery.each(datasets, (i,val) => {
+      //     dataArray.push(val[0]);
+      // });
+      return {
+          type: 'line',
+          data: {
+              labels: dates,
+              datasets: dataArray
+          },
+          options: graphOptions
+      };
+  }
+
+  private buildGraphOptions(name, yLabel) {
+    const options = {
+      responsive: true,
+      title: {
+        display: true,
+        text: name
+      },
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Days'
+              }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+              },
+          scaleLabel: {
+            display: true,
+            labelString: yLabel
+          }
+        }]
+      },
+      pan: {
+        enabled: true,
+        mode: 'x'
+      },
+      zoom: {
+        enabled: true,
+        mode: 'x',
+        sensitivity: 3,
+      }
+    };
+    return options;
+  }
+
+  private getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+  }
+
 
   private stateAnalysis(trendInfo: any) {
     const trend = trendInfo.rawQuery['Company_Returns'][0]['Data'][5]['CM_Return_pct'] > 0 ? 1 : -1;
@@ -113,7 +272,7 @@ export class AnalysisComponent implements OnInit {
     }
 
     if (coincidenceIndex) {
-      outputString += ', however can be a coincidence as the trend was similar'
+      outputString += ', however can be a coincidence as the trend was similar';
     }
 
     return outputString;
