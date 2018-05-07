@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material';
 import { Router } from '@angular/router';
+import { Company } from '../company';
 
 @Component({
   selector: 'app-search',
@@ -60,11 +61,21 @@ export class SearchComponent {
         newsParams = newsParams.append('to', this.getDateString(to));
       }
     }
+
+    // Remove everything after '.' otherwise if given CBA.AX, CBA will not be an option
+    this.query = this.query.replace(/\..*/, '');
+    this.query = this.query.toUpperCase();
+    const companies: Company[] = this.callerService.instrumentFuzzySearch(this.query);
+    let instrument = '';
+    companies.forEach(c => {
+      if (c.name.includes(this.query) || c.code.includes(this.query)) {
+        instrument = c.name;
+      }
+    });
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
-        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': this.query};
-        // TODO: search for business name from query and set it as instrument
+        const news = {'title': '', 'description': '', 'author': '', imageUrl: '', url: '', 'date': '', 'instrument': instrument};
         news.title = e['title'];
         news.url = e['url'];
         news.author = e['author'];
