@@ -101,17 +101,17 @@ export class CallerService {
   getRandomSample(sourceArray:Company[], neededElements:Number) {
     var result = [];
     for (var i = 0; i < neededElements; i++) {
-        result.push(sourceArray[Math.floor(Math.random()*sourceArray.length)]);
+        result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
     }
     return result;
   }
 
   instrumentFuzzySearch(queryString: string) {
     queryString = queryString.toUpperCase();
-    var options = {
+    const options = {
         keys: ['name', 'code'],
-      };
-    var fuse = new Fuse(this.companies, options);
+    };
+    const fuse = new Fuse(this.companies, options);
     return <Company[]> fuse.search(queryString).slice(0,5);
   }
 
