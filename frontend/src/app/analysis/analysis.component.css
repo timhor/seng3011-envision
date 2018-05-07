@@ -182,5 +182,5 @@ mat-progress-spinner {
 }
 
 .expand-button {
-  margin-top: 24px;
+  float: right;
 }
