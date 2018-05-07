@@ -166,5 +166,13 @@ mat-chip:not(.mat-basic-chip) {
 }
 
 mat-progress-spinner {
-  margin: 200px auto 0;
+  margin: 0 auto;
+}
+
+.analysis-card > mat-progress-spinner {
+  margin-top: 200px;
+}
+
+.graph-card > mat-progress-spinner {
+  margin-top: 90px;
 }

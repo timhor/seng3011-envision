@@ -23,6 +23,8 @@ export class AnalysisComponent implements OnInit {
   public data;
   public options;
   public positiveSummary = false;
+  public loadingReturnsPct = true;
+  public loadingCMReturnsPct = true;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -105,8 +107,11 @@ export class AnalysisComponent implements OnInit {
     let returnPctData = [];
     let cmReturnPctData = [];
 
-    let shouldDrawCMReturnsPct = false;
     let shouldDrawReturnsPct = false;
+    let shouldDrawCMReturnsPct = false;
+
+    this.loadingReturnsPct = true;
+    this.loadingCMReturnsPct = true;
 
     // Populate data arrays
     this.trendInfo['rawQuery']['Company_Returns'].forEach(instrument => {
@@ -171,6 +176,7 @@ export class AnalysisComponent implements OnInit {
         );
       }
 
+      this.loadingReturnsPct = false;
 
       // Build CM returns percentage graph
       if (shouldDrawCMReturnsPct) {
@@ -181,6 +187,9 @@ export class AnalysisComponent implements OnInit {
           this.buildGraphData(dates, cmReturnPercentageDatasets, this.buildGraphOptions('Cumulative Returns Percentage', 'Returns (%)'))
         );
       }
+
+      this.loadingCMReturnsPct = false;
+
       return;
     });
   }
