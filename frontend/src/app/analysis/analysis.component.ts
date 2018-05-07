@@ -3,7 +3,7 @@ import { CallerService } from '../caller.service';
 import { Router } from '@angular/router';
 import { TrendInfo } from './trendinfo';
 import { HttpParams } from '@angular/common/http';
-
+import { NewsInfo } from '../newsinfo';
 
 
 @Component({
@@ -13,11 +13,12 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AnalysisComponent implements OnInit {
 
-  public newsInfo: any = null;
+  public newsInfo: NewsInfo = null;
   public trendInfo: TrendInfo = null;
   public showingOverview = true;
   public showingGraph1 = false;
   public showingGraph2 = false;
+  public positiveSummary = false;
 
   constructor(private callerService: CallerService, private router: Router) {}
 
@@ -26,7 +27,6 @@ export class AnalysisComponent implements OnInit {
     if (this.newsInfo === null) {
       this.router.navigate(['home']);
     }
-    console.log(this.newsInfo.date);
     this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
   }
 
@@ -40,11 +40,14 @@ export class AnalysisComponent implements OnInit {
     const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
     params = params.append('instrument_id', companyCode + ',' + index);
-    const tempDate: string = date.slice(0, 10);
+
+    // HACK: Please fix properly after
+    const tempDate = date.split('/').reverse().join('-');
     params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
       trendInfo.rawQuery = result;
+      console.log(result);
       let indexTS: Array<any>;
       let companyTS: Array<any>;
 
@@ -59,6 +62,7 @@ export class AnalysisComponent implements OnInit {
           indexTS = array;
         } else {
           companyTS = array;
+          this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
         }
       }
       // Pearson correlation coefficient
@@ -68,6 +72,7 @@ export class AnalysisComponent implements OnInit {
       trendInfo.hidden = false;
       console.log(trendInfo);
     });
+    trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
     return trendInfo;
 
   }
@@ -93,8 +98,10 @@ export class AnalysisComponent implements OnInit {
     let outputString = '';
     if (trend === 1) {
       outputString += 'Positive growth ';
+      this.positiveSummary = true;
     } else {
       outputString += 'Negative growth ';
+      this.positiveSummary = false;
     }
 
     switch (correlation) {

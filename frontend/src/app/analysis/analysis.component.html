@@ -43,8 +43,36 @@
       </div>
     </div>
     <div class="col-md-4">
-      <mat-card class="analysis-card"> <!-- *ngIf="!trendInfo.hidden" -->
-        <!-- {{trendInfo.analysis}} -->
+      <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
+        <h2 class="analysis-title">Analysis</h2>
+        <mat-card-content class="analysis-content">
+          <b>Summary:</b>
+          <div class="analysis-data positive-data" *ngIf="positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <div class="analysis-data negative-data" *ngIf="!positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <b>Cumulative Returns:</b>
+          <div class="analysis-data">
+            {{trendInfo.cumulativeReturn}}
+          </div>
+          <b>5-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.shortRangeCorrelation}}
+          </div>
+          <b>20-day Correlation:</b>
+          <div class="analysis-data">
+            {{trendInfo.longRangeCorrelation}}
+          </div>
+          <b>Related companies:</b>
+          <div class="analysis-related">
+            <ul>
+              <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
+            </ul>
+          </div>
+        </mat-card-content>
+        <br>
       </mat-card>
     </div>
   </div>

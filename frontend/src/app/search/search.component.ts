@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material';
 import { Router } from '@angular/router';
 import { Company } from '../company';
+import { NewsInfo } from '../newsinfo';
 
 @Component({
   selector: 'app-search',

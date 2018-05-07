@@ -3,5 +3,7 @@ export class TrendInfo {
   shortRangeCorrelation: number;
   longRangeCorrelation: number;
   analysis: string;
+  cumulativeReturn: number;
+  relatedCompanies: string[];
   hidden = true;
 }
