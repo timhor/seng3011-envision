@@ -47,10 +47,6 @@ mat-card {
   text-align: left;
 }
 
-.trending-image {
-  height: 400px;
-}
-
 .top-title {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
@@ -66,25 +62,6 @@ mat-card {
   font-size: 15px;
   padding-top:10px;
   text-align: left;
-}
-
-.top-image {
-  height: 100px;
-}
-
-@media only screen and (max-width: 992px) {
-  .top-image {
-    height: 300px;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .trending-image {
-    height: 300px;
-  }
-
-  .top-image {
-    height: 200px;
-  }
 }
 
 .article-author {
@@ -103,21 +80,17 @@ a.no-underline:hover {
 }
 
 .analysis-button {
-  background-color: white; 
-  border: rgb(255, 90, 72) 2px solid; 
+  background-color: white;
+  border: rgb(255, 90, 72) 2px solid;
   border-radius: 5px;
-  color: rgb(255, 90, 72); 
+  color: rgb(255, 90, 72);
   margin-top: 10px;
   padding: 5px;
 }
 
 .analysis-button:hover {
   background-color: rgb(255, 90, 72);
-  color: white; 
-}
-
-img {
-  margin-top: 13px;
+  color: white;
 }
 
 mat-chip {
@@ -160,7 +133,7 @@ mat-chip:not(.mat-basic-chip) {
 
 .hover-text {
   color: white;
-  font-size: 28px;
+  font-size: 24px;
   position: absolute;
   top: 32.5%;
   left: 50%;
@@ -168,13 +141,22 @@ mat-chip:not(.mat-basic-chip) {
   -ms-transform: translate(-50%, -50%);
   text-align: center;
   opacity: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
-@media (min-width: 500px) {
-  .img-container {
+.top-image {
+  height: 100px;
+}
+
+@media (min-width: 800px) {
+  .trending-image {
     height: 65%;
   }
   .hover-text {
     font-size: 36px;
+  }
+  .top-image a .hover-text {
+    font-size: 15px;
+    top: 50%;
   }
 }

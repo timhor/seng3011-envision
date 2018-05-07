@@ -6,7 +6,12 @@
   <div class="row">
     <div class="col-md-7">
       <mat-card>
-        <img class="trending-image" src="{{trendingNews[0]?.imageUrl}}" width="100%">
+        <div class="img-container trending-image">
+          <a href="{{ trendingNews[0]?.url }}" target="_blank">
+            <img src="{{ trendingNews[0]?.imageUrl }}">
+            <div class="hover-text">VISIT ARTICLE</div>
+          </a>
+        </div>
         <mat-card-header class="trending-title">
           <a class="no-underline" href="{{trendingNews[0]?.url}}" target="_blank">{{trendingNews[0]?.title}}</a>
         </mat-card-header>
@@ -41,7 +46,12 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img class="top-image" src="{{trendingNews[1]?.imageUrl}}" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[1]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[1]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[1])" style="text-align: right">
@@ -66,7 +76,12 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img class="top-image" src="{{trendingNews[2]?.imageUrl}}" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[2]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[2]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[2])" style="text-align: right">
@@ -90,7 +105,12 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img class="top-image" src="{{trendingNews[3]?.imageUrl}}" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[3]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[3]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
           <form (ngSubmit)="analyse(trendingNews[3])" style="text-align: right">
@@ -113,7 +133,12 @@
               </mat-card-content>
             </div>
             <div class="col-md-5">
-              <img class="top-image" src="{{trendingNews[4]?.imageUrl}}" width="100%">
+              <div class="img-container top-image">
+                <a href="{{ trendingNews[4]?.url }}" target="_blank">
+                  <img src="{{ trendingNews[4]?.imageUrl }}">
+                  <div class="hover-text">VISIT ARTICLE</div>
+                </a>
+              </div>
             </div>
           </div>
           <mat-chip-list style="text-align:left;">
