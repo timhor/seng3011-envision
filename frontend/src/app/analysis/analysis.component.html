@@ -28,14 +28,15 @@
       <div class="row" style="padding-top:5px;">
         <div class="col-md-6" style="padding: 0px; padding-right:5px;">
           <mat-card class="graph-card">
-            <canvas id="returnsGraph"></canvas>
+            <chart [type]="graph_type" [data]="rtn_data" [options]="rtn_options"></chart>
             <button mat-icon-button (click)="expandGraph1()">
               <mat-icon>call_made</mat-icon>
             </button>
           </mat-card>
         </div>
         <div class="col-md-6" style="padding: 0px; padding-left:5px;">
-          <mat-card class="graph-card"><canvas id="cmReturnsGraph"></canvas>
+          <mat-card class="graph-card">
+            <chart [type]="graph_type" [data]="cm_rtn_data" [options]="cm_rtn_options"></chart>
             <button mat-icon-button (click)="expandGraph2()">
               <mat-icon>call_made</mat-icon>
             </button>
