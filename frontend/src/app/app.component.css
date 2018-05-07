@@ -88,3 +88,8 @@ mat-divider {
   border-left: salmon solid 3px;
   background-color: #202020;
 }
+
+::ng-deep .cdk-overlay-pane {
+  max-width: none;
+  width: 240px;
+}
