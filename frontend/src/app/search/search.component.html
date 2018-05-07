@@ -15,6 +15,12 @@
         <span>End:</span>
         <ng2-flatpickr placeholder="Pick a date!" style="margin: 10px 0;" type="date" required [(ngModel)]="endDate" name="endDate"></ng2-flatpickr>
         <hr class="filterBoxSpacer">
+        <mat-radio-group class="example-radio-group" [(ngModel)]="sortBy">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of sortOptions" [value]="option">
+            {{ option }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <hr class="filterBoxSpacer">
         <div style="margin: 0 auto; text-align:center;">
           <button mat-raised-button (click)="togglePanel()" class="filterSubmitBtn">Update</button>
         </div>
@@ -36,7 +42,7 @@
               <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
             </mat-card-header>
             <mat-card-content class="trending-content">
-              <div style="height: 75px; overflow: scroll; text-overflow: ellipsis;">
+              <div style="height: 75px; overflow-y: scroll; text-overflow: ellipsis;">
                 <p [innerHtml]="resp.description"></p>
               </div>
               <p class="article-author">

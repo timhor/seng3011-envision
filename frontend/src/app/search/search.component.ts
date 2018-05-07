@@ -18,6 +18,8 @@ export class SearchComponent {
   public panelState = false;
   public searchedNews: any[] = [];
   private pageSize = '10';
+  public sortOptions: string[] = ['Relevance', 'Newest', 'Popularity'];
+  public sortBy = 'Relevance';
 
   @ViewChild('filtersPanel') panel: MatExpansionPanel;
 
@@ -41,7 +43,15 @@ export class SearchComponent {
     this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
     newsParams = newsParams.append('q', this.query);
-    newsParams = newsParams.append('sortBy', 'relevance');
+
+    let sortByVal = 'relevancy';
+    if (this.sortBy === this.sortOptions[1]) {
+      sortByVal = 'publishedAt';
+    } else if (this.sortBy === this.sortOptions[2]) {
+      sortByVal = 'popularity';
+    }
+    newsParams = newsParams.append('sortBy', sortByVal);
+
     if (this.startDate !== null && this.endDate !== null) {
       const from = new Date(this.startDate);
       const to = new Date(this.endDate);
@@ -63,7 +73,7 @@ export class SearchComponent {
         }
         news.imageUrl = e['urlToImage'];
         if (e['urlToImage'] === undefined || e['urlToImage'] === '' || e['urlToImage'] === null) {
-          news.imageUrl = 'http://via.placeholder.com/1300x350';
+          news.imageUrl = 'http://via.placeholder.com/900x500';
         }
         news.description = e['description'];
         news.date = new Date(e['publishedAt']).toLocaleDateString();
