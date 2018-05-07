@@ -66,6 +66,7 @@ export class SearchComponent {
     this.query = this.query.replace(/\..*/, '');
     // Remove everything before ':' for ASX:CBA cases
     this.query = this.query.replace(/.*\:/, '');
+    console.log(this.query);
     this.query = this.query.toUpperCase();
     const companies: Company[] = this.callerService.instrumentFuzzySearch(this.query);
     let instrument = '';
