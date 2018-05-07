@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TrendInfo } from './trendinfo';
 import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
-import { Chart } from '../../assets/Chart.bundle.min.js';
+import { Chart } from 'chart.js';
 import { createText } from '@angular/core/src/view/text';
 
 
@@ -79,13 +79,13 @@ export class AnalysisComponent implements OnInit {
   }
 
   private generateGraphs() {
-    let dates: Array<any>;
+    let dates = [];
 
-    let returnPercentageDatasets: Array<any>;
-    let cmReturnPercentageDatasets: Array<any>;
+    let returnPercentageDatasets = [];
+    let cmReturnPercentageDatasets = [];
 
-    let returnPctData: Array<any>;
-    let cmReturnPctData: Array<any>;
+    let returnPctData = [];
+    let cmReturnPctData = [];
 
     let shouldDrawCMReturnsPct = false;
     let shouldDrawReturnsPct = false;
@@ -100,7 +100,7 @@ export class AnalysisComponent implements OnInit {
 
       instrument['Data'].forEach(rec => {
         if (rec['Return_pct'] !== undefined) {
-          console.log('Checking: ' + Number((rec.Return_pct * 100).toFixed(4)));
+          console.log('Checking: ' + Number((rec['Return_pct'] * 100).toFixed(4)));
           returnPctData.push(Number((rec['Return_pct'] * 100).toFixed(4)));
         }
         if (rec['CM_Return_pct'] !== undefined) {
@@ -130,8 +130,8 @@ export class AnalysisComponent implements OnInit {
       }
 
       if (cmReturnPctData.length > 0) {
-        cmReturnPercentageDatasets[instrument.InstrumentID] = new Array();
-        cmReturnPercentageDatasets[instrument.InstrumentID].push(
+        cmReturnPercentageDatasets[instrument['InstrumentID']] = new Array();
+        cmReturnPercentageDatasets[instrument['InstrumentID']].push(
           {
             label: instrument['InstrumentID'],
             data: cmReturnPctData,
