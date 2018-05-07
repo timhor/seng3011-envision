@@ -181,6 +181,6 @@ mat-progress-spinner {
   margin-top: 24px;
 }
 
-canvas {
+:host ::ng-deep .chartjs-render-monitor {
   margin-top: 10px;
 }

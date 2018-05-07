@@ -29,7 +29,7 @@
         <div class="col-md-6" style="padding: 0px; padding-right: 5px;">
           <mat-card class="graph-card">
             <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
-            <canvas id="returnsGraph"></canvas>
+            <chart [type]="graph_type" [data]="rtn_data" [options]="rtn_options"></chart>
             <div *ngIf="!loadingReturnsPct">
               <button mat-icon-button class="expandBtn" (click)="expandGraph1()">
                 <mat-icon>call_made</mat-icon>
@@ -40,7 +40,7 @@
         <div class="col-md-6" style="padding: 0px; padding-left: 5px;">
           <mat-card class="graph-card">
             <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
-            <canvas id="cmReturnsGraph"></canvas>
+            <chart [type]="graph_type" [data]="cm_rtn_data" [options]="cm_rtn_options"></chart>
             <div *ngIf="!loadingReturnsPct">
               <button mat-icon-button class="expandBtn" (click)="expandGraph2()">
                 <mat-icon>call_made</mat-icon>
@@ -105,6 +105,7 @@
         <button mat-icon-button (click)="expandGraph1()">
           <mat-icon>call_received</mat-icon>
         </button>
+        <chart [type]="graph_type" [data]="rtn_data" [options]="rtn_options"></chart>
       </mat-card>
     </div>
   </div>
@@ -117,6 +118,7 @@
         <button mat-icon-button (click)="expandGraph2()">
           <mat-icon>call_received</mat-icon>
         </button>
+        <chart [type]="graph_type" [data]="cm_rtn_data" [options]="cm_rtn_options"></chart>
       </mat-card>
     </div>
   </div>
