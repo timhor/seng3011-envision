@@ -50,8 +50,7 @@ a.no-underline:hover {
 
 .graph-card {
   font-family: 'Open Sans', sans-serif;
-  height: 250px;
-
+  height: 280px;
 }
 
 .news-card {
@@ -61,12 +60,12 @@ a.no-underline:hover {
 
 .analysis-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 891px;
 }
 
 .expanded-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 891px;
 }
 
 .img-container {
@@ -182,5 +181,5 @@ mat-progress-spinner {
 }
 
 .expand-button {
-  margin-top: 24px;
+  float: right;
 }
