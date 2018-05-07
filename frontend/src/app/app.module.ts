@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppMaterialModule } from './app-material/app-material.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +32,7 @@ export const serviceProviders = [
   imports: [
     BrowserModule,
     AppMaterialModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,

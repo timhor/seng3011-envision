@@ -5,7 +5,6 @@ import { TrendInfo } from './trendinfo';
 import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
 
-
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
@@ -124,7 +123,7 @@ export class AnalysisComponent implements OnInit {
     }
 
     if (coincidenceIndex) {
-      outputString += ', however can be a coincidence as the trend was similar'
+      outputString += ', however can be a coincidence as the trend was similar';
     }
 
     return outputString;

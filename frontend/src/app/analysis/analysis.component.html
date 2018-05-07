@@ -43,18 +43,16 @@
       </div>
     </div>
     <div class="col-md-4">
-      <mat-card class="analysis-card" *ngIf="trendInfo.error">
+      <mat-card class="analysis-card">
         <h2 class="analysis-title">Analysis</h2>
-        <mat-card-content class="analysis-content">
+        <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
+        <mat-card-content class="analysis-content" *ngIf="trendInfo.error">
           <b>Summary:</b>
           <div class="analysis-data">
             {{trendInfo.analysis}}
           </div>
         </mat-card-content>
-      </mat-card>
-      <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
-        <h2 class="analysis-title">Analysis</h2>
-        <mat-card-content class="analysis-content">
+        <mat-card-content class="analysis-content" *ngIf="!trendInfo.hidden">
           <b>Summary:</b>
           <div class="analysis-data positive-data" *ngIf="positiveSummary">
             {{trendInfo.analysis}}

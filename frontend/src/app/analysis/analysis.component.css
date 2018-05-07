@@ -164,3 +164,7 @@ mat-chip:not(.mat-basic-chip) {
 .negative-data {
   color: red;
 }
+
+mat-progress-spinner {
+  margin: 200px auto 0;
+}
