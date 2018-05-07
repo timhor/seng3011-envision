@@ -108,9 +108,9 @@ export class CallerService {
     return this.http.get('../assets/ASXListedCompanies.json');
   }
 
-  getRandomSample(sourceArray:Company[], neededElements:Number) {
-    var result = [];
-    for (var i = 0; i < neededElements; i++) {
+  getRandomSample(sourceArray: Company[], neededElements: Number) {
+    const result = [];
+    for (let i = 0; i < neededElements; i++) {
         result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
     }
     return result;
@@ -122,7 +122,7 @@ export class CallerService {
         keys: ['name', 'code'],
     };
     const fuse = new Fuse(this.companies, options);
-    return <Company[]> fuse.search(queryString).slice(0,5);
+    return <Company[]> fuse.search(queryString).slice(0, 5);
   }
 
   // from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
