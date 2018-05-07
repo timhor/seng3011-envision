@@ -38,14 +38,18 @@ export class SearchComponent {
   }
 
   private getQuery() {
+    this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
     newsParams = newsParams.append('q', this.query);
-    newsParams = newsParams.append('sortBy', 'relevancy');
-    // TODO: incorporate dates into search
-    // if (this.startDate !== null && this.endDate !== null) {
-    // newsParams = newsParams.append('from', startDateStr);
-    //   newsParams = newsParams.append('to', endDateStr);
-    // }
+    newsParams = newsParams.append('sortBy', 'relevance');
+    if (this.startDate !== null && this.endDate !== null) {
+      const from = new Date(this.startDate);
+      const to = new Date(this.endDate);
+      if (from.getTime() < to.getTime()) {
+        newsParams = newsParams.append('from', this.getDateString(from));
+        newsParams = newsParams.append('to', this.getDateString(to));
+      }
+    }
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
       this.newsResponse['articles'].forEach(e => {
@@ -62,7 +66,7 @@ export class SearchComponent {
           news.imageUrl = 'http://via.placeholder.com/1300x350';
         }
         news.description = e['description'];
-        news.date = e['publishedAt'];
+        news.date = new Date(e['publishedAt']).toLocaleDateString();
         this.searchedNews.push(news);
       });
     });
@@ -72,5 +76,10 @@ export class SearchComponent {
     console.log(news);
     this.callerService.setAnalysisInfo(news);
     this.router.navigate(['analysis']);
+  }
+
+  private getDateString(date: Date) {
+    // month starts at 0
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 }

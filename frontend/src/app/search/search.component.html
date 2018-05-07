@@ -34,7 +34,7 @@
             <mat-card-content class="trending-content">
               <p [innerHtml]="resp.description"></p>
               <p class="article-author">
-                by {{ resp.author }}
+                by {{ resp.author }} | {{ resp.date }}
               </p>
               <form (ngSubmit)="analyse(searchedNews[i])" style="text-align: right">
                   <button mat-raised-button class="analysis-button">Envisualise!</button>
