@@ -258,7 +258,8 @@ export class AnalysisComponent implements OnInit {
 
 
   private stateAnalysis(trendInfo: any) {
-    const trend = trendInfo.rawQuery['Company_Returns'][0]['Data'][5]['CM_Return_pct'] > 0 ? 1 : -1;
+    const companyIndex = trendInfo.rawQuery['Company_Returns'][0]['InstrumentID'].includes('^') ? 0 : 1;
+    const trend = trendInfo.rawQuery['Company_Returns'][companyIndex]['Data'][5]['CM_Return_pct'] > 0 ? 1 : -1;
 
     let correlation: number;
     if (Math.abs(trendInfo.shortRangeCorrelation) > 0.8) {
@@ -270,7 +271,7 @@ export class AnalysisComponent implements OnInit {
     }
 
     let coincidenceIndex = false;
-    if (Math.abs(trendInfo.longRangeCorrelation - trendInfo.shortRangeCorrelation) < 0.1) {
+    if (Math.abs(trendInfo.longRangeCorrelation - trendInfo.shortRangeCorrelation) < 0.05) {
         // Check if the stock was moving inline with the index
         coincidenceIndex = true;
     }
