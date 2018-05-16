@@ -6,6 +6,8 @@ import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
 import { Chart } from 'chart.js';
 import { createText } from '@angular/core/src/view/text';
+import { AnalysisDialogComponent } from '../analysis-dialog/analysis-dialog.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-analysis',
@@ -28,7 +30,7 @@ export class AnalysisComponent implements OnInit {
   public loadingReturnsPct = true;
   public loadingCMReturnsPct = true;
 
-  constructor(private callerService: CallerService, private router: Router) {}
+  constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -50,7 +52,8 @@ export class AnalysisComponent implements OnInit {
     params = params.append('instrument_id', companyCode + ',' + index);
 
     // HACK: Please fix properly after
-    const tempDate = date.split('/').reverse().join('-');
+    const splitDate: string[] = date.split('/');
+    const tempDate = splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1];
     params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
@@ -363,5 +366,16 @@ export class AnalysisComponent implements OnInit {
   public expandGraph2() {
     this.showingOverview = !this.showingOverview;
     this.showingGraph2 = !this.showingGraph2;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AnalysisDialogComponent, {
+      width: '250px',
+      data: { 'a': 'a', 'b': 'b' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
