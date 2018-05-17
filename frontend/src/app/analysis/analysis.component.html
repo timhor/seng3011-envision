@@ -68,16 +68,16 @@
           <div class="analysis-data negative-data" *ngIf="!positiveSummary">
             {{trendInfo.analysis}}
           </div>
-          <b>Cumulative Returns:</b>
-          <div class="analysis-data">
+          <b *ngIf="factors[0].value">Cumulative Returns:</b>
+          <div class="analysis-data" *ngIf="factors[0].value">
             {{trendInfo.cumulativeReturn}}
           </div>
-          <b>5-day Correlation:</b>
-          <div class="analysis-data">
+          <b *ngIf="factors[1].value">5-day Correlation:</b>
+          <div class="analysis-data" *ngIf="factors[1].value">
             {{trendInfo.shortRangeCorrelation}}
           </div>
-          <b>20-day Correlation:</b>
-          <div class="analysis-data">
+          <b *ngIf="factors[2].value">20-day Correlation:</b>
+          <div class="analysis-data" *ngIf="factors[2].value">
             {{trendInfo.longRangeCorrelation}}
           </div>
           <b>Related Companies:</b>
