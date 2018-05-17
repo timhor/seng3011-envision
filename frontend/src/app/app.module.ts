@@ -24,6 +24,7 @@ import 'chartjs-plugin-zoom';
 import { AnalysisDialogComponent } from './analysis-dialog/analysis-dialog.component';
 import { MatDialogModule } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 export const serviceProviders = [
   CallerService
@@ -36,7 +37,8 @@ export const serviceProviders = [
     SearchComponent,
     AnalysisComponent,
     AboutComponent,
-    AnalysisDialogComponent
+    AnalysisDialogComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ export const serviceProviders = [
       serviceProviders
   ],
   entryComponents: [
-    AnalysisDialogComponent
+    AnalysisDialogComponent,
+    DialogBoxComponent
   ],
   bootstrap: [AppComponent]
 })

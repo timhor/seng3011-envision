@@ -7,7 +7,8 @@ import { NewsInfo } from '../newsinfo';
 import { Chart } from 'chart.js';
 import { createText } from '@angular/core/src/view/text';
 import { AnalysisDialogComponent } from '../analysis-dialog/analysis-dialog.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 
 @Component({
   selector: 'app-analysis',
@@ -36,15 +37,17 @@ export class AnalysisComponent implements OnInit {
         {
             name: 'Cumulative Returns',
             value: true,
-            help: 'this is a help text'
+            help: 'help text for Cumulative Returns'
         },
         {
             name: '5-day Correlation',
-            value: true
+            value: true,
+            help: 'help text for 5-day Correlation'
         },
         {
             name: '20-day Correlation',
-            value: true
+            value: true,
+            help: 'help text 20-day Correlation'
         }
     ];
   }
@@ -396,19 +399,23 @@ export class AnalysisComponent implements OnInit {
     this.showingGraph2 = !this.showingGraph2;
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AnalysisDialogComponent, {
-      width: '1000px',
-      disableClose: true,
-      data: this.factors
-    });
+    openDialog(): void {
+        const dialogRef = this.dialog.open(AnalysisDialogComponent, {
+        width: '1000px',
+        disableClose: true,
+        data: this.factors
+        });
 
-    dialogRef.afterClosed().subscribe(
-        data => this.factors = data
-    );
-  }
+        dialogRef.afterClosed().subscribe(
+            data => this.factors = data
+        );
+    }
 
-  openHelp(text: string): void {
-      console.log('opened dialog with ' + text);
-  }
+    openHelp(text: string): void {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            width: '500px',
+            disableClose: true,
+            data: text
+        });
+    }
 }
