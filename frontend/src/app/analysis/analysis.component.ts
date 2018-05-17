@@ -35,7 +35,8 @@ export class AnalysisComponent implements OnInit {
       this.factors = [
         {
             name: 'Cumulative Returns',
-            value: true
+            value: true,
+            help: 'this is a help text'
         },
         {
             name: '5-day Correlation',
@@ -405,5 +406,9 @@ export class AnalysisComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
         data => this.factors = data
     );
+  }
+
+  openHelp(text: string): void {
+      console.log('opened dialog with ' + text);
   }
 }

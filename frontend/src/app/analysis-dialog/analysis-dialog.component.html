@@ -3,7 +3,9 @@
             [colspan]="4"
             [rowspan]="1">
             <mat-checkbox [(ngModel)]="factor.value">{{factor.name}}</mat-checkbox>
-            <button>what is this?</button>
+            <button mat-icon-button (click)="openHelp(factor.help)">
+                    <mat-icon>help_outline</mat-icon>
+                </button>
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Weighting" value="1.0" min="0" max="1" type="number">
             </mat-form-field>

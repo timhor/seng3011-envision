@@ -23,4 +23,8 @@ export class AnalysisDialogComponent implements OnInit {
 
   ngOnInit() {}
 
+  openHelp(text: string): void {
+    console.log('opened dialog with ' + text);
+  }
+
 }

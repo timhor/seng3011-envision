@@ -71,14 +71,23 @@
           <b *ngIf="factors[0].value">Cumulative Returns:</b>
           <div class="analysis-data" *ngIf="factors[0].value">
             {{trendInfo.cumulativeReturn}}
+            <button mat-icon-button (click)="openHelp(factors[0].help)">
+                <mat-icon>help_outline</mat-icon>
+            </button>
           </div>
           <b *ngIf="factors[1].value">5-day Correlation:</b>
           <div class="analysis-data" *ngIf="factors[1].value">
             {{trendInfo.shortRangeCorrelation}}
+            <button mat-icon-button (click)="openHelp(factors[1].help)">
+                    <mat-icon>help_outline</mat-icon>
+                </button>
           </div>
           <b *ngIf="factors[2].value">20-day Correlation:</b>
           <div class="analysis-data" *ngIf="factors[2].value">
             {{trendInfo.longRangeCorrelation}}
+            <button mat-icon-button (click)="openHelp(factors[2].help)">
+                    <mat-icon>help_outline</mat-icon>
+                </button>
           </div>
           <b>Related Companies:</b>
           <div class="analysis-related">
