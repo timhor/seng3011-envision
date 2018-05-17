@@ -29,8 +29,24 @@ export class AnalysisComponent implements OnInit {
   public positiveSummary = false;
   public loadingReturnsPct = true;
   public loadingCMReturnsPct = true;
+  public factors: any[];
 
-  constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {}
+  constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
+      this.factors = [
+        {
+            name: 'Cumulative Returns',
+            value: true
+        },
+        {
+            name: '5-day Correlation',
+            value: true
+        },
+        {
+            name: '20-day Correlation',
+            value: true
+        }
+    ];
+  }
 
   ngOnInit() {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -51,7 +67,6 @@ export class AnalysisComponent implements OnInit {
     let params: HttpParams = new HttpParams();
     params = params.append('instrument_id', companyCode + ',' + index);
 
-    // HACK: Please fix properly after
     const splitDate: string[] = date.split('/');
     const tempDate = splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1];
     params = params.append('date_of_interest', tempDate);
@@ -61,6 +76,17 @@ export class AnalysisComponent implements OnInit {
       console.log(result);
       let indexTS: Array<any>;
       let companyTS: Array<any>;
+
+      // handle alpha vantage error
+      if (result['Metadata']['success'] === false) {
+          trendInfo.cumulativeReturn = 0;
+          trendInfo.longRangeCorrelation = 0;
+          trendInfo.shortRangeCorrelation = 0;
+          trendInfo.analysis = 'error';
+          trendInfo.hidden = false;
+          trendInfo.error = false;
+          return trendInfo;
+      }
 
       let i: number;
       let array: number[];
@@ -314,6 +340,7 @@ export class AnalysisComponent implements OnInit {
   */
   private getPearsonCorrelation(x, y) {
     let shortestArrayLength = 0;
+    if ( x === undefined || y === undefined) {return 0; }
 
     if (x.length === y.length) {
         shortestArrayLength = x.length;
@@ -370,12 +397,13 @@ export class AnalysisComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AnalysisDialogComponent, {
-      width: '250px',
-      data: { 'a': 'a', 'b': 'b' }
+      width: '1000px',
+      disableClose: true,
+      data: this.factors
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+        data => this.factors = data
+    );
   }
 }

@@ -1,3 +1,14 @@
-<p>
-  analysis-dialog works!
-</p>
+<mat-grid-list cols="4" rowHeight="100px">
+    <mat-grid-tile *ngFor="let factor of factors"
+            [colspan]="4"
+            [rowspan]="1">
+            <mat-checkbox [(ngModel)]="factor.value">{{factor.name}}</mat-checkbox>
+            <button>what is this?</button>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Weighting" value="1.0" min="0" max="1" type="number">
+            </mat-form-field>
+    </mat-grid-tile>
+</mat-grid-list>
+<mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+</mat-dialog-actions>

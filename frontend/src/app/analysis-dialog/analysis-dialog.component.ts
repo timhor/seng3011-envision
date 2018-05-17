@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-analysis-dialog',
@@ -8,15 +9,18 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class AnalysisDialogComponent implements OnInit {
 
+    public factors: any[];
+
     constructor(
         public dialogRef: MatDialogRef<AnalysisDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) data: any) {
+            this.factors = data;
+        }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  close(): void {
+    this.dialogRef.close(this.factors);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
