@@ -65,7 +65,17 @@
         </mat-card-content>
         <mat-card-content class="analysis-content" *ngIf="!trendInfo.hidden">
           <div>
-            <b>Summary:</b>
+            <b>Summary:
+              <span class="positive-data" *ngIf="overallMetric > 40">
+                BUY
+              </span>
+              <span class="neutral-data" *ngIf="-40 <= overallMetric && overallMetric <= 40">
+                HOLD
+              </span>
+              <span class="negative-data" *ngIf="overallMetric < -40">
+                SELL
+              </span>
+            </b>
             <button mat-icon-button class="help-button" (click)="openHelp(summary, summaryHelp)">
               <mat-icon>help_outline</mat-icon>
             </button>

@@ -165,6 +165,7 @@ public overallMetric: number;
     this.longRangeMetric = this.trendInfo.longRangeCorrelation * 100;
 
     this.overallMetric = (this.returnsMetric + this.shortRangeMetric + this.longRangeMetric) / 3;
+    console.log('Overall metric is' + this.overallMetric);
   }
 
   private generateGraphs() {

@@ -163,6 +163,10 @@ mat-chip:not(.mat-basic-chip) {
   color: green;
 }
 
+.neutral-data {
+  color: #ff9d00;
+}
+
 .negative-data {
   color: red;
 }
