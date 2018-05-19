@@ -44,7 +44,7 @@ export class SearchComponent {
   private getQuery() {
     this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
-    newsParams = newsParams.append('q', this.query);
+    newsParams = newsParams.append('q', '\"' + this.query.replace(/ (\w+)$/, '') + '\"');
 
     let sortByVal = 'relevancy';
     if (this.sortBy === this.sortOptions[1]) {
@@ -78,6 +78,13 @@ export class SearchComponent {
     });
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
+      this.newsResponse['articles'] = this.newsResponse['articles'].filter(e => {
+          // console.log(e);
+          if (e['title'].includes('&amp')) { return false; }
+          if (e['description'].includes('&amp')) { return false; }
+          if (e['source']['name'].includes('Salon.com')) { return false; }
+          return true;
+      });
       this.newsResponse['articles'].forEach(e => {
         const news = new NewsInfo('', '', '', '', '', '', instrument);
         news.title = e['title'];

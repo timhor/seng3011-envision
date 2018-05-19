@@ -42,7 +42,8 @@ export class HomeComponent {
         // Check if found 5 pieces of article already
         console.log(instrument);
         let newsParams: HttpParams = new HttpParams();
-        newsParams = newsParams.append('q', instrument);
+        // console.log(instrument.replace(/ (\w+)$/, ''));
+        newsParams = newsParams.append('q', '\"' + instrument.replace(/ (\w+)$/, '') + '\"');
         newsParams = newsParams.append('sortBy', 'relevancy');
         if (this.trendingNews.length === 5) {
           return;
