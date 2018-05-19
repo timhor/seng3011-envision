@@ -1,6 +1,10 @@
-<p>
-  {{displayString}}
-</p>
 <mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
+  <button mat-icon-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-dialog-actions>
+<h2>{{ displayString }}</h2>
+<mat-divider></mat-divider>
+<p>
+  {{ displayString }}
+</p>
