@@ -192,3 +192,7 @@ mat-progress-spinner {
 ::ng-deep .mat-tooltip {
   text-align: center;
 }
+
+.info-button {
+  color: gray;
+}
