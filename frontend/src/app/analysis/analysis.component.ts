@@ -73,10 +73,10 @@ export class AnalysisComponent implements OnInit {
 
     const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
-    params = params.append('instrument_id', companyCode + ',' + index);
+    params = params.append('instrument_id', companyCode + '.AX,' + index);
 
     const splitDate: string[] = date.split('/');
-    const tempDate = splitDate[2] + '-' + splitDate[0] + '-' + splitDate[1];
+    const tempDate = splitDate[2] + '-' + splitDate[1] + '-' + splitDate[0];
     params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
