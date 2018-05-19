@@ -44,7 +44,7 @@ export class SearchComponent {
   private getQuery() {
     this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
-    newsParams = newsParams.append('q', this.query);
+    newsParams = newsParams.append('q', '\"' + this.query.replace(/ (\w+)$/, '') + '\"');
 
     let sortByVal = 'relevancy';
     if (this.sortBy === this.sortOptions[1]) {
