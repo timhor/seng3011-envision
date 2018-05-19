@@ -11,12 +11,10 @@ export class DialogBoxComponent implements OnInit {
     public title: string;
     public displayString: string;
 
-    constructor(
-        public dialogRef: MatDialogRef<DialogBoxComponent>,
-        @Inject(MAT_DIALOG_DATA) data) {
-            this.title = data.title;
-            this.displayString = data.help;
-        }
+    constructor(public dialogRef: MatDialogRef<DialogBoxComponent>, @Inject(MAT_DIALOG_DATA) data) {
+        this.title = data.title;
+        this.displayString = data.help;
+    }
 
     ngOnInit() {}
 
