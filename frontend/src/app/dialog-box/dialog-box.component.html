@@ -5,4 +5,7 @@
 </mat-dialog-actions>
 <h2>{{ title }}</h2>
 <mat-divider></mat-divider>
-<pre>{{ displayString }}</pre>
+<mat-dialog-content>
+  <br>
+  <div [innerHTML]="displayString"></div>
+</mat-dialog-content>

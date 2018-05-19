@@ -189,6 +189,7 @@ mat-progress-spinner {
 
 .edit-button {
   border: solid 1.5px lightsalmon;
+  font-weight: bold;
   padding: 3px 6px;
 }
 
