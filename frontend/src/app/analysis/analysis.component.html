@@ -53,7 +53,6 @@
     <div class="col-md-4">
       <mat-card class="analysis-card">
         <h2 class="analysis-title">Analysis</h2>
-        <hr>
         <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
         <button mat-icon-button (click)="openDialog()" class="edit-button"
           matTooltip="Edit Factors" matTooltipPosition="left" *ngIf="!trendInfo.hidden">
