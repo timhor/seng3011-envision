@@ -36,11 +36,11 @@ export class AnalysisComponent implements OnInit {
   public summaryHelp: string;
   public generalInfo = 'General Info';
   public generalInfoHelp =
-`Summary: An overall summary based off the given factors.
-Cumulative Returns: Cumulative return to show the change in returns during the analysis window.
-Correlation: Calculated using Pearson's Correlation Coefficient.
-
-Pearson's Correlation Calculation: Covariance between the stock and the industry divided by the product of variances.
+`<b>Summary:</b> An overall summary based off the given factors.<br>
+<b>Cumulative Returns:</b> Cumulative return to show the change in returns during the analysis window.<br>
+<b>Correlation:</b> Calculated using Pearson's Correlation Coefficient.<br>
+<br>
+<b>Pearson's Correlation Calculation:</b> Covariance between the stock and the industry divided by the product of variances.
 `;
 
 public returnsMetric: number;

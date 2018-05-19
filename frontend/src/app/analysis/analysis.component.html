@@ -53,14 +53,10 @@
     <div class="col-md-4">
       <mat-card class="analysis-card">
         <h2 class="analysis-title">Analysis</h2>
+        <button mat-icon-button class="info-button" (click)="openHelp(generalInfo, generalInfoHelp)">
+          <mat-icon>info_outline</mat-icon>
+        </button>
         <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
-        <div class="edit-btn-box">
-          <button mat-icon-button class="info-button" (click)="openHelp(generalInfo, generalInfoHelp)">Info</button>
-          <button mat-icon-button (click)="openDialog()" class="edit-button"
-            matTooltip="Edit Factors" matTooltipPosition="left" *ngIf="!trendInfo.hidden">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
         <mat-card-content class="analysis-content" *ngIf="trendInfo.error">
           <b>Summary:</b>
           <div class="analysis-data">
@@ -70,7 +66,7 @@
         <mat-card-content class="analysis-content" *ngIf="!trendInfo.hidden">
           <div>
             <b>Summary:</b>
-            <button mat-icon-button class="info-button" (click)="openHelp(summary, summaryHelp)">
+            <button mat-icon-button class="help-button" (click)="openHelp(summary, summaryHelp)">
               <mat-icon>help_outline</mat-icon>
             </button>
           </div>
@@ -82,7 +78,7 @@
           </div>
           <div>
             <b *ngIf="factors[0].value">Cumulative Returns:</b>
-            <button mat-icon-button class="info-button" (click)="openHelp(factors[0].name, factors[0].help)">
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[0].name, factors[0].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
           </div>
@@ -91,7 +87,7 @@
           </div>
           <div>
             <b *ngIf="factors[1].value">5-day Correlation:</b>
-            <button mat-icon-button class="info-button"(click)="openHelp(factors[1].name, factors[1].help)">
+            <button mat-icon-button class="help-button"(click)="openHelp(factors[1].name, factors[1].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
           </div>
@@ -100,7 +96,7 @@
           </div>
           <div>
             <b *ngIf="factors[2].value">20-day Correlation:</b>
-            <button mat-icon-button class="info-button" (click)="openHelp(factors[2].name, factors[2].help)">
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[2].name, factors[2].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
           </div>
@@ -114,6 +110,11 @@
             <ul>
               <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
             </ul>
+          </div>
+          <div style="text-align: center;">
+            <button mat-raised-button (click)="openDialog()" class="edit-button" *ngIf="!trendInfo.hidden">
+              Configure Factors
+            </button>
           </div>
           <hr>
           <p style="margin-top: 36px;">
