@@ -13,11 +13,12 @@ export class AnalysisDialogComponent implements OnInit {
     public factors: any[];
 
     constructor(
-        public dialogRef: MatDialogRef<AnalysisDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) data: any,
-        public dialog: MatDialog) {
-            this.factors = data;
-        }
+      public dialogRef: MatDialogRef<AnalysisDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) data: any,
+      public dialog: MatDialog
+    ) {
+      this.factors = data;
+    }
 
   close(): void {
     this.dialogRef.close(this.factors);
@@ -27,13 +28,13 @@ export class AnalysisDialogComponent implements OnInit {
 
   openHelp(title: string, help: string): void {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-        width: '500px',
-        disableClose: true,
-        data: {
-            title: title,
-            help: help
-        }
+      width: '500px',
+      disableClose: true,
+      data: {
+        title: title,
+        help: help
+      }
     });
-}
+  }
 
 }
