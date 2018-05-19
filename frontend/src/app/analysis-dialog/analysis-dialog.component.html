@@ -11,7 +11,7 @@
 			<mat-checkbox [(ngModel)]="factor.value" class="text-inside-grid">{{factor.name}}</mat-checkbox>
 		</mat-grid-tile>
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
-			<button mat-icon-button (click)="openHelp(factor.help)">
+			<button mat-icon-button (click)="openHelp(factor.name, factor.help)">
 				<mat-icon class="info-button">help_outline</mat-icon>
 			</button>
 		</mat-grid-tile>
@@ -21,7 +21,7 @@
 			</mat-form-field>
 		</mat-grid-tile>
 		<mat-grid-tile [colspan]="1" [rowspan]="1">
-			<button mat-icon-button (click)="openHelp(factor.help)">
+			<button mat-icon-button (click)="openHelp(factor.name, factor.help)">
 				<mat-icon class="info-button">help_outline</mat-icon>
 			</button>
 		</mat-grid-tile>

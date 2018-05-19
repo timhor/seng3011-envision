@@ -8,12 +8,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class DialogBoxComponent implements OnInit {
 
+    public title: string;
     public displayString: string;
 
     constructor(
         public dialogRef: MatDialogRef<DialogBoxComponent>,
         @Inject(MAT_DIALOG_DATA) data) {
-            this.displayString = data;
+            this.title = data.title;
+            this.displayString = data.help;
         }
 
     ngOnInit() {}

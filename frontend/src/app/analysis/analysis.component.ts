@@ -401,9 +401,9 @@ export class AnalysisComponent implements OnInit {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(AnalysisDialogComponent, {
-        width: '1000px',
-        disableClose: true,
-        data: this.factors
+          width: '1000px',
+          disableClose: true,
+          data: this.factors
         });
 
         dialogRef.afterClosed().subscribe(
@@ -411,11 +411,14 @@ export class AnalysisComponent implements OnInit {
         );
     }
 
-    openHelp(text: string): void {
+    openHelp(title: string, help: string): void {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             width: '500px',
             disableClose: true,
-            data: text
+            data: {
+              title: title,
+              help: help
+            }
         });
     }
 }

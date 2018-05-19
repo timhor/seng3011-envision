@@ -25,11 +25,14 @@ export class AnalysisDialogComponent implements OnInit {
 
   ngOnInit() {}
 
-  openHelp(text: string): void {
+  openHelp(title: string, help: string): void {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
         width: '500px',
         disableClose: true,
-        data: text
+        data: {
+            title: title,
+            help: help
+        }
     });
 }
 
