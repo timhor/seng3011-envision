@@ -87,7 +87,17 @@
             {{trendInfo.analysis}}
           </div>
           <div>
-            <b *ngIf="factors[0].value">Cumulative Returns:</b>
+            <b *ngIf="factors[0].value">Cumulative Returns:
+                <span class="positive-data" *ngIf="returnsMetric > 40">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-40 <= returnsMetric && returnsMetric <= 40">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="returnsMetric < -40">
+                  SELL
+                </span>
+            </b>
             <button mat-icon-button class="help-button" (click)="openHelp(factors[0].name, factors[0].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
@@ -96,7 +106,17 @@
             {{trendInfo.cumulativeReturn}}
           </div>
           <div>
-            <b *ngIf="factors[1].value">5-day Correlation:</b>
+            <b *ngIf="factors[1].value">5-day Correlation:
+                <span class="positive-data" *ngIf="shortRangeMetric > 40">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-40 <= shortRangeMetric && shortRangeMetric <= 40">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="shortRangeMetric < -40">
+                  SELL
+                </span>
+            </b>
             <button mat-icon-button class="help-button"(click)="openHelp(factors[1].name, factors[1].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
@@ -105,7 +125,17 @@
             {{trendInfo.shortRangeCorrelation}}
           </div>
           <div>
-            <b *ngIf="factors[2].value">20-day Correlation:</b>
+            <b *ngIf="factors[2].value">20-day Correlation:
+                <span class="positive-data" *ngIf="longRangeMetric > 40">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-40 <= longRangeMetric && longRangeMetric <= 40">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="longRangeMetric < -40">
+                  SELL
+                </span>
+            </b>
             <button mat-icon-button class="help-button" (click)="openHelp(factors[2].name, factors[2].help)">
               <mat-icon>help_outline</mat-icon>
             </button>
