@@ -195,4 +195,10 @@ mat-progress-spinner {
 
 .info-button {
   color: gray;
+  float: right;
+  margin-top: -10px;
+}
+
+.edit-btn-box {
+  padding-bottom: 1px;
 }
