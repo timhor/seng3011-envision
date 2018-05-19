@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './dialog-box.component.html',
   styleUrls: ['./dialog-box.component.css']
 })
-export class DialogBoxComponent implements OnInit {
+export class DialogBoxComponent {
 
     public title: string;
     public displayString: string;
@@ -15,8 +15,6 @@ export class DialogBoxComponent implements OnInit {
         this.title = data.title;
         this.displayString = data.help;
     }
-
-    ngOnInit() {}
 
     close(): void {
         this.dialogRef.close();
