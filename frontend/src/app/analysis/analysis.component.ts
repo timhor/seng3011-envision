@@ -43,6 +43,11 @@ Correlation: Calculated using Pearson's Correlation Coefficient.
 Pearson's Correlation Calculation: Covariance between the stock and the industry divided by the product of variances.
 `;
 
+public returnsMetric: number;
+public shortRangeMetric: number;
+public longRangeMetric: number;
+public overallMetric: number;
+
   constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
     this.factors = [
       {
@@ -140,10 +145,26 @@ Pearson's Correlation Calculation: Covariance between the stock and the industry
       this.generateGraphs();
       console.log('This trendInfo' + this.trendInfo);
       console.log(trendInfo);
+      this.determineBuySell();
     });
 
     trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
     return trendInfo;
+  }
+
+  determineBuySell() {
+    if (this.trendInfo.cumulativeReturn <= -0.05) {
+      this.returnsMetric = -100;
+    } else if (this.trendInfo.cumulativeReturn >= 0.05) {
+      this.returnsMetric = 100;
+    } else {
+      this.returnsMetric = this.trendInfo.cumulativeReturn * 2000;
+    }
+
+    this.shortRangeMetric = this.trendInfo.shortRangeCorrelation * 100;
+    this.longRangeMetric = this.trendInfo.longRangeCorrelation * 100;
+
+    this.overallMetric = (this.returnsMetric + this.shortRangeMetric + this.longRangeMetric) / 3;
   }
 
   private generateGraphs() {
@@ -420,7 +441,10 @@ Pearson's Correlation Calculation: Covariance between the stock and the industry
     });
 
     dialogRef.afterClosed().subscribe(
-      data => this.factors = data
+      data => {
+        this.factors = data;
+        this.determineBuySell();
+      }
     );
   }
 
