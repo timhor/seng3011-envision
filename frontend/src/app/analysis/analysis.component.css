@@ -136,12 +136,14 @@ mat-chip:not(.mat-basic-chip) {
   font-size: 36px;
   text-decoration: underline salmon solid;
   text-align: center;
+  display: inline-block;
+  margin: 0;
 }
 
 .analysis-content {
   font-size: 14px;
   text-align: left;
-  margin-top: 70px;
+  margin-top: 60px;
 }
 
 .analysis-data {
@@ -186,7 +188,14 @@ mat-progress-spinner {
 }
 
 .edit-button {
-  float: right;
+  border: solid 1.5px lightsalmon;
+  padding: 3px 6px;
+}
+
+.edit-button:hover {
+  background-color: salmon;
+  border: solid 1.5px salmon;
+  color: whitesmoke;
 }
 
 ::ng-deep .mat-tooltip {
@@ -196,9 +205,11 @@ mat-progress-spinner {
 .info-button {
   color: gray;
   float: right;
-  margin-top: -10px;
+  margin-top: 5px;
 }
 
-.edit-btn-box {
-  padding-bottom: 1px;
+.help-button {
+  color: gray;
+  float: right;
+  margin-top: -10px;
 }
