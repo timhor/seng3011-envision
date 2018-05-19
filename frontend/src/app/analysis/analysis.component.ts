@@ -30,9 +30,18 @@ export class AnalysisComponent implements OnInit {
   public positiveSummary = false;
   public loadingReturnsPct = true;
   public loadingCMReturnsPct = true;
+
   public factors: any[];
   public summary: string;
   public summaryHelp: string;
+  public generalInfo = 'General Info';
+  public generalInfoHelp =
+`Summary: An overall summary based off the given factors.
+Cumulative Returns: Cumulative return to show the change in returns during the analysis window.
+Correlation: Calculated using Pearson's Correlation Coefficient.
+
+Pearson's Correlation Calculation: Covariance between the stock and the industry divided by the product of variances.
+`;
 
   constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
     this.factors = [

@@ -55,6 +55,7 @@
         <h2 class="analysis-title">Analysis</h2>
         <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
         <div class="edit-btn-box">
+          <button mat-icon-button class="info-button" (click)="openHelp(generalInfo, generalInfoHelp)">Info</button>
           <button mat-icon-button (click)="openDialog()" class="edit-button"
             matTooltip="Edit Factors" matTooltipPosition="left" *ngIf="!trendInfo.hidden">
             <mat-icon>edit</mat-icon>
