@@ -48,17 +48,17 @@ Pearson's Correlation Calculation: Covariance between the stock and the industry
       {
         name: 'Cumulative Returns',
         value: true,
-        help: 'help text for Cumulative Returns'
+        help: 'Cumulative return to show the change in returns during the analysis window.'
       },
       {
         name: '5-day Correlation',
         value: true,
-        help: 'help text for 5-day Correlation'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the short term correlation.'
       },
       {
         name: '20-day Correlation',
         value: true,
-        help: 'help text 20-day Correlation'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.'
       }
     ];
     this.summary = 'Summary';
