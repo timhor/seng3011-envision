@@ -6,6 +6,9 @@ import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
 import { Chart } from 'chart.js';
 import { createText } from '@angular/core/src/view/text';
+import { AnalysisDialogComponent } from '../analysis-dialog/analysis-dialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 
 @Component({
   selector: 'app-analysis',
@@ -27,8 +30,31 @@ export class AnalysisComponent implements OnInit {
   public positiveSummary = false;
   public loadingReturnsPct = true;
   public loadingCMReturnsPct = true;
+  public factors: any[];
+  public summary: string;
+  public summaryHelp: string;
 
-  constructor(private callerService: CallerService, private router: Router) {}
+  constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
+    this.factors = [
+      {
+        name: 'Cumulative Returns',
+        value: true,
+        help: 'help text for Cumulative Returns'
+      },
+      {
+        name: '5-day Correlation',
+        value: true,
+        help: 'help text for 5-day Correlation'
+      },
+      {
+        name: '20-day Correlation',
+        value: true,
+        help: 'help text 20-day Correlation'
+      }
+    ];
+    this.summary = 'Summary';
+    this.summaryHelp = 'help text for Summary';
+  }
 
   ngOnInit() {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -47,10 +73,10 @@ export class AnalysisComponent implements OnInit {
 
     const index: string = this.callerService.getStockIndex(companyCode);
     let params: HttpParams = new HttpParams();
-    params = params.append('instrument_id', companyCode + ',' + index);
+    params = params.append('instrument_id', companyCode + '.AX,' + index);
 
-    // HACK: Please fix properly after
-    const tempDate = date.split('/').reverse().join('-');
+    const splitDate: string[] = date.split('/');
+    const tempDate = splitDate[2] + '-' + splitDate[1] + '-' + splitDate[0];
     params = params.append('date_of_interest', tempDate);
 
     this.callerService.getStockInfo(params).subscribe((result) => {
@@ -59,27 +85,38 @@ export class AnalysisComponent implements OnInit {
       let indexTS: Array<any>;
       let companyTS: Array<any>;
 
+      // handle alpha vantage error
+      if (result['Metadata']['success'] === false) {
+        trendInfo.cumulativeReturn = 0;
+        trendInfo.longRangeCorrelation = 0;
+        trendInfo.shortRangeCorrelation = 0;
+        trendInfo.analysis = 'error';
+        trendInfo.hidden = false;
+        trendInfo.error = false;
+        return trendInfo;
+      }
+
       let i: number;
       let array: number[];
       for (i = 0; i < 2; i++) {
         array = [];
         try {
-            result['Company_Returns'][i]['Data'].forEach(e => {
-              array.push(e['Return_pct']);
-            });
-            if (result['Company_Returns'][i]['InstrumentID'] === index) {
-              indexTS = array;
-            } else {
-              companyTS = array;
-              this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
-            }
-            // Pearson correlation coefficient
-            trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
-            trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
-            trendInfo.analysis = this.stateAnalysis(trendInfo);
-            trendInfo.hidden = false;
-            trendInfo.error = false;
-            console.log(trendInfo);
+          result['Company_Returns'][i]['Data'].forEach(e => {
+            array.push(e['Return_pct']);
+          });
+          if (result['Company_Returns'][i]['InstrumentID'] === index) {
+            indexTS = array;
+          } else {
+            companyTS = array;
+            this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+          }
+          // Pearson correlation coefficient
+          trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
+          trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+          trendInfo.analysis = this.stateAnalysis(trendInfo);
+          trendInfo.hidden = false;
+          trendInfo.error = false;
+          console.log(trendInfo);
         } catch (error) {
           trendInfo.analysis = 'Company stock information does not exist, sorry!';
           trendInfo.error = true;
@@ -222,12 +259,12 @@ export class AnalysisComponent implements OnInit {
           scaleLabel: {
             display: true,
             labelString: 'Days'
-              }
+          }
         }],
         yAxes: [{
           ticks: {
             beginAtZero: true
-              },
+          },
           scaleLabel: {
             display: true,
             labelString: yLabel
@@ -248,12 +285,12 @@ export class AnalysisComponent implements OnInit {
   }
 
   private getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
 
@@ -272,8 +309,8 @@ export class AnalysisComponent implements OnInit {
 
     let coincidenceIndex = false;
     if (Math.abs(trendInfo.longRangeCorrelation - trendInfo.shortRangeCorrelation) < 0.05) {
-        // Check if the stock was moving inline with the index
-        coincidenceIndex = true;
+      // Check if the stock was moving inline with the index
+      coincidenceIndex = true;
     }
 
     let outputString = '';
@@ -287,16 +324,16 @@ export class AnalysisComponent implements OnInit {
 
     switch (correlation) {
       case 1:
-        outputString += 'with very high correlation to index';
-        break;
+      outputString += 'with very high correlation to index';
+      break;
 
       case 2:
-        outputString += 'with high correlation';
-        break;
+      outputString += 'with high correlation';
+      break;
 
       default:
-        outputString += 'with low correlation to index';
-        break;
+      outputString += 'with low correlation to index';
+      break;
     }
 
     if (coincidenceIndex) {
@@ -311,15 +348,16 @@ export class AnalysisComponent implements OnInit {
   */
   private getPearsonCorrelation(x, y) {
     let shortestArrayLength = 0;
+    if ( x === undefined || y === undefined) {return 0; }
 
     if (x.length === y.length) {
-        shortestArrayLength = x.length;
+      shortestArrayLength = x.length;
     } else if (x.length > y.length) {
-        shortestArrayLength = y.length;
-        console.error('x has more items in it, the last ' + (x.length - shortestArrayLength) + ' item(s) will be ignored');
+      shortestArrayLength = y.length;
+      console.error('x has more items in it, the last ' + (x.length - shortestArrayLength) + ' item(s) will be ignored');
     } else {
-        shortestArrayLength = x.length;
-        console.error('y has more items in it, the last ' + (y.length - shortestArrayLength) + ' item(s) will be ignored');
+      shortestArrayLength = x.length;
+      console.error('y has more items in it, the last ' + (y.length - shortestArrayLength) + ' item(s) will be ignored');
     }
 
     const xy = [];
@@ -327,9 +365,9 @@ export class AnalysisComponent implements OnInit {
     const y2 = [];
 
     for (let i = 0; i < shortestArrayLength; i++) {
-        xy.push(x[i] * y[i]);
-        x2.push(x[i] * x[i]);
-        y2.push(y[i] * y[i]);
+      xy.push(x[i] * y[i]);
+      x2.push(x[i] * x[i]);
+      y2.push(y[i] * y[i]);
     }
 
     let sum_x = 0;
@@ -339,11 +377,11 @@ export class AnalysisComponent implements OnInit {
     let sum_y2 = 0;
 
     for (let i = 0; i < shortestArrayLength; i++) {
-        sum_x += x[i];
-        sum_y += y[i];
-        sum_xy += xy[i];
-        sum_x2 += x2[i];
-        sum_y2 += y2[i];
+      sum_x += x[i];
+      sum_y += y[i];
+      sum_xy += xy[i];
+      sum_x2 += x2[i];
+      sum_y2 += y2[i];
     }
 
     const step1 = (shortestArrayLength * sum_xy) - (sum_x * sum_y);
@@ -363,5 +401,28 @@ export class AnalysisComponent implements OnInit {
   public expandGraph2() {
     this.showingOverview = !this.showingOverview;
     this.showingGraph2 = !this.showingGraph2;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AnalysisDialogComponent, {
+      width: '1000px',
+      disableClose: true,
+      data: this.factors
+    });
+
+    dialogRef.afterClosed().subscribe(
+      data => this.factors = data
+    );
+  }
+
+  openHelp(title: string, help: string): void {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '500px',
+      disableClose: true,
+      data: {
+        title: title,
+        help: help
+      }
+    });
   }
 }

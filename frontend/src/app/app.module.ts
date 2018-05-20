@@ -21,6 +21,10 @@ import { AboutComponent } from './about/about.component';
 
 import 'hammerjs';
 import 'chartjs-plugin-zoom';
+import { AnalysisDialogComponent } from './analysis-dialog/analysis-dialog.component';
+import { MatDialogModule } from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 export const serviceProviders = [
   CallerService
@@ -32,7 +36,9 @@ export const serviceProviders = [
     HomeComponent,
     SearchComponent,
     AnalysisComponent,
-    AboutComponent
+    AboutComponent,
+    AnalysisDialogComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -43,11 +49,17 @@ export const serviceProviders = [
     FormsModule,
     HttpClientModule,
     Ng2FlatpickrModule,
-    ChartModule
+    ChartModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [
       CallerService,
       serviceProviders
+  ],
+  entryComponents: [
+    AnalysisDialogComponent,
+    DialogBoxComponent
   ],
   bootstrap: [AppComponent]
 })

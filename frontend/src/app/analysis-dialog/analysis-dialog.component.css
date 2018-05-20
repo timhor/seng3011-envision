@@ -1,0 +1,16 @@
+::ng-deep mat-dialog-actions {
+	float: right;
+}
+
+.text-inside-grid {
+	position: absolute;
+	left: 5px;
+}
+
+h2 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.info-button {
+	color: gray;
+}

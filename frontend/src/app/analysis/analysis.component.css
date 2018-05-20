@@ -141,6 +141,7 @@ mat-chip:not(.mat-basic-chip) {
 .analysis-content {
   font-size: 14px;
   text-align: left;
+  margin-top: 70px;
 }
 
 .analysis-data {
@@ -182,4 +183,22 @@ mat-progress-spinner {
 
 .expand-button {
   float: right;
+}
+
+.edit-button {
+  float: right;
+}
+
+::ng-deep .mat-tooltip {
+  text-align: center;
+}
+
+.info-button {
+  color: gray;
+  float: right;
+  margin-top: -10px;
+}
+
+.edit-btn-box {
+  padding-bottom: 1px;
 }

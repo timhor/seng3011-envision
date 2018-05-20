@@ -1,0 +1,29 @@
+<mat-dialog-actions>
+	<button mat-icon-button (click)="close()">
+		<mat-icon>close</mat-icon>
+	</button>
+</mat-dialog-actions>
+<h2>Edit Factors</h2>
+<mat-divider></mat-divider>
+<mat-grid-list cols="6" rowHeight="100px" style="width: 600px; margin: auto;">
+	<span *ngFor="let factor of factors">
+		<mat-grid-tile [colspan]="2" [rowspan]="1">
+			<mat-checkbox [(ngModel)]="factor.value" class="text-inside-grid">{{factor.name}}</mat-checkbox>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<button mat-icon-button (click)="openHelp(factor.name, factor.help)">
+				<mat-icon class="info-button">help_outline</mat-icon>
+			</button>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="2" [rowspan]="1">
+			<mat-form-field>
+				<input matInput placeholder="Weighting" value="1.0" min="0" max="1" type="number">
+			</mat-form-field>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="1" [rowspan]="1">
+			<button mat-icon-button (click)="openHelp(factor.name, factor.help)">
+				<mat-icon class="info-button">help_outline</mat-icon>
+			</button>
+		</mat-grid-tile>
+	</span>
+</mat-grid-list>

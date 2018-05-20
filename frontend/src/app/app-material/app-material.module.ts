@@ -14,7 +14,8 @@ import {
   MatGridListModule,
   MatExpansionModule,
   MatChipsModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -32,7 +33,8 @@ import {
     MatGridListModule,
     MatExpansionModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +50,8 @@ import {
     MatGridListModule,
     MatExpansionModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule
   ]
 })
 export class AppMaterialModule { }
