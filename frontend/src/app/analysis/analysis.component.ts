@@ -152,13 +152,19 @@ export class AnalysisComponent implements OnInit {
     this.loadingReturnsPct = true;
     this.loadingCMReturnsPct = true;
 
+    const graphColors = ['#E76C51', '#23415B'];
+    let counter = 0;
     // Populate data arrays
     this.trendInfo['rawQuery']['Company_Returns'].forEach(instrument => {
       // Convert API Data to Array
       returnPctData = [];
       cmReturnPctData = [];
 
-      const instrumentColor: any = this.getRandomColor();
+      const instrumentColor: any = graphColors[counter];
+      counter++;
+
+      // Build set of colors with one point being different color
+      const radiusSizes = [3, 3, 3, 3, 3, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
 
       instrument['Data'].forEach(rec => {
         if (rec['Return_pct'] !== undefined) {
@@ -186,6 +192,8 @@ export class AnalysisComponent implements OnInit {
             fill: false,
             borderColor: instrumentColor,
             lineTension: 0.1,
+            radius: radiusSizes,
+            backgroundColor: instrumentColor,
           }
         );
         shouldDrawReturnsPct = true;
@@ -200,6 +208,8 @@ export class AnalysisComponent implements OnInit {
             fill: false,
             borderColor: instrumentColor,
             lineTension: 0.1,
+            radius: radiusSizes,
+            backgroundColor: instrumentColor,
           }
         );
         shouldDrawCMReturnsPct = true;

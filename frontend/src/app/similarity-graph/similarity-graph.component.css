@@ -1,0 +1,51 @@
+#cy-graph {
+    width: 80%;
+    height: 400px;
+    border: salmon 2px solid;
+    /* display: block; */
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#industry-selection {
+    width: 50%;
+    display: block;
+    align-self: center;
+    margin-left: 25%;
+    margin-top: 25px;
+    margin-bottom: 50px;
+    overflow: scroll;
+}
+
+hr {
+    width: 60%;
+}
+.container {
+    margin:0 auto;
+}
+
+h1 {
+    font-family: 'Francois One', sans-serif;
+    font-size: 50px;
+    text-decoration: underline salmon solid;
+}
+
+.industries-content {
+    color: rgb(0, 0, 0);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    padding-bottom: 8px;
+    padding-top: 10px;
+    text-align: left;
+}
+
+.row {
+    width: 90%;
+    margin: 0 auto;
+}
+
+ul{
+    list-style-type: none;
+}

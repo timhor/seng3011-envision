@@ -5,6 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import { SearchComponent } from '../search/search.component';
 import { AnalysisComponent } from '../analysis/analysis.component';
 import { AboutComponent } from '../about/about.component';
+import { SimilarityGraphComponent } from '../similarity-graph/similarity-graph.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'group',
     component: HomeComponent
+  },
+  {
+      path: 'similarity-graph',
+      component: SimilarityGraphComponent
   }
 ];
 

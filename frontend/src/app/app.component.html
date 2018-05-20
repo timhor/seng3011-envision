@@ -28,6 +28,10 @@
         <mat-icon>info_outline</mat-icon>
         <span class="navLinkText">About</span>
       </a>
+      <a mat-list-item routerLink="/similarity-graph" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+        <mat-icon>scatter_plot</mat-icon>
+        <span class="navLinkText">Envisulise</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
