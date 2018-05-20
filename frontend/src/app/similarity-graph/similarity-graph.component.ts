@@ -206,9 +206,9 @@ openHelp(): void {
       title: 'Legend',
       help:
         `<ul>
-          <li><span style="color: #ffcc5c;">RED:</span> Neutral</li>
-          <li><span style="color: #96ceb4;">GREEN:</span> Strong</li>
-          <li><span style="color: #ff6f69;">YELLOW:</span> Weak</li>
+          <li><span class="strong-link">RED:</span> Strong</li>
+          <li><span class="weak-link">GREEN:</span> Weak</li>
+          <li><span class="neutral-link">YELLOW:</span> Neutral</li>
         </ul>
         `
     }

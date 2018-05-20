@@ -54,3 +54,15 @@ ul{
     color: gray;
     float: right;
 }
+
+::ng-deep .neutral-link {
+    color: #ffcc5c;
+}
+
+::ng-deep .weak-link {
+    color: #96ceb4;
+}
+
+::ng-deep .strong-link {
+    color: #ff6f69;
+}
