@@ -46,6 +46,7 @@ export class AnalysisComponent implements OnInit {
 public returnsMetric: number;
 public shortRangeMetric: number;
 public longRangeMetric: number;
+public volumeFlowMetric: number;
 public overallMetric: number;
 
   constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
@@ -53,17 +54,26 @@ public overallMetric: number;
       {
         name: 'Cumulative Returns',
         value: true,
-        help: 'Cumulative return to show the change in returns during the analysis window.'
+        help: 'Cumulative return to show the change in returns during the analysis window.',
+        factor: 1
       },
       {
         name: '5-day Correlation',
         value: true,
-        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the short term correlation.'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the short term correlation.',
+        factor: 1
       },
       {
         name: '20-day Correlation',
         value: true,
-        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
+        factor: 1
+      },
+      {
+        name: 'Volume Flow',
+        value: true,
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
+        factor: 1
       }
     ];
     this.summary = 'Summary';
@@ -112,6 +122,7 @@ public overallMetric: number;
 
       let i: number;
       let array: number[];
+      const volume: number[] = [];
       for (i = 0; i < 2; i++) {
         array = [];
         try {
@@ -123,10 +134,14 @@ public overallMetric: number;
           } else {
             companyTS = array;
             this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+            result['Company_Returns'][i]['Data'].forEach(e => {
+              volume.push(e['Volume']);
+            });
           }
           // Pearson correlation coefficient
           trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
           trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+          trendInfo.volumeFlow = this.calculateVolumeFlow(volume);
           trendInfo.analysis = this.stateAnalysis(trendInfo);
           trendInfo.hidden = false;
           trendInfo.error = false;
@@ -137,10 +152,11 @@ public overallMetric: number;
         }
       }
       // Pearson correlation coefficient
-      trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
-      trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
-      trendInfo.analysis = this.stateAnalysis(trendInfo);
-      trendInfo.hidden = false;
+      // trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
+      // trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+      // trendInfo.volumeFlow = this.calculateVolumeFlow(companyTS);
+      // trendInfo.analysis = this.stateAnalysis(trendInfo);
+      // trendInfo.hidden = false;
 
       this.generateGraphs();
       console.log('This trendInfo' + this.trendInfo);
@@ -164,8 +180,43 @@ public overallMetric: number;
     this.shortRangeMetric = this.trendInfo.shortRangeCorrelation * 100;
     this.longRangeMetric = this.trendInfo.longRangeCorrelation * 100;
 
+    if (this.trendInfo.volumeFlow < 0.1) {
+      this.volumeFlowMetric = -100;
+    } else if (this.trendInfo.volumeFlow > 0.4) {
+      this.volumeFlowMetric = 100;
+    } else {
+      // 0.4 - 0.1 = 0.3
+      this.volumeFlowMetric = (this.trendInfo.volumeFlow - 0.1) / 0.3 * 200 - 100;
+    }
+
     this.overallMetric = (this.returnsMetric + this.shortRangeMetric + this.longRangeMetric) / 3;
     console.log('Overall metric is' + this.overallMetric);
+  }
+
+  private calculateVolumeFlow(ts: number[]) {
+    if (ts.length < 10) {
+      return 0;
+    }
+
+    let immediate = 0;
+    let total = 0;
+    let count = 0;
+    console.log(ts);
+    ts.forEach(data => {
+      if (count >= 5 && count <= 10) {
+        // Most recent 5 days, considered immediate after effect of the news story
+        immediate += data;
+      }
+      total += data;
+      count += 1;
+    });
+    if (total === 0) {
+      return 0;
+    }
+    console.log(`Immediate is ${immediate}`);
+    console.log(`total is ${total}`);
+
+    return immediate / total;
   }
 
   private generateGraphs() {

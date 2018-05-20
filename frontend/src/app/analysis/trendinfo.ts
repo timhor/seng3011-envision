@@ -6,6 +6,7 @@ export class TrendInfo {
   cumulativeReturn: number;
   longRangeCorrelation: number;
   shortRangeCorrelation: number;
+  volumeFlow: number;
 
   // Other displayed info
   relatedCompanies: string[];

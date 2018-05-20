@@ -144,6 +144,25 @@
             {{trendInfo.longRangeCorrelation}}
           </div>
           <div>
+            <b *ngIf="factors[3].value">Volume Flow:
+                <span class="positive-data" *ngIf="volumeFlowMetric > 40">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-40 <= volumeFlowMetric && volumeFlowMetric <= 40">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="volumeFlowMetric < -40">
+                  SELL
+                </span>
+            </b>
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[3].name, factors[3].help)">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data" *ngIf="factors[3].value">
+            {{trendInfo.volumeFlow}}
+          </div>
+          <div>
             <b>Related Companies:</b>
           </div>
           <div class="analysis-related">
