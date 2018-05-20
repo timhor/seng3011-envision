@@ -49,3 +49,8 @@ h1 {
 ul{
     list-style-type: none;
 }
+
+.info-button {
+    color: gray;
+    float: right;
+}
