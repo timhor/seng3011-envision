@@ -1,10 +1,9 @@
 #cy-graph {
-    width: 80%;
+    width: 90%;
     height: 400px;
     border: salmon 2px solid;
     /* display: block; */
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: auto;
     margin-top: 10px;
     margin-bottom: 30px;
 }
