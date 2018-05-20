@@ -30,26 +30,50 @@ export class AnalysisComponent implements OnInit {
   public positiveSummary = false;
   public loadingReturnsPct = true;
   public loadingCMReturnsPct = true;
+
   public factors: any[];
   public summary: string;
   public summaryHelp: string;
+  public generalInfo = 'General Info';
+  public generalInfoHelp =
+`<b>Summary:</b> An overall summary based off the given factors.<br>
+<b>Cumulative Returns:</b> Cumulative return to show the change in returns during the analysis window.<br>
+<b>Correlation:</b> Calculated using Pearson's Correlation Coefficient.<br>
+<br>
+<b>Pearson's Correlation Calculation:</b> Covariance between the stock and the industry divided by the product of variances.
+`;
+
+public returnsMetric: number;
+public shortRangeMetric: number;
+public longRangeMetric: number;
+public volumeFlowMetric: number;
+public overallMetric: number;
 
   constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
     this.factors = [
       {
         name: 'Cumulative Returns',
         value: true,
-        help: 'help text for Cumulative Returns'
+        help: 'Cumulative return to show the change in returns during the analysis window.',
+        factor: 1
       },
       {
         name: '5-day Correlation',
         value: true,
-        help: 'help text for 5-day Correlation'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the short term correlation.',
+        factor: 1
       },
       {
         name: '20-day Correlation',
         value: true,
-        help: 'help text 20-day Correlation'
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
+        factor: 1
+      },
+      {
+        name: 'Volume Flow',
+        value: true,
+        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
+        factor: 1
       }
     ];
     this.summary = 'Summary';
@@ -98,6 +122,7 @@ export class AnalysisComponent implements OnInit {
 
       let i: number;
       let array: number[];
+      const volume: number[] = [];
       for (i = 0; i < 2; i++) {
         array = [];
         try {
@@ -109,10 +134,14 @@ export class AnalysisComponent implements OnInit {
           } else {
             companyTS = array;
             this.trendInfo.cumulativeReturn = result['Company_Returns'][i]['Data'][5]['CM_Return_pct'];
+            result['Company_Returns'][i]['Data'].forEach(e => {
+              volume.push(e['Volume']);
+            });
           }
           // Pearson correlation coefficient
           trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
           trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+          trendInfo.volumeFlow = this.calculateVolumeFlow(volume);
           trendInfo.analysis = this.stateAnalysis(trendInfo);
           trendInfo.hidden = false;
           trendInfo.error = false;
@@ -123,18 +152,71 @@ export class AnalysisComponent implements OnInit {
         }
       }
       // Pearson correlation coefficient
-      trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
-      trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
-      trendInfo.analysis = this.stateAnalysis(trendInfo);
-      trendInfo.hidden = false;
+      // trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
+      // trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
+      // trendInfo.volumeFlow = this.calculateVolumeFlow(companyTS);
+      // trendInfo.analysis = this.stateAnalysis(trendInfo);
+      // trendInfo.hidden = false;
 
       this.generateGraphs();
       console.log('This trendInfo' + this.trendInfo);
       console.log(trendInfo);
+      this.determineBuySell();
     });
 
     trendInfo.relatedCompanies = this.callerService.getRelatedCompanies(company).slice(0, 5);
     return trendInfo;
+  }
+
+  determineBuySell() {
+    if (this.trendInfo.cumulativeReturn <= -0.05) {
+      this.returnsMetric = -100;
+    } else if (this.trendInfo.cumulativeReturn >= 0.05) {
+      this.returnsMetric = 100;
+    } else {
+      this.returnsMetric = this.trendInfo.cumulativeReturn * 2000;
+    }
+
+    this.shortRangeMetric = this.trendInfo.shortRangeCorrelation * 100;
+    this.longRangeMetric = this.trendInfo.longRangeCorrelation * 100;
+
+    if (this.trendInfo.volumeFlow < 0.1) {
+      this.volumeFlowMetric = -100;
+    } else if (this.trendInfo.volumeFlow > 0.4) {
+      this.volumeFlowMetric = 100;
+    } else {
+      // 0.4 - 0.1 = 0.3
+      this.volumeFlowMetric = (this.trendInfo.volumeFlow - 0.1) / 0.3 * 200 - 100;
+    }
+
+    this.overallMetric = (this.returnsMetric + this.shortRangeMetric + this.longRangeMetric) / 3;
+    console.log('Overall metric is' + this.overallMetric);
+  }
+
+  private calculateVolumeFlow(ts: number[]) {
+    if (ts.length < 10) {
+      return 0;
+    }
+
+    let immediate = 0;
+    let total = 0;
+    let count = 0;
+    console.log(ts);
+    ts.forEach(data => {
+      if (count >= 5 && count <= 10) {
+        // Most recent 5 days, considered immediate after effect of the news story
+        immediate += data;
+      }
+      total += data;
+      count += 1;
+    });
+    if (total === 0) {
+      return 0;
+    }
+    console.log(`Immediate is ${immediate}`);
+    console.log(`total is ${total}`);
+
+    return immediate / total;
   }
 
   private generateGraphs() {
@@ -421,7 +503,10 @@ export class AnalysisComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(
-      data => this.factors = data
+      data => {
+        this.factors = data;
+        this.determineBuySell();
+      }
     );
   }
 
