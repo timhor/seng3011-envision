@@ -145,31 +145,31 @@ export class SimilarityGraphComponent implements OnInit, AfterViewInit {
                 'text-valign': 'center',
                 'color': 'white',
                 'text-outline-width': 2,
-                'background-color': '#999',
-                'text-outline-color': '#999'
+                'background-color': '#555',
+                'text-outline-color': '#555'
             })
             .selector('edge')
             .css({
                 'curve-style': 'bezier',
                 'target-arrow-shape': 'triangle',
-                'target-arrow-color': '#ccc',
-                'line-color': '#ccc',
+                'target-arrow-color': '#ffcc5c',
+                'line-color': '#ffcc5c',
                 'width': 2
             })
             .selector('edge.strong')
             .css({
                 'curve-style': 'bezier',
                 'target-arrow-shape': 'triangle',
-                'target-arrow-color': '#aaa',
-                'line-color': '#aaa',
+                'target-arrow-color': '#96ceb4',
+                'line-color': '#96ceb4',
                 'width': 3
             })
             .selector('edge.weak')
             .css({
                 'curve-style': 'bezier',
                 'target-arrow-shape': 'triangle',
-                'target-arrow-color': '#eee',
-                'line-color': '#eee',
+                'target-arrow-color': '#ff6f69',
+                'line-color': '#ff6f69',
                 'width': 1
             })
             .selector(':selected')
