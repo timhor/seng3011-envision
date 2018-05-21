@@ -187,7 +187,6 @@ mat-card {
 .analysis-button {
   background-color: white;
   border: rgb(255, 90, 72) 2px solid;
-  border-radius: 5px;
   color: rgb(255, 90, 72);
   margin-top: 10px;
   padding: 5px;
