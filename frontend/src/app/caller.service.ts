@@ -78,7 +78,7 @@ export class CallerService {
       name: '5-day Correlation',
       value: true,
       help:
-`<p>Calculated using Pearson's Correlation Coefficient to determine the short term correlation.</p>
+`<p>Calculated using Pearson's Correlation Coefficient to determine the short term correlation, up to 5 days from the news story.</p>
 <p>Indicators:</p>
 <ul>
 <li>
@@ -100,7 +100,7 @@ export class CallerService {
       name: '20-day Correlation',
       value: true,
       help:
-`Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.
+`Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation for the entire 20-day window used.
 <p>Indicators:</p>
 <ul>
 <li>
