@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Company } from '../company';
 import { CallerService } from '../caller.service';
 import { AccountInfo } from '../accountInfo';
@@ -9,7 +9,7 @@ import { AccountsService } from '../accounts.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
 
   public accountDetails: AccountInfo = {
     'username': '',
@@ -22,9 +22,6 @@ export class SignupComponent implements OnInit {
   private companySuggestions: Company[] = [];
 
   constructor(private callerService: CallerService, private accountsService: AccountsService) {}
-
-  ngOnInit() {
-  }
 
   onSubmit() {
     console.log(this.accountDetails);
