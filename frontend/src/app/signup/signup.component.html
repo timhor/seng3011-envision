@@ -15,6 +15,32 @@
         <mat-form-field class="full-width">
           <input matInput [(ngModel)]="accountDetails.password_2" name="password_2" placeholder="Repeat Password" type="password" required>
         </mat-form-field>
+        <form (ngSubmit)="updateList()" class="full-width" style="text-align: left">
+          <mat-form-field style="width: 89%">
+            <input matInput #searchBox [(ngModel)]="query" name="query" placeholder="Add Company(s)" type="search"
+              [matAutocomplete]="auto" (input)="updateAutocomplete(searchBox.value)">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let company of companySuggestions" [value]="company.name">
+                {{ company.name }}  ({{ company.code }})
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-icon-button type="submit">
+            <mat-icon>add</mat-icon>
+          </button>
+        </form>
+        <div *ngIf="accountDetails.company_list.length" style="text-align: left;">
+          <h3 class="subtitle-text">Company List:</h3>
+          <ul>
+            <span *ngFor="let company of accountDetails.company_list; let i=index">
+              <li>{{ company }}
+                <button mat-icon-button type="button">
+                  <mat-icon (click)="remove(i)">clear</mat-icon>
+                </button>
+              </li>
+            </span>
+          </ul>
+        </div>
         <button mat-button class="submit-button" type="submit">Create Account</button>
       </form>
     </mat-card-content>
