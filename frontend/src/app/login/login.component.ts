@@ -16,7 +16,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.accountsService.login(this.username, this.password)) {
-      this.router.navigate(['home']);
+      this.router.navigate(['dashboard']);
     } else {
       this.error = 'Incorrect Username or Password!';
     }

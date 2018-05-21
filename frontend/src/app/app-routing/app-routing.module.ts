@@ -8,6 +8,7 @@ import { AboutComponent } from '../about/about.component';
 import { SimilarityGraphComponent } from '../similarity-graph/similarity-graph.component';
 import { SignupComponent } from '../signup/signup.component';
 import { LoginComponent } from '../login/login.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   }
 ];
 

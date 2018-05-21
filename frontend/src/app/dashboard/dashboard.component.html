@@ -1,0 +1,50 @@
+<h1>
+  Dashboard
+</h1>
+<div>
+  <br>
+  <div style="margin-top: 62px">
+    <div class="container" *ngFor="let resp of searchedNews; let i = index;">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <mat-card class="news-card">
+            <div class="img-container">
+              <a href="{{ resp.url }}" target="_blank">
+                <img src="{{ resp.imageUrl }}">
+                <div class="hover-text">VISIT ARTICLE</div>
+              </a>
+            </div>
+            <mat-card-header class="trending-title">
+              <a class="no-underline" href="{{ resp.url }}" target="_blank">{{ resp.title }}</a>
+            </mat-card-header>
+            <mat-card-content class="trending-content">
+              <div style="height: 75px; overflow-y: scroll; text-overflow: ellipsis;">
+                <p [innerHtml]="resp.description"></p>
+              </div>
+              <p class="article-author">
+                by {{ resp.author }} | {{ resp.date }}
+              </p>
+              <mat-chip-list style="text-align:left;">
+                <mat-chip color="accent" selected="true">{{ searchedNews[i]?.instrument }}</mat-chip>
+              </mat-chip-list>
+              <form (ngSubmit)="analyse(searchedNews[i])" style="text-align: right">
+                  <button mat-raised-button class="analysis-button">Envisualise!</button>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-md-2"></div>
+        <!-- <hr class="hidden-spacer"> -->
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" align="center">
+          <mat-divider style="margin: 20px 0; width:75%;"></mat-divider>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>

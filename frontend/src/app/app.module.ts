@@ -29,6 +29,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AccountsService } from './accounts.service';
 import { AccountInfo } from './accountInfo';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const serviceProviders = [
   CallerService
@@ -45,7 +46,8 @@ export const serviceProviders = [
     AnalysisDialogComponent,
     DialogBoxComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
