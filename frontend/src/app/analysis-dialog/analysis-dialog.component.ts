@@ -9,16 +9,15 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
   styleUrls: ['./analysis-dialog.component.css']
 })
 export class AnalysisDialogComponent {
+  public factors: any[];
 
-    public factors: any[];
-
-    constructor(
-      public dialogRef: MatDialogRef<AnalysisDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) data: any,
-      public dialog: MatDialog
-    ) {
-      this.factors = data;
-    }
+  constructor(
+    public dialogRef: MatDialogRef<AnalysisDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any,
+    public dialog: MatDialog
+  ) {
+    this.factors = data;
+  }
 
   close(): void {
     this.dialogRef.close(this.factors);
@@ -34,5 +33,4 @@ export class AnalysisDialogComponent {
       }
     });
   }
-
 }

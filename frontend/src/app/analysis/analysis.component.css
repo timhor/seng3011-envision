@@ -80,6 +80,7 @@ a.no-underline:hover {
 
 mat-card {
   padding: 10px;
+  overflow: auto;
 }
 
 .img-container:hover {
@@ -143,7 +144,12 @@ mat-chip:not(.mat-basic-chip) {
 .analysis-content {
   font-size: 14px;
   text-align: left;
-  margin-top: 60px;
+  margin-top: 40px;
+}
+
+.analysis-label {
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .analysis-data {

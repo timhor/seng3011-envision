@@ -36,49 +36,26 @@ export class AnalysisComponent implements OnInit {
   public summaryHelp: string;
   public generalInfo = 'General Info';
   public generalInfoHelp =
-`<b>Summary:</b> An overall summary based off the given factors.<br>
-<b>Cumulative Returns:</b> Cumulative return to show the change in returns during the analysis window.<br>
-<b>Correlation:</b> Calculated using Pearson's Correlation Coefficient.<br>
-<br>
-<b>Pearson's Correlation Calculation:</b> Covariance between the stock and the industry divided by the product of variances.
+`<ul>
+  <li>
+    <strong>Summary:</strong> An overall summary based off the given factors.
+  </li>
+  <li>
+    <strong>Cumulative Returns:</strong> Cumulative return to show the change in returns during the analysis window.
+  </li>
+  <li>
+    <strong>Correlation:</strong> Calculated using Pearson's Correlation Coefficient – the covariance between the stock and
+    the industry divided by the product of variances.</li>
+</ul>
 `;
 
-public returnsMetric: number;
-public shortRangeMetric: number;
-public longRangeMetric: number;
-public volumeFlowMetric: number;
 public overallMetric: number;
 
-  constructor(private callerService: CallerService, private router: Router, public dialog: MatDialog) {
-    this.factors = [
-      {
-        name: 'Cumulative Returns',
-        value: true,
-        help: 'Cumulative return to show the change in returns during the analysis window.',
-        factor: 1
-      },
-      {
-        name: '5-day Correlation',
-        value: true,
-        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the short term correlation.',
-        factor: 1
-      },
-      {
-        name: '20-day Correlation',
-        value: true,
-        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
-        factor: 1
-      },
-      {
-        name: 'Volume Flow',
-        value: true,
-        help: 'Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.',
-        factor: 1
-      }
-    ];
-    this.summary = 'Summary';
-    this.summaryHelp = 'help text for Summary';
-  }
+  constructor(
+    private callerService: CallerService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.newsInfo = this.callerService.getAnalysisInfo();
@@ -86,6 +63,98 @@ public overallMetric: number;
       this.router.navigate(['home']);
     }
     this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
+    this.factors = [
+      {
+        name: 'Cumulative Returns',
+        value: true,
+        help:
+`<p>Cumulative return to show the change in returns during the analysis window.</p>
+<p>Indicators:</p>
+<ul>
+  <li>
+    <span class="positive">BUY:</span> The cumulative returns are very positive and this would have been a good buy.
+  </li>
+  <li>
+    <span class="neutral">HOLD:</span> The cumulative returns did not shift large enough to be considered for movement.
+  </li>
+  <li>
+    <span class="negative">SELL:</span> The cumulative returns are very negative and would have been a good choice to sell.
+  </li>
+</ul>
+<br>
+`,
+        factor: 1,
+        metric: 0
+      },
+      {
+        name: '5-day Correlation',
+        value: true,
+        help:
+`<p>Calculated using Pearson's Correlation Coefficient to determine the short term correlation.</p>
+<p>Indicators:</p>
+<ul>
+  <li>
+    <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
+  </li>
+  <li>
+    <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
+  </li>
+  <li>
+    <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
+  </li>
+</ul>
+<br>
+`,
+        factor: 1,
+        metric: 0
+      },
+      {
+        name: '20-day Correlation',
+        value: true,
+        help:
+`Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.
+<p>Indicators:</p>
+<ul>
+  <li>
+    <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
+  </li>
+  <li>
+    <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
+  </li>
+  <li>
+    <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
+  </li>
+</ul>
+<br>
+`,
+        factor: 1,
+        metric: 0
+      },
+      {
+        name: 'Volume Flow',
+        value: true,
+        help:
+`Calculated by comparing the proportion of volume within the first 5 days of the news compared to the relative 20-day range.
+<p>Indicators:</p>
+<ul>
+  <li>
+    <span class="positive">BUY:</span> The stock had a high volume flow, meaning that it was highly traded right after the news story.
+  </li>
+  <li>
+    <span class="neutral">HOLD:</span> The stock traded in normal trading capacity, so this measure is not relevant.
+  </li>
+  <li>
+    <span class="negative">SELL:</span> The stock had lower than normal volume flow, meaning that it has been stale since the news story.
+  </li>
+</ul>
+<br>
+`,
+        factor: 1,
+        metric: 0
+      }
+    ];
+    this.summary = 'Summary';
+    this.summaryHelp = 'help text for Summary';
   }
 
   private analyseTrends(company: string, date: string) {
@@ -142,7 +211,7 @@ public overallMetric: number;
           trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
           trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
           trendInfo.volumeFlow = this.calculateVolumeFlow(volume);
-          trendInfo.analysis = this.stateAnalysis(trendInfo);
+          trendInfo.analysis = this.stateAnalysis(trendInfo, this.trendInfo.cumulativeReturn);
           trendInfo.hidden = false;
           trendInfo.error = false;
           console.log(trendInfo);
@@ -151,16 +220,8 @@ public overallMetric: number;
           trendInfo.error = true;
         }
       }
-      // Pearson correlation coefficient
-      // trendInfo.longRangeCorrelation = this.getPearsonCorrelation(indexTS, companyTS);
-      // trendInfo.shortRangeCorrelation = this.getPearsonCorrelation(indexTS.slice(4, 15), companyTS.slice(4, 15));
-      // trendInfo.volumeFlow = this.calculateVolumeFlow(companyTS);
-      // trendInfo.analysis = this.stateAnalysis(trendInfo);
-      // trendInfo.hidden = false;
 
       this.generateGraphs();
-      console.log('This trendInfo' + this.trendInfo);
-      console.log(trendInfo);
       this.determineBuySell();
     });
 
@@ -170,27 +231,37 @@ public overallMetric: number;
 
   determineBuySell() {
     if (this.trendInfo.cumulativeReturn <= -0.05) {
-      this.returnsMetric = -100;
+      this.factors[0].metric = -100;
     } else if (this.trendInfo.cumulativeReturn >= 0.05) {
-      this.returnsMetric = 100;
+      this.factors[0].metric = 100;
     } else {
-      this.returnsMetric = this.trendInfo.cumulativeReturn * 2000;
+      this.factors[0].metric = this.trendInfo.cumulativeReturn * 2000;
     }
 
-    this.shortRangeMetric = this.trendInfo.shortRangeCorrelation * 100;
-    this.longRangeMetric = this.trendInfo.longRangeCorrelation * 100;
+    this.factors[1].metric = this.trendInfo.shortRangeCorrelation * 100;
+    this.factors[2].metric = this.trendInfo.longRangeCorrelation * 100;
 
     if (this.trendInfo.volumeFlow < 0.1) {
-      this.volumeFlowMetric = -100;
+      this.factors[3].factors = -100;
     } else if (this.trendInfo.volumeFlow > 0.4) {
-      this.volumeFlowMetric = 100;
+      this.factors[3].factors = 100;
     } else {
       // 0.4 - 0.1 = 0.3
-      this.volumeFlowMetric = (this.trendInfo.volumeFlow - 0.1) / 0.3 * 200 - 100;
+      this.factors[3].factors = (this.trendInfo.volumeFlow - 0.1) / 0.3 * 200 - 100;
     }
 
-    this.overallMetric = (this.returnsMetric + this.shortRangeMetric + this.longRangeMetric) / 3;
-    console.log('Overall metric is' + this.overallMetric);
+    let activeMetrics = 0;
+    this.overallMetric = 0;
+    this.factors.forEach(e => {
+      if (e.value) {
+        activeMetrics += 1;
+        this.overallMetric += e.metric * e.factor;
+      }
+    });
+    if (activeMetrics !== 0) {
+      this.overallMetric /= activeMetrics;
+      console.log('Overall metric is' + this.overallMetric);
+    }
   }
 
   private calculateVolumeFlow(ts: number[]) {
@@ -201,7 +272,6 @@ public overallMetric: number;
     let immediate = 0;
     let total = 0;
     let count = 0;
-    console.log(ts);
     ts.forEach(data => {
       if (count >= 5 && count <= 10) {
         // Most recent 5 days, considered immediate after effect of the news story
@@ -213,9 +283,6 @@ public overallMetric: number;
     if (total === 0) {
       return 0;
     }
-    console.log(`Immediate is ${immediate}`);
-    console.log(`total is ${total}`);
-
     return immediate / total;
   }
 
@@ -250,7 +317,6 @@ public overallMetric: number;
 
       instrument['Data'].forEach(rec => {
         if (rec['Return_pct'] !== undefined) {
-          console.log('Checking: ' + Number((rec['Return_pct'] * 100).toFixed(4)));
           returnPctData.push(Number((rec['Return_pct'] * 100).toFixed(4)));
         }
         if (rec['CM_Return_pct'] !== undefined) {
@@ -386,9 +452,8 @@ public overallMetric: number;
   }
 
 
-  private stateAnalysis(trendInfo: any) {
-    const companyIndex = trendInfo.rawQuery['Company_Returns'][0]['InstrumentID'].includes('^') ? 0 : 1;
-    const trend = trendInfo.rawQuery['Company_Returns'][companyIndex]['Data'][5]['CM_Return_pct'] > 0 ? 1 : -1;
+  private stateAnalysis(trendInfo: any, retPct: number) {
+    const trend = retPct > 0 ? 1 : -1;
 
     let correlation: number;
     if (Math.abs(trendInfo.shortRangeCorrelation) > 0.8) {
@@ -412,6 +477,14 @@ public overallMetric: number;
     } else {
       outputString += 'Negative growth ';
       this.positiveSummary = false;
+    }
+
+    if (trendInfo.volumeFlow > 0.35) {
+      outputString += 'while traded aggressively ';
+    } else if (trendInfo.volumeFlow > 0.2) {
+      outputString += 'while traded actively ';
+    } else if (trendInfo.volumeFlow < 0.1) {
+      outputString += 'while traded less frequently ';
     }
 
     switch (correlation) {
