@@ -154,7 +154,33 @@ public overallMetric: number;
       }
     ];
     this.summary = 'Summary';
-    this.summaryHelp = 'help text for Summary';
+    this.summaryHelp =
+    `The summary was determined from the values of the following data:
+    <br>
+    <br>
+    <strong>Cumulative Return</strong>
+    <ul>
+      <li>0: 'Positive growth'</li>
+      <li>&lt= 0: 'Negative growth'</li>
+    </ul>
+    <br>
+    <strong>Volume Flow</strong>
+    <ul>
+      <li>&gt 0.35: 'Traded aggressively'</li>
+      <li>&gt 0.2: 'Traded actively'</li>
+      <li>&lt 0.1: 'Traded less frequently'</li>
+    </ul>
+    <br>
+    <strong>5-day Correlation</strong>
+    <ul>
+      <li>&gt 0.8: High correlation</li>
+      <li>&gt 0.7: Very High correlation</li>
+      <li>&lt= 0.7: Low correlation</li>
+    </ul>
+    <br>
+    <u>Coincidence</u> is determined by:
+    <pre>((20-day correlation) - (5-day correlation)) &lt 0.05</pre>
+    `;
   }
 
   private analyseTrends(company: string, date: string) {
