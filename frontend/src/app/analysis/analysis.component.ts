@@ -155,9 +155,7 @@ public overallMetric: number;
     ];
     this.summary = 'Summary';
     this.summaryHelp =
-    `The summary was determined from the values of the following data:
-    <br>
-    <br>
+    `<p>The summary was determined from the values of the following data:</p>
     <strong>Cumulative Return</strong>
     <ul>
       <li>0: 'Positive growth'</li>
@@ -180,6 +178,21 @@ public overallMetric: number;
     <br>
     <u>Coincidence</u> is determined by:
     <pre>((20-day correlation) - (5-day correlation)) &lt 0.05</pre>
+    <br>
+    <hr>
+    <p>Indicators:</p>
+    <ul>
+      <li>
+        <span class="positive">BUY:</span> The summary indicates the stock is very positive and would have been a good buy.
+      </li>
+      <li>
+        <span class="neutral">HOLD:</span> The summary indicates the stock did not shift large enough to be considered for movement.
+      </li>
+      <li>
+        <span class="negative">SELL:</span> The summary indicates the stock is very negative and would have been a good choice to sell.
+      </li>
+    </ul>
+    <br>
     `;
   }
 
