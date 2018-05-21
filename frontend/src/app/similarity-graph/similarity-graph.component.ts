@@ -203,9 +203,17 @@ openHelp(): void {
     width: '500px',
     disableClose: true,
     data: {
-      title: 'Legend',
+      title: 'Help',
       help:
-        `<ul>
+        `<p>
+            This page contains a graph which shows the correlation between industries for news events.
+            <br><br>
+            The circles represent industries and the style of the lines between them represent the strength of the correlation between the industries when a news story affect the source industry (the one with the arrow going away from it).
+            <br><br>
+            Note that the correlation between two industries may not be the same in both directions, this can be exploited for fun and profit!
+        </p>
+        <h3>Legend</h3>
+        <ul>
           <li><span class="strong-link">RED:</span> Strong</li>
           <li><span class="weak-link">GREEN:</span> Weak</li>
           <li><span class="neutral-link">YELLOW:</span> Neutral</li>
