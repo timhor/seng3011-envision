@@ -45,7 +45,12 @@ export class AnalysisComponent implements OnInit {
   </li>
   <li>
     <strong>Correlation:</strong> Calculated using Pearson's Correlation Coefficient – the covariance between the stock and
-    the industry divided by the product of variances.</li>
+    the industry divided by the product of variances.
+  </li>
+  <li>
+    <strong>Volume Flow:</strong> The ratio between the volume 5 days after the story compared to the 20-day span used for
+    comparison to determine the change in volume traded due to the event.
+  </li>
 </ul>
 `;
 
@@ -180,13 +185,15 @@ public overallMetric: number;
     <pre>((20-day correlation) - (5-day correlation)) &lt 0.05</pre>
     <br>
     <hr>
+    Based off the relative weighting of each data metric above, the summary provides an indicator. The weightings can be
+    negative to treat the metric inversely if the user wishes.<br>
     <p>Indicators:</p>
     <ul>
       <li>
         <span class="positive">BUY:</span> The summary indicates the stock is very positive and would have been a good buy.
       </li>
       <li>
-        <span class="neutral">HOLD:</span> The summary indicates the stock did not shift large enough to be considered for movement.
+        <span class="neutral">HOLD:</span> The summary indicates the stock did not move enough to be cosidering changing position.
       </li>
       <li>
         <span class="negative">SELL:</span> The summary indicates the stock is very negative and would have been a good choice to sell.
