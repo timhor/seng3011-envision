@@ -52,6 +52,8 @@ mat-divider {
   width: 85%;
   outline: 0;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 1px;
+  text-align: left;
 }
 
 .search-form {
