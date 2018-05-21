@@ -208,17 +208,21 @@ public overallMetric: number;
     }
 
     let activeMetrics = 0;
+    let factorWeights = 0;
     this.overallMetric = 0;
     this.factors.forEach(e => {
       if (e.value) {
         activeMetrics += 1;
-        this.overallMetric += e.metric * e.factor;
+        factorWeights += e.factor;
       }
     });
-    if (activeMetrics !== 0) {
-      this.overallMetric /= activeMetrics;
-      console.log('Overall metric is' + this.overallMetric);
-    }
+
+    this.factors.forEach(e => {
+      if (e.value) {
+        this.overallMetric += e.metric * e.factor / factorWeights;
+      }
+    });
+    console.log('Overall metric is' + this.overallMetric);
   }
 
   private calculateVolumeFlow(ts: number[]) {
