@@ -3,6 +3,7 @@ import { Company } from '../company';
 import { CallerService } from '../caller.service';
 import { AccountInfo } from '../accountInfo';
 import { AccountsService } from '../accounts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -22,12 +23,13 @@ export class SignupComponent {
   public error: string;
   private companySuggestions: Company[] = [];
 
-  constructor(private callerService: CallerService, private accountsService: AccountsService) {}
+  constructor(private callerService: CallerService, private accountsService: AccountsService, private router: Router) {}
 
   onSubmit() {
     console.log(this.accountDetails);
     if (this.accountsService.addAccount(this.accountDetails)) {
       this.error = null;
+      this.router.navigate(['login']);
     } else {
       this.error = 'Invalid registration';
     }
