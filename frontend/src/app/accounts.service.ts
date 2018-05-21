@@ -14,7 +14,16 @@ export class AccountsService {
    }
 
   public addAccount(account: AccountInfo) {
-    this.accounts.push(account);
+    if (!account.username || !account.email || !account.password || !account.password_2 ||
+        (account.password !== account.password_2)) {
+      return false;
+    }
+    if (!this.accounts.find(x => x.username === account.username)) {
+      this.accounts.push(account);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public login(username: string, password: string) {

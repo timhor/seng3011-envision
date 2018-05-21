@@ -19,13 +19,18 @@ export class SignupComponent {
     'company_list': []
   };
   public query: string;
+  public error: string;
   private companySuggestions: Company[] = [];
 
   constructor(private callerService: CallerService, private accountsService: AccountsService) {}
 
   onSubmit() {
     console.log(this.accountDetails);
-    this.accountsService.addAccount(this.accountDetails);
+    if (this.accountsService.addAccount(this.accountDetails)) {
+      this.error = null;
+    } else {
+      this.error = 'Invalid registration';
+    }
   }
 
   updateList() {

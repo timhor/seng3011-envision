@@ -41,6 +41,7 @@
             </span>
           </ul>
         </div>
+        <span *ngIf="error" style="color: red;">{{ error }}</span>
         <button mat-button class="submit-button" type="submit">Create Account</button>
       </form>
     </mat-card-content>
