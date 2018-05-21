@@ -6,6 +6,7 @@ import { SearchComponent } from '../search/search.component';
 import { AnalysisComponent } from '../analysis/analysis.component';
 import { AboutComponent } from '../about/about.component';
 import { SimilarityGraphComponent } from '../similarity-graph/similarity-graph.component';
+import { SignupComponent } from '../signup/signup.component';
 
 const routes: Routes = [
   {
@@ -35,8 +36,12 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-      path: 'similarity-graph',
-      component: SimilarityGraphComponent
+    path: 'similarity-graph',
+    component: SimilarityGraphComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   }
 ];
 

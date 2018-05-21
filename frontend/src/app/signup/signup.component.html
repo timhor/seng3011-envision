@@ -1,0 +1,22 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <h1 class="signup-title">Sign Up</h1>
+      <form class="signup-form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width">
+          <input matInput [(ngModel)]="accountDetails.username" name="username" placeholder="Username" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput [(ngModel)]="accountDetails.email" name="email" placeholder="Emai" type="email" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput [(ngModel)]="accountDetails.password" name="password" placeholder="Password" type="password" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput [(ngModel)]="accountDetails.password_2" name="password_2" placeholder="Repeat Password" type="password" required>
+        </mat-form-field>
+        <button mat-button class="submit-button" type="submit">Create Account</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

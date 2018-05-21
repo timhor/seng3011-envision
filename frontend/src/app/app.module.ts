@@ -27,6 +27,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 import { SimilarityGraphComponent } from './similarity-graph/similarity-graph.component';
+import { SignupComponent } from './signup/signup.component';
 
 export const serviceProviders = [
   CallerService
@@ -41,7 +42,8 @@ export const serviceProviders = [
     AboutComponent,
     SimilarityGraphComponent,
     AnalysisDialogComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
