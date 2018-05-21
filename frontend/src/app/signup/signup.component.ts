@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../company';
 import { CallerService } from '../caller.service';
 import { AccountInfo } from '../accountInfo';
+import { AccountsService } from '../accounts.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,13 +21,14 @@ export class SignupComponent implements OnInit {
   public query: string;
   private companySuggestions: Company[] = [];
 
-  constructor(private callerService: CallerService) {}
+  constructor(private callerService: CallerService, private accountsService: AccountsService) {}
 
   ngOnInit() {
   }
 
   onSubmit() {
     console.log(this.accountDetails);
+    this.accountsService.addAccount(this.accountDetails);
   }
 
   updateList() {
