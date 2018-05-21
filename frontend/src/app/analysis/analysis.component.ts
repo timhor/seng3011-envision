@@ -45,7 +45,12 @@ export class AnalysisComponent implements OnInit {
   </li>
   <li>
     <strong>Correlation:</strong> Calculated using Pearson's Correlation Coefficient – the covariance between the stock and
-    the industry divided by the product of variances.</li>
+    the industry divided by the product of variances.
+  </li>
+  <li>
+    <strong>Volume Flow:</strong> The ratio between the volume 5 days after the story compared to the 20-day span used for
+    comparison to determine the change in volume traded due to the event.
+  </li>
 </ul>
 `;
 
@@ -63,98 +68,50 @@ public overallMetric: number;
       this.router.navigate(['home']);
     }
     this.trendInfo = this.analyseTrends(this.newsInfo.instrument, this.newsInfo.date);
-    this.factors = [
-      {
-        name: 'Cumulative Returns',
-        value: true,
-        help:
-`<p>Cumulative return to show the change in returns during the analysis window.</p>
-<p>Indicators:</p>
-<ul>
-  <li>
-    <span class="positive">BUY:</span> The cumulative returns are very positive and this would have been a good buy.
-  </li>
-  <li>
-    <span class="neutral">HOLD:</span> The cumulative returns did not shift large enough to be considered for movement.
-  </li>
-  <li>
-    <span class="negative">SELL:</span> The cumulative returns are very negative and would have been a good choice to sell.
-  </li>
-</ul>
-<br>
-`,
-        factor: 1,
-        metric: 0
-      },
-      {
-        name: '5-day Correlation',
-        value: true,
-        help:
-`<p>Calculated using Pearson's Correlation Coefficient to determine the short term correlation.</p>
-<p>Indicators:</p>
-<ul>
-  <li>
-    <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
-  </li>
-  <li>
-    <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
-  </li>
-  <li>
-    <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
-  </li>
-</ul>
-<br>
-`,
-        factor: 1,
-        metric: 0
-      },
-      {
-        name: '20-day Correlation',
-        value: true,
-        help:
-`Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation.
-<p>Indicators:</p>
-<ul>
-  <li>
-    <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
-  </li>
-  <li>
-    <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
-  </li>
-  <li>
-    <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
-  </li>
-</ul>
-<br>
-`,
-        factor: 1,
-        metric: 0
-      },
-      {
-        name: 'Volume Flow',
-        value: true,
-        help:
-`Calculated by comparing the proportion of volume within the first 5 days of the news compared to the relative 20-day range.
-<p>Indicators:</p>
-<ul>
-  <li>
-    <span class="positive">BUY:</span> The stock had a high volume flow, meaning that it was highly traded right after the news story.
-  </li>
-  <li>
-    <span class="neutral">HOLD:</span> The stock traded in normal trading capacity, so this measure is not relevant.
-  </li>
-  <li>
-    <span class="negative">SELL:</span> The stock had lower than normal volume flow, meaning that it has been stale since the news story.
-  </li>
-</ul>
-<br>
-`,
-        factor: 1,
-        metric: 0
-      }
-    ];
+    this.factors = this.callerService.factors;
     this.summary = 'Summary';
-    this.summaryHelp = 'help text for Summary';
+    this.summaryHelp =
+    `<p>The summary was determined from the values of the following data:</p>
+    <strong>Cumulative Return</strong>
+    <ul>
+      <li>0: 'Positive growth'</li>
+      <li>&lt= 0: 'Negative growth'</li>
+    </ul>
+    <br>
+    <strong>Volume Flow</strong>
+    <ul>
+      <li>&gt 0.35: 'Traded aggressively'</li>
+      <li>&gt 0.2: 'Traded actively'</li>
+      <li>&lt 0.1: 'Traded less frequently'</li>
+    </ul>
+    <br>
+    <strong>5-day Correlation</strong>
+    <ul>
+      <li>&gt 0.8: High correlation</li>
+      <li>&gt 0.7: Very High correlation</li>
+      <li>&lt= 0.7: Low correlation</li>
+    </ul>
+    <br>
+    <u>Coincidence</u> is determined by:
+    <pre>((20-day correlation) - (5-day correlation)) &lt 0.05</pre>
+    <br>
+    <hr>
+    Based off the relative weighting of each data metric above, the summary provides an indicator. The weightings can be
+    negative to treat the metric inversely if the user wishes.<br>
+    <p>Indicators:</p>
+    <ul>
+      <li>
+        <span class="positive">BUY:</span> The summary indicates the stock is very positive and would have been a good buy.
+      </li>
+      <li>
+        <span class="neutral">HOLD:</span> The summary indicates the stock did not move enough to be cosidering changing position.
+      </li>
+      <li>
+        <span class="negative">SELL:</span> The summary indicates the stock is very negative and would have been a good choice to sell.
+      </li>
+    </ul>
+    <br>
+    `;
   }
 
   private analyseTrends(company: string, date: string) {
@@ -251,17 +208,21 @@ public overallMetric: number;
     }
 
     let activeMetrics = 0;
+    let factorWeights = 0;
     this.overallMetric = 0;
     this.factors.forEach(e => {
       if (e.value) {
         activeMetrics += 1;
-        this.overallMetric += e.metric * e.factor;
+        factorWeights += e.factor;
       }
     });
-    if (activeMetrics !== 0) {
-      this.overallMetric /= activeMetrics;
-      console.log('Overall metric is' + this.overallMetric);
-    }
+
+    this.factors.forEach(e => {
+      if (e.value) {
+        this.overallMetric += e.metric * e.factor / factorWeights;
+      }
+    });
+    console.log('Overall metric is' + this.overallMetric);
   }
 
   private calculateVolumeFlow(ts: number[]) {
