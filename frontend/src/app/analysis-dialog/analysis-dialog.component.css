@@ -14,3 +14,15 @@ h2 {
 .info-button {
 	color: gray;
 }
+
+.positive {
+  color: green;
+}
+
+.neutral {
+  color: #ff9d00;
+}
+
+.negative {
+  color: red;
+}
