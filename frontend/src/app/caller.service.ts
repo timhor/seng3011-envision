@@ -51,6 +51,97 @@ export class CallerService {
     '249e782f71e3429ea0975d5b376fa42f'
   ];
 
+  public factors = [
+    {
+      name: 'Cumulative Returns',
+      value: true,
+      help:
+`<p>Cumulative return to show the change in returns during the analysis window.</p>
+<p>Indicators:</p>
+<ul>
+<li>
+  <span class="positive">BUY:</span> The cumulative returns are very positive and this would have been a good buy.
+</li>
+<li>
+  <span class="neutral">HOLD:</span> The cumulative returns did not shift large enough to be considered for movement.
+</li>
+<li>
+  <span class="negative">SELL:</span> The cumulative returns are very negative and would have been a good choice to sell.
+</li>
+</ul>
+<br>
+`,
+      factor: 1,
+      metric: 0
+    },
+    {
+      name: '5-day Correlation',
+      value: true,
+      help:
+`<p>Calculated using Pearson's Correlation Coefficient to determine the short term correlation, up to 5 days from the news story.</p>
+<p>Indicators:</p>
+<ul>
+<li>
+  <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
+</li>
+<li>
+  <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
+</li>
+<li>
+  <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
+</li>
+</ul>
+<br>
+`,
+      factor: 1,
+      metric: 0
+    },
+    {
+      name: '20-day Correlation',
+      value: true,
+      help:
+`Calculated using Pearson\'s Correlation Coefficient to determine the long term correlation for the entire 20-day window used.
+<p>Indicators:</p>
+<ul>
+<li>
+  <span class="positive">BUY:</span> The stock moved generally in line with its respective index, which generally indicates good health.
+</li>
+<li>
+  <span class="neutral">HOLD:</span> The stock did not correlate much with its index, so the correlation is not a useful measure.
+</li>
+<li>
+  <span class="negative">SELL:</span> The stock moved inversely with its respective index, which is generally a sign of an issue.
+</li>
+</ul>
+<br>
+`,
+      factor: 1,
+      metric: 0
+    },
+    {
+      name: 'Volume Flow',
+      value: true,
+      help:
+`Calculated by comparing the proportion of volume within the first 5 days of the news compared to the relative 20-day range.
+<p>Indicators:</p>
+<ul>
+<li>
+  <span class="positive">BUY:</span> The stock had a high volume flow, meaning that it was highly traded right after the news story.
+</li>
+<li>
+  <span class="neutral">HOLD:</span> The stock traded in normal trading capacity, so this measure is not relevant.
+</li>
+<li>
+  <span class="negative">SELL:</span> The stock had lower than normal volume flow, meaning that it has been stale since the news story.
+</li>
+</ul>
+<br>
+`,
+      factor: 1,
+      metric: 0
+    }
+  ];
+
 
   constructor(private http: HttpClient) {
     this.http.get('../assets/ASXListedCompanies.json').subscribe(val => this.companies = <Company[]> val);
