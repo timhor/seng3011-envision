@@ -57,7 +57,6 @@ export class CallerService {
       value: true,
       help:
 `<p>Cumulative return to show the change in returns during the analysis window.</p>
-<br>
 <p>Indicators:</p>
 <ul>
 <li>
