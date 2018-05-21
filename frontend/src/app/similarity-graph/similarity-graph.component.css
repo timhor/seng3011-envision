@@ -1,12 +1,12 @@
 #cy-graph {
-    width: 80%;
+    width: 90%;
     height: 400px;
     border: salmon 2px solid;
     /* display: block; */
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: auto;
     margin-top: 10px;
     margin-bottom: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #industry-selection {
@@ -48,4 +48,21 @@ h1 {
 
 ul{
     list-style-type: none;
+}
+
+.info-button {
+    color: gray;
+    float: right;
+}
+
+::ng-deep .neutral-link {
+    color: #ffcc5c;
+}
+
+::ng-deep .weak-link {
+    color: #96ceb4;
+}
+
+::ng-deep .strong-link {
+    color: #ff6f69;
 }

@@ -1,26 +1,28 @@
 <h1>
-    Similarity Graph
+  Similarity Graph
 </h1>
 <br>
 <div class="container">
-    <div class="row">
-        <div class="col-sm'5">
-            <mat-card>
-                <mat-card-content class="industries-content">
-                    <div id="cy-graph"></div>
-                    <hr>
-                    <div id="industry-selection">
-                        <ul>
-                            <li *ngFor="let industry of industries; let i = index">
-                                <mat-checkbox (change)="buildGraph()" [(ngModel)]="industry.visible" class="text-inside-grid">{{industry.name}}</mat-checkbox>
-                                {{industry.name}}
-                            </li>
-                        </ul>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-
-        </div>
+  <div class="row">
+    <div class="col-sm'5">
+      <mat-card>
+        <mat-card-content class="industries-content">
+          <button mat-icon-button class="info-button" (click)="openHelp()">
+            <mat-icon>help_outline</mat-icon>
+          </button>
+          <div id="cy-graph"></div>
+          <hr>
+          <div id="industry-selection">
+            <h2>Groups</h2>
+            <ul>
+              <li *ngFor="let industry of industries; let i = index">
+                <mat-checkbox (change)="buildGraph()" [(ngModel)]="industry.visible" class="text-inside-grid">{{industry.name}}</mat-checkbox>
+              </li>
+            </ul>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
+  </div>
 </div>
 <br><br>
