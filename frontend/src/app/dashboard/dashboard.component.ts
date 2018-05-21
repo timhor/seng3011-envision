@@ -4,6 +4,7 @@ import { CallerService } from '../caller.service';
 import { HttpParams } from '@angular/common/http';
 import { NewsInfo } from '../newsinfo';
 import { Company } from '../company';
+import { AccountsService } from '../accounts.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,10 +24,15 @@ export class DashboardComponent implements OnInit {
   public sortBy = 'Relevance';
   private articlesPerCompany = 5;
 
-  public constructor(private route: ActivatedRoute, private callerService: CallerService, private router: Router) {
+  public constructor(
+    private route: ActivatedRoute,
+    private callerService: CallerService,
+    private router: Router,
+    private accountsService: AccountsService
+  ) {
     this.route.queryParams.subscribe(params => {
 
-      this.userSubscriptions = ['CBA', 'AMP'];
+      this.userSubscriptions = this.accountsService.getCompanies();
       // GET A LIST OF COMPANIES THE USER IS SUBSCRIBED TO
 
       if (this.userSubscriptions.length > 0) {
