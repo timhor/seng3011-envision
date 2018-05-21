@@ -22,8 +22,6 @@ import { AboutComponent } from './about/about.component';
 import 'hammerjs';
 import 'chartjs-plugin-zoom';
 import { AnalysisDialogComponent } from './analysis-dialog/analysis-dialog.component';
-import { MatDialogModule } from '@angular/material';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 import { SimilarityGraphComponent } from './similarity-graph/similarity-graph.component';
@@ -58,9 +56,7 @@ export const serviceProviders = [
     FormsModule,
     HttpClientModule,
     Ng2FlatpickrModule,
-    ChartModule,
-    MatDialogModule,
-    MatCheckboxModule
+    ChartModule
   ],
   providers: [
       CallerService,

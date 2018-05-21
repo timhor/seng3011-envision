@@ -15,7 +15,9 @@ import {
   MatExpansionModule,
   MatChipsModule,
   MatRadioModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
@@ -34,7 +36,9 @@ import {
     MatExpansionModule,
     MatChipsModule,
     MatRadioModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule,
@@ -51,7 +55,9 @@ import {
     MatExpansionModule,
     MatChipsModule,
     MatRadioModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatCheckboxModule
   ]
 })
 export class AppMaterialModule { }
