@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   private pageSize = '10';
   public sortOptions: string[] = ['Relevance', 'Newest', 'Popularity'];
   public sortBy = 'Relevance';
-  private articlesPerCompany = 5;
+  private articlesPerCompany = 4;
 
   public constructor(
     private route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
 
 
   private getNewsArticles() {
-    if (this.userSubscriptions.length > 5) {
+    if (this.userSubscriptions.length >= 5) {
       this.articlesPerCompany = 2;
     }
 
@@ -119,16 +119,48 @@ export class DashboardComponent implements OnInit {
             news.date = new Date(e['publishedAt']).toLocaleDateString();
             this.searchedNews.push(news);
             articlesObtained = 0;
+            let counter = this.searchedNews.length;
+            while (counter > 0) {
+              let index = Math.floor(Math.random() * counter);
+              counter--;
+              let temp = this.searchedNews[counter];
+              this.searchedNews[counter] = this.searchedNews[index];
+              this.searchedNews[index] = temp;
+            }
           }
         });
       });
     });
+    console.log(this.searchedNews);
   }
 
   analyse(news: any) {
     console.log(news);
     this.callerService.setAnalysisInfo(news);
     this.router.navigate(['analysis']);
+  }
+
+  // Code snipped obtained from:
+  // tslint:disable-next-line:max-line-length
+  // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+  shuffle(array) {
+      let counter = array.length;
+
+      // While there are elements in the array
+      while (counter > 0) {
+          // Pick a random index
+          let index = Math.floor(Math.random() * counter);
+
+          // Decrease counter by 1
+          counter--;
+
+          // And swap the last element with it
+          let temp = array[counter];
+          array[counter] = array[index];
+          array[index] = temp;
+      }
+
+      return array;
   }
 
   private getDateString(date: Date) {

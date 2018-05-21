@@ -198,15 +198,16 @@ mat-progress-spinner {
 }
 
 .edit-button {
-  border: solid 1.5px lightsalmon;
-  font-weight: bold;
-  padding: 3px 6px;
+  background-color: white;
+  border: rgb(255, 90, 72) 2px solid;
+  color: rgb(255, 90, 72);
+  margin-top: 10px;
+  padding: 5px;
 }
 
 .edit-button:hover {
-  background-color: salmon;
-  border: solid 1.5px salmon;
-  color: whitesmoke;
+  background-color: rgb(255, 90, 72);
+  color: white;
 }
 
 ::ng-deep .mat-tooltip {
