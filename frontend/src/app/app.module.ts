@@ -22,11 +22,14 @@ import { AboutComponent } from './about/about.component';
 import 'hammerjs';
 import 'chartjs-plugin-zoom';
 import { AnalysisDialogComponent } from './analysis-dialog/analysis-dialog.component';
-import { MatDialogModule } from '@angular/material';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 import { SimilarityGraphComponent } from './similarity-graph/similarity-graph.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { AccountsService } from './accounts.service';
+import { AccountInfo } from './accountInfo';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const serviceProviders = [
   CallerService
@@ -41,7 +44,10 @@ export const serviceProviders = [
     AboutComponent,
     SimilarityGraphComponent,
     AnalysisDialogComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    SignupComponent,
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -52,13 +58,12 @@ export const serviceProviders = [
     FormsModule,
     HttpClientModule,
     Ng2FlatpickrModule,
-    ChartModule,
-    MatDialogModule,
-    MatCheckboxModule
+    ChartModule
   ],
   providers: [
       CallerService,
-      serviceProviders
+      serviceProviders,
+      AccountsService
   ],
   entryComponents: [
     AnalysisDialogComponent,

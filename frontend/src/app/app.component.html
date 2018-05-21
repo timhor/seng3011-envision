@@ -7,6 +7,10 @@
     </div>
     <mat-divider></mat-divider>
     <mat-nav-list class="navLinks">
+      <a mat-list-item *ngIf="isLoggedIn" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+        <mat-icon>dashboard</mat-icon>
+        <span class="navLinkText">Dashboard</span>
+      </a>
       <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>trending_up</mat-icon>
         <span class="navLinkText">Trending</span>
@@ -56,15 +60,36 @@
         <span class="fill-space"></span>
 
         <div class="profile">
-          <button mat-icon-button>
-            <mat-icon>message</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>notifications</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>person</mat-icon>
-          </button>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button>
+              <mat-icon>notifications</mat-icon>
+            </button>
+            <span class="caption">Notification</span>
+          </div>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button>
+              <mat-icon>person</mat-icon>
+            </button>
+            <span class="caption">Profile</span>
+          </div>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+            </button>
+            <span class="caption">Logout</span>
+          </div>
+          <div class="item" *ngIf="!isLoggedIn">
+            <button mat-icon-button routerLink="/login">
+              <mat-icon>input</mat-icon>
+            </button>
+            <span class="caption">Login</span>
+          </div>
+          <div class="item" *ngIf="!isLoggedIn">
+            <button mat-icon-button routerLink="/signup">
+              <mat-icon>person_add</mat-icon>
+            </button>
+            <span class="caption">Sign Up</span>
+          </div>
         </div>
       </mat-toolbar>
 

@@ -1,0 +1,38 @@
+.container {
+  height: 100%;
+  margin: 4em auto;
+}
+
+mat-card {
+  margin: auto;
+  min-height: 500px;
+  width: 35%;
+}
+
+.signup-title {
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+}
+
+.subtitle-text {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.signup-form {
+  margin: 0 auto;
+  margin-top: 50px;
+  max-width: 400px;
+  min-width: 150px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  background-color: tomato;
+  color: white;
+  margin-top: 25px;
+  width: 100%;
+}
