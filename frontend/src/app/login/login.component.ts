@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public username: string;
   public password: string;
+  public error: string;
 
   constructor(private accountsService: AccountsService, private router: Router) { }
 
   onSubmit() {
-    this.accountsService.login(this.username, this.password);
-    this.router.navigate(['home']);
+    if (this.accountsService.login(this.username, this.password)) {
+      this.router.navigate(['home']);
+    } else {
+      this.error = 'Incorrect Username or Password!';
+    }
   }
 
 }

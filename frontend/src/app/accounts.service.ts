@@ -8,6 +8,7 @@ export class AccountsService {
   private loggedInIndex: number;
 
   constructor() {
+    this.accounts = [];
     this.isLoggedIn = false;
     this.loggedInIndex = -1;
    }
@@ -39,5 +40,9 @@ export class AccountsService {
 
   public getCompanies() {
     return this.accounts[this.loggedInIndex].company_list;
+  }
+
+  public loggedIn() {
+    return this.isLoggedIn;
   }
 }

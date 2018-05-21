@@ -93,3 +93,15 @@ mat-divider {
   max-width: none;
   width: 240px;
 }
+
+.item {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+}
+
+.caption {
+  display: block;
+  font-size: 10px;
+  margin-top: -14px;
+}
