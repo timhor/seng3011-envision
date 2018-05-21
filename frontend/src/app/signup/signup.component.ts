@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../company';
 import { CallerService } from '../caller.service';
+import { AccountInfo } from '../accountInfo';
 
 @Component({
   selector: 'app-signup',
@@ -9,7 +10,7 @@ import { CallerService } from '../caller.service';
 })
 export class SignupComponent implements OnInit {
 
-  public accountDetails: any = {
+  public accountDetails: AccountInfo = {
     'username': '',
     'email': '',
     'password': '',
