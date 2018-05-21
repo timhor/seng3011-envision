@@ -5,7 +5,7 @@
 </mat-dialog-actions>
 <h2>Edit Factors</h2>
 <mat-divider></mat-divider>
-<mat-grid-list cols="6" rowHeight="100px" style="width: 600px; margin: auto;">
+<mat-grid-list cols="5" rowHeight="100px" style="width: 600px; margin: auto;">
 	<span *ngFor="let factor of factors">
 		<mat-grid-tile [colspan]="2" [rowspan]="1">
 			<mat-checkbox [(ngModel)]="factor.value" class="text-inside-grid">{{factor.name}}</mat-checkbox>
