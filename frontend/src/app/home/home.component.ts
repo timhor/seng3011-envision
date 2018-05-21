@@ -37,14 +37,18 @@ export class HomeComponent {
       console.log(tempArray);
       tempArray = this.callerService.shuffleArray(tempArray);
 
-      tempArray = tempArray.slice(0, 10);
+      tempArray = tempArray.slice(0, 15);
       tempArray.forEach(instrument => {
-        // Check if found 5 pieces of article already
         console.log(instrument);
         let newsParams: HttpParams = new HttpParams();
-        // console.log(instrument.replace(/ (\w+)$/, ''));
-        newsParams = newsParams.append('q', '\"' + instrument.replace(/ (\w+)$/, '') + '\"');
+        if (instrument.split(' ').length <= 2) {
+          newsParams = newsParams.append('q', '\"' + instrument + '\"');
+        } else {
+          newsParams = newsParams.append('q', '\"' + instrument.replace(/ (\w+)$/, '') + '\"');
+        }
         newsParams = newsParams.append('sortBy', 'relevancy');
+
+        // Check if found 5 pieces of article already
         if (this.trendingNews.length === 5) {
           return;
         }
