@@ -5,3 +5,14 @@
 h2 {
 	font-family: 'Open Sans', sans-serif;
 }
+:host::ng-deep .positive {
+  color: green;
+}
+
+:host::ng-deep .neutral {
+  color: #ff9d00;
+}
+
+:host::ng-deep .negative {
+  color: red;
+}
