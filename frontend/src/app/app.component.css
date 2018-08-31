@@ -52,6 +52,8 @@ mat-divider {
   width: 85%;
   outline: 0;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 1px;
+  text-align: left;
 }
 
 .search-form {
@@ -87,4 +89,21 @@ mat-divider {
 .navLinks a.active{
   border-left: salmon solid 3px;
   background-color: #202020;
+}
+
+::ng-deep .cdk-overlay-pane {
+  max-width: none;
+  width: 240px;
+}
+
+.item {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+}
+
+.caption {
+  display: block;
+  font-size: 10px;
+  margin-top: -14px;
 }

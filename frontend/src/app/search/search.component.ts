@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material';
 import { Router } from '@angular/router';
+import { Company } from '../company';
 import { NewsInfo } from '../newsinfo';
 
 @Component({
@@ -43,7 +44,11 @@ export class SearchComponent {
   private getQuery() {
     this.searchedNews = [];
     let newsParams: HttpParams = new HttpParams();
-    newsParams = newsParams.append('q', this.query);
+    if (this.query.split(' ').length <= 2) {
+      newsParams = newsParams.append('q', '\"' + this.query + '\"');
+    } else {
+      newsParams = newsParams.append('q', '\"' + this.query.replace(/ (\w+)$/, '') + '\"');
+    }
 
     let sortByVal = 'relevancy';
     if (this.sortBy === this.sortOptions[1]) {
@@ -61,11 +66,31 @@ export class SearchComponent {
         newsParams = newsParams.append('to', this.getDateString(to));
       }
     }
+
+
+    // Remove everything after '.' for CBA.AX cases otherwise, CBA will not be an option
+    this.query = this.query.replace(/\..*/, '');
+    // Remove everything before ':' for ASX:CBA cases
+    this.query = this.query.replace(/.*\:/, '');
+    this.query = this.query.toUpperCase();
+    const companies: Company[] = this.callerService.instrumentFuzzySearch(this.query);
+    let instrument = '';
+    companies.forEach(c => {
+      if (c.name.includes(this.query) || c.code.includes(this.query)) {
+        instrument = c.name;
+      }
+    });
     this.callerService.getNewsInfo(newsParams).subscribe((result) => {
       this.newsResponse = result;
+      this.newsResponse['articles'] = this.newsResponse['articles'].filter(e => {
+          // console.log(e);
+          if (e['title'].includes('&amp')) { return false; }
+          if (e['description'].includes('&amp')) { return false; }
+          if (e['source']['name'].includes('Salon.com')) { return false; }
+          return true;
+      });
       this.newsResponse['articles'].forEach(e => {
-        const news = new NewsInfo('', '', '', '', '', '', this.query);
-        // TODO: search for business name from query and set it as instrument
+        const news = new NewsInfo('', '', '', '', '', '', instrument);
         news.title = e['title'];
         news.url = e['url'];
         news.author = e['author'];

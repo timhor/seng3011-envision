@@ -50,8 +50,7 @@ a.no-underline:hover {
 
 .graph-card {
   font-family: 'Open Sans', sans-serif;
-  height: 250px;
-
+  height: 280px;
 }
 
 .news-card {
@@ -61,12 +60,12 @@ a.no-underline:hover {
 
 .analysis-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 891px;
 }
 
 .expanded-card {
   font-family: 'Open Sans', sans-serif;
-  height: 861px;
+  height: 42vw;
 }
 
 .img-container {
@@ -81,6 +80,7 @@ a.no-underline:hover {
 
 mat-card {
   padding: 10px;
+  overflow: auto;
 }
 
 .img-container:hover {
@@ -130,4 +130,98 @@ mat-chip {
 
 mat-chip:not(.mat-basic-chip) {
   padding: 2px 5px;
+}
+
+.analysis-title {
+  font-family: 'Francois One', sans-serif;
+  font-size: 36px;
+  text-decoration: underline salmon solid;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+}
+
+.analysis-content {
+  font-size: 14px;
+  text-align: left;
+  margin-top: 40px;
+}
+
+.analysis-label {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.analysis-data {
+  font-family: 'Courier New', Courier, monospace;
+  font-style: italic;
+  margin-bottom: 7px;
+  padding: 7px;
+  text-align: center;
+}
+
+.analysis-related {
+  margin-bottom: 7px;
+  padding: 7px;
+}
+
+.positive-data {
+  color: green;
+}
+
+.neutral-data {
+  color: #ff9d00;
+}
+
+.negative-data {
+  color: red;
+}
+
+mat-progress-spinner {
+  margin: 0 auto;
+}
+
+.analysis-card > mat-progress-spinner {
+  margin-top: 200px;
+}
+
+.graph-card > mat-progress-spinner {
+  margin-top: 90px;
+}
+
+:host ::ng-deep .chartjs-render-monitor {
+  margin-top: 10px;
+}
+
+.expand-button {
+  float: right;
+}
+
+.edit-button {
+  background-color: white;
+  border: rgb(255, 90, 72) 2px solid;
+  color: rgb(255, 90, 72);
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.edit-button:hover {
+  background-color: rgb(255, 90, 72);
+  color: white;
+}
+
+::ng-deep .mat-tooltip {
+  text-align: center;
+}
+
+.info-button {
+  color: gray;
+  float: right;
+  margin-top: 5px;
+}
+
+.help-button {
+  color: gray;
+  float: right;
+  margin-top: -10px;
 }

@@ -7,17 +7,26 @@
     </div>
     <mat-divider></mat-divider>
     <mat-nav-list class="navLinks">
+      <a mat-list-item *ngIf="isLoggedIn" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+        <mat-icon>dashboard</mat-icon>
+        <span class="navLinkText">Dashboard</span>
+      </a>
       <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
-        <mat-icon>home</mat-icon>
-        <span class="navLinkText">Home</span>
-      </a>
-      <a mat-list-item routerLink="/search" routerLinkActive="active" (click)="onLinkClick()">
-        <mat-icon>search</mat-icon>
-        <span class="navLinkText">Search</span>
-      </a>
-      <a mat-list-item routerLink="/trending" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
-        <mat-icon>show_chart</mat-icon>
+        <mat-icon>trending_up</mat-icon>
         <span class="navLinkText">Trending</span>
+      </a>
+      <a mat-list-item [matMenuTriggerFor]="menu">
+        <mat-icon>business_center</mat-icon>
+        <span class="navLinkText">Industries</span>
+        <span class="fill-space"></span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </a>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item *ngFor="let group of groups" (click)="openGroup(group)">{{ group }}</button>
+      </mat-menu>
+      <a mat-list-item routerLink="/similarity-graph" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
+        <mat-icon>scatter_plot</mat-icon>
+        <span class="navLinkText">Similarity Graph</span>
       </a>
       <a mat-list-item routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick()">
         <mat-icon>info_outline</mat-icon>
@@ -51,15 +60,36 @@
         <span class="fill-space"></span>
 
         <div class="profile">
-          <button mat-icon-button>
-            <mat-icon>message</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>notifications</mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon>person</mat-icon>
-          </button>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button>
+              <mat-icon>notifications</mat-icon>
+            </button>
+            <span class="caption">Notification</span>
+          </div>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button>
+              <mat-icon>person</mat-icon>
+            </button>
+            <span class="caption">Profile</span>
+          </div>
+          <div class="item" *ngIf="isLoggedIn">
+            <button mat-icon-button (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+            </button>
+            <span class="caption">Logout</span>
+          </div>
+          <div class="item" *ngIf="!isLoggedIn">
+            <button mat-icon-button routerLink="/login">
+              <mat-icon>input</mat-icon>
+            </button>
+            <span class="caption">Login</span>
+          </div>
+          <div class="item" *ngIf="!isLoggedIn">
+            <button mat-icon-button routerLink="/signup">
+              <mat-icon>person_add</mat-icon>
+            </button>
+            <span class="caption">Sign Up</span>
+          </div>
         </div>
       </mat-toolbar>
 

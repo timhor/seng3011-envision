@@ -25,30 +25,157 @@
         </mat-card>
       </div>
       <hr class="spacer">
-      <div class="row" style="padding-top:5px;">
-        <div class="col-md-6" style="padding: 0px; padding-right:5px;">
-          <mat-card class="graph-card">GRAPH #1
-            <button mat-icon-button (click)="expandGraph1()">
-              <mat-icon>call_made</mat-icon>
-            </button>
+      <div class="row" style="padding-top: 5px;">
+        <div class="col-md-6" style="padding: 0px; padding-right: 5px;">
+          <mat-card class="graph-card">
+            <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
+            <div *ngIf="!loadingReturnsPct">
+              <button mat-icon-button class="expand-button" (click)="expandGraph1()">
+                <mat-icon>call_made</mat-icon>
+              </button>
+            </div>
+            <chart [type]="graph_type" [data]="rtn_data" [options]="rtn_options"></chart>
           </mat-card>
         </div>
-        <div class="col-md-6" style="padding: 0px; padding-left:5px;">
-          <mat-card class="graph-card">GRAPH #2
-            <button mat-icon-button (click)="expandGraph2()">
-              <mat-icon>call_made</mat-icon>
-            </button>
+        <div class="col-md-6" style="padding: 0px; padding-left: 5px;">
+          <mat-card class="graph-card">
+            <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="loadingReturnsPct"></mat-progress-spinner>
+            <div *ngIf="!loadingReturnsPct">
+              <button mat-icon-button class="expand-button" (click)="expandGraph2()">
+                <mat-icon>call_made</mat-icon>
+              </button>
+            </div>
+            <chart [type]="graph_type" [data]="cm_rtn_data" [options]="cm_rtn_options"></chart>
           </mat-card>
         </div>
       </div>
     </div>
     <div class="col-md-4">
-      <mat-card class="analysis-card" *ngIf="!trendInfo.hidden">
-        Analysis<br>
-        Summary: {{trendInfo.analysis}}<br>
-        Cumulative Returns: {{trendInfo.cumulativeReturn}}<br>
-        5-day Correlation: {{trendInfo.shortRangeCorrelation}}<br>
-        20-day Correlation: {{trendInfo.longRangeCorrelation}}<br>
+      <mat-card class="analysis-card">
+        <h2 class="analysis-title">Analysis</h2>
+        <button mat-icon-button class="info-button" (click)="openHelp(generalInfo, generalInfoHelp)">
+          <mat-icon>info_outline</mat-icon>
+        </button>
+        <mat-progress-spinner diameter="42" mode="indeterminate" *ngIf="trendInfo.hidden && !trendInfo.error"></mat-progress-spinner>
+        <mat-card-content class="analysis-content" *ngIf="trendInfo.error">
+          <strong>Summary:</strong>
+          <div class="analysis-data">
+            {{trendInfo.analysis}}
+          </div>
+        </mat-card-content>
+        <mat-card-content class="analysis-content" *ngIf="!trendInfo.hidden">
+          <div class="analysis-label">
+            <strong>Summary:
+              <span class="positive-data" *ngIf="overallMetric > 30">BUY</span>
+              <span class="neutral-data" *ngIf="-30 <= overallMetric && overallMetric <= 30">HOLD</span>
+              <span class="negative-data" *ngIf="overallMetric < -30">SELL</span>
+            </strong>
+            <button mat-icon-button class="help-button" (click)="openHelp(summary, summaryHelp)" >
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data positive-data" *ngIf="positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <div class="analysis-data negative-data" *ngIf="!positiveSummary">
+            {{trendInfo.analysis}}
+          </div>
+          <div class="analysis-label">
+            <strong *ngIf="factors[0].value">Cumulative Returns:
+                <span class="positive-data" *ngIf="factors[0].metric > 30">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-30 <= factors[0].metric && factors[0].metric <= 30">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="factors[0].metric < -30">
+                  SELL
+                </span>
+            </strong>
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[0].name, factors[0].help)" *ngIf="factors[0].value">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data" *ngIf="factors[0].value">
+            {{trendInfo.cumulativeReturn}}
+          </div>
+          <div class="analysis-label">
+            <strong *ngIf="factors[1].value">5-day Correlation:
+                <span class="positive-data" *ngIf="factors[1].metric > 30">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-30 <= factors[1].metric && factors[1].metric <= 30">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="factors[1].metric < -30">
+                  SELL
+                </span>
+            </strong>
+            <button mat-icon-button class="help-button"(click)="openHelp(factors[1].name, factors[1].help)" *ngIf="factors[1].value">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data" *ngIf="factors[1].value">
+            {{trendInfo.shortRangeCorrelation}}
+          </div>
+          <div class="analysis-label">
+            <strong *ngIf="factors[2].value">20-day Correlation:
+                <span class="positive-data" *ngIf="factors[2].metric > 30">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-30 <= factors[2].metric && factors[2].metric <= 30">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="factors[2].metric < -30">
+                  SELL
+                </span>
+            </strong>
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[2].name, factors[2].help)" *ngIf="factors[2].value">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data" *ngIf="factors[2].value">
+            {{trendInfo.longRangeCorrelation}}
+          </div>
+          <div class="analysis-label">
+            <strong *ngIf="factors[3].value">Volume Flow:
+                <span class="positive-data" *ngIf="factors[3].metric > 30">
+                  BUY
+                </span>
+                <span class="neutral-data" *ngIf="-30 <= factors[3].metric && factors[3].metric <= 30">
+                  HOLD
+                </span>
+                <span class="negative-data" *ngIf="factors[3].metric < -30">
+                  SELL
+                </span>
+            </strong>
+            <button mat-icon-button class="help-button" (click)="openHelp(factors[3].name, factors[3].help)" *ngIf="factors[3].value">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+          </div>
+          <div class="analysis-data" *ngIf="factors[3].value">
+            {{trendInfo.volumeFlow}}
+          </div>
+          <div class="analysis-label">
+            <strong>Related Companies:</strong>
+          </div>
+          <div class="analysis-related">
+            <ul>
+              <li *ngFor="let related of trendInfo.relatedCompanies">{{related}}</li>
+            </ul>
+          </div>
+          <div style="text-align: center;">
+            <button mat-raised-button (click)="openDialog()" class="edit-button" *ngIf="!trendInfo.hidden">
+              Configure Factors
+            </button>
+          </div>
+          <hr>
+          <p style="margin-top: 36px;">
+            <strong>Note:</strong>
+            Visualising data on news within the past few days may not give the best results, since markets may take some time to adjust.
+          </p>
+        </mat-card-content>
+        <br>
       </mat-card>
     </div>
   </div>
@@ -57,10 +184,11 @@
   <div class="row">
     <div class="col-md-12">
       <mat-card class="expanded-card">
-        GRAPH#1
-        <button mat-icon-button (click)="expandGraph1()">
+        <div id="returns-pct" hidden="true"></div>
+        <button mat-icon-button (click)="expandGraph1()" class="expand-button">
           <mat-icon>call_received</mat-icon>
         </button>
+        <chart [type]="graph_type" [data]="rtn_data" [options]="rtn_options"></chart>
       </mat-card>
     </div>
   </div>
@@ -69,10 +197,11 @@
   <div class="row">
     <div class="col-md-12">
       <mat-card class="expanded-card">
-        GRAPH#2
-        <button mat-icon-button (click)="expandGraph2()">
+        <div id="cm-returns-pct" hidden="true"></div>
+        <button mat-icon-button (click)="expandGraph2()" class="expand-button">
           <mat-icon>call_received</mat-icon>
         </button>
+        <chart [type]="graph_type" [data]="cm_rtn_data" [options]="cm_rtn_options"></chart>
       </mat-card>
     </div>
   </div>
